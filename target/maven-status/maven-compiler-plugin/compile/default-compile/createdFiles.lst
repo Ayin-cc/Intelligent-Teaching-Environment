@@ -1,0 +1,11 @@
+net\Connection.class
+methods\Classroom.class
+methods\QRcode.class
+sql\SQLOperation.class
+serve\QRCodeService.class
+methods\Teacher.class
+methods\Student.class
+sql\SQLConnection.class
+util\CheckUid.class
+util\JsonPackage.class
+methods\Msg.class

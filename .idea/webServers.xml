@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="4fcfbcdc-f2e8-41f2-95f3-01b435112cdf" name="1" url="">
+        <fileTransfer accessType="SFTP" host="47.92.203.46" port="22" sshConfigId="9f955c1d-151a-4f37-821a-87c3bd5006ba" sshConfig="root@47.92.203.46:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+      <webServer id="f05871e0-f51d-4d8b-ac2e-97affae87c8e" name="Alibaba" url="http://47.92.203.46:8080">
+        <fileTransfer accessType="SFTP" host="47.92.203.46" port="22" sshConfigId="9f955c1d-151a-4f37-821a-87c3bd5006ba" sshConfig="root@47.92.203.46:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
