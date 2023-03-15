@@ -1,0 +1,111 @@
+/* 全局初始化 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "face";
+    /* 禁止选取 */
+    user-select: none;
+}
+/* 所有超链接初始化去掉下划线 */
+a{
+text-decoration: none;
+}
+/* body */
+body {
+    height: 100%;
+    /* 溢出隐藏 */
+    overflow-x: hidden;
+    display: flex;
+    background: linear-gradient(to right, rgba(156, 226, 240,50%), rgba(232, 155, 243,.5));
+    /* background: linear-gradient(to right, rgb(247, 238, 214), rgb(247, 238, 214)); */
+}
+
+/* home */
+.home{
+    height: 100%;
+    width: 100%;
+    background-color: #ffffff;
+}
+
+    /* home de头部信息 */
+.home .masthead{
+    background-color: rgba(107, 24, 251, 0.1);
+    border: 1px solid rgba(255, 255, 255, .6);
+    box-shadow: 2px 1px 19px rgba(0, 0, 0, .1);
+}
+
+    /* SCU的那栏 */
+.home .masthead .slider-container{
+    background-color: rgba(255, 255, 255, 1);
+    border: 1px solid rgba(255, 255, 255, .6);
+    box-shadow: 2px 1px 19px rgba(0, 0, 0, .1);
+}
+.home .masthead .slider-container .SCU{
+    user-select: none;
+    text-align: center;
+    font-size: 25px;
+}
+.home .masthead .slider-container .SCU b{
+    font-size: 40px;
+}
+
+    /* SCU的tp栏 */
+.home .masthead .tp{
+    background-color: rgba(255, 255, 255, 1);
+    border: 1px solid rgba(255, 255, 255, .6);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    overflow-x: hidden;
+}
+.home .masthead .tp .tp-home{
+    margin: 15px;
+    width: 1;
+    font-size: 20px;
+}
+.home .masthead .tp .tp-about{
+    margin: 15px;
+    width: 1;
+    font-size: 20px;
+}
+.home .masthead .tp .tp-me{
+    
+    margin: 15px;
+    width: 1;
+    font-size: 20px;
+}
+
+.home .function-box{
+    margin-top: 10px;
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: center;
+    overflow-x: hidden;
+}
+.home .function-box h2{
+    user-select: none;
+    margin: 5px;
+    margin-right: 15px;
+    margin-top: 5px;
+}
+/* sign-in communication message interaction timetable-query roll-call */
+.home .function-box .sign-in{
+    margin: 10px;
+    margin-top: 10px;
+}
+.home .function-box .communication{
+    margin: 10px;
+}
+.home .function-box .message{
+    margin: 10px;
+}
+.home .function-box .interaction{
+    margin: 10px;
+}
+.home .function-box .timetable-query{
+    margin: 10px;
+}
+.home .function-box .roll-call{
+    margin: 10px;
+}

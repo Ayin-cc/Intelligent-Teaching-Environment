@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DdlMappings">
+    <mapping uuid="01d05991-a311-4907-aa76-39899dccad81" name="scuee@localhost Mapping">
+      <data-sources db="394c8760-20b9-41ff-9be3-ab644eea7cbf" />
+      <scope>
+        <node kind="schema" qname="scuee" />
+      </scope>
+    </mapping>
+  </component>
+</project>
