@@ -1,0 +1,96 @@
+<!DOCTYPE HTML>
+<!--
+	Eventually by Xingyuechenfu
+-->
+<html lang="en">
+<!--head-->
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewpoint" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/login.css">
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <title>登录界面</title>
+</head>
+
+<!--body-->
+
+<body>
+    <!-- 1 最外面的大盒 -->
+    <div class="box">
+        <!-- 1.1滑动盒 -->
+        <div class="sliding_box">
+            <h1 class="welcome">WELCOME!</h1>
+            <h1 class="join_us">JOIN US!</h1>
+        </div>
+
+        <!-- 1.2注册 -->
+        <div class="register_box">
+            <!-- 标题 -->
+            <div class="title_box">
+                <h1>注 册</h1>
+            </div>
+            <!-- 输入框 -->
+            <div class="input_box">
+                <input class="acc1" type="text" placeholder="用户名">
+                <input class="acc2" type="password" placeholder="密码">
+                <input class="acc3" type="password" placeholder="确认密码">
+            </div>
+            <!-- 按键 -->
+            <div class="button_box">
+                <button id="register_btn">注册</button>
+                <p onclick="mySwitch()">已有账号?去登录</p>
+            </div>
+        </div>
+
+        <!-- 1.3登录 -->
+        <div class="login_box">
+            <!-- 标题 -->
+            <div class="title_box">
+                <h1>登 录</h1>
+            </div>
+            <!-- 输入框 -->
+            <div class="input_box">
+                <input class="acc1" type="text" id="login_username" placeholder="用户名">
+                <input class="acc2" type="password" id="login_password" placeholder="密码">
+            </div>
+            <!-- 按键 -->
+            <div class="button_box">
+                <button id="login_btn">登录</button>
+                <p onclick="mySwitch()">没有账号?去注册</p>
+            </div>
+        </div>
+        <!--  -->
+
+    </div>
+    <!-- 2 滑动 -->
+    <script>
+        // 滑动的状态
+        let flag = true
+        const mySwitch = () => {
+            if (flag) {
+                // 获取到滑动盒子的dom元素并修改它移动的位置
+                $(".sliding_box").css("transform", "translateX(100%)")
+                // 获取到滑动盒子的dom元素并修改它的背景颜色
+                $(".sliding_box").css("background-color", "#ce69de")
+                $(".welcome").css("opacity", "0")
+                $(".join_us").css("opacity", "1")
+            }
+            else {
+                $(".sliding_box").css("transform", "translateX(0%)")
+                $(".sliding_box").css("background-color", "#6498f3")
+                $(".welcome").css("opacity", "1")
+                $(".join_us").css("opacity", "0")
+            }
+            flag = !flag
+        }
+    </script>
+
+    <!-- 回调 没写完 -->
+    <script src="assets/js/md5.min.js"></script>
+    <script src="assets/js/login.js"></script>
+
+</body>
+
+</html>

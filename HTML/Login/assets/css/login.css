@@ -1,0 +1,168 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "face";
+}
+
+/* 去除input的轮廓 */
+input {
+    outline: none;
+}
+.join_us{
+    opacity : 0;
+}
+
+html,
+body {
+    height: 100%;
+}
+body {
+    /* 溢出隐藏 */
+    overflow-x: hidden;
+    display: flex;
+    background: linear-gradient(to right, rgb(156, 226, 240), rgb(232, 155, 243));
+}
+
+/* 最外层的大盒子 */
+.box {
+    width: 1050px;
+    height: 600px;
+    display: flex;
+    /* 相对定位 */
+    position: relative;
+    z-index: 10;
+    margin: auto;
+    border-radius: 8px;
+    background-color: rgba(107, 24, 251, 0.1);
+    border: 1px solid rgba(255, 255, 255, .6);
+    box-shadow: 2px 1px 19px rgba(0, 0, 0, .1);
+}
+
+/* 滑动的盒子 */
+.sliding_box {
+    width: 50%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 90;
+    border-radius: 4px;
+    background-color: #6498f3;
+    box-shadow: 2px 1px 19px rgba(0, 0, 0, .1);
+    transition: 0.5s ease-in-out;
+}
+.sliding_box .welcome {
+    margin-top: 150px;
+    text-align: center;
+    letter-spacing: 5px;
+    color: white;
+    /* 禁止选中 */
+    user-select: none;
+    text-shadow: 4px 4px 3px rgba(0, 0, 0, .1);
+    transition: 0.5s ease-in-out;
+}
+.sliding_box .join_us {
+    height: 30px;
+    line-height: 10px;
+    text-align: center;
+    margin: -22px 0;
+    /* 禁止选中 */
+    user-select: none;
+    font-weight: bold;
+    color: white;
+    text-shadow: 4px 4px 3px rgba(0, 0, 0, .1);
+    transition: 0.5s ease-in-out;
+}
+
+
+/* 登录和注册 */
+.login_box{
+    margin: -10px 0;
+    flex: 1;
+    height: 100%;
+}
+.register_box {
+    margin: -50px 0;
+    flex: 1;
+    height: 100%;
+}
+
+/* 标题 */
+.title_box {
+    height: 300px;
+    line-height: 500px;
+
+}
+.title_box h1 {
+    text-align: center;
+    color: white;
+    /* 禁止选中 */
+    user-select: none;
+    letter-spacing: 5px;
+    text-shadow: 4px 4px 3px rgba(0, 0, 0, .1);
+
+}
+
+/* 输入框盒子 */
+.input_box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+input {
+    width: 60%;
+    height: 40px;
+    margin-bottom: 20px;
+    text-indent: 10px;
+    border: 1px solid #fff;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 120px;
+    backdrop-filter: blur(10px);
+}
+/* 字颜色 */
+input:focus {
+    color: #588bb5;
+}
+
+/* 聚焦时隐藏文字 */
+input:focus::placeholder {
+    opacity: 0;
+}
+
+/* 按钮盒子 */
+.button_box {
+    display: flex;
+    justify-content: center;
+}
+button {
+    width: 100px;
+    height: 30px;
+    margin: 0 7px;
+    line-height: 30px;
+    border: none;
+    border-radius: 4px;
+    background-color: #6498f3;
+    color: white;
+}
+
+/* 鼠标悬停在button上 */
+button:hover {
+    cursor: pointer;
+    opacity: .8;
+}
+
+/* 按钮文字 */
+.button_box p {
+    height: 30px;
+    line-height: 30px;
+    /* 禁止选中 */
+    user-select: none;
+    font-size: 14px;
+    color: white;
+
+}
+.button_box p:hover {
+    cursor: pointer;
+    border-bottom: 1px solid white;
+}
