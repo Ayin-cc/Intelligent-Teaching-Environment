@@ -138,6 +138,14 @@ a{
     padding-left: 20px;
     height: auto;
 }
+.right-box .content-page #my-iframe{
+    width:100%;
+    min-height:500px;
+    height: auto;
+    overflow: hidden;
+    border: 0px;
+}
+
 
 
 
