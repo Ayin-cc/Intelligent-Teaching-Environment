@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CH">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,28 +8,56 @@
     <link rel="stylesheet" href="message.css">
     <title>消息分发</title>
 </head>
+
 <body>
+    <header>
+        <h1 class="title">消息分发</h1>
+    </header>
     <div class="page">
-        <header>
-            <h2 class="title">消息分发</h2>
-        </header>
+        <div class="blank-box"></div>
         <div class="left-box">
-            <form class="input-form" action="demo_form.php"><!-- 尚未有php -->
-                <div class="input-title" contenteditable="true" placeholder="请输入标题..."></div>
-                <div class="input-content" contenteditable="true" placeholder="请输入内容..."></div>
-                <!--                 
+            <div class="input-box">
+                <form class="input-form" action="#"><!-- 尚未有php之类的 -->
+                    <div class="input-title input-div" contenteditable="true" placeholder="请输入标题..."></div>
+                    <div class="input-content input-div" contenteditable="true" placeholder="请输入内容..."></div>
+                    <!--                 
                 <textarea class="input_title" cols="60" rows="1">标题</textarea>
                 <textarea class="input_content" cols="60" rows="10">内容</textarea>
-                 -->
-                <input class="submit-btn" type="submit" value="发送">
-            </form>
-            
+                -->
+                    <div class="btns">
+                        <input class="clear-btn" id="clear-btn" type="reset" value="清空">
+                        <input class="submit-btn" type="submit" value="发送">
+                    </div>
+                    <!-- 本地js -->
+                    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                    <script>
+                        $(document).ready(function () {
+                            $('#clear-btn').click(function () {
+                                $('.input-div').html('');
+                            });
+                        });
+                    </script>
+
+                </form>
+            </div>
+
+
         </div>
         <div class="right-box">
-                
+            <form class="radio-type" action="#" method="post">
+                <input type="radio" class="simple" name="type" checked>一般通知
+                <input type="radio" class="important" name="type" checked>重要通知
+                <input type="radio" class="propaganda" name="type" checked>宣传
+            </form>
+            <form class="btn-function" action="#">
+                <button class="history">发送历史</button>
+                <button class="exit">退出</button>
+            </form>
         </div>
+        <div class="blank-box"></div>
 
     </div>
-    
+
 </body>
+
 </html>
