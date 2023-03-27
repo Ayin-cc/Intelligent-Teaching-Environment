@@ -1,1 +1,1 @@
-
+administrator中的消息分发的(message)文件在administrator/html/information中
