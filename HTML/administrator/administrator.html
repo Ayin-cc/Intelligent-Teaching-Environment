@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1 user-scalable=no">
+    <link rel="stylesheet" href="administrator.css">
+    <title>SmartClass Administrator</title>
+</head>
+
+<body>
+    <div class="page">
+
+        <!-- 侧边栏 -->
+        <div class="left-box" id="mySidebar">
+            <div class="logo-name">
+                <h2>Smart Class</h2>
+            </div>
+            <div class="nav-box">
+                <div class="nav-name">
+                    导航
+                </div>
+                <div class="nav-list">
+                    <ul>
+                        <li class="nav-tab effect">
+                            <a href="html/homepage.html" class="li-a" id="li-homepage" target="iframe">首页</a>
+                        </li>
+                        <li class="nav-tab effect">
+                            <a class="li-a accordion" id="li-statistics" target="iframe">统计</a>
+                            <div class="li-box">
+                                <a href="html/statistics/register.html" target="iframe">签到统计</a>
+                                <a href="html/statistics/roll-call.html" target="iframe">课堂点名统计</a>
+                                <a href="html/statistics/interaction.html" target="iframe">问题互动统计</a>
+                            </div>
+                        </li>
+                        <li class="nav-tab effect">
+                            <a class="li-a accordion" id="li-information" target="iframe">信息</a>
+                            <div class="li-box">
+                                <a href="html/information/message.html" target="iframe">消息分发</a>
+                                <a href="html/information/communication.html" target="iframe">交流窗口</a>
+                            </div>
+                        </li>
+                        <li class="nav-tab effect">
+                            <a class="li-a accordion" id="li-management" target="iframe">管理</a>
+                            <div class="li-box">
+                                <a href="html/management/account.html" target="iframe">账号管理</a>
+                                <a href="html/management/background.html" target="iframe">壁纸库管理</a>
+                                <a href="html/management/timetable.html" target="iframe">课表管理</a>
+                                <a href="html/management/classroomIP.html" target="iframe">教室IP管理</a>
+                            </div>
+                        </li>
+                        <li class="nav-tab effect">
+                            <a class="li-a accordion" id="li-debug" target="iframe">调试</a>
+                            <div class="li-box">
+                                <a href="html/debug/debug.html" target="iframe">调试</a>
+                                <a href="html/debug/contact.html" target="iframe">联系我们</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- 右边 -->
+        <div class="right-box">
+            <div class="nav-top">
+                <b>SCU SmartClass Administrator</b>
+                <div class="profile-photo">
+                    <img src="images/images_1.jpg" />
+                </div>   
+            </div>
+            <div class="content-page">
+                <iframe id="my-iframe" name="iframe" scrolling="auto" src="html/homepage.html"></iframe>
+            </div>
+        </div>
+
+    </div>
+
+
+    <script type="text/javascript" src="js/administrator.js"></script>
+    
+</body>
+
+</html>

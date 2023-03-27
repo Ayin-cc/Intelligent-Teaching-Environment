@@ -1,0 +1,129 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "face";
+    background-repeat: no-repeat;
+    /* 禁止选取 */
+    user-select: none;
+    /* 去除修饰线 */
+    text-decoration: none;
+}
+
+.page {
+    /* 去除边框  去除内边距 */
+    display: flex;
+}
+
+header {
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+header h2 {
+    display: flex;
+}
+/* 空盒 */
+.blank-box{
+    display: flex;
+    flex: 0.5;
+}
+/* 左侧的 */
+.left-box {
+    display: flex;
+    flex: 2;
+}
+.left-box .input-box{
+    width: 100%;
+}
+.left-box .input-form {
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    margin: 10px;
+    
+}
+
+/* 输入框 */
+.input-div{
+    margin: 10px;
+    border: 1px solid #a0b3d6;
+    /*设置边框1px，实线，边框线色为#a0b3d6 */
+    font-size: 14px;
+    padding: 4px;
+    color: #333;
+    outline: 0;
+    /* 当元素获得焦点的时候，焦点框为0.去掉虚线框（或高亮框）*/
+}
+/* 当输入框为空时，显示默认文字 */
+.left-box .input-div:empty::before{
+    content: attr(placeholder);
+    /*获取属性的值 attr（value）,可以获得属性值 */
+    color: #999;
+}
+
+.left-box .input-title {
+    min-height: 20px;
+}
+
+.left-box .input-content {
+    min-height: 200px;
+}
+
+.left-box .btns .btn {
+    display: flex;
+    flex-direction: row;
+
+}
+
+.left-box .btn{
+    margin: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 3%;
+    border: 1px solid #a0b3d6;
+    background-color: aliceblue;
+}
+
+
+/* 右边 */
+.right-box {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+.right-box .radio-type {
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 3%;
+    justify-content: center;
+    align-items: center;
+}
+
+.right-box .btn-function {
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.right-box button {
+    margin: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 3%;
+    border: 1px solid #a0b3d6;
+    background-color: aliceblue;
+    
+    align-items: center;
+    width: 50%;
+}
