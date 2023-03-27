@@ -1,0 +1,31 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "face";
+    background-repeat: no-repeat;
+    /* 禁止选取 */
+    user-select: none;
+    /* 去除修饰线 */
+    text-decoration: none;
+}
+
+html,
+body {
+    
+    width: 100%;
+    height: 100%;
+    /* 溢出隐藏 */
+    overflow-x: hidden;
+}
+.title{
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+
+.page {
+    /* 去除边框  去除内边距 */
+    display: flex;
+}

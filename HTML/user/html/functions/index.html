@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="msg_from_server"></div>
+    <div id="sse"></div>
+
+    <script>
+        var sse = new EventSource('http://localhost/sse');
+        //       EventSource:事件源   服务器推送的链接
+        // var sse = new EventSource('http://localhost/sse-retry');
+
+        // 接收到服务器返回的数据，并放入到sse的div中
+        sse.onmessage = function(evt){
+            var el = document.getElementById('sse');
+            el.innerHTML = evt.data;
+        };
+    </script>
+</body>
+</html>

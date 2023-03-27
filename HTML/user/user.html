@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1 user-scalable=no">
+    <link rel="stylesheet" href="user.css">
+    <title>SmartClass User</title>
+</head>
+
+<body>
+    <div class="page">
+
+        <!-- 侧边栏 -->
+        <div class="left-box" id="mySidebar">
+            <div class="logo-name">
+                <h2>Smart Class</h2>
+            </div>
+            <div class="nav-box">
+                <div class="nav-name">
+                    导航
+                </div>
+                <div class="nav-list">
+                    <ul>
+                        <li class="nav-tab effect">
+                            <a href="html/homepage.html" class="li-a" id="li-homepage" target="iframe">首页</a>
+                        </li>
+                        <li class="nav-tab effect">
+                            <a class="li-a accordion" id="li-functions" target="iframe">功能模块</a>
+                            <div class="li-box">
+                                <a href="html/functions/register.html" target="iframe">签到</a>
+                                <a href="html/functions/communication.html" target="iframe">交流窗口</a>
+                                <a href="html/functions/information.html" target="iframe">消息</a>
+                                <a href="html/functions/interaction.html" target="iframe">问题互动</a>
+                                <a href="html/functions/timetable.html" target="iframe">课表查询</a>
+                                <a href="html/functions/roll-call.html" target="iframe">课堂点名</a>
+                            </div>
+                        </li>
+                        <li class="nav-tab effect">
+                            <a class="li-a accordion" id="li-about" target="iframe">关于</a>
+                            <div class="li-box">
+                                <a href="html/about/debug.html" target="iframe">调试</a>
+                                <a href="html/about/contact.html" target="iframe">联系我们</a>
+                            </div>
+                        </li>
+                        <li class="nav-tab effect">
+                            <a class="li-a accordion" id="li-mine" target="iframe">此教室</a>
+                            <div class="li-box">
+                                <a href="#" target="iframe">id查询</a>
+                                <a href="#" target="iframe">壁纸库</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- 右边 -->
+        <div class="right-box">
+            <div class="nav-top">
+                <b>SCU SmartClass User</b>
+                <div class="profile-photo">
+                    <img src="images/images_1.jpg" />
+                </div>
+            </div>
+            <div class="content-page">
+                <iframe id="my-iframe" name="iframe" scrolling="auto" src="html/homepage.html"></iframe>
+            </div>
+        </div>
+
+    </div>
+
+
+    <script type="text/javascript" src="js/user.js"></script>
+
+</body>
+
+</html>

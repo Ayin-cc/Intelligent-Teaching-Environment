@@ -1,0 +1,152 @@
+/* 初始化 */
+*{
+    /* 去除边框  去除内边距 */
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "face";
+    background-repeat: no-repeat;
+    /* 禁止选取 */
+    user-select: none;
+    /* 去除修饰线 */
+    text-decoration: none;
+}
+
+body {
+    height: 100%;
+    /* 溢出隐藏 */
+    overflow-x: hidden;
+    /* background: linear-gradient(to right, rgba(156, 226, 240, 50%), rgba(232, 155, 243, .5)); */
+}
+
+a{
+    color: rgba(90, 84, 84, 1);
+}
+
+.page{
+    display: flex;
+    flex-direction: row;
+}
+/* 左侧边栏 */
+.left-box{
+    display: flex;
+    flex-direction: column;
+    position:absolute;/* 我也不知道为什么，但有了这个，导航栏才是整个页面长 */
+    top: 0;
+    height: 100%;
+    width: 240px;
+    background-color: rgba(255, 255, 255, 1);
+    box-shadow: 0 0 20px rgba(172, 104, 250, 0.1);
+}
+
+.left-box .logo-name{
+    text-align: center;
+    line-height: 70px;
+    letter-spacing: 0.05rem;
+    color: rgba(109, 97, 234, 1);
+}
+
+.left-box .nav-box .nav-name{
+    font-size: 15px;
+    font-weight: 700;
+    padding: 12px 20px;
+    color: rgba(90, 84, 84, 1);
+    letter-spacing: 0.05em;
+}
+    /* 左侧边栏 de List */
+.left-box .nav-box .nav-list{
+    padding: 12px 20px;
+}
+
+.left-box .nav-box .nav-list ul{
+    list-style: none;
+    font-weight: 500;
+}
+.left-box .nav-box .nav-list .nav-tab{
+    padding: 10px;
+}
+.left-box .nav-box .nav-list .nav-tab .li-box{
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+}
+.left-box .nav-box .nav-list .nav-tab .li-box a{
+    padding-top: 5px;
+}
+/*  */
+.left-box .nav-box .nav-list .nav-tab:hover{
+    transition: all 0.5s;
+    box-shadow: 20px 0 2px 0px rgba(255, 255, 255, 1),
+                20px 5px 10px 0px rgba(172, 104, 250, 0.1),
+                20px 0 2px 0px rgba(255, 255, 255, 1),
+                5px -5px 10px 0px rgba(172, 104, 250, 0.1);
+}
+/* 左边 动态1 li-a */
+.left-box .nav-box .nav-list .nav-tab .li-a {
+    transition: all 0.5s;
+    margin-left: 0px;
+    color: rgb(67, 57, 180);
+}
+.left-box .nav-box .nav-list .nav-tab .li-a:hover {
+    margin-left: 6px;
+    font-weight: 700;
+    color: rgba(109, 97, 234, 1) !important;    
+}
+
+/* 动态2 li-box a */
+.left-box .nav-box .nav-list .nav-tab .li-box a{
+    transition: all 0.5s;
+    margin-left: 0px;
+}
+
+.left-box .nav-box .nav-list .nav-tab .li-box a:hover{
+    margin-left: 6px;
+    font-weight: 600;
+}
+
+/* 右边 */
+.right-box {
+    display: flex;
+    flex-direction: column;
+
+    padding-left: 240px;/* 因为左边的导航栏是浮动的 */
+    flex:1;
+}
+.right-box .nav-top{
+    padding: 5px;
+    padding-left: 20px;
+    display: flex;
+    flex-direction: row;
+    box-shadow: 5px 0 10px rgba(170, 132, 247, 0.2);
+}
+.right-box .nav-top b{
+    padding: 10px;
+    display: flex;
+    flex: 8;
+}
+.right-box .profile-photo{
+    display: flex;
+    width:45px;
+    height:45px;
+    border-radius: 50%;
+    box-shadow:0 0 5px rgba(0, 0, 0, .1);
+    overflow: hidden;
+}
+
+.right-box .content-page{
+    padding: 5px;
+    padding-left: 20px;
+    height: auto;
+}
+.right-box .content-page #my-iframe{
+    width:100%;
+    min-height:500px;
+    height: auto;
+    overflow: hidden;
+    border: 0px;
+}
+
+/* 右边 动态 */
+.right-box{
+    transition: all 0.5s;
+}
