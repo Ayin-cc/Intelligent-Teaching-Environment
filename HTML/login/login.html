@@ -10,6 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewpoint" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="assets/css/login.css">
+    <script src="assets/js/login.js"></script>
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <title>登录界面</title>
 </head>
@@ -32,11 +33,14 @@
                 <h1>注 册</h1>
             </div>
             <!-- 输入框 -->
-            <div class="input_box">
-                <input class="acc1" type="text" placeholder="用户名">
-                <input class="acc2" type="password" placeholder="密码">
-                <input class="acc3" type="password" placeholder="确认密码">
-            </div>
+            <form name="register_form" action="#" method="post">
+                <div class="input_box">
+                    <input class="acc1" type="text" name="username" id="register_username" placeholder="用户名">
+                    <input class="acc2" type="password" name="password" id="register_password" placeholder="密码">
+                    <input class="acc3" type="password" name="password_check" id="register_password_check" placeholder="确认密码">
+                </div>
+            </form>
+
             <!-- 按键 -->
             <div class="button_box">
                 <button id="register_btn">注册</button>
@@ -51,10 +55,10 @@
                 <h1>登 录</h1>
             </div>
             <!-- 输入框 -->
-            <form action="#" method="post">
+            <form name="login_form" action="#" method="post">
                 <div class="input_box">
-                    <input class="acc1" type="text" id="login_username" placeholder="用户名">
-                    <input class="acc2" type="password" id="login_password" placeholder="密码">
+                    <input class="acc1" type="text" name="username" id="login_username" placeholder="用户名">
+                    <input class="acc2" type="password" name="password" id="login_password" placeholder="密码">
                 </div>
             </form>
             <!-- 按键 -->
