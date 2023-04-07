@@ -1,16 +1,21 @@
 package sql;
 
 import methods.Classroom;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+@Repository
 public class QRCodeDao {
+    @Autowired
+    private SQLConnection sql;
+
     //判断教室是否存在
-    public static Boolean exist(int cid){
+    public Boolean exist(int cid){
         Classroom classroom = new Classroom();
-        SQLConnection sql = new SQLConnection();
         classroom.setId(cid);
         PreparedStatement pstmt = null;
         ResultSet result = null;
@@ -39,9 +44,8 @@ public class QRCodeDao {
     }
 
     //从数据库获取二维码给教室端
-    public static String getQRCode(int cid){
+    public String getQRCode(int cid){
         Classroom classroom = new Classroom();
-        SQLConnection sql = new SQLConnection();
         PreparedStatement pstmt = null;
         ResultSet code = null;
         String result = null;
@@ -65,7 +69,7 @@ public class QRCodeDao {
     }
 
     //将二维码存入数据库
-    public static void setQRCode(int cid, String code){
+    public void setQRCode(int cid, String code){
         SQLConnection sql = new SQLConnection();
         PreparedStatement pstmt = null;
 

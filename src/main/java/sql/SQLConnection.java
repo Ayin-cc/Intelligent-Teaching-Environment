@@ -1,14 +1,19 @@
 package sql;
 
+import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.PostMapping;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+@Repository
 public class SQLConnection {
     private static final String URL = "jdbc:mysql://localhost:3306/scuee";
     private static final String NAME = "root";
     private static final String PASSWORD = "12345678";
     public Connection conn = null;
+
 
     public void sqlConnection() {
         //加载驱动

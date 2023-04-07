@@ -1,6 +1,10 @@
 package serve;
 
-import methods.MsgList;
+import config.SpringConfig;
+import methods.Message;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.stereotype.Service;
 import sql.DistrMsgDao;
 
 import javax.servlet.ServletException;
@@ -9,38 +13,48 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.Writer;
+
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 @WebServlet("/DistrMsg")
+@Service
 public class DistrMsgService extends HttpServlet {
+    @Autowired
+    private DistrMsgDao msgDao;
+
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         super.doPost(req, resp);
     }
 
+
     //分发消息
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
-        // 从队列中获取消息
-        MsgList msgList = new MsgList();
-        msgList = DistrMsgDao.getMsgList();
+        // 从数据库中获取消息
+        while(true) {
+            Message message;
+            message = msgDao.getMsg();
+            message.addMsg("I'm msg1", 1, "2023");
 
-        // 按类型分发
-        for (int i = 0; i < msgList.length; i++) {
-            // 重要通知
-            if(msgList.type.remove() == "1"){
+            // 使用SSE, 用于发送消息
+            resp.setContentType("text/event-stream");
+            resp.setHeader("Cache-Control", "no-cache, no-store, max-age=0, must-revalidate");
+            //resp.setHeader("Expires", "0");
 
-            }
-
-            // 普通通知
-            else if(msgList.type.remove() == "2"){
-
-            }
-
-            // 宣传
-            else if(msgList.type.remove() == "3"){
-
-            }
-
+            // 分发消息
+            String msg = message.ToString();
+            System.out.println(msg);
+            new Thread(() -> {
+                try {
+                    Writer writer = resp.getWriter();
+                    writer.write("event:message\n");
+                    writer.write("data:" + msg + "\n\n");
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }).start();
         }
     }
 

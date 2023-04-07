@@ -1,15 +1,17 @@
 package sql;
 
-import methods.MsgList;
+import methods.Message;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class DistrMsgDao {
     //将消息队列放入数据库
-    public static void setMsgList(MsgList msgList){
+    public void setMsg(Message message){
 
     }
 
     //从数据库中获取消息队列
-    public static MsgList getMsgList(){
+    public Message getMsg(){
 
         return null;
     }

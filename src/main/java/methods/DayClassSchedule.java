@@ -1,14 +1,16 @@
 package methods;
 
+import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * 如何做成结构良好的周课程表？
  */
-
+@Component
 public class DayClassSchedule {
-    ArrayList<AClass> aclass = new ArrayList<>();
+    private ArrayList<AClass> aclass = new ArrayList<>();
 
 
     public DayClassSchedule() {

@@ -1,5 +1,9 @@
 package serve;
 
+import config.SpringConfig;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.stereotype.Service;
 import sql.QRCodeDao;
 import util.CheckUid;
 
@@ -12,7 +16,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 
 @WebServlet("/QRCode")
+@Service
 public class QRCodeService extends HttpServlet {
+    @Autowired
+    private QRCodeDao qrCodeDao;
+
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         this.doPost(req, resp);
@@ -22,6 +30,7 @@ public class QRCodeService extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("utf-8");
         resp.setCharacterEncoding("utf-8");
+
 
         String uid;
         BufferedReader reader = req.getReader();
@@ -35,7 +44,7 @@ public class QRCodeService extends HttpServlet {
                 //发送响应数据-二维码JSON
                 resp.setStatus(200);
                 resp.setHeader("Server", "QRCode");
-                resp.getWriter().write(QRCodeDao.getQRCode(Integer.parseInt(uid)));
+                resp.getWriter().write(qrCodeDao.getQRCode(Integer.parseInt(uid)));
             }
             else{
                 resp.setStatus(200);

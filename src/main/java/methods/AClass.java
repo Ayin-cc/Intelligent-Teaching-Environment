@@ -1,10 +1,13 @@
 package methods;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class AClass {
-    String name;
-    String teacher;
-    String location;
-    String period;
+    private String name;
+    private String teacher;
+    private String location;
+    private String period;
 
 
     public AClass() {

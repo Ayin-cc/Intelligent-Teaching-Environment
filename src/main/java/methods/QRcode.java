@@ -1,5 +1,8 @@
 package methods;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class QRcode {
     private String id;
     private String code;

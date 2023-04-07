@@ -1,5 +1,8 @@
 package methods;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class Teacher {
     private int id;
     private String name;
