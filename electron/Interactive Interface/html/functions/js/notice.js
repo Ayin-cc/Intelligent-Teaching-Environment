@@ -2,31 +2,45 @@
 * 打开就启动的项目 
 ******/
 window.onload = function () {
-    // supportSSE() // 检查功能的，一般不用
-    showMessage("一般通知","通知已启动，喵！","这条通知是告诉你通知功能正在运作，喵呜~")
+    
+    alert("一般不会用到这里的功能\n\n因为分发的消息显示在Windows的通知栏\n而不是这里");
+    // HTML的
+    // 消息功能检测
+    var btn_check = document.getElementById("check");
+    btn_check.onclick = function () {
+        alert("正在检测中……");
+        check();
+    }
+    // 立即尝试收取
+    var btn_collect = document.getElementById("collect")
+    btn_collect.onclick = function () {
+        alert("如果没有消息弹出（不是这条），说明未接收到新的消息");
+        var sse = new EventSource("");
+        sse.onmessage = function (event) {
+            var data = JSON.parse(event.data);// 转化为JSON
+            var Jtype = data.type;//"一般通知"、"重要通知"、"宣传"
+            var Jtitle = data.title;
+            var Jcontent = data.content;
+            showMessage(Jtype, Jtitle, Jcontent);
+        }
+    }
 }
+
 /******
 * 以下为SSE的代码
-* 调用showMessage("","","")发出通知，windows弹出
+* 调用showMessage("","","")发出通知，在Windows通知栏弹出
 * 注意：
 ******/
-function showMessage(type,title,content){
+function check() {
+    supportSSE();
+}
+function showMessage(type, title, content) {
     var m = new Notification(type, {
         tag: type,
         title: title,// 
-        body: title+"\n"+ content,
+        body: title + "\n" + content,
     })
 }
-
-var sse = new EventSource("");
-sse.onmessage = function (event) {
-    var data = JSON.parse(event.data);// 转化为JSON
-    var Jtype = data.type;//"一般通知"、"重要通知"、"宣传"
-    var Jtitle = data.title;
-    var Jcontent = data.content;
-    showMessage(Jtype,Jtitle,Jcontent)
-}
-
 
 /******
 * 以下为检查的函数，调用supportSSE()就可以了
@@ -35,17 +49,17 @@ sse.onmessage = function (event) {
 // 1.判断是否支持SSE
 function supportSSE() {
     if ('EventSource' in window) {
-        console.log("支持SSE")
-        supportNotify()
+        showMessage("一般通知", "支持", "支持SSE功能");
+        supportNotify();
     } else {
-        alert("不支持SSE")
+        alert("不支持SSE");
     }
 }
 // 2.判断浏览器是否支持Web Notifications API
 function supportNotify() {
     if (window.Notification) {
         // 支持
-        console.log("支持" + "Web Notifications API");
+        showMessage("一般通知", "支持", "支持Web Notifications API");
         //如果支持Web Notifications API，再判断浏览器是否支持弹出实例
         supportShowMess();
     } else {
@@ -64,7 +78,8 @@ function supportShowMess() {
                 console.log('2: ' + status);
                 //如果状态是同意
                 if (status === "granted") {
-                    console.log("支持弹出消息")
+                    showMessage("一般通知", "支持", "支持弹出消息");
+                    alert("检测完毕\n支持消息功能")
                     // 到这步就说明可以弹出了
                 } else {
                     alert('当前浏览器不支持弹出消息')
@@ -73,3 +88,4 @@ function supportShowMess() {
         }
     }, 1000)
 }
+
