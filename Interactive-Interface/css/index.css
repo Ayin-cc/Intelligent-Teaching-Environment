@@ -1,0 +1,392 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "face";
+    user-select: none;
+    text-decoration: none;
+    transition: all 0.5s;
+}
+
+a {
+    color: rgba(90, 84, 84, 1);
+    text-decoration: none;
+}
+
+.page {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    display: flex;
+}
+
+/* left */
+/* left */
+.left {
+    height: 100vh;
+    width: var(--left-box-width);
+    max-width: 320px;
+    min-width: 300px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(-45deg, rgb(219, 224, 230), rgb(214, 231, 243));
+}
+
+/* profile-box */
+.left .profile-box {
+    margin-top: 4vh;
+    margin-bottom: 5%;
+    width: 100%;
+    flex: .2;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* 纵排:居中 */
+}
+.left .profile-box .position-box{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 7vh;
+    padding-bottom: 20px;
+}
+
+.left .profile-box .profile-img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    box-shadow: 0 0 5px rgba(0, 0, 0, .1);
+
+    display: flex;
+    overflow: hidden;
+    position: relative;
+}
+
+
+/* profile-card */
+.left .profile-card {
+    top: calc(16vh + 62px);
+    
+    width: 260px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    display: none;
+    opacity: 0;
+    flex-direction: column;
+    position: fixed;
+    background-color:rgb(255, 255, 255);
+    
+}
+/* 创建动画 */
+@keyframes CardOpacity{
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 100%;
+    }
+}
+.left .profile-box .position-box:hover .profile-card{
+    display: flex;
+    transition: 1s;
+    /* 执行动画 */
+    animation: CardOpacity 0.3s ease-in-out;
+    opacity: 1;
+}
+
+/* card-detail */
+.left .profile-card .card-detail{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 100%;
+    align-items: center;
+}
+
+.left .profile-card .card-detail .card-li{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 100%;
+}
+.left .profile-card .card-detail .line{
+    height: 1px;
+    width: 80%;
+    background-color: rgba(215, 173, 249, 0.557);
+
+}
+.left .profile-card .card-detail .card-li .content{
+    padding-left: 20px;
+    padding-right: 20px;
+    width: 100%;
+    display: flex;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    position: relative;
+}
+.left .profile-card .card-detail .card-li .content:hover{
+    background-color: rgb(223, 239, 250);
+}
+.left .profile-card .card-detail .card-li .content:hover .content-name{
+    font-weight: 700;
+    color: #323232;
+}
+.left .profile-card .card-detail .card-li .content .card-li-icon{
+    /* width: 20px;
+    height: 20px; */
+    padding-right: 5px;
+    position: relative;
+    display: flex;
+}
+.left .profile-card .card-detail .card-li .content .content-name{
+    padding-left: 7px;
+    position: relative;
+    display: flex;
+}
+.left .profile-card .card-detail .card-li .content .content-text{
+    display: flex;
+    position: absolute;
+    right: 10px;
+    font-weight: 200;
+    /* 赦免：此部分允许选取 */
+    user-select: text;
+}
+.left .profile-card .card-detail .card-li .content .chevron{
+    display: flex;
+    position: absolute;
+    right: 10px;
+}
+.left .profile-card .card-detail .card-li .card-logout{
+    display: none;
+}
+
+/* profile-name */
+.left .profile-box .profile-name {
+    display: flex;
+    margin-top: 5%;
+    font-size: 20px;
+}
+
+/* function-box */
+.left .function-box {
+    width: 100%;
+    flex: .6;
+    display: flex;
+    justify-content: center;
+}
+.left .function-box .position-box{
+    width: 80%;
+    height: 80%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.left .function-box .btn-box {
+    margin: 10px;
+    margin-left: 5%;
+    margin-right: 5%;
+    width: 90px;
+    height: 80px;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.left .function-box .btn-box a{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.left .function-box .btn-box .btn-border{
+    width: 90px;
+    height: 68px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20%;
+}
+.left .function-box .btn-box:hover .btn-border{
+    transition: all 0.2s;
+    border:4px solid rgb(173, 201, 249);
+    /* border-collapse:collapse; */
+    box-shadow: 0 0 10px rgba(173, 187, 249, 0.5);
+}
+.left .function-box .btn-box .btn {
+    width: 90%;
+    height: 55px;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20%;
+    background: linear-gradient(10deg, rgb(89, 111, 224), rgb(130, 194, 239));
+}
+.left .function-box .btn-box .btn .icon {
+    display: flex;
+    width: 25px;
+    height: 25px;
+}
+.left .function-box .btn-box .btn-name {
+    font-size: 15px;
+    font-weight: 500;
+    display: flex;
+    padding: 5px;
+}
+.left .function-box .btn-box:hover .btn-name{
+    transition: all 0.2s;
+    font-weight: 600;
+}
+/* buttom-box */
+.left .buttom-box {
+    display: flex;
+    flex: .2;
+}
+
+/* right */
+/* right */
+.right {
+    height: 100vh;
+    /* width: calc(100% - var(--left-box-width)); *//* 右边恰好填满整个page。但，为什么不对劲? */
+    width: 100%;
+    
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+/* control-menu */
+.right .control-menu{
+    top: 5px;
+    width: 100%;
+    height: 40px;
+    display: flex;
+}
+.right .control-menu .blank-box{
+    -webkit-app-region: drag;
+    display: flex;
+    flex: 20;
+}
+.right .control-menu .btn-box{
+    display: flex;
+    flex: 1;
+}
+.right .control-menu .btn-box .btn{
+    height: 100%;
+    width: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.right .control-menu .btn-box .closeWindow{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 45px;
+}
+.right .control-menu .btn-box .btn:hover{
+    background-color: rgb(200, 242, 246);
+}
+.right .control-menu .btn-box .btn-closeWindow{
+    padding-right: 5px;
+}
+.right .control-menu .btn-box .btn-closeWindow:hover{
+    background-color: rgb(246, 200, 200);
+}
+.right .control-menu .btn-box .btn-fullScreenWindow .img-fullScreenWindow{  
+    height: 15px;
+    width: 30px;
+}
+
+/* header */
+.right .header{
+    display: flex;
+    flex-direction: column;
+    height: 100px;
+    /* box-shadow: 0 0 5px rgba(90, 84, 84, .5); */
+}
+.right .header .header-first{
+    padding: 5px;
+    padding-left: 30px;
+    display: flex;
+    align-items: center;
+}
+.right .header .header-first .greeting{
+    font-size: 40px;
+    display: flex;
+}
+.right .header .header-first .blank-box{
+    display: flex;
+    flex: 10;
+}
+.right .header .header-first .btn-box{
+    width: 100px;
+    height: 80%;
+    display: flex;
+    position: relative;
+    right: 12px;
+}
+.right .header .header-first .btn-box .btn{
+    margin-left: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    display: flex;
+    border-radius: 20%;
+    position: relative;
+}
+.right .header .header-first .btn-box .btn:hover{
+    background-color: rgba(173, 245, 249, 0.5);
+}
+
+.right .header .header-second{
+    padding: 5px;
+    padding-left: 25px;
+    display: flex;
+}
+.right .header .header-second .time{
+    padding-left: 8px;
+    height: 100%;
+    display: flex;
+}
+.right .header .header-second .blank-box{
+    display: flex;
+    flex: 1;
+}
+.right .header .header-second .btn-box{
+    height: 100%;
+    display: flex;
+    padding-right: 22px;
+}
+.right .header .header-second .btn-box .btn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    padding: 10px;
+    border-radius: 20%;
+}
+.right .header .header-second .btn-box .btn:hover{
+    background-color: rgba(173, 245, 249, 0.5);
+}
+.right .header .header-second .btn-box .btn .img-refresh{
+    height: 20px;
+    width: 20px;
+}
+
+/* iframe-box */
+.right .iframe-box{
+    width: 100%;
+    height: calc(100vh - 145px);
+}
+.right .iframe-box .main-iframe{
+    border: none;
+    width: 100%;
+    height: 100%;
+}
+
