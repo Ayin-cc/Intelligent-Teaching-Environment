@@ -31,7 +31,7 @@ a {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: linear-gradient(-45deg, rgb(219, 224, 230), rgb(214, 231, 243));
+    background: linear-gradient(-45deg, rgb(49, 70, 89), rgb(44, 72, 92));
 }
 
 /* profile-box */
@@ -46,7 +46,8 @@ a {
     align-items: center;
     /* 纵排:居中 */
 }
-.left .profile-box .position-box{
+
+.left .profile-box .position-box {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -65,31 +66,33 @@ a {
     position: relative;
 }
 
-
 /* profile-card */
 .left .profile-card {
-    top: calc(16vh + 62px);
-    
+    top: calc(16vh + 65px);
+
     width: 260px;
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding-top: 35px;
+    padding-bottom: 35px;
     display: none;
     opacity: 0;
     flex-direction: column;
     position: fixed;
-    background-color:rgb(255, 255, 255);
-    
+    background-color: rgb(255, 255, 255);
+    z-index: 99;
 }
+
 /* 创建动画 */
-@keyframes CardOpacity{
-    0%{
+@keyframes CardOpacity {
+    0% {
         opacity: 0;
     }
-    100%{
+
+    100% {
         opacity: 100%;
     }
 }
-.left .profile-box .position-box:hover .profile-card{
+
+.left .profile-box .position-box:hover .profile-card {
     display: flex;
     transition: 1s;
     /* 执行动画 */
@@ -98,7 +101,7 @@ a {
 }
 
 /* card-detail */
-.left .profile-card .card-detail{
+.left .profile-card .card-detail {
     display: flex;
     flex-direction: column;
     position: relative;
@@ -106,19 +109,21 @@ a {
     align-items: center;
 }
 
-.left .profile-card .card-detail .card-li{
+.left .profile-card .card-detail .card-li {
     display: flex;
     flex-direction: column;
     position: relative;
     width: 100%;
 }
-.left .profile-card .card-detail .line{
+
+.left .profile-card .card-detail .line {
     height: 1px;
     width: 80%;
     background-color: rgba(215, 173, 249, 0.557);
 
 }
-.left .profile-card .card-detail .card-li .content{
+
+.left .profile-card .card-detail .card-li .content {
     padding-left: 20px;
     padding-right: 20px;
     width: 100%;
@@ -127,39 +132,53 @@ a {
     padding-bottom: 8px;
     position: relative;
 }
-.left .profile-card .card-detail .card-li .content:hover{
+
+.left .profile-card .card-detail .card-li .content::before,
+.left .profile-card .card-detail .card-li .content::after {
+    content: " ";
+    padding-left: 5px;
+}
+
+.left .profile-card .card-detail .card-li .content:hover {
     background-color: rgb(223, 239, 250);
 }
-.left .profile-card .card-detail .card-li .content:hover .content-name{
+
+.left .profile-card .card-detail .card-li .content:hover .content-name {
     font-weight: 700;
     color: #323232;
 }
-.left .profile-card .card-detail .card-li .content .card-li-icon{
+
+.left .profile-card .card-detail .card-li .content .card-li-icon {
     /* width: 20px;
     height: 20px; */
     padding-right: 5px;
     position: relative;
     display: flex;
 }
-.left .profile-card .card-detail .card-li .content .content-name{
+
+.left .profile-card .card-detail .card-li .content .content-name {
     padding-left: 7px;
     position: relative;
     display: flex;
 }
-.left .profile-card .card-detail .card-li .content .content-text{
+
+.left .profile-card .card-detail .card-li .content .content-text {
+    padding-left: 20px;
     display: flex;
     position: absolute;
-    right: 10px;
+    right: 15px;
     font-weight: 200;
     /* 赦免：此部分允许选取 */
     user-select: text;
 }
-.left .profile-card .card-detail .card-li .content .chevron{
+
+.left .profile-card .card-detail .card-li .content .chevron {
     display: flex;
     position: absolute;
     right: 10px;
 }
-.left .profile-card .card-detail .card-li .card-logout{
+
+.left .profile-card .card-detail .card-li .card-logout {
     display: none;
 }
 
@@ -168,170 +187,221 @@ a {
     display: flex;
     margin-top: 5%;
     font-size: 20px;
+    color: rgb(255, 255, 255);
 }
 
 /* function-box */
 .left .function-box {
     width: 100%;
-    flex: .6;
+    height: 60%;
     display: flex;
-    justify-content: center;
-}
-.left .function-box .position-box{
-    width: 80%;
-    height: 80%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
 }
 
-.left .function-box .btn-box {
-    margin: 10px;
-    margin-left: 5%;
-    margin-right: 5%;
-    width: 90px;
-    height: 80px;
-
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-.left .function-box .btn-box a{
+/* position-box */
+.left .function-box .position-box {
     width: 100%;
     height: 100%;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-.left .function-box .btn-box .btn-border{
-    width: 90px;
-    height: 68px;
-    display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    border-radius: 20%;
 }
-.left .function-box .btn-box:hover .btn-border{
-    transition: all 0.2s;
-    border:4px solid rgb(173, 201, 249);
-    /* border-collapse:collapse; */
-    box-shadow: 0 0 10px rgba(173, 187, 249, 0.5);
-}
-.left .function-box .btn-box .btn {
-    width: 90%;
-    height: 55px;
 
+.left .function-box .position-box .blank-box {
+    height: 30px;
+}
+
+/* btn-box */
+.left .function-box .position-box .btn-box {
+    height: 50px;
+    width: 100%;
     display: flex;
-    flex-wrap: wrap;
     justify-content: center;
-    align-items: center;
-    border-radius: 20%;
-    background: linear-gradient(10deg, rgb(89, 111, 224), rgb(130, 194, 239));
+    flex-direction: column;
 }
-.left .function-box .btn-box .btn .icon {
+
+.left .function-box .position-box .btn-box a {
     display: flex;
-    width: 25px;
-    height: 25px;
-}
-.left .function-box .btn-box .btn-name {
-    font-size: 15px;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    text-transform: uppercase;
     font-weight: 500;
-    display: flex;
-    padding: 5px;
-}
-.left .function-box .btn-box:hover .btn-name{
-    transition: all 0.2s;
-    font-weight: 600;
-}
-/* buttom-box */
-.left .buttom-box {
-    display: flex;
-    flex: .2;
+    font-size: 20px;
+    padding: 10px 50px;
+    position: relative;
 }
 
-/* right */
+.left .function-box .position-box .btn-box a:before {
+    transition: all 0.7s cubic-bezier(0.7, -0.5, 0.2, 1.5);
+    content: '';
+    width: 0%;
+    height: 100%;
+    background: rgb(223, 239, 250);
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.left .function-box .position-box .btn-box .active{
+    background: rgba(223, 239, 250, 0.2);
+}
+.left .function-box .position-box .btn-box .active:before {
+    width: 3%;
+    height: 100%;
+    background: rgb(223, 239, 250);
+}
+.left .function-box .position-box .btn-box .active div{
+    font-weight: 900;
+}
+.left .function-box .position-box .btn-box a:hover::before {
+    background: rgb(223, 239, 250);
+    width: 100%;
+}
+
+.left .function-box .position-box .btn-box a:hover div {
+    transition: 0.5s;
+    mix-blend-mode: darken;
+    color: #323232;
+}
+
+.left .function-box .position-box .homepage a:hover img {
+    content: url(../images/icons/home_dark.svg);
+    mix-blend-mode: darken;
+}
+
+.left .function-box .position-box .sign-in a:hover img {
+    content: url(../images/icons/edit_dark.svg);
+    mix-blend-mode: darken;
+}
+
+.left .function-box .position-box .roll-call a:hover img {
+    content: url(../images/icons/classroom_dark.svg);
+    mix-blend-mode: darken;
+}
+
+.left .function-box .position-box .message a:hover img {
+    content: url(../images/icons/message-unread_dark.svg);
+    mix-blend-mode: darken;
+}
+
+.left .function-box .position-box .interaction a:hover img {
+    content: url(../images/icons/peoples_dark.svg);
+    mix-blend-mode: darken;
+}
+
+.left .function-box .position-box .timetable a:hover img {
+    content: url(../images/icons/schedule_dark.svg);
+    mix-blend-mode: darken;
+}
+
+
+.left .function-box .position-box .btn-box a img {
+    height: 24px;
+    width: 24px;
+    flex: 2;
+}
+
+.left .function-box .position-box .btn-box a div {
+    flex: 4;
+    color: white;
+}
+
 /* right */
 .right {
     height: 100vh;
-    /* width: calc(100% - var(--left-box-width)); *//* 右边恰好填满整个page。但，为什么不对劲? */
     width: 100%;
-    
+
     position: relative;
     display: flex;
     flex-direction: column;
 }
+
 /* control-menu */
-.right .control-menu{
+.right .control-menu {
     top: 5px;
     width: 100%;
     height: 40px;
     display: flex;
 }
-.right .control-menu .blank-box{
+
+.right .control-menu .blank-box {
     -webkit-app-region: drag;
     display: flex;
     flex: 20;
 }
-.right .control-menu .btn-box{
+
+.right .control-menu .btn-box {
     display: flex;
     flex: 1;
 }
-.right .control-menu .btn-box .btn{
+
+.right .control-menu .btn-box .btn {
     height: 100%;
     width: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
-.right .control-menu .btn-box .closeWindow{
+
+.right .control-menu .btn-box .closeWindow {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 45px;
 }
-.right .control-menu .btn-box .btn:hover{
+
+.right .control-menu .btn-box .btn:hover {
     background-color: rgb(200, 242, 246);
 }
-.right .control-menu .btn-box .btn-closeWindow{
+
+.right .control-menu .btn-box .btn-closeWindow {
     padding-right: 5px;
 }
-.right .control-menu .btn-box .btn-closeWindow:hover{
+
+.right .control-menu .btn-box .btn-closeWindow:hover {
     background-color: rgb(246, 200, 200);
 }
-.right .control-menu .btn-box .btn-fullScreenWindow .img-fullScreenWindow{  
+
+.right .control-menu .btn-box .btn-fullScreenWindow .img-fullScreenWindow {
     height: 15px;
     width: 30px;
 }
 
 /* header */
-.right .header{
+.right .header {
     display: flex;
     flex-direction: column;
     height: 100px;
     /* box-shadow: 0 0 5px rgba(90, 84, 84, .5); */
 }
-.right .header .header-first{
+
+.right .header .header-first {
     padding: 5px;
     padding-left: 30px;
     display: flex;
     align-items: center;
 }
-.right .header .header-first .greeting{
+
+.right .header .header-first .greeting {
     font-size: 40px;
     display: flex;
 }
-.right .header .header-first .blank-box{
+
+.right .header .header-first .blank-box {
     display: flex;
     flex: 10;
 }
-.right .header .header-first .btn-box{
+
+.right .header .header-first .btn-box {
     width: 100px;
     height: 80%;
     display: flex;
     position: relative;
     right: 12px;
 }
-.right .header .header-first .btn-box .btn{
+
+.right .header .header-first .btn-box .btn {
     margin-left: 5px;
     padding-left: 10px;
     padding-right: 10px;
@@ -339,30 +409,35 @@ a {
     border-radius: 20%;
     position: relative;
 }
-.right .header .header-first .btn-box .btn:hover{
+
+.right .header .header-first .btn-box .btn:hover {
     background-color: rgba(173, 245, 249, 0.5);
 }
 
-.right .header .header-second{
+.right .header .header-second {
     padding: 5px;
     padding-left: 25px;
     display: flex;
 }
-.right .header .header-second .time{
+
+.right .header .header-second .time {
     padding-left: 8px;
     height: 100%;
     display: flex;
 }
-.right .header .header-second .blank-box{
+
+.right .header .header-second .blank-box {
     display: flex;
     flex: 1;
 }
-.right .header .header-second .btn-box{
+
+.right .header .header-second .btn-box {
     height: 100%;
     display: flex;
     padding-right: 22px;
 }
-.right .header .header-second .btn-box .btn{
+
+.right .header .header-second .btn-box .btn {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -371,22 +446,29 @@ a {
     padding: 10px;
     border-radius: 20%;
 }
-.right .header .header-second .btn-box .btn:hover{
+
+.right .header .header-second .btn-box .btn:hover {
     background-color: rgba(173, 245, 249, 0.5);
 }
-.right .header .header-second .btn-box .btn .img-refresh{
+
+.right .header .header-second .btn-box .btn .img-refresh {
     height: 20px;
     width: 20px;
 }
 
 /* iframe-box */
-.right .iframe-box{
+.right .iframe-box {
     width: 100%;
     height: calc(100vh - 145px);
 }
-.right .iframe-box .main-iframe{
+
+.right .iframe-box .main-iframe {
     border: none;
     width: 100%;
-    height: 100%;
+    height: 80%;
 }
 
+.right .iframe-box .blank-box {
+    display: flex;
+    height: 20%;
+}

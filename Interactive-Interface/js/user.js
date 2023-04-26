@@ -1,3 +1,28 @@
+
+/* 改导航栏的样式 */
+// 点击后，加粗+左边显示条条
+var function_btn_box = document.getElementsByClassName("function-box")[0].getElementsByClassName('btn-box');
+for(var i = 0; i < function_btn_box.length; i++ ){
+    function_btn_box[i].addEventListener('click',function(event){
+        // 遍历所有的 btn-box 元素
+        for(var j = 0; j < function_btn_box.length; j++) {
+            var btn_box = function_btn_box[j];
+            // 获取子元素 a 和 before 元素
+            var a = btn_box.getElementsByTagName('a')[0];
+            // 将其他 a 标签的 before 宽度设为 0
+            if (btn_box !== event.currentTarget) {
+                a.classList.remove('active');
+            }
+            // 将当前 a 标签的 before 宽度设为 1
+            else {
+                a.classList.add('active');
+            }
+        }
+    })
+}
+
+
+/* 改时间与问候语 */
 // 显示时间
 var time = document.getElementById('time')
 function showNowDate() {
@@ -13,7 +38,7 @@ function showNowDate() {
     else if (day == '4') now += '四';
     else if (day == '5') now += '五';
     else if (day == '6') now += '六';
-    else if (day == '6') now += '日';
+    else if (day == '0') now += '日';
     time.innerHTML = now;
 }
 // 改变问候语

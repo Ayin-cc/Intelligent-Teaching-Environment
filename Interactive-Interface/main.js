@@ -7,7 +7,6 @@
 const { app, BrowserWindow, Menu, Tray, ipcMain } = require('electron')
 const path = require('path')
 
-let tray = null;
 
 
 /********** 创建窗口函数 **********
@@ -15,8 +14,8 @@ let tray = null;
 ********** 创建窗口函数 **********/
 function createWindow() {
     const mainWindow = new BrowserWindow({
-        width: 1000,
-        minWidth: 1000,
+        width: 1132,
+        minWidth: 1132,
         height: 700,
         minHeight: 700,
         icon: path.join(__dirname,'./images/image_1.jpg'),
@@ -33,7 +32,7 @@ function createWindow() {
     mainWindow.loadFile('index.html')// 加载 index.html
 
     
-    // mainWindow.webContents.openDevTools();
+    // mainWindow.webContents.openDevTools(); // 打开窗口的调试工具
 
     // ↓↓↓↓↓创建托盘↓↓↓↓↓
     // ↓↓↓↓↓创建托盘↓↓↓↓↓
@@ -58,7 +57,7 @@ function createWindow() {
     mainWindow.on('show', () => { });
     // 触发隐藏时触发
     mainWindow.on('hide', () => { });
-
+    let tray = null;
     // 创建托盘图标
     tray = new Tray(path.join(__dirname, 'images/image_1.jpg'))
     // 托盘名称
