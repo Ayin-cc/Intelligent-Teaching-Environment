@@ -4,9 +4,9 @@
 
 // BrowserWindow控制应用生命周期和创建原生浏览器窗口的模块
 // Tray创建托盘
+const { getCurrentWindow } = require('@electron/remote/main');
 const { app, BrowserWindow, Menu, Tray, ipcMain } = require('electron')
 const path = require('path')
-
 
 
 /********** 创建窗口函数 **********
@@ -18,25 +18,22 @@ function createWindow() {
         minWidth: 1132,
         height: 700,
         minHeight: 700,
-        icon: path.join(__dirname,'./images/image_1.jpg'),
+        icon: path.join(__dirname, './images/image_1.jpg'),
         frame: false,//实现头部的隐藏
         webPreferences: { // 用于控制窗口加载的网页是否集成node.js环境
-            nodeIntegration: true,
-            contextIsolation: false,
-            enableRemoteModule: true,
+            // nodeIntegration: true,
+            // enableRemoteModule: true,
+            // contextIsolation: true,// Electron 12.0以上版本需要的额外设置此项
+            preload: path.join(__dirname, 'preload.js'),// 在渲染进程中使用node.js, 需要要配置webPreferences属性
         }
     }) // 创建浏览器窗口
-    // 允许使用remote
-    require('@electron/remote/main').initialize()
-    require("@electron/remote/main").enable(mainWindow.webContents)
+
     mainWindow.loadFile('index.html')// 加载 index.html
 
-    
-    // mainWindow.webContents.openDevTools(); // 打开窗口的调试工具
+    mainWindow.webContents.openDevTools(); // 打开窗口的调试工具
 
     // ↓↓↓↓↓创建托盘↓↓↓↓↓
     // ↓↓↓↓↓创建托盘↓↓↓↓↓
-    // mainWindow.webContents.openDevTools(); // 打开窗口的调试工具
     // 关闭默认菜单
     mainWindow.setMenu(null);
 
@@ -88,9 +85,6 @@ function createWindow() {
     // ↑↑↑↑↑创建托盘↑↑↑↑↑
     // ↑↑↑↑↑创建托盘↑↑↑↑↑
     // 监听渲染进程发送的最小化窗口消息
-    ipcMain.on('minimize-window', () => {
-        mainWindow.minimize();
-    });
 }
 
 // 应用程序准备就绪时触发
@@ -98,3 +92,63 @@ app.whenReady().then(() => {
     createWindow() // 调用创建窗口函数
 })
 
+
+// ipc
+/* 
+* 通过ipc进行的操作 
+* 有很多，注意
+*/
+ipcMain.on('greeting', (event, message) => { // debug
+    console.log(`\n${message}`)
+})
+// 控制菜单 ↓
+ipcMain.on('mainWindow_minimize', (event, message) => {
+    const mainWindow = BrowserWindow.getFocusedWindow();
+    if (!mainWindow.isMinimized()) {
+        mainWindow.minimize();
+    }
+})
+ipcMain.handle('mainWindow_maximize', (event, message) => {
+    const mainWindow = BrowserWindow.getFocusedWindow();
+    if (!mainWindow.isMaximized()) {
+        mainWindow.maximize();
+        // event.sender.send('controlBtn[1]_state','0')
+        return 0;
+    } else {
+        mainWindow.restore();
+        // event.sender.send('controlBtn[1]_state','1')
+        return 1;
+    }
+})
+ipcMain.on('mainWindow_close', (event, message) => {
+    const mainWindow = BrowserWindow.getFocusedWindow();
+    mainWindow.close();
+})
+
+// 设置菜单 ↓
+ipcMain.on('settingWindow_create', (event, message) => {
+    var mainWindow = BrowserWindow.getAllWindows()[0]; // 获取主窗口
+    const settingWindow = new BrowserWindow({
+        parent: mainWindow,
+        modal: true,// 有子窗口时锁定主窗口
+        width: 200,
+        height: 200,
+        frame: false,//实现头部的隐藏
+        webPreferences: {
+            nodeIntegration: true,
+            preload: path.join(__dirname, 'preload.js'),// 在setting的渲染进程中使用node.js, 需要要配置webPreferences属性
+        }
+    })
+    settingWindow.loadFile('html/setting/setting.html');
+    // settingWindow.webContents.once("dom-ready", () => {
+    //     enable(settingWindow.webContents); // 启用子窗口
+    // });
+    settingWindow.on('close', () => {
+        subWin.close();
+        subWin.destroy();
+    })
+})
+ipcMain.on('settingWindow_close',(event,message)=>{
+    const settingWindow = BrowserWindow.getFocusedWindow();
+    settingWindow.close();
+})
