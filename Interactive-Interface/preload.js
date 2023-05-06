@@ -1,8 +1,8 @@
 const { contextBridge, ipcRenderer } = require('electron')
 
-// contextBridge.exposeInMainWorld('ipcRenderer', ipcRenderer);
+// contextBridge.exposeInMainWorld('ipcRenderer', ipcRenderer); //暴露ipcRenderer，但不知道为什么没有ipcRenderer.on等
 // 只暴露ipcRenderer.send()  ipcRenderer.on()  ipcRenderer.invoke()
-contextBridge.exposeInMainWorld('ipcRenderer', {
+contextBridge.exposeInMainWorld('ipcRenderer', {// on好像有点问题
     send: (channel, data) => {
         // 通过 ipcRenderer 发送消息
         ipcRenderer.send(channel, data)

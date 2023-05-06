@@ -98,6 +98,9 @@ app.whenReady().then(() => {
 * 通过ipc进行的操作 
 * 有很多，注意
 */
+
+
+// 来自index.js的
 ipcMain.on('greeting', (event, message) => { // debug
     console.log(`\n${message}`)
 })
@@ -151,4 +154,10 @@ ipcMain.on('settingWindow_create', (event, message) => {
 ipcMain.on('settingWindow_close',(event,message)=>{
     const settingWindow = BrowserWindow.getFocusedWindow();
     settingWindow.close();
+})
+
+
+//来自sign-in.js的
+ipcMain.on('sign-in-start',(event,message)=>{
+    
 })
