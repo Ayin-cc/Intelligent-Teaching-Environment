@@ -8,12 +8,13 @@
     <!-- 导入 -->
     <!-- <script src="https://cdn.staticfile.org/qrcodejs/1.0.0/qrcode.min.js"></script> -->
     <script src="./qrcodejs1.0.0.min.js"></script>
+    <link rel="stylesheet" href="QRcode.css">
     <title>qrcode生成器</title>
 </head>
 
 <body>
     <!-- 放置图片的容器 -->
-    <div id="qrcode-container"><img src="" alt=""></div>
+    <div id="qrcode-container"><img id="sign-in-start" src="" alt=""></div>
     <script>
         // 从服务器端获取数字
         let code = "1234567890";
@@ -25,13 +26,12 @@
             height: 256,
             colorDark: "#000000",
             colorLight: "#ffffff",
-            correctLevel: QRCode.CorrectLevel.H
+            correctLevel: QRCode.CorrectLevel.H,
         });
-
-        // 将生成的二维码图片添加到容器中
-        var img = document.getElementsByTagName('img')[0];
-        img.style.display = 'block'; // 显示图片
-        img.style.margin = 'auto'; // 居中显示
+        // 注意；这里生成的img在<img id="sign-in-start" src="" alt="">之后
+        //      且 没有class或id
+        var start_img = document.getElementById('sign-in-start');
+        start_img.style.display = 'none';
     </script>
 
 </body>
