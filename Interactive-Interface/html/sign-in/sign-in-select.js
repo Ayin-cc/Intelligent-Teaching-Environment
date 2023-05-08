@@ -30,7 +30,7 @@ for (let i = 0; i < timeBtn.length; i++) {
             inputBtn_onclick = 0;
         }
         else if (i == '3') {
-            duringTime = parseInt(document.getElementById('sign-in-duration').value);// 这里没有获取数字
+            duringTime = parseInt(document.getElementById('sign-in-duration').value);
             inputBtn_onclick = 1;
         }
     })

@@ -9,8 +9,9 @@ var QR_img = document.getElementsByClassName('left')[0].getElementsByTagName('im
 // 修改剩余时间所需的变量（全局）
 var remaind_time = document.getElementsByClassName('remainder');
 const endTime = new Date().getTime() + parseInt(duringTime) * 60 * 1000;
-
+var stopBtn = document.getElementsByClassName('stop-btn')// 停止按钮的class
 // 更新剩余时间并显示在页面上
+var stop_onclick = 0;
 function updateCountdown() {
 
     const now = new Date().getTime();
@@ -22,9 +23,20 @@ function updateCountdown() {
 
     // 将剩余时间显示在页面上
     remaind_time[0].innerHTML = `${minutes}分钟${seconds < 10 ? '0' : ''}${seconds}秒`;
+    
+    // 检测是否停止
+
+    stopBtn[0].addEventListener('click',function(event){
+        var first_text = document.getElementsByClassName('right')[0].getElementsByClassName('first-box')[0].getElementsByClassName('first-text');
+        QR_img.item(0).src = './over.png'
+        first_text.item(0).style.display = 'none';
+        remaind_time[0].innerHTML = '签到已结束！';
+        stop_onclick = 1;
+    })
+    
 
     // 如果剩余时间不为零，则每秒钟更新一次
-    if (remainingTime > 0) {
+    if (remainingTime > 0 && !stop_onclick) {
         setTimeout(updateCountdown, 1000);
     } else {
         // 否则显示提示信息
@@ -38,4 +50,6 @@ function updateCountdown() {
 
 // 开始倒计时
 updateCountdown();
+
+
 
