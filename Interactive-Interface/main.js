@@ -142,7 +142,7 @@ ipcMain.on('settingWindow_create', (event, message) => {
             preload: path.join(__dirname, 'preload.js'),// 在setting的渲染进程中使用node.js, 需要要配置webPreferences属性
         }
     })
-    settingWindow.loadFile('html/setting/setting.html');
+    settingWindow.loadFile('./html/setting/setting.html');
     // settingWindow.webContents.once("dom-ready", () => {
     //     enable(settingWindow.webContents); // 启用子窗口
     // });
@@ -154,6 +154,32 @@ ipcMain.on('settingWindow_create', (event, message) => {
 ipcMain.on('settingWindow_close',(event,message)=>{
     const settingWindow = BrowserWindow.getFocusedWindow();
     settingWindow.close();
+})
+
+// 帮助菜单 ↓
+ipcMain.on('helpWindow_create', (event, message) => {
+    var mainWindow = BrowserWindow.getAllWindows()[0]; // 获取主窗口
+    const helpWindow = new BrowserWindow({
+        parent: mainWindow,
+        modal: true,// 有子窗口时锁定主窗口
+        width: 200,
+        height: 200,
+        frame: false,//实现头部的隐藏
+        webPreferences: {
+            nodeIntegration: true,
+            preload: path.join(__dirname, 'preload.js'),
+        }
+    })
+    helpWindow.loadFile('./html/help/help.html');
+
+    helpWindow.on('close', () => {
+        subWin.close();
+        subWin.destroy();
+    })
+})
+ipcMain.on('helpWindow_close',(event,message)=>{
+    const helpWindow = BrowserWindow.getFocusedWindow();
+    helpWindow.close();
 })
 
 
