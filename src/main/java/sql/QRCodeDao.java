@@ -11,7 +11,7 @@ import java.sql.SQLException;
 @Repository
 public class QRCodeDao {
     @Autowired
-    private SQLConnection sql;
+    private SQLConnection sql = new SQLConnection();
 
     //判断教室是否存在
     public Boolean exist(int cid){

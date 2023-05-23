@@ -1,7 +1,6 @@
 package sql;
 
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

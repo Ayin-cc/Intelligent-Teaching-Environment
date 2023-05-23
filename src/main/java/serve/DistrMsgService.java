@@ -15,8 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.Writer;
 
-import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
-
 @WebServlet("/DistrMsg")
 @Service
 public class DistrMsgService extends HttpServlet {
@@ -36,7 +34,6 @@ public class DistrMsgService extends HttpServlet {
         while(true) {
             Message message;
             message = msgDao.getMsg();
-            message.addMsg("I'm msg1", 1, "2023");
 
             // 使用SSE, 用于发送消息
             resp.setContentType("text/event-stream");
