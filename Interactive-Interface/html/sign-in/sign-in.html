@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="sign-in.css">
+    <title>签到</title>
+</head>
+
+<body>
+    <div class="page">
+        <div class="left">
+            <div class="QR-code">
+                <img src="./erweima.png" alt="">
+            </div>
+        </div>
+        <div class="right">
+            <div class="boxes">
+                <div class="first-box box">
+                    <div class="countdown">
+                        <div class="first-text">还有</div>
+                        <div class="remainder">5分钟00秒</div>
+                    </div>
+                    <div class="stop-btn">停止签到</div>
+                </div>
+                <div class="second-box box">
+                    <div class="first-text">签到人数：</div>
+                    <div class="number">
+                        <p class="molecule">0</p>
+                        <p class="fractional-line">&nbsp;/&nbsp;</p>
+                        <p class="denominator">50</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="./sign-in.js"></script>
+    <script src="../../preload.js"></script>
+</body>
+
+</html>
