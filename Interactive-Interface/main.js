@@ -4,16 +4,16 @@
 
 // BrowserWindow控制应用生命周期和创建原生浏览器窗口的模块
 // Tray创建托盘
-const { getCurrentWindow } = require('@electron/remote/main');
-const { app, BrowserWindow, Menu, Tray, ipcMain } = require('electron')
+// const { getCurrentWindow } = require('@electron/remote/main');
+const { app, BrowserWindow, Menu, Tray, ipcMain, Notification } = require('electron')
 const path = require('path')
-
+const http = require('http');
 
 /********** 创建窗口函数 **********
 * 目前实现了 "创建窗口" "创建托盘"
 ********** 创建窗口函数 **********/
 function createWindow() {
-    const mainWindow = new BrowserWindow({
+    const mainWindow = new BrowserWindow({ // 设置窗口
         width: 1132,
         minWidth: 1132,
         height: 700,
@@ -26,7 +26,7 @@ function createWindow() {
             // contextIsolation: true,// Electron 12.0以上版本需要的额外设置此项
             preload: path.join(__dirname, 'preload.js'),// 在渲染进程中使用node.js, 需要要配置webPreferences属性
         }
-    }) // 创建浏览器窗口
+    })
 
     mainWindow.loadFile('index.html')// 加载 index.html
 
@@ -84,21 +84,20 @@ function createWindow() {
     })
     // ↑↑↑↑↑创建托盘↑↑↑↑↑
     // ↑↑↑↑↑创建托盘↑↑↑↑↑
-    // 监听渲染进程发送的最小化窗口消息
+    // getMessage()
 }
 
 // 应用程序准备就绪时触发
 app.whenReady().then(() => {
     createWindow() // 调用创建窗口函数
+    displayMessage('Debug', 'This is debug!', './images/image_1.jpg')
 })
-
 
 // ipc
 /* 
 * 通过ipc进行的操作 
 * 有很多，注意
 */
-
 
 // 来自index.js的
 ipcMain.on('greeting', (event, message) => { // debug
@@ -151,7 +150,7 @@ ipcMain.on('settingWindow_create', (event, message) => {
         subWin.destroy();
     })
 })
-ipcMain.on('settingWindow_close',(event,message)=>{
+ipcMain.on('settingWindow_close', (event, message) => {
     const settingWindow = BrowserWindow.getFocusedWindow();
     settingWindow.close();
 })
@@ -177,13 +176,52 @@ ipcMain.on('helpWindow_create', (event, message) => {
         subWin.destroy();
     })
 })
-ipcMain.on('helpWindow_close',(event,message)=>{
+ipcMain.on('helpWindow_close', (event, message) => {
     const helpWindow = BrowserWindow.getFocusedWindow();
     helpWindow.close();
 })
 
-
 //来自sign-in.js的
-ipcMain.on('sign-in-start',(event,message)=>{
-    
+ipcMain.on('sign-in-start', (event, message) => {
+
 })
+
+// SSE
+/* 
+* 通过server-sent events接收服务器端的消息 
+* 注意，还要加提醒功能
+*/
+function getMessage() {
+    // 创建http连接
+    http.get('http://localhost:8080/SCUEE/SendMsg', function (response) {
+        response.on('data', function (data) {
+            const message = JSON.parse(data);
+            message_type = message.type;// general / important / publicize
+            message_title = message.title;
+            message_content = message.content;
+            var message_icon = ""
+            if (message_type == "general") {
+                message_icon = "./images/icons/评论_comment-one.svg"
+            } else if (message_type == "important") {
+                message_icon = "./images/icons/举报_report.svg"
+            } else if (message_type == "publicize") {
+                message_icon = "./images/icons/表情信息_message-emoji.svg"
+            }
+            displayMessage(message_title, message_content, message_icon)
+        });
+    });
+
+}
+
+// Notification
+/* 
+* 通过Notification实现在Windows右下角弹出消息
+*/
+function displayMessage(message_title, message_body, message_icon) {
+    let notification = new Notification({
+        title: message_title, //消息标题
+        body: message_body, //消息体内容
+        icon: message_icon, //消息图片
+    });
+    notification.show();
+}
