@@ -19,7 +19,10 @@ a {
     position: relative;
     display: flex;
 }
-
+/* 禁止滚动条 */
+body::-webkit-scrollbar {
+    display: none;
+}
 /* left */
 /* left */
 .left {
