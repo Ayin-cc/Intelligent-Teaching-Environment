@@ -21,15 +21,18 @@
     display: flex;
     width: 35vw;
     min-width: 350px;
-    height: 60vh;
+    height: 100vh;
     min-height: 350px;
+    align-items: center;
+    justify-content: center;
 }
 
 .left .QR-code {
     display: flex;
     border: 5px dashed rgb(155, 148, 148);
     padding: 10px;
-    /* background-color: rgb(247, 245, 243); */
+    width: 350px;
+    height: 350px;
 }
 
 .left .QR-code img {
@@ -38,9 +41,8 @@
     background-color: rgb(255, 255, 255);
 }
 
-
 .right {
-    height: 70vh;
+    height: 100vh;
     min-height: 350px;
     display: flex;
     align-items: center;
