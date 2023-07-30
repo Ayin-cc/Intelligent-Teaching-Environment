@@ -1,19 +1,19 @@
-package methods;
+package entity;
 
 import org.springframework.stereotype.Component;
 
 @Component
-public class AClass {
+public class Course {
     private String name;
     private String teacher;
     private String location;
     private String period;
 
 
-    public AClass() {
+    public Course() {
     }
 
-    public AClass(String name, String teacher, String location, String period) {
+    public Course(String name, String teacher, String location, String period) {
         this.name = name;
         this.teacher = teacher;
         this.location = location;

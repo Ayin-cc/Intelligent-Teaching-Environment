@@ -1,6 +1,6 @@
-package sql;
+package dao;
 
-import methods.Classroom;
+import entity.Classroom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -14,7 +14,7 @@ public class QRCodeDao {
     private SQLConnection sql = new SQLConnection();
 
     //判断教室是否存在
-    public Boolean exist(int cid){
+    public Boolean exist(int cid) {
         Classroom classroom = new Classroom();
         classroom.setId(cid);
         PreparedStatement pstmt = null;
@@ -26,12 +26,11 @@ public class QRCodeDao {
         try {
             pstmt = sql.conn.prepareStatement(sqlCommand);
             result = pstmt.executeQuery();
-            while(result.next()){
-                if(!result.getBoolean(1)) {
+            while (result.next()) {
+                if (!result.getBoolean(1)) {
                     flag = false;
                     System.out.println("教室不存在");
-                }
-                else {
+                } else {
                     flag = true;
                 }
             }
@@ -44,24 +43,24 @@ public class QRCodeDao {
     }
 
     //从数据库获取二维码给教室端
-    public String getQRCode(int cid){
+    public String getQRCode(int cid) {
         Classroom classroom = new Classroom();
         PreparedStatement pstmt = null;
         ResultSet code = null;
         String result = null;
 
-        try{
+        try {
             sql.sqlConnection();
 
             String sqlCommand = "select qrcode from classroom where id = " + cid + ";";
             pstmt = sql.conn.prepareStatement(sqlCommand);
             code = pstmt.executeQuery(sqlCommand);
-            while(code.next()){
+            while (code.next()) {
                 result = code.getString(1);
             }
 
             sql.sqlClose();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -69,11 +68,11 @@ public class QRCodeDao {
     }
 
     //将二维码存入数据库
-    public void setQRCode(int cid, String code){
+    public void setQRCode(int cid, String code) {
         SQLConnection sql = new SQLConnection();
         PreparedStatement pstmt = null;
 
-        try{
+        try {
             sql.sqlConnection();
 
             String sqlCommand = "insert" + code + "into qrcode" + "where id = " + cid + ";";
@@ -81,7 +80,7 @@ public class QRCodeDao {
             pstmt.executeQuery();
 
             sql.sqlClose();
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

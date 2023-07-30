@@ -1,4 +1,4 @@
-package methods;
+package entity;
 
 import org.springframework.stereotype.Component;
 
@@ -10,37 +10,36 @@ import java.util.List;
  */
 @Component
 public class DayClassSchedule {
-    private ArrayList<AClass> aclass = new ArrayList<>();
+    private ArrayList<Course> aclass = new ArrayList<>();
 
 
     public DayClassSchedule() {
     }
 
-    public DayClassSchedule(int section, AClass cl) {
+    public DayClassSchedule(int section, Course cl) {
         this.aclass.set(section, cl);
     }
 
-    public List<AClass> getAclass() {
+    public List<Course> getAclass() {
         return aclass;
     }
 
     //获取某一节课的数据
-    public AClass getSingleAclass(int section){
+    public Course getSingleAclass(int section) {
 
-        if(aclass.get(section) != null){
+        if (aclass.get(section) != null) {
             return aclass.get(section);
-        }
-        else{
+        } else {
             System.out.println("Class Not Found!");
             return null;
         }
     }
 
-    public void setSingleAlcass(int section, AClass cl){
+    public void setSingleAlcass(int section, Course cl) {
         this.aclass.set(section, cl);
     }
 
-    public void setAclass(ArrayList<AClass> aclass) {
+    public void setAclass(ArrayList<Course> aclass) {
         this.aclass = aclass;
     }
 

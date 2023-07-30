@@ -1,7 +1,4 @@
 package serve;
 
-import org.springframework.stereotype.Service;
-
-@Service
-public class ChatBoxService {
+public interface ChatBoxService {
 }

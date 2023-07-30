@@ -4,6 +4,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ComponentScan({"methods", "serve", "sql"})
+@ComponentScan({"entity", "serve", "dao"})
 public class SpringConfig {
 }

@@ -1,5 +1,5 @@
-import methods.Classroom;
-import sql.SQLConnection;
+import entity.Classroom;
+import dao.SQLConnection;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

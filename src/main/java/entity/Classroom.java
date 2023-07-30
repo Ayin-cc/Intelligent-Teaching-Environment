@@ -1,4 +1,4 @@
-package methods;
+package entity;
 
 import org.springframework.stereotype.Component;
 
@@ -25,30 +25,39 @@ public class Classroom {
     public int getId() {
         return id;
     }
+
     public void setId(int id) {
         this.id = id;
     }
+
     public String getAddress() {
         return address;
     }
+
     public void setAddress(String address) {
         this.address = address;
     }
+
     public String getPasswd() {
         return passwd;
     }
+
     public void setPasswd(String passwd) {
         this.passwd = passwd;
     }
+
     public String getSchedule() {
         return schedule;
     }
+
     public void setSchedule(String schedule) {
         this.schedule = schedule;
     }
+
     public QRcode getQRCode() {
         return qrCode;
     }
+
     public void setQRCode(QRcode qrCode) {
         this.qrCode = qrCode;
     }

@@ -1,29 +1,34 @@
-package methods;
+package entity;
+
 
 import org.springframework.stereotype.Component;
 
 @Component
 public class QRcode {
-    private String id;
+    private String type = "qrcode";
+    private String cid;
     private String code;
 
     public QRcode() {
     }
 
-    public QRcode(String id, String code) {
-        this.id = id;
+    public QRcode(String cid, String code) {
+        this.cid = cid;
         this.code = code;
     }
 
     public String getId() {
-        return id;
+        return cid;
     }
-    public void setId(String id) {
-        this.id = id;
+
+    public void setId(String cid) {
+        this.cid = cid;
     }
+
     public String getCode() {
         return code;
     }
+
     public void setCode(String code) {
         this.code = code;
     }

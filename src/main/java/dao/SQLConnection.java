@@ -1,4 +1,4 @@
-package sql;
+package dao;
 
 import org.springframework.stereotype.Repository;
 
@@ -33,12 +33,12 @@ public class SQLConnection {
     }
 
     public void sqlClose() {
-        if(conn!=null) {
+        if (conn != null) {
             try {
                 conn.close();
             } catch (SQLException e) {
                 e.printStackTrace();
-                conn=null;
+                conn = null;
             }
         }
     }
