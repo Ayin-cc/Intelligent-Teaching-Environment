@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="./index.css" rel="stylesheet" />
+    <title>IC</title>
+</head>
+
+<body class="flex flex-col w-screen h-screen bg-white">
+    <!-- header -->
+    <div class="flex h-10 select-none">
+        <!-- header-left(logo) -->
+        <div class="flex items-center">
+            <div class="flex h-7 w-7 mx-2">
+                <img src="./images/ganyu.jpg" alt="" srcset="">
+            </div>
+            <div class="flex w-max">
+                <div class="flex text-purple-800">&nbsp;I</div>
+                <div class="flex text-purple-400">ntelligent</div>
+                <div class="flex text-purple-800">&nbsp;T</div>
+                <div class="flex text-purple-400">eaching</div>
+                <div class="flex text-purple-800">&nbsp;E</div>
+                <div class="flex text-purple-400">nvironment</div>
+            
+            </div>
+        </div>
+        <!-- header-blank -->
+        <div class="flex flex-grow"></div>
+        <!-- header-menu -->
+        <div class="flex items-center justify-center min-w-max">
+            <div class="flex h-8 w-8 mx-2 p-2 rounded-lg hover:bg-slate-100">
+                <img src="./images/icons/333/提醒.svg" alt="消息" srcset="" />
+            </div>
+            <div class="flex mx-3"></div>
+            <div class="flex h-8 w-8 mx-2 p-2 rounded-lg hover:bg-slate-100">
+                <img src="./images/icons/333/刷新.svg" alt="刷新" srcset="" />
+            </div>
+            <div class="flex h-8 w-8 mx-2 p-2 rounded-lg hover:bg-slate-100">
+                <img src="./images/icons/333/帮助.svg" alt="提示" srcset="" />
+            </div>
+            <div class="flex h-8 w-8 mx-2 p-2 rounded-lg hover:bg-slate-100">
+                <img src="./images/icons/333/设置.svg" alt="设置" srcset="" />
+            </div>
+            <div class="flex h-7 w-7 mx-0 p-1 rounded-lg hover:bg-slate-100">
+                <img src="./images/icons/333/左.svg" alt="折叠" srcset="" />
+            </div>
+        </div>
+        <!-- header-blank -->
+        <div class="flex px-5"></div>
+        <!-- header-right -->
+        <div class="flex h-full items-center justify-center">
+            <div class="flex w-14 h-full items-center justify-center hover:bg-sky-200">
+                <img class="h-6 w-6" src="./images/icons/333/减.svg" alt="最小化" srcset="" />
+            </div>
+            <div class="flex w-14 h-full items-center justify-center hover:bg-sky-200">
+                <img class="h-6 w-6" src="./images/icons/333/小方形.svg" alt="最大化" srcset="" />
+            </div>
+            <div class="flex w-14 h-full items-center justify-center hover:bg-red-300">
+                <img class="h-6 w-6" src="./images/icons/333/关闭-小.svg" alt="关闭" srcset="" />
+            </div>
+        </div>
+    </div>
+    <!-- main -->
+    <div class="flex h-full">
+        <!-- sidebar -->
+        <div class="flex flex-col w-1/6 h-full min-w-max select-none">
+            <!-- sidebar-top -->
+            <div class="flex h-20"></div>
+            <!-- sidebar-middle -->
+            <div class="flex flex-grow flex-col min-w-max">
+                
+                <!-- homepage-btn -->
+                <div class="flex h-10 mx-8 my-0.5 rounded-xl items-center bg-gray-100 hover:bg-gray-200  before:w-0.5 before:h-full before:bg-purple-600">
+                    <div class="flex h-6 w-6 mx-4">
+                        <img src="./images/icons/9013fe/首页2.svg" alt="首页" srcset="" />
+                    </div>
+                    <div class="flex font-medium text-purple-600">首页</div>
+                    <div class="flex"></div>
+                </div>
+                <!-- function-btns -->
+                <div class="flex flex-col">
+                    <div class="flex h-10 mx-8 my-0.5 rounded-xl items-center hover:bg-gray-100  before:w-0.5 before:h-full before:bg-slate-400 before:hover:bg-slate-600">
+                        <div class="flex h-6 w-6 mx-4">
+                            <img src="./images/icons/333/更多2.svg" alt="签到" srcset="" />
+                        </div>
+                        <div class="flex font-medium">功能</div>
+                        <!-- blank -->
+                        <div class="flex flex-grow"></div>
+                        <div class="flex h-8 w-8 mx-4 p-1 rounded-lg hover:bg-purple-200">
+                            <img src="./images/icons/333/下.svg" alt="展开" srcset="" />
+                        </div>
+                    </div>
+                    <div class="flex flex-col">
+
+                        <div class="flex h-10 mx-8 pl-2 my-0.5 rounded-xl items-center hover:bg-gray-100 before:w-0.5 before:h-full before:bg-slate-200 before:hover:bg-slate-400">
+                            <div class="flex h-6 w-6 mx-4">
+                                <img src="./images/icons/333/编辑.svg" alt="签到" srcset="" />
+                            </div>
+                            <div class="flex font-medium">签到</div>
+                            <!-- blank -->
+                            <div class="flex flex-grow"></div>
+
+                        </div>
+
+                        <div class="flex h-10 mx-8 pl-2 my-0.5 rounded-xl items-center hover:bg-gray-100 before:w-0.5 before:h-full before:bg-slate-200 before:hover:bg-slate-400">
+                            <div class="flex h-6 w-6 mx-4">
+                                <img src="./images/icons/333/课堂.svg" alt="点名" srcset="" />
+                            </div>
+                            <div class="flex font-medium">点名</div>
+                            <div class="flex flex-grow"></div>
+
+                        </div>
+
+                        <div class="flex h-10 mx-8 pl-2 my-0.5 rounded-xl items-center hover:bg-gray-100 before:w-0.5 before:h-full before:bg-slate-200 before:hover:bg-slate-400">
+                            <div class="flex h-6 w-6 mx-4">
+                                <img src="./images/icons/333/人群.svg" alt="抽问" srcset="" />
+                            </div>
+                            <div class="flex font-medium">抽问</div>
+                            <div class="flex flex-grow"></div>
+
+                        </div>
+
+                        <div class="flex h-10 mx-8 pl-2 my-0.5 rounded-xl items-center hover:bg-gray-100 before:w-0.5 before:h-full before:bg-slate-200 before:hover:bg-slate-400">
+                            <div class="flex h-6 w-6 mx-4">
+                                <img src="./images/icons/333/消息.svg" alt="通知" srcset="" />
+                            </div>
+                            <div class="flex font-medium">通知</div>
+                            <div class="flex flex-grow"></div>
+
+                        </div>
+
+                        <div class="flex h-10 mx-8 pl-2 my-0.5 rounded-xl items-center hover:bg-gray-100 before:w-0.5 before:h-full before:bg-slate-200 before:hover:bg-slate-400">
+                            <div class="flex h-6 w-6 mx-4">
+                                <img src="./images/icons/333/相册.svg" alt="壁纸" srcset="" />
+                            </div>
+                            <div class="flex font-medium">壁纸</div>
+                            <div class="flex flex-grow"></div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- sidebar-bottom -->
+            <div class="flex flex-col h-36">
+                <div class="flex mx-8 p-4 rounded-lg items-center max-w-xs hover:shadow-md">
+                    <div class="flex w-8 h-8 mx-1 rounded-full overflow-hidden hover:shadow-md">
+                        <img src="./images/icons/333/用户.svg" alt="用户" srcset="">
+                    </div>
+                    <div class="flex flex-grow px-5 overflow-hidden select-all selection:bg-purple-500 selection:text-white">XYCF</div>
+                    <div class="flex w-8 h-8 mx-1 ml-4 p-1 rounded-full hover:bg-purple-100"><img src="./images/icons/333/更多.svg" alt="更多"></div>
+                </div>
+                <div class="flex mx-12 my-2 w-auto h-0.5 bg-slate-400"></div>
+                <!-- menu-btn -->
+                <div class="flex mx-10 h-10 w-10 p-2 mb-3 rounded-xl hover:bg-purple-100"><img src="./images/icons/333/汉堡图标.svg" alt="菜单" srcset=""></div>
+            </div>
+            
+        </div>
+        <!-- content -->
+        <div class="flex flex-col bg-white w-5/6 h-full rounded-3xl shadow-inner items-center">
+            <!-- homepage -->
+            <div class="flex flex-grow homepage px-4 w-full">
+                <!-- hompage-top -->
+                <div class="flex flex-col w-full">
+                    <div class="flex items-center justify-center w-full">
+                        <div class="flex p-4 px-8 greeting-homepage font-medium text-4xl">
+                            凌晨了，早点休息吧…
+                        </div>
+                        <div class="flex flex-grow"></div><!-- blank -->
+
+                    </div>
+                    <div class="flex">
+                        <div class="flex px-8 date-homepage">
+                            2022年1月6日&nbsp;&nbsp;00:00
+                        </div>
+                        <div class="flex flex-grow"></div>
+                    </div>
+                </div>
+                <div class="flex">
+
+                </div>
+                <div class="flex">
+
+                </div>
+            </div>
+
+            <!-- 示例 -->
+            <div class="flex">
+                <div
+                    class="p-6 max-w-sm h-max mx-auto bg-white rounded-xl shadow-lg flex items-center space-x-4 hover:bg-slate-50">
+                    <div class="shrink-0">
+                        <img class="h-12 w-12" src="./images/logo.svg" alt="ChitChat Logo" />
+                    </div>
+                    <div>
+                        <div class="text-xl font-medium text-black">Message</div>
+                        <p class="text-slate-500">You have a new message!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="./index.js"></script>
+</body>
+
+</html>
