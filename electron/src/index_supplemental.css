@@ -43,3 +43,92 @@
     left: 32px;
     transition:  all .2s linear;
 }
+
+/* --------------- */
+/* 黑夜模式图标变色 */
+
+/* header的menu */
+.dark #message-menu-header img{
+    content: url(./images/icons/d4d4d8/提醒.svg);
+}
+
+.dark #refresh-menu-header img{
+    content: url(./images/icons/d4d4d8/刷新.svg);
+}
+
+.dark #help-menu-header img{
+    content: url(./images/icons/d4d4d8/帮助.svg);
+}
+
+.dark #setting-menu-header img{
+    content: url(./images/icons/d4d4d8/设置.svg);
+}
+
+.dark #folder-menu-header img{
+    content: url(./images/icons/d4d4d8/左.svg);
+}
+/* header的controller */
+.dark #minimizeWindow-controller-header img{
+    content: url(./images/icons/d4d4d8/减.svg);
+}
+
+.dark #fullscreenWindow-controller-header img{
+    content: url(./images/icons/d4d4d8/小方形.svg);
+}
+
+.dark #closeWindow-controller-header img{
+    content: url(./images/icons/d4d4d8/关闭-小.svg);
+}
+/* sidebar的中部图标 */
+.dark #homepage-sidebar img{
+    content: url(./images/icons/d4d4d8/首页2.svg);
+}
+
+.dark #function-sidebar img{
+    content: url(./images/icons/d4d4d8/更多2.svg);
+}
+
+.dark #folder-function-sidebar img{
+    content: url(./images/icons/d4d4d8/下.svg);
+}
+
+.dark #signIn-sidebar img{
+    content: url(./images/icons/d4d4d8/编辑.svg);
+}
+
+.dark #rollCall-sidebar img{
+    content: url(./images/icons/d4d4d8/课堂.svg);
+}
+
+.dark #randomSelection-sidebar img{
+    content: url(./images/icons/d4d4d8/人群.svg);
+}
+
+.dark #message-sidebar img{
+    content: url(./images/icons/d4d4d8/消息.svg);
+}
+
+.dark #wallpaper-sidebar img{
+    content: url(./images/icons/d4d4d8/相册.svg);
+}
+/* sidebar的bottom的图标 */
+.dark #photo-profile-sidebarBottom img{
+    content: url(./images/icons/d4d4d8/用户.svg);
+}
+
+.dark #folder-profile-sidebarBottom img{
+    content: url(./images/icons/d4d4d8/更多.svg);
+}
+
+.dark #folder-menu-sidebarBottom img{
+    content: url(./images/icons/d4d4d8/汉堡图标.svg);
+}
+
+/* 顶部菜单折叠 */
+.hide{
+    width: 0;
+    height: 0;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
