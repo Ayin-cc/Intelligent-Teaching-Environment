@@ -9,6 +9,8 @@
 </head>
 
 <body class="flex flex-col w-screen h-screen bg-white dark:bg-zinc-900">
+    <!-- 因为tailwind CSS是实时修改css的，故留下需要的样式 -->
+    <div class="ml-2 p-2 hidden"></div>
     <!-- header -->
     <div class="flex h-10 select-none">
         <!-- header-left(logo) -->
@@ -72,18 +74,18 @@
                 <!-- homepage-btn -->
                 <div class="flex h-10 mx-8 my-0.5 rounded-xl items-center 
                 bg-gray-100 hover:bg-gray-200 before:w-0.5 before:h-full before:bg-purple-600 
-                dark:bg-zinc-600 dark:hover:bg-zinc-500 dark:before:bg-purple-400" id="homepage-sidebar">
+                dark:bg-zinc-600 dark:hover:bg-zinc-500 dark:before:bg-purple-400 resizable" id="homepage-sidebar">
                     <div class="flex h-6 w-6 mx-4">
                         <img src="./images/icons/9013fe/首页2.svg" alt="首页" srcset="" />
                     </div>
-                    <div class="flex font-medium text-purple-600 dark:text-zinc-300 dark:font-bold hide-able">首页</div>
+                    <div class="flex font-medium text-purple-600 dark:text-zinc-300 dark:font-bold hide-able ">首页</div>
                     <div class="flex"></div>
                 </div>
                 <!-- function-btns -->
-                <div class="flex flex-col">
+                <div class="flex flex-col" id="functions-sidebar">
                     <div class="flex h-10 mx-8 my-0.5 rounded-xl items-center 
                     hover:bg-gray-100 before:w-0.5 before:h-full before:bg-slate-400 before:hover:bg-slate-600
-                    dark:hover:bg-zinc-600 dark:before:bg-zinc-600 dark:before:hover:bg-zinc-400" id="function-sidebar">
+                    dark:hover:bg-zinc-600 dark:before:bg-zinc-600 dark:before:hover:bg-zinc-400 resizable" id="function-sidebar">
                         <div class="flex h-6 w-6 mx-4">
                             <img src="./images/icons/333/更多2.svg" alt="签到" srcset="" />
                         </div>
@@ -99,7 +101,7 @@
                     <div class="flex flex-col">
                         <div class="flex h-10 mx-8 pl-2 my-0.5 rounded-xl items-center 
                         hover:bg-gray-100 before:w-0.5 before:h-full before:bg-slate-200 before:hover:bg-slate-400 
-                        dark:hover:bg-zinc-600 dark:before:bg-zinc-600 dark:before:hover:bg-zinc-400" id="signIn-sidebar">
+                        dark:hover:bg-zinc-600 dark:before:bg-zinc-600 dark:before:hover:bg-zinc-400 resizable foldable" id="signIn-sidebar">
                             <div class="flex h-6 w-6 mx-4">
                                 <img src="./images/icons/333/编辑.svg" alt="签到" srcset="" />
                             </div>
@@ -110,7 +112,7 @@
 
                         <div class="flex h-10 mx-8 pl-2 my-0.5 rounded-xl items-center 
                         hover:bg-gray-100 before:w-0.5 before:h-full before:bg-slate-200 before:hover:bg-slate-400 
-                        dark:hover:bg-zinc-600 dark:before:bg-zinc-600 dark:before:hover:bg-zinc-400"  id="rollCall-sidebar">
+                        dark:hover:bg-zinc-600 dark:before:bg-zinc-600 dark:before:hover:bg-zinc-400 resizable foldable"  id="rollCall-sidebar">
                             <div class="flex h-6 w-6 mx-4">
                                 <img src="./images/icons/333/课堂.svg" alt="点名" srcset="" />
                             </div>
@@ -120,7 +122,7 @@
 
                         <div class="flex h-10 mx-8 pl-2 my-0.5 rounded-xl items-center 
                         hover:bg-gray-100 before:w-0.5 before:h-full before:bg-slate-200 before:hover:bg-slate-400 
-                        dark:hover:bg-zinc-600 dark:before:bg-zinc-600 dark:before:hover:bg-zinc-400" id="randomSelection-sidebar">
+                        dark:hover:bg-zinc-600 dark:before:bg-zinc-600 dark:before:hover:bg-zinc-400 resizable foldable" id="randomSelection-sidebar">
                             <div class="flex h-6 w-6 mx-4">
                                 <img src="./images/icons/333/人群.svg" alt="抽问" srcset="" />
                             </div>
@@ -130,7 +132,7 @@
 
                         <div class="flex h-10 mx-8 pl-2 my-0.5 rounded-xl items-center 
                         hover:bg-gray-100 before:w-0.5 before:h-full before:bg-slate-200 before:hover:bg-slate-400 
-                        dark:hover:bg-zinc-600 dark:before:bg-zinc-600 dark:before:hover:bg-zinc-400" id="message-sidebar">
+                        dark:hover:bg-zinc-600 dark:before:bg-zinc-600 dark:before:hover:bg-zinc-400 resizable foldable" id="message-sidebar">
                             <div class="flex h-6 w-6 mx-4">
                                 <img src="./images/icons/333/消息.svg" alt="通知" srcset="" />
                             </div>
@@ -140,7 +142,7 @@
 
                         <div class="flex h-10 mx-8 pl-2 my-0.5 rounded-xl items-center 
                         hover:bg-gray-100 before:w-0.5 before:h-full before:bg-slate-200 before:hover:bg-slate-400 
-                        dark:hover:bg-zinc-600 dark:before:bg-zinc-600 dark:before:hover:bg-zinc-400" id="wallpaper-sidebar">
+                        dark:hover:bg-zinc-600 dark:before:bg-zinc-600 dark:before:hover:bg-zinc-400 resizable foldable" id="wallpaper-sidebar">
                             <div class="flex h-6 w-6 mx-4">
                                 <img src="./images/icons/333/相册.svg" alt="壁纸" srcset="" />
                             </div>
@@ -153,7 +155,7 @@
 
             <!-- sidebar-bottom -->
             <div class="flex flex-col h-36">
-                <div class="flex mx-8 p-4 rounded-lg items-center max-w-xs hover:shadow-md">
+                <div class="flex mx-8 p-4 rounded-lg items-center max-w-xs hover:shadow-md resizable">
                     <div class="flex w-8 h-8 mx-1 rounded-full overflow-hidden hover:shadow-md" id="photo-profile-sidebarBottom">
                         <img src="./images/icons/333/用户.svg" alt="用户" srcset="" />
                     </div>
@@ -169,7 +171,7 @@
                 <div class="flex mx-12 my-2 w-auto h-0.5 bg-slate-400 hide-able"></div>
                 <!-- menu-btns -->
                 <div class="flex items-center justify-center">
-                    <div class="flex mx-10 h-10 w-10 p-2 rounded-xl justify-center hover:bg-purple-100 dark:hover:bg-zinc-700" id="folder-menu-sidebarBottom">
+                    <div class="flex mx-10 h-10 w-10 p-2 ml-10 rounded-xl justify-center hover:bg-purple-100 dark:hover:bg-zinc-700 resizable" id="folder-menu-sidebarBottom">
                         <img src="./images/icons/333/汉堡图标.svg" alt="菜单" srcset="" />
                     </div>
                     <div class="flex flex-grow"></div>
