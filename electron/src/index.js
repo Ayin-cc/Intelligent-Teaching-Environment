@@ -128,10 +128,8 @@ document.addEventListener("DOMContentLoaded", function () {
     checkbox.addEventListener("change", function () {
         var isChecked = checkbox.checked;
         if (isChecked) {
-            console.log("已选中—darkMode");
             htmlElement.classList.toggle("dark");
         } else {
-            console.log("未选中—lightMode");
             htmlElement.classList.toggle("dark");
         }
     });
@@ -150,50 +148,90 @@ document.addEventListener("DOMContentLoaded", function () {
                 var textElement = item.querySelector('.text');
                 var imgElement = item.querySelector('img');
                 var originalSrc = imgElement.src;
-                if(htmlElement.classList.contains('dark')){
-                    // 有dark(dark mode)
-
-                }else{
-                    // (light mode)
-                    // 改文字
-                    textElement.classList.remove('text-purple-600');
-                    textElement.classList.add('text-zinc-950');
-                    // 改图片
+                
                     
-
+                // -----改文字-----
+                // (light mode)
+                textElement.classList.remove('text-purple-600');
+                textElement.classList.add('text-zinc-950');
+                // (dark mode)
+                textElement.classList.remove('dark:font-bold');
+                    
+                // -----改图片-----
+                
+                if(htmlElement.classList.contains('dark')){
+                    // (DARK mode)
+                    // 改的是light mode的图片
+                    // 因为dark mode懒得做单独的颜色，用css改的
+                    // 要切换到light mode时，未选中的颜色改为黑色
                     if(originalSrc.includes('9013fe')){
                         imgElement.src = originalSrc.replace('/9013fe/', '/333/');
                     }
-                    // 改背景、':hover'与':before'
-                    item.classList.remove('bg-gray-100');
-                    item.classList.remove('hover:bg-gray-200');
-                    item.classList.remove('before:bg-purple-600');
-                    item.classList.add('hover:bg-gray-100');
-                    item.classList.add('before:bg-slate-200');
-                    item.classList.add('before:hover:bg-slate-400');
+                }else{
+                    // (LIGHT mode)
+                    if(originalSrc.includes('9013fe')){
+                        imgElement.src = originalSrc.replace('/9013fe/', '/333/');
+                    }
+                    
                 }
 
-                
+                // -----改背景、':hover'与':before'-----
+                // (light mode)
+                item.classList.remove('bg-gray-100');
+                item.classList.remove('hover:bg-gray-200');
+                item.classList.remove('before:bg-purple-600');
+                item.classList.add('hover:bg-gray-100');
+                item.classList.add('before:bg-slate-200');
+                item.classList.add('before:hover:bg-slate-400');
+                // (dark mode)
+                item.classList.remove('dark:bg-zinc-600');
+                item.classList.remove('dark:hover:bg-zinc-500');
+                item.classList.remove('dark:before:bg-purple-400');
+                item.classList.add('dark:hover:bg-zinc-600');
+                item.classList.add('dark:before:bg-zinc-600');
+                item.classList.add('dark:before:hover:bg-zinc-400');
             });
-            // 对点击的元素操作
+            // 以下单独对点击的元素操作
             var thisText = this.querySelector('.text');
             var thisImg = this.querySelector('img');
             var originalSrc = thisImg.src;
-            // 改文字
+
+            // -----改文字-----
+            // (light mode)
             thisText.classList.remove('text-zinc-950');
             thisText.classList.add('text-purple-600');
-            // 改图片
-            if(originalSrc.includes('333')){
-                thisImg.src = originalSrc.replace('/333/', '/9013fe/');
+            // (dark mode)
+            this.classList.add('dark:font-bold');
+
+            // -----改图片-----
+            
+            if(htmlElement.classList.contains('dark')){
+                // (DARK mode)
+                if(originalSrc.includes('333')){
+                    thisImg.src = originalSrc.replace('/333/', '/9013fe/');
+                }
+            }else{
+                // (LIGHT mode)
+                if(originalSrc.includes('333')){
+                    thisImg.src = originalSrc.replace('/333/', '/9013fe/');
+                }
             }
-            // 改背景
+            
+            // -----改背景颜色-----
+            // (light mode)
             this.classList.remove('hover:bg-gray-100');
             this.classList.remove('before:bg-slate-200');
             this.classList.remove('before:hover:bg-slate-400');
             this.classList.add('bg-gray-100');
             this.classList.add('hover:bg-gray-200');
             this.classList.add('before:bg-purple-600');
-            
+            // (dark mode)
+            this.classList.remove('dark:hover:bg-zinc-600');
+            this.classList.remove('dark:before:bg-zinc-600');
+            this.classList.remove('dark:before:hover:bg-zinc-400');
+            this.classList.add('dark:bg-zinc-600');
+            this.classList.add('dark:hover:bg-zinc-500');
+            this.classList.add('dark:before:bg-purple-400');
         });
     });
 
