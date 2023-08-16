@@ -42,22 +42,25 @@ document.addEventListener("DOMContentLoaded", function () {
     // sidebar(左边栏)的folder(底部的folder)点击，切换折叠状态 
     // 注意! 这个调整了很多东西
     // (done)
+    var sidebar = document.getElementById('sidebar');
     var folderMenuSidebarBottom = document.getElementById('folder-menu-sidebarBottom');
     folderMenuSidebarBottom.addEventListener('click', function(){
         // 隐藏元素
-        var sidebar = document.getElementById('sidebar');
         var hideableElements = sidebar.querySelectorAll('.hide-able');
         hideableElements.forEach(function(element){
             element.classList.toggle('hide');
         });
         // 调整间距
-        // 因为sidebar最小是`66px`，防止折叠时又一次收缩
+        
 
         var resizableElements = sidebar.querySelectorAll('.resizable');
         resizableElements.forEach(function(element){
             if (element.classList.contains('mx-10')) {
                 element.classList.remove('mx-10');
                 element.classList.add('re-mx-10');
+                // sidebar设为70px，防止折叠时又一次收缩
+                // 但还是会收缩（折叠时最宽是66px，但不知为何会伸缩）
+                // 遂，还改为66px，给`#sidebar-top`添加css，min-width: 66px
                 sidebar.style.width = '66px';
             }else if (element.classList.contains('re-mx-10')) {
                 element.classList.remove('re-mx-10');
@@ -119,11 +122,6 @@ document.addEventListener("DOMContentLoaded", function () {
         
     });
 
-    // sidebar的btns点击，切换颜色，粗细等等
-    // (unfinished)
-    
-
-
     // 切换主题模式
     var checkbox = document.getElementById("theme-toggle");
     var htmlElement = document.documentElement;
@@ -137,6 +135,69 @@ document.addEventListener("DOMContentLoaded", function () {
             htmlElement.classList.toggle("dark");
         }
     });
+
+    
+    // sidebar的btns点击，切换颜色，粗细等等
+    // (unfinished)
+    // htmlElement已在'切换主题模式'中var
+    var clickableSidebarElement = sidebar.querySelectorAll('.clickable');
+    clickableSidebarElement.forEach(function(element) {
+        // element是each clickable元素
+        element.addEventListener('click', function() {
+            // 对全部操作
+            clickableSidebarElement.forEach(function(item) {
+                // item是each clickable元素
+                var textElement = item.querySelector('.text');
+                var imgElement = item.querySelector('img');
+                var originalSrc = imgElement.src;
+                if(htmlElement.classList.contains('dark')){
+                    // 有dark(dark mode)
+
+                }else{
+                    // (light mode)
+                    // 改文字
+                    textElement.classList.remove('text-purple-600');
+                    textElement.classList.add('text-zinc-950');
+                    // 改图片
+                    
+
+                    if(originalSrc.includes('9013fe')){
+                        imgElement.src = originalSrc.replace('/9013fe/', '/333/');
+                    }
+                    // 改背景、':hover'与':before'
+                    item.classList.remove('bg-gray-100');
+                    item.classList.remove('hover:bg-gray-200');
+                    item.classList.remove('before:bg-purple-600');
+                    item.classList.add('hover:bg-gray-100');
+                    item.classList.add('before:bg-slate-200');
+                    item.classList.add('before:hover:bg-slate-400');
+                }
+
+                
+            });
+            // 对点击的元素操作
+            var thisText = this.querySelector('.text');
+            var thisImg = this.querySelector('img');
+            var originalSrc = thisImg.src;
+            // 改文字
+            thisText.classList.remove('text-zinc-950');
+            thisText.classList.add('text-purple-600');
+            // 改图片
+            if(originalSrc.includes('333')){
+                thisImg.src = originalSrc.replace('/333/', '/9013fe/');
+            }
+            // 改背景
+            this.classList.remove('hover:bg-gray-100');
+            this.classList.remove('before:bg-slate-200');
+            this.classList.remove('before:hover:bg-slate-400');
+            this.classList.add('bg-gray-100');
+            this.classList.add('hover:bg-gray-200');
+            this.classList.add('before:bg-purple-600');
+            
+        });
+    });
+
+    // 
 
 
 });

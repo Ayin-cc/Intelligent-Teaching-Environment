@@ -68,17 +68,17 @@
         <!-- sidebar -->
         <div class="flex flex-col w-1/6 h-full min-w-max select-none" id="sidebar">
             <!-- sidebar-top -->
-            <div class="flex h-20"></div>
+            <div class="flex h-20" id="sidebar-top"></div>
             <!-- sidebar-middle -->
             <div class="flex flex-grow flex-col min-w-max">
                 <!-- homepage-btn -->
                 <div class="flex h-10 mx-8 my-0.5 rounded-xl items-center 
                 bg-gray-100 hover:bg-gray-200 before:w-0.5 before:h-full before:bg-purple-600 
-                dark:bg-zinc-600 dark:hover:bg-zinc-500 dark:before:bg-purple-400 resizable" id="homepage-sidebar">
+                dark:bg-zinc-600 dark:hover:bg-zinc-500 dark:before:bg-purple-400 resizable clickable" id="homepage-sidebar">
                     <div class="flex h-6 w-6 mx-4">
                         <img src="./images/icons/9013fe/首页2.svg" alt="首页" srcset="" />
                     </div>
-                    <div class="flex font-medium text-purple-600 dark:text-zinc-300 dark:font-bold hide-able ">首页</div>
+                    <div class="flex font-medium text-purple-600 dark:text-zinc-300 dark:font-bold hide-able text">首页</div>
                     <div class="flex"></div>
                 </div>
                 <!-- function-btns -->
@@ -89,7 +89,7 @@
                         <div class="flex h-6 w-6 mx-4">
                             <img src="./images/icons/333/更多2.svg" alt="签到" srcset="" />
                         </div>
-                        <div class="flex font-medium dark:text-zinc-300 hide-able">功能</div>
+                        <div class="flex font-medium text-zinc-950 dark:text-zinc-300 hide-able text">功能</div>
                         <!-- blank -->
                         <div class="flex flex-grow"></div>
                         <div class="flex h-8 w-8 mx-4 p-1 rounded-lg 
@@ -101,52 +101,51 @@
                     <div class="flex flex-col">
                         <div class="flex h-10 mx-8 pl-2 my-0.5 rounded-xl items-center 
                         hover:bg-gray-100 before:w-0.5 before:h-full before:bg-slate-200 before:hover:bg-slate-400 
-                        dark:hover:bg-zinc-600 dark:before:bg-zinc-600 dark:before:hover:bg-zinc-400 resizable foldable" id="signIn-sidebar">
+                        dark:hover:bg-zinc-600 dark:before:bg-zinc-600 dark:before:hover:bg-zinc-400 resizable foldable clickable" id="signIn-sidebar">
                             <div class="flex h-6 w-6 mx-4">
                                 <img src="./images/icons/333/编辑.svg" alt="签到" srcset="" />
                             </div>
-                            <div class="flex font-medium dark:text-zinc-300 hide-able">签到</div>
-                            <!-- blank -->
+                            <div class="flex font-medium text-zinc-950 dark:text-zinc-300 hide-able text">签到</div>
                             <div class="flex flex-grow"></div>
                         </div>
 
                         <div class="flex h-10 mx-8 pl-2 my-0.5 rounded-xl items-center 
                         hover:bg-gray-100 before:w-0.5 before:h-full before:bg-slate-200 before:hover:bg-slate-400 
-                        dark:hover:bg-zinc-600 dark:before:bg-zinc-600 dark:before:hover:bg-zinc-400 resizable foldable"  id="rollCall-sidebar">
+                        dark:hover:bg-zinc-600 dark:before:bg-zinc-600 dark:before:hover:bg-zinc-400 resizable foldable clickable"  id="rollCall-sidebar">
                             <div class="flex h-6 w-6 mx-4">
                                 <img src="./images/icons/333/课堂.svg" alt="点名" srcset="" />
                             </div>
-                            <div class="flex font-medium dark:text-zinc-300 hide-able">点名</div>
+                            <div class="flex font-medium text-zinc-950 dark:text-zinc-300 hide-able text">点名</div>
                             <div class="flex flex-grow"></div>
                         </div>
 
                         <div class="flex h-10 mx-8 pl-2 my-0.5 rounded-xl items-center 
                         hover:bg-gray-100 before:w-0.5 before:h-full before:bg-slate-200 before:hover:bg-slate-400 
-                        dark:hover:bg-zinc-600 dark:before:bg-zinc-600 dark:before:hover:bg-zinc-400 resizable foldable" id="randomSelection-sidebar">
+                        dark:hover:bg-zinc-600 dark:before:bg-zinc-600 dark:before:hover:bg-zinc-400 resizable foldable clickable" id="randomSelection-sidebar">
                             <div class="flex h-6 w-6 mx-4">
                                 <img src="./images/icons/333/人群.svg" alt="抽问" srcset="" />
                             </div>
-                            <div class="flex font-medium dark:text-zinc-300 hide-able">抽问</div>
+                            <div class="flex font-medium text-zinc-950 dark:text-zinc-300 hide-able text">抽问</div>
                             <div class="flex flex-grow"></div>
                         </div>
 
                         <div class="flex h-10 mx-8 pl-2 my-0.5 rounded-xl items-center 
                         hover:bg-gray-100 before:w-0.5 before:h-full before:bg-slate-200 before:hover:bg-slate-400 
-                        dark:hover:bg-zinc-600 dark:before:bg-zinc-600 dark:before:hover:bg-zinc-400 resizable foldable" id="message-sidebar">
+                        dark:hover:bg-zinc-600 dark:before:bg-zinc-600 dark:before:hover:bg-zinc-400 resizable foldable clickable" id="message-sidebar">
                             <div class="flex h-6 w-6 mx-4">
                                 <img src="./images/icons/333/消息.svg" alt="通知" srcset="" />
                             </div>
-                            <div class="flex font-medium dark:text-zinc-300 hide-able">通知</div>
+                            <div class="flex font-medium text-zinc-950 dark:text-zinc-300 hide-able text">通知</div>
                             <div class="flex flex-grow"></div>
                         </div>
 
                         <div class="flex h-10 mx-8 pl-2 my-0.5 rounded-xl items-center 
                         hover:bg-gray-100 before:w-0.5 before:h-full before:bg-slate-200 before:hover:bg-slate-400 
-                        dark:hover:bg-zinc-600 dark:before:bg-zinc-600 dark:before:hover:bg-zinc-400 resizable foldable" id="wallpaper-sidebar">
+                        dark:hover:bg-zinc-600 dark:before:bg-zinc-600 dark:before:hover:bg-zinc-400 resizable foldable clickable" id="wallpaper-sidebar">
                             <div class="flex h-6 w-6 mx-4">
                                 <img src="./images/icons/333/相册.svg" alt="壁纸" srcset="" />
                             </div>
-                            <div class="flex font-medium dark:text-zinc-300 hide-able">壁纸</div>
+                            <div class="flex font-medium text-zinc-950 dark:text-zinc-300 hide-able text">壁纸</div>
                             <div class="flex flex-grow"></div>
                         </div>
                     </div>
@@ -180,12 +179,13 @@
                         <label for="theme-toggle" class="mx-10 hover:shadow-lg"></label>
                     </div>
                 </div>
+                <!-- sidebar-bottom-pro -->
                 <div class="flex mb-3"></div>
 
             </div>
         </div>
         <!-- content -->
-        <div class="flex flex-col bg-white w-5/6 h-full rounded-3xl shadow-inner items-center 
+        <div class="flex flex-col bg-white w-full h-full rounded-3xl shadow-inner items-center 
         dark:bg-zinc-800">
 
             <!-- homepage -->

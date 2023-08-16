@@ -132,3 +132,9 @@
     padding: 0;
     overflow: hidden;
 }
+
+/* 侧边栏收缩最小宽度 */
+/* 无奈之举 */
+#sidebar-top{
+    min-width: 66px;
+}
