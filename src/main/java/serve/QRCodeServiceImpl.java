@@ -28,4 +28,8 @@ public class QRCodeServiceImpl implements QRCodeService {
         }
     }
 
+    @Override
+    public void scan(String sid){
+
+    }
 }
