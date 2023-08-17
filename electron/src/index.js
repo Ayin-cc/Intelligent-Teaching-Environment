@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }, 3000); // 3s
     });
-
+    
     // 顶部的folder点击，切换显示状态
     // (done)
     var folderMenuHeaderBtn = document.getElementById('folder-menu-header');
@@ -235,10 +235,27 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    // 
+    // homepage的实时时间显示
+    
+    // 每秒钟更新一次时间
+    setInterval(updateDateTime, 1000);
+    // 初始化时立即更新一次时间
+    updateDateTime();
 
 
 });
 
 // 函数
-
+function updateDateTime(){
+    var timeHomepage = document.getElementById('time-homepage');
+    const currentDateTime = new Date();
+    const formattedDateTime = currentDateTime.toLocaleString('zh-CN', {
+        year: 'numeric',// 显示年份，以数字形式展示。
+        month: 'long',// 显示月份的完整名称，如 "一月"。
+        day: 'numeric',
+        hour: '2-digit',// 显示小时，以两位数字形式展示，不足两位的前面会加上零。
+        minute: '2-digit',
+        second: '2-digit'
+    }); // 格式化当前日期时间
+    timeHomepage.textContent = formattedDateTime; // 将格式化后的日期时间设置为元素的文本内容
+}
