@@ -3,16 +3,60 @@
     transition: all 0.2s;
 }
 
-/* 切换主题的toggle */
-#theme-toggle{
-    display: none;/*隐藏表单元素*/
+
+/* 默认toggle */
+.toggle{
+    display: none;
+}
+.toggle:hover+label {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, .1), 0 4px 6px -4px rgba(0, 0, 0, .1);
+}
+.toggle+label {
+    display: inline-block;
+    position: relative;
+    /* transition: all 0.2s; */
+    width: 40px;
+    height: 20px;
+    border: 1px solid #999;
+    border-radius: 15px;
+    /* background-color: rgb(161, 161, 170); */
+}
+.toggle:checked+label {
+    /*选中表单后的样式，:checked表示checkbox被选中后的状态*/
+    background-color: rgb(139 92 246);
+}
+.toggle+label::before {
+    /*使用伪元素生成一个按钮*/
+    content: '';
+    display: block;
+    height: 14px;
+    width: 14px;
+    position: absolute;
+    border-radius: 50%;
+    left: 2px;
+    top: 2px;
+    background-color: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .4);
+    transition: all .3s;
+}
+.toggle:checked+label::before {
+    /*checkbox选中时按钮的样式*/
+    left: 22px;
+    transition: all .2s linear;
 }
 
-#theme-toggle:hover+label{
+/* 切换主题的toggle */
+#theme-toggle {
+    display: none;
+    /*隐藏表单元素*/
+}
+
+#theme-toggle:hover+label {
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, .1), 0 4px 6px -4px rgba(0, 0, 0, .1);
 }
 
-#theme-toggle+label{/*+选择器选择紧跟“+”左边选择器的第一个元素*/
+#theme-toggle+label {
+    /*+选择器选择紧跟“+”左边选择器的第一个元素*/
     display: inline-block;
     position: relative;
     transition: all .3s;
@@ -23,10 +67,13 @@
     background-color: #ffffff;
 }
 
-#theme-toggle:checked+label{/*选中表单后的样式，:checked表示checkbox被选中后的状态*/
+#theme-toggle:checked+label {
+    /*选中表单后的样式，:checked表示checkbox被选中后的状态*/
     background-color: rgb(148, 163, 184);
 }
-#theme-toggle+label::before{/*使用伪元素生成一个按钮*/
+
+#theme-toggle+label::before {
+    /*使用伪元素生成一个按钮*/
     content: '';
     display: block;
     height: 25px;
@@ -39,102 +86,135 @@
     box-shadow: 0 1px 3px rgba(0, 0, 0, .4);
     transition: all .3s;
 }
-#theme-toggle:checked+label::before{/*checkbox选中时按钮的样式*/
+
+#theme-toggle:checked+label::before {
+    /*checkbox选中时按钮的样式*/
     left: 32px;
-    transition:  all .2s linear;
+    transition: all .2s linear;
 }
+
+
+
+
 
 /* --------------- */
 /* 黑夜模式图标变色 */
 
 /* header的menu */
-.dark #message-menu-header img{
+.dark #message-menu-header img {
     content: url(./images/icons/d4d4d8/提醒.svg);
 }
 
-.dark #refresh-menu-header img{
+.dark #refresh-menu-header img {
     content: url(./images/icons/d4d4d8/刷新.svg);
 }
 
-.dark #help-menu-header img{
+.dark #help-menu-header img {
     content: url(./images/icons/d4d4d8/帮助.svg);
 }
 
-.dark #setting-menu-header img{
+.dark #setting-menu-header img {
     content: url(./images/icons/d4d4d8/设置.svg);
 }
 
-.dark #folder-menu-header img{
+.dark #folder-menu-header img {
     content: url(./images/icons/d4d4d8/左.svg);
 }
+
 /* header的controller */
-.dark #minimizeWindow-controller-header img{
+.dark #minimizeWindow-controller-header img {
     content: url(./images/icons/d4d4d8/减.svg);
 }
 
-.dark #fullscreenWindow-controller-header img{
+.dark #fullscreenWindow-controller-header img {
     content: url(./images/icons/d4d4d8/小方形.svg);
 }
 
-.dark #closeWindow-controller-header img{
+.dark #closeWindow-controller-header img {
     content: url(./images/icons/d4d4d8/关闭-小.svg);
 }
+
 /* sidebar的中部图标 */
-.dark #homepage-sidebar img{
+.dark #homepage-sidebar img {
     content: url(./images/icons/d4d4d8/首页2.svg);
 }
 
-.dark #function-sidebar img{
+.dark #function-sidebar img {
     content: url(./images/icons/d4d4d8/更多2.svg);
 }
 
-.dark #folder-function-sidebar img{
+.dark #folder-function-sidebar img {
     content: url(./images/icons/d4d4d8/下.svg);
 }
 
-.dark #signIn-sidebar img{
+.dark #signIn-sidebar img {
     content: url(./images/icons/d4d4d8/编辑.svg);
 }
 
-.dark #rollCall-sidebar img{
+.dark #rollCall-sidebar img {
     content: url(./images/icons/d4d4d8/课堂.svg);
 }
 
-.dark #randomSelection-sidebar img{
+.dark #randomSelection-sidebar img {
     content: url(./images/icons/d4d4d8/人群.svg);
 }
 
-.dark #message-sidebar img{
+.dark #message-sidebar img {
     content: url(./images/icons/d4d4d8/消息.svg);
 }
 
-.dark #wallpaper-sidebar img{
+.dark #wallpaper-sidebar img {
     content: url(./images/icons/d4d4d8/相册.svg);
 }
+
 /* sidebar的bottom的图标 */
-.dark #photo-profile-sidebarBottom img{
+.dark #photo-profile-sidebarBottom img {
     content: url(./images/icons/d4d4d8/用户.svg);
 }
 
-.dark #folder-profile-sidebarBottom img{
+.dark #folder-profile-sidebarBottom img {
     content: url(./images/icons/d4d4d8/更多.svg);
 }
 
-.dark #folder-menu-sidebarBottom img{
+.dark #folder-menu-sidebarBottom img {
     content: url(./images/icons/d4d4d8/汉堡图标.svg);
 }
 
-/* 顶部菜单折叠 */
-.hide{
-    width: 0;
+/* 折叠、隐藏 */
+.hide {
+    overflow: hidden;
+
     height: 0;
+    width: 0;
     margin: 0;
     padding: 0;
-    overflow: hidden;
+
+    flex-grow: 0;
+    /* display: none; */
 }
+
+
 
 /* 侧边栏收缩最小宽度 */
 /* 无奈之举 */
-#sidebar-top{
+#sidebar-top {
     min-width: 66px;
 }
+
+/* 滑动条 */
+/* 修改滑动条的外观 */
+/* input[type="range"] {
+
+} */
+/* 滑块 */
+/* input[type="range"]::-webkit-slider-thumb {
+    
+} */
+
+/* 轨道 */
+/* input[type="range"]::-webkit-slider-runnable-track {
+
+} */
+
+
+

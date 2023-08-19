@@ -135,15 +135,36 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     
-    // sidebar的btns点击，切换颜色，粗细等等
+    // sidebar的btns点击效果，以及切换content
     // (unfinished)
+    // sidebar已在'侧边栏折叠'中声明
     // htmlElement已在'切换主题模式'中var
-    var clickableSidebarElement = sidebar.querySelectorAll('.clickable');
-    clickableSidebarElement.forEach(function(element) {
+    var clickableSidebarElements = sidebar.querySelectorAll('.clickable');
+    // 用于页面内容切换的变量
+    var content = document.getElementById('content');
+    var hideableHomepageElements = content.querySelectorAll('.hide-able');
+
+    clickableSidebarElements.forEach(function(element) {
         // element是each clickable元素
         element.addEventListener('click', function() {
+            // 切换content(只有这里是"切换content")
+            // 获取被点击的元素的 id
+            var clickedId = this.id;
+            // 遍历所有 hideableElements
+            hideableHomepageElements.forEach(function(hideableElement) {
+                // 获取 hideableElement 的 id
+                var hideableId = hideableElement.id;
+                // 如果 hideableElement 的 id 包含 clickedId，则移除 hide 类，否则添加 hide 类
+                if (clickedId.includes(hideableId)) {
+                    hideableElement.classList.remove('hide');
+                } else {
+                    hideableElement.classList.add('hide');
+                }
+            });
+
+
             // 对全部操作
-            clickableSidebarElement.forEach(function(item) {
+            clickableSidebarElements.forEach(function(item) {
                 // item是each clickable元素
                 var textElement = item.querySelector('.text');
                 var imgElement = item.querySelector('img');
@@ -234,19 +255,49 @@ document.addEventListener("DOMContentLoaded", function () {
             this.classList.add('dark:before:bg-purple-400');
         });
     });
-
-    // homepage的实时时间显示
-    
-    // 每秒钟更新一次时间
-    setInterval(updateDateTime, 1000);
-    // 初始化时立即更新一次时间
-    updateDateTime();
-
+    // homepage的刷新
+    updateHomepage();
+    // signIn的刷新
+    updateSignIn();
 
 });
 
-// 函数
-function updateDateTime(){
+// *************************
+// *    函数
+// *    一般放在DOMContentLoaded监听触发后
+// *************************
+
+
+// 
+// homepage(首页)
+function updateHomepage(){
+    // 初始化：
+    // 立即更新一次时间
+    updateHomepageDateTime();
+    // 持续性
+    setInterval(updateHomepageDateTime, 1000);// 每秒钟更新一次时间
+    var homepage = document.getElementById('homepage')
+    var signInDurationCustomInputToggle = document.getElementById('signIn-custom-duration-input-toggle');
+    var inputBoxSignInDuration = document.getElementById('inputBox-signIn-duration');
+    var inputBoxSignInCustomDuration = document.getElementById('inputBox-signIn-custom-duration');
+    signInDurationCustomInputToggle.addEventListener('change', function(){
+        if(signInDurationCustomInputToggle.checked){
+            inputBoxSignInDuration.classList.add('hidden');
+            inputBoxSignInDuration.classList.remove('flex');
+            inputBoxSignInCustomDuration.classList.add('flex');
+            inputBoxSignInCustomDuration.classList.remove('hidden');
+
+        }else{
+            inputBoxSignInDuration.classList.add('flex');
+            inputBoxSignInDuration.classList.remove('hidden');
+            inputBoxSignInCustomDuration.classList.add('hidden');
+            inputBoxSignInCustomDuration.classList.remove('flex');
+        }
+    })
+
+}
+// 更新homepage时间
+function updateHomepageDateTime(){
     var timeHomepage = document.getElementById('time-homepage');
     const currentDateTime = new Date();
     const formattedDateTime = currentDateTime.toLocaleString('zh-CN', {
@@ -258,4 +309,23 @@ function updateDateTime(){
         second: '2-digit'
     }); // 格式化当前日期时间
     timeHomepage.textContent = formattedDateTime; // 将格式化后的日期时间设置为元素的文本内容
+}
+
+// 
+// signIn(签到)
+function updateSignIn(){
+    updateInputTange()
+}
+// 更新滑动条
+function updateInputTange(){
+    var signInDurationInput = document.getElementById('signIn-duration-input');
+    var signInDurationLabel = document.getElementById('signIn-duration-label');
+    signInDurationInput.addEventListener("input", function(){
+        signInDurationLabel.textContent=signInDurationInput.value;
+    });
+    var signInFrequencyInput = document.getElementById('signIn-frequency-input');
+    var signInFrequencyLabel = document.getElementById('signIn-frequency-label');
+    signInFrequencyInput.addEventListener("input", function(){
+        signInFrequencyLabel.textContent=signInFrequencyInput.value;
+    });
 }
