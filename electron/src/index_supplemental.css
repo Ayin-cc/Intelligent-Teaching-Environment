@@ -193,14 +193,6 @@
     /* display: none; */
 }
 
-
-
-/* 侧边栏收缩最小宽度 */
-/* 无奈之举 */
-#sidebar-top {
-    min-width: 66px;
-}
-
 /* 滑动条 */
 /* 修改滑动条的外观 */
 /* input[type="range"] {
@@ -215,6 +207,16 @@
 /* input[type="range"]::-webkit-slider-runnable-track {
 
 } */
+
+/* 单独、特殊 */
+
+/* 侧边栏收缩最小宽度 */
+/* 无奈之举 */
+#sidebar-top {
+    min-width: 66px;
+}
+
+/* QR-code */
 
 
 
