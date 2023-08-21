@@ -11,7 +11,7 @@ public class DistrMsgServiceImpl implements DistrMsgService {
     private DistrMsgDao msgDao;
 
     @Override
-    public void create(String msg){
+    public void create(Message msg){
 
     }
 

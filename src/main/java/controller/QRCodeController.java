@@ -27,13 +27,18 @@ public class QRCodeController {
 
     // 学生端扫描二维码接口
     @RequestMapping("/scan")
-    public void scan(@RequestBody String type, String sid){
-
+    public void scan(@RequestBody String code){
+        qrCodeService.scan(code);
     }
 
     // 查询签到数据接口
     @RequestMapping("/query")
     public void query(@RequestBody String type, String cid){
+        if(type.equals("qrcode")){
 
+        }
+        else{
+            System.out.println("请求信息错误！");
+        }
     }
 }

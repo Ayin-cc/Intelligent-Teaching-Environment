@@ -1,6 +1,8 @@
 package serve;
 
+import entity.Chat;
+import entity.Course;
+
 public interface ChatBoxService {
-    void join();
-    void send();
+    void send(Chat chat);
 }

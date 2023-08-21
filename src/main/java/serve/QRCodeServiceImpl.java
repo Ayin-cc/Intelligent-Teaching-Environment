@@ -29,7 +29,7 @@ public class QRCodeServiceImpl implements QRCodeService {
     }
 
     @Override
-    public void scan(String sid){
-
+    public void scan(String code){
+        // 根据code获取openid
     }
 }

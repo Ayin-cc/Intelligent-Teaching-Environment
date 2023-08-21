@@ -6,17 +6,17 @@ import org.springframework.stereotype.Component;
 public class Course {
     private String name;
     private String teacher;
-    private String location;
+    private String site;
     private String period;
 
 
     public Course() {
     }
 
-    public Course(String name, String teacher, String location, String period) {
+    public Course(String name, String teacher, String site, String period) {
         this.name = name;
         this.teacher = teacher;
-        this.location = location;
+        this.site = site;
         this.period = period;
     }
 
@@ -41,13 +41,13 @@ public class Course {
     }
 
 
-    public String getLocation() {
-        return location;
+    public String getSite() {
+        return site;
     }
 
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setSite(String site) {
+        this.site = site;
     }
 
 
@@ -61,6 +61,6 @@ public class Course {
     }
 
     public String toString() {
-        return "Class{name = " + name + ", teacher = " + teacher + ", location = " + location + ", period = " + period + "}";
+        return "Class{name = " + name + ", teacher = " + teacher + ", site = " + site + ", period = " + period + "}";
     }
 }

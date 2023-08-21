@@ -1,6 +1,8 @@
 package serve;
 
+import entity.Message;
+
 public interface DistrMsgService {
-    void create(String msg);
+    void create(Message msg);
     void get();
 }

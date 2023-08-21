@@ -10,12 +10,12 @@ public class CallStuServiceImpl implements CallStuService {
     private CallStuDao callStuDao;
 
     @Override
-    public void random(){
+    public void random(String cid){
 
     }
 
     @Override
-    public void select(){
+    public void select(String cid, String sid){
 
     }
 }

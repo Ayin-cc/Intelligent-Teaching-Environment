@@ -1,6 +1,7 @@
 package serve;
 
 import dao.ChatBoxDao;
+import entity.Chat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,12 +11,7 @@ public class ChatBoxServiceImpl implements ChatBoxService {
     private ChatBoxDao chatBoxDao;
 
     @Override
-    public void join(){
-
-    }
-
-    @Override
-    public void send(){
+    public void send(Chat chat){
 
     }
 }
