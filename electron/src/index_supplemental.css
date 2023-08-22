@@ -216,6 +216,10 @@
     min-width: 66px;
 }
 
+.max-w-10{
+    max-width: 2.5rem;
+}
+
 /* QR-code */
 
 

@@ -373,6 +373,8 @@ function signInStart() {
 }
 // 签到中
 // (unfinished)
+// 没有获取学生信息，没有已签到学生数量、学生总数。遂只设置初始数据
+// 没有二维码
 function signInContinuing() {
     var signInSelect = document.getElementById('signIn-select');
     var signInInterface = document.getElementById('signIn-interface');
@@ -408,10 +410,9 @@ function signInContinuing() {
             duration = signInDurationInput.value * 60;
             frequency = signInFrequencyInput.value;
         }
-        // 没有获取学生信息，没有已签到学生数量、学生总数。遂只设置初始数据
+        // 没有获取学生信息，没有已签到学生数量、学生总数。遂只设置初始数据（unfinished）
         var totalCount = 50;
         var signedCount = 0;
-        // 在持续性消息中，缺少获取已签到数量（unfinished）
 
         // 持续性改变消息
         // 倒计时
@@ -462,3 +463,18 @@ function signInFinished() {
     });
 }
 
+
+// 点名
+// rollCall(点名)
+
+
+// 随机抽问
+// randomSelection(随机抽问)
+
+
+// 通知
+// message(通知)
+
+
+// 壁纸
+// wallpaper(壁纸)

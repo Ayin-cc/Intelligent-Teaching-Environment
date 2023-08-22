@@ -72,7 +72,7 @@
         </div>
     </div>
     <!-- main -->
-    <div class="flex h-full">
+    <div class="flex w-full h-full">
         <!-- sidebar -->
         <div class="flex flex-col w-1/6 h-full min-w-max select-none" id="sidebar">
             <!-- sidebar-top -->
@@ -205,7 +205,7 @@
         </div>
         <!-- content -->
         <div class="flex flex-col bg-white w-full h-full rounded-3xl shadow-inner items-center 
-        dark:bg-zinc-900 select-none" id="content">
+        dark:bg-zinc-900 select-none overflow-hidden" id="content">
 
             <!-- homepage -->
             <div class="flex flex-grow px-4 w-full hide-able hide" id="homepage">
@@ -233,7 +233,7 @@
 
             <!-- 其他功能 -->
             <!-- signIn -->
-            <div class="flex flex-grow px-4 w-full flex-col hide-able" id="signIn">
+            <div class="flex flex-grow px-4 w-full flex-col hide-able hide" id="signIn">
                 <!-- signIn-top -->
                 <div class="flex flex-col w-full">
                     <div class="flex items-center justify-center w-full">
@@ -378,7 +378,8 @@
                                     <div class="flex flex-grow"></div>
                                     <div class="flex p-4 px-4">
                                         <div class="flex px-6 py-1 rounded-lg bg-blue-500 text-white border hover:bg-blue-600 
-                                    dark:bg-blue-700 dark:text-zinc-200 dark:hover:bg-blue-800" id="signIn-finish-btn">
+                                        dark:bg-blue-700 dark:text-zinc-200 dark:hover:bg-blue-800"
+                                            id="signIn-finish-btn">
                                             立即结束
                                         </div>
                                     </div>
@@ -437,12 +438,11 @@
                                 <div class="flex min-w-max">
                                     <div class="flex p-4 px-4">
                                         <div class="flex px-6 py-1 rounded-lg bg-blue-500 text-white border hover:bg-blue-600 
-                                    dark:bg-blue-700 dark:text-zinc-200 dark:hover:bg-blue-800"
-                                            id="signIn-return-btn">
+                                    dark:bg-blue-700 dark:text-zinc-200 dark:hover:bg-blue-800" id="signIn-return-btn">
                                             返回
                                         </div>
                                     </div>
-                                    
+
                                 </div>
                             </div>
                         </div>
@@ -494,7 +494,7 @@
                 <div class="flex flex-col w-full">
                     <div class="flex items-center justify-center w-full">
                         <div class="flex p-4 px-8 font-medium text-4xl dark:text-zinc-300">
-                            随机抽选
+                            随机抽问
                         </div>
                         <div class="flex flex-grow"></div>
                     </div>
@@ -502,20 +502,284 @@
                         <div class="flex flex-grow"></div>
                     </div>
                 </div>
+                <!-- randomSelection-content -->
+                <div class="flex flex-col h-full w-full px-4" id="randomSelection-content">
+                    <!-- randomSelection-select -->
+                    <div class="flex flex-col w-full" id="randomSelection-select">
+                        <!-- 随机抽取选项设置 -->
+                        <div class="flex flex-col">
+                            <div class="flex p-4 px-4 font-medium text-2xl dark:text-zinc-300">
+                                抽取设置
+                            </div>
+                            <div class="flex flex-col p-4 rounded-lg bg-zinc-50 dark:bg-zinc-800">
+
+                                <div class="flex items-center">
+                                    <div class="flex text-lg pr-4 dark:text-zinc-300">抽取人数</div>
+                                    <div class="flex flex-grow"></div>
+
+                                    <div class="flex min-w-max">
+                                        <input class="flex min-w-max w-72 items-center" type="range"
+                                            id="randomSelection-count-input" name="randomSelection-count" min="1"
+                                            max="10" step="1" value="1" />
+                                        <label class="flex w-8 items-center dark:text-zinc-300"
+                                            for="randomSelection-count-input" id="randomSelection-count-label">1</label>
+                                        <div class="flex w-10 min-w-max items-center dark:text-zinc-300">人</div>
+                                    </div>
+                                    <div class="flex w-2"></div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- 发起抽取 -->
+                        <div class="flex flex-col w-full">
+                            <div class="flex p-4 px-4 font-medium text-2xl dark:text-zinc-300">
+                                开始抽问
+                            </div>
+                            <div class="flex flex-col p-4 rounded-lg bg-zinc-50 dark:bg-zinc-800">
+                                <div class="flex items-center justify-center">
+                                    <div class="flex min-w-max">
+                                        <div class="flex px-10 py-4 rounded-lg bg-blue-500 text-white text-xl border hover:bg-blue-600
+                                        dark:bg-blue-700 dark:text-zinc-200 dark:hover:bg-blue-800"
+                                            id="randomSelection-start-btn">
+                                            开始抽问
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <!-- randomSelection-during -->
+                    <!-- randomSelection-result -->
+                </div>
+
             </div>
             <!-- message -->
-            <div class="flex flex-grow px-4 w-full flex-col hide-able hide" id="message">
+            <div class="flex flex-grow px-4 w-full flex-col hide-able" id="message">
                 <!-- message-top -->
                 <div class="flex flex-col w-full">
                     <div class="flex items-center justify-center w-full">
                         <div class="flex p-4 px-8 font-medium text-4xl dark:text-zinc-300">
-                            消息
+                            通知
                         </div>
                         <div class="flex flex-grow"></div>
                         <!-- blank -->
                     </div>
                     <div class="flex w-full py-px px-2 bg-zinc-300 dark:bg-zinc-600">
                         <div class="flex flex-grow"></div>
+                    </div>
+                </div>
+                <!-- message-content -->
+                <div class="flex flex-col h-full w-full px-4" id="message-content">
+                    <!-- message-select -->
+                    <div class="flex flex-col w-full" id="message-select">
+                        <!-- 通知展示 -->
+                        <div class="flex flex-col w-full">
+                            <div class="flex p-4 px-4 font-medium text-2xl dark:text-zinc-300">
+                                查看通知
+                            </div>
+                            <div class="flex flex-col max-w-full">
+                                <!-- 某重要通知(未读) -->
+                                <div class="flex flex-col pt-4 px-4 rounded-lg min-w-0 hover:bg-zinc-100 dark:hover:bg-zinc-800 after:mt-2 after:h-px after:w-full after:bg-zinc-300 importantNotice">
+                                    <!-- 消息体 -->
+                                    <div class="flex pb-2 items-center min-w-0">
+                                        <!-- 状态图标 -->
+                                        <div
+                                            class="flex p-1 min-w-fit min-h-fit rounded-xl bg-amber-200 hover:bg-amber-400 dark:bg-amber-600 dark:hover:bg-amber-500">
+                                            <img class="w-8 h-8 p-1" src="./images/icons/333/邮件.svg">
+                                        </div>
+                                        <!-- 重要等级图标 -->
+                                        <div
+                                            class="flex p-1 min-w-fit min-h-fit ml-8 rounded-full bg-red-500 hover:bg-red-700 dark:bg-red-800 dark:hover:bg-red-700">
+                                            <img class="w-8 h-8 p-1" src="./images/icons/ffffff/未读消息.svg" alt="重要通知">
+                                        </div>
+                                        <!-- 标题 -->
+                                        <div class="flex px-2 w-40">
+                                            <div class="truncate dark:text-zinc-300 font-bold">
+                                                Debug
+                                            </div>
+                                        </div>
+                                        <!-- 内容简介 -->
+                                        <div class="flex min-w-0">
+                                            <div class="truncate dark:text-zinc-300">
+                                                This is a message for testing! It' s an unread important notice!
+                                            </div>
+                                        </div>
+                                        <div class="flex flex-grow"></div>
+                                        <!-- 通知时间 -->
+                                        <div class="flex pl-4 w-36 min-w-max text-zinc-400">
+                                            2023/08/22 18:00
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- 某重要通知(已读) -->
+                                <div class="flex flex-col pt-4 px-4 rounded-lg min-w-0 hover:bg-zinc-100 dark:hover:bg-zinc-800 after:mt-2 after:h-px after:w-full after:bg-zinc-300">
+                                    <!-- 消息体 -->
+                                    <div class="flex pb-2 items-center min-w-0">
+                                        <!-- 状态图标 -->
+                                        <div
+                                            class="flex p-1 min-w-fit min-h-fit rounded-xl bg-amber-100 hover:bg-amber-200 dark:bg-zinc-800 dark:hover:bg-zinc-600">
+                                            <img class="w-8 h-8 p-1" src="./images/icons/333/已读邮件.svg">
+                                        </div>
+                                        <!-- 重要等级图标 -->
+                                        <div
+                                            class="flex p-1 min-w-fit min-h-fit ml-8 rounded-full bg-red-400 hover:bg-red-500 dark:bg-red-950 dark:hover:bg-red-800">
+                                            <img class="w-8 h-8 p-1" src="./images/icons/ffffff/消息.svg" alt="重要通知">
+                                        </div>
+                                        <!-- 标题 -->
+                                        <div class="flex px-2 w-40">
+                                            <div class="truncate dark:text-zinc-300">
+                                                Debug
+                                            </div>
+                                        </div>
+                                        <!-- 内容简介 -->
+                                        <div class="flex min-w-0">
+                                            <div class="truncate dark:text-zinc-300">
+                                                This is a message for testing! It' s an read important notice!
+                                            </div>
+                                        </div>
+                                        <div class="flex flex-grow"></div>
+                                        <!-- 通知时间 -->
+                                        <div class="flex pl-4 w-36 min-w-max text-zinc-400">
+                                            2023/08/22 18:00
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- 某一般通知(未读) -->
+                                <div class="flex flex-col pt-4 px-4 rounded-lg min-w-0 hover:bg-zinc-100 dark:hover:bg-zinc-800 after:mt-2 after:h-px after:w-full after:bg-zinc-300 commonNotice">
+                                    <!-- 消息内容 -->
+                                    <div class="flex pb-2 items-center min-w-0">
+                                        <!-- 状态图标 -->
+                                        <div
+                                            class="flex p-1 min-w-fit min-h-fit rounded-xl bg-amber-200 hover:bg-amber-400 dark:bg-amber-600 dark:hover:bg-amber-500">
+                                            <img class="w-8 h-8 p-1" src="./images/icons/333/邮件.svg">
+                                        </div>
+                                        <!-- 重要等级图标 -->
+                                        <div class="flex p-1 min-w-fit min-h-fit ml-8 rounded-full bg-orange-400 hover:bg-orange-600 dark:bg-orange-700 dark:hover:bg-orange-600">
+                                            <img class="w-8 h-8 p-1" src="./images/icons/ffffff/未读消息.svg" alt="重要通知">
+                                        </div>
+                                        <!-- 标题 -->
+                                        <div class="flex px-2 w-40">
+                                            <div class="truncate font-bold dark:text-zinc-300">
+                                                Debug
+                                            </div>
+                                        </div>
+                                        <!-- 内容简介 -->
+                                        <div class="flex min-w-0">
+                                            <div class="truncate dark:text-zinc-300">
+                                                This is a message for testing! It' s an unread common notice!
+                                            </div>
+                                        </div>
+                                        <div class="flex flex-grow"></div>
+                                        <!-- 通知时间 -->
+                                        <div class="flex pl-4 w-36 min-w-max text-zinc-400">
+                                            2023/08/22 18:00
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- 某一般通知(已读) -->
+                                <div class="flex flex-col pt-4 px-4 rounded-lg min-w-0 hover:bg-zinc-100 dark:hover:bg-zinc-800 after:mt-2 after:h-px after:w-full after:bg-zinc-300 commonNotice">
+                                    <!-- 消息内容 -->
+                                    <div class="flex pb-2 items-center min-w-0">
+                                        <!-- 状态图标 -->
+                                        <div
+                                            class="flex p-1 min-w-fit min-h-fit rounded-xl bg-amber-100 hover:bg-amber-200 dark:bg-zinc-800 dark:hover:bg-zinc-600">
+                                            <img class="w-8 h-8 p-1" src="./images/icons/333/已读邮件.svg">
+                                        </div>
+                                        <!-- 重要等级图标 -->
+                                        <div class="flex p-1 min-w-fit min-h-fit ml-8 rounded-full bg-orange-300 hover:bg-orange-500 dark:bg-orange-900 dark:hover:bg-orange-800">
+                                            <img class="w-8 h-8 p-1" src="./images/icons/ffffff/消息.svg" alt="重要通知">
+                                        </div>
+                                        <!-- 标题 -->
+                                        <div class="flex px-2 w-40">
+                                            <div class="truncate dark:text-zinc-300">
+                                                Debug
+                                            </div>
+                                        </div>
+                                        <!-- 内容简介 -->
+                                        <div class="flex min-w-0">
+                                            <div class="truncate dark:text-zinc-300">
+                                                This is a message for testing! It' s an unread common notice!
+                                            </div>
+                                        </div>
+                                        <div class="flex flex-grow"></div>
+                                        <!-- 通知时间 -->
+                                        <div class="flex pl-4 w-36 min-w-max text-zinc-400">
+                                            2023/08/22 18:00
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- 某宣传通知(未读) -->
+                                <div class="flex flex-col pt-4 px-4 rounded-lg min-w-0 hover:bg-zinc-100 dark:hover:bg-zinc-800 after:mt-2 after:h-px after:w-full after:bg-zinc-300 publicizeNotice">
+                                    <!-- 消息内容 -->
+                                    <div class="flex pb-2 items-center min-w-0">
+                                        <!-- 状态图标 -->
+                                        <div
+                                            class="flex p-1 min-w-fit min-h-fit rounded-xl bg-amber-200 hover:bg-amber-400 dark:bg-amber-600 dark:hover:bg-amber-500">
+                                            <img class="w-8 h-8 p-1" src="./images/icons/333/已读邮件.svg">
+                                        </div>
+                                        <!-- 重要等级图标 -->
+                                        <div class="flex p-1 min-w-fit min-h-fit ml-8 rounded-full bg-green-500 hover:bg-green-600 dark:bg-green-700 dark:hover:bg-green-600">
+                                            <img class="w-8 h-8 p-1" src="./images/icons/ffffff/消息.svg" alt="重要通知">
+                                        </div>
+                                        <!-- 标题 -->
+                                        <div class="flex px-2 w-40">
+                                            <div class="truncate font-bold dark:text-zinc-300">
+                                                Debug
+                                            </div>
+                                        </div>
+                                        <!-- 内容简介 -->
+                                        <div class="flex min-w-0">
+                                            <div class="truncate dark:text-zinc-300">
+                                                This is a message for testing! It' s an unread common notice!
+                                            </div>
+                                        </div>
+                                        <div class="flex flex-grow"></div>
+                                        <!-- 通知时间 -->
+                                        <div class="flex pl-4 w-36 min-w-max text-zinc-400">
+                                            2023/08/22 18:00
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- 某宣传通知(已读) -->
+                                <div class="flex flex-col pt-4 px-4 rounded-lg min-w-0 hover:bg-zinc-100 dark:hover:bg-zinc-800 after:mt-2 after:h-px after:w-full after:bg-zinc-300 publicizeNotice">
+                                    <!-- 消息内容 -->
+                                    <div class="flex pb-2 items-center min-w-0">
+                                        <!-- 状态图标 -->
+                                        <div
+                                            class="flex p-1 min-w-fit min-h-fit rounded-xl bg-amber-100 hover:bg-amber-200 dark:bg-zinc-800 dark:hover:bg-zinc-600">
+                                            <img class="w-8 h-8 p-1" src="./images/icons/333/已读邮件.svg">
+                                        </div>
+                                        <!-- 重要等级图标 -->
+                                        <div class="flex p-1 min-w-fit min-h-fit ml-8 rounded-full bg-green-300 hover:bg-green-500 dark:bg-green-950 dark:hover:bg-green-800">
+                                            <img class="w-8 h-8 p-1" src="./images/icons/ffffff/消息.svg" alt="重要通知">
+                                        </div>
+                                        <!-- 标题 -->
+                                        <div class="flex px-2 w-40">
+                                            <div class="truncate dark:text-zinc-300">
+                                                Debug
+                                            </div>
+                                        </div>
+                                        <!-- 内容简介 -->
+                                        <div class="flex min-w-0">
+                                            <div class="truncate dark:text-zinc-300">
+                                                This is a message for testing! It' s an unread common notice!
+                                            </div>
+                                        </div>
+                                        <div class="flex flex-grow"></div>
+                                        <!-- 通知时间 -->
+                                        <div class="flex pl-4 w-36 min-w-max text-zinc-400">
+                                            2023/08/22 18:00
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+
                     </div>
                 </div>
             </div>
