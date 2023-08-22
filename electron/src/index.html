@@ -72,7 +72,7 @@
         </div>
     </div>
     <!-- main -->
-    <div class="flex w-full h-full">
+    <div class="flex w-full h-10-to-full">
         <!-- sidebar -->
         <div class="flex flex-col w-1/6 h-full min-w-max select-none" id="sidebar">
             <!-- sidebar-top -->
@@ -205,7 +205,7 @@
         </div>
         <!-- content -->
         <div class="flex flex-col bg-white w-full h-full rounded-3xl shadow-inner items-center 
-        dark:bg-zinc-900 select-none overflow-hidden" id="content">
+        dark:bg-zinc-900 select-none overflow-x-hidden" id="content">
 
             <!-- homepage -->
             <div class="flex flex-grow px-4 w-full hide-able hide" id="homepage">
@@ -556,8 +556,9 @@
 
             </div>
             <!-- message -->
-            <div class="flex flex-grow px-4 w-full flex-col hide-able" id="message">
+            <div class="flex flex-grow px-4 w-full h-full flex-col hide-able" id="message">
                 <!-- message-top -->
+                <!-- height为72+2=74px -->
                 <div class="flex flex-col w-full">
                     <div class="flex items-center justify-center w-full">
                         <div class="flex p-4 px-8 font-medium text-4xl dark:text-zinc-300">
@@ -571,15 +572,17 @@
                     </div>
                 </div>
                 <!-- message-content -->
-                <div class="flex flex-col h-full w-full px-4" id="message-content">
+                <div class="flex flex-col h-74px-to-full w-full px-4" id="message-content">
                     <!-- message-select -->
-                    <div class="flex flex-col w-full" id="message-select">
+                    <div class="flex flex-col w-full h-full" id="message-select">
                         <!-- 通知展示 -->
-                        <div class="flex flex-col w-full">
+                        <div class="flex flex-col w-full h-full">
+                            <!-- 16=4rem=64px -->
                             <div class="flex p-4 px-4 font-medium text-2xl dark:text-zinc-300">
                                 查看通知
                             </div>
-                            <div class="flex flex-col max-w-full">
+                            <!-- (unfinished) -->
+                            <div class="flex flex-col max-w-full max-h-full h-16-to-full overflow-y-scroll">
                                 <!-- 某重要通知(未读) -->
                                 <div class="flex flex-col pt-4 px-4 rounded-lg min-w-0 hover:bg-zinc-100 dark:hover:bg-zinc-800 after:mt-2 after:h-px after:w-full after:bg-zinc-300 importantNotice">
                                     <!-- 消息体 -->
