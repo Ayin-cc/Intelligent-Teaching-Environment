@@ -274,14 +274,19 @@ function updateHomepage() {
     // 初始化：
     // 立即更新一次时间
     updateHomepageDateTime();
+    updateHomepageGreeting();
     // 持续性
     // 每秒钟更新一次时间
-    setInterval(updateHomepageDateTime, 1000);
+    setInterval(function(){
+        updateHomepageDateTime();
+        updateHomepageGreeting();
+    }, 1000);
 
 
 }
 // 更新homepage时间
 function updateHomepageDateTime() {
+    
     var timeHomepage = document.getElementById('time-homepage');
     const currentDateTime = new Date();
     const formattedDateTime = currentDateTime.toLocaleString('zh-CN', {
@@ -293,6 +298,26 @@ function updateHomepageDateTime() {
         second: '2-digit'
     }); // 格式化当前日期时间
     timeHomepage.textContent = formattedDateTime; // 将格式化后的日期时间设置为元素的文本内容
+}
+// 更新homepage问候语
+function updateHomepageGreeting(){
+    var greetingHomepage = document.getElementById('greeting-homepage');
+    var currentHour = new Date().getHours();
+    if (currentHour >= 5 && currentHour < 7) {
+        greetingHomepage.textContent = "清晨好！新的一天开始了，希望你有个美好的开始。";
+    }else if (currentHour >= 7 && currentHour < 12) {
+        greetingHomepage.textContent = "早上好！新的一天开始了，希望你有个美好的开始!";
+    } else if (currentHour >= 12 && currentHour < 14) {
+        greetingHomepage.textContent = "中午好！是时候休息一下啦。";
+    } else if (currentHour >= 14 && currentHour < 18) {
+        greetingHomepage.textContent = "下午好！继续加油努力吧!";
+    } else if (currentHour >= 18 && currentHour < 21) {
+        greetingHomepage.textContent = "傍晚好！夕阳的余晖让一切都变得温暖。";
+    } else if (currentHour >= 21 && currentHour < 23) {
+        greetingHomepage.textContent = "晚上好！夜晚是创意和思考的好时机。";
+    }else if(currentHour >= 23 || currentHour < 5) {
+        greetingHomepage.textContent = "夜深了，早点休息。";
+    }
 }
 
 // 签到
