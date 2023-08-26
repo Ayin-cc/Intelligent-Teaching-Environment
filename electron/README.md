@@ -129,3 +129,14 @@ ___
 更新首页的问候语更换功能
 
 
+# 2023/8/26
+现在可以使用electron以开发模式打开了(使用`npm install electron -D`下载electron，然后使用`npm start`或`npx electron .`打开)
+
+更新electron相关的初步功能，包括：
+
+>创建界面
+>创建托盘
+>实现最小化、全屏、隐藏等基本功能
+
+
+大改文件目录结构
