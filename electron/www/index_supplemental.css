@@ -1,0 +1,280 @@
+* {
+    font-family: "face";
+    transition: all 0.2s;
+}
+
+
+/* 默认toggle */
+.toggle {
+    display: none;
+}
+
+.toggle:hover+label {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, .1), 0 4px 6px -4px rgba(0, 0, 0, .1);
+}
+
+.toggle+label {
+    display: inline-block;
+    position: relative;
+    /* transition: all 0.2s; */
+    width: 40px;
+    height: 20px;
+    border: 1px solid #999;
+    border-radius: 15px;
+    /* background-color: rgb(161, 161, 170); */
+}
+
+.toggle:checked+label {
+    /*选中表单后的样式，:checked表示checkbox被选中后的状态*/
+    background-color: rgb(139 92 246);
+}
+
+.toggle+label::before {
+    /*使用伪元素生成一个按钮*/
+    content: '';
+    display: block;
+    height: 14px;
+    width: 14px;
+    position: absolute;
+    border-radius: 50%;
+    left: 2px;
+    top: 2px;
+    background-color: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .4);
+    transition: all .3s;
+}
+
+.toggle:checked+label::before {
+    /*checkbox选中时按钮的样式*/
+    left: 22px;
+    transition: all .2s linear;
+}
+
+/* 切换主题的toggle */
+#theme-toggle {
+    display: none;
+    /*隐藏表单元素*/
+}
+
+#theme-toggle:hover+label {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, .1), 0 4px 6px -4px rgba(0, 0, 0, .1);
+}
+
+#theme-toggle+label {
+    /*+选择器选择紧跟“+”左边选择器的第一个元素*/
+    display: inline-block;
+    position: relative;
+    transition: all .3s;
+    width: 60px;
+    height: 30px;
+    border: 1px solid #999;
+    border-radius: 15px;
+    background-color: #ffffff;
+}
+
+#theme-toggle:checked+label {
+    /*选中表单后的样式，:checked表示checkbox被选中后的状态*/
+    background-color: rgb(148, 163, 184);
+}
+
+#theme-toggle+label::before {
+    /*使用伪元素生成一个按钮*/
+    content: '';
+    display: block;
+    height: 25px;
+    width: 25px;
+    position: absolute;
+    border-radius: 25px;
+    left: 2px;
+    top: 2px;
+    background-color: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .4);
+    transition: all .3s;
+}
+
+#theme-toggle:checked+label::before {
+    /*checkbox选中时按钮的样式*/
+    left: 32px;
+    transition: all .2s linear;
+}
+
+
+
+
+
+/* --------------- */
+/* 黑夜模式图标变色 */
+
+/* header的menu */
+.dark #message-menu-header img {
+    content: url(./icons/d4d4d8/提醒.svg);
+}
+
+.dark #refresh-menu-header img {
+    content: url(./icons/d4d4d8/刷新.svg);
+}
+
+.dark #help-menu-header img {
+    content: url(./icons/d4d4d8/帮助.svg);
+}
+
+.dark #setting-menu-header img {
+    content: url(./icons/d4d4d8/设置.svg);
+}
+
+.dark #folder-menu-header img {
+    content: url(./icons/d4d4d8/左.svg);
+}
+
+/* header的controller */
+.dark #minimizeWindow-controller-header img {
+    content: url(./icons/d4d4d8/减.svg);
+}
+
+.dark #fullscreenWindow-controller-header img {
+    content: url(./icons/d4d4d8/小方形.svg);
+}
+
+.dark #fullscreenWindow-controller-header .fullscreened{
+    content: url(./icons/d4d4d8/复制2.svg);
+}
+
+.dark #closeWindow-controller-header img {
+    content: url(./icons/d4d4d8/关闭-小.svg);
+}
+
+/* sidebar的中部图标 */
+.dark #homepage-sidebar img {
+    content: url(./icons/d4d4d8/首页2.svg);
+}
+
+.dark #function-sidebar img {
+    content: url(./icons/d4d4d8/更多2.svg);
+}
+
+.dark #folder-function-sidebar img {
+    content: url(./icons/d4d4d8/下.svg);
+}
+
+.dark #signIn-sidebar img {
+    content: url(./icons/d4d4d8/编辑.svg);
+}
+
+.dark #rollCall-sidebar img {
+    content: url(./icons/d4d4d8/课堂.svg);
+}
+
+.dark #randomSelection-sidebar img {
+    content: url(./icons/d4d4d8/人群.svg);
+}
+
+.dark #message-sidebar img {
+    content: url(./icons/d4d4d8/消息.svg);
+}
+
+.dark #wallpaper-sidebar img {
+    content: url(./icons/d4d4d8/相册.svg);
+}
+
+/* sidebar的bottom的图标 */
+.dark #photo-profile-sidebarBottom img {
+    content: url(./icons/d4d4d8/用户.svg);
+}
+
+.dark #folder-profile-sidebarBottom img {
+    content: url(./icons/d4d4d8/更多.svg);
+}
+
+.dark #folder-menu-sidebarBottom img {
+    content: url(./icons/d4d4d8/汉堡图标.svg);
+}
+
+/* 折叠、隐藏 */
+.hide {
+    overflow: hidden;
+
+    height: 0;
+    width: 0;
+    margin: 0;
+    padding: 0;
+
+    flex-grow: 0;
+    /* display: none; */
+}
+
+/* 部分高度 */
+.h-10-to-full {
+    height: calc(100% - 2.5rem)
+        /* 100% - 40px */
+    ;
+}
+
+.h-16-to-full {
+    height: calc(100% - 4rem)
+        /* 100% - 64px */
+    ;
+}
+
+.h-74px-to-full {
+    height: calc(100% - 74px)
+        /* 100% - 74px */
+    ;
+}
+
+
+/* 定义滚动条的样式 */
+.overflow-y-scroll::-webkit-scrollbar {
+    width: 10px;
+    /* 设置滚动条的宽度 */
+}
+
+/* 定义滚动条轨道的样式 */
+/* .overflow-y-scroll::-webkit-scrollbar-track {
+    background-color: #f1f1f1;  设置滚动条轨道的背景色
+} */
+/* .overflow-y-scroll::-webkit-scrollbar-track:hover {
+    background-color: #f1f1f1;
+} */
+
+/* 定义滚动条滑块的样式 */
+.overflow-y-scroll::-webkit-scrollbar-thumb {
+    background-color: #888;
+    /* 设置滚动条滑块的背景色 */
+    border-radius: 5px;
+    /* 设置滚动条滑块的圆角 */
+}
+
+/* 定义滚动条滑块在 hover 状态时的样式 */
+.overflow-y-scroll::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+    /* 设置滚动条滑块在 hover 状态时的背景色 */
+}
+
+/* 滑动条 */
+/* 修改滑动条的外观 */
+/* input[type="range"] {
+
+} */
+/* 滑块 */
+/* input[type="range"]::-webkit-slider-thumb {
+    
+} */
+
+/* 轨道 */
+/* input[type="range"]::-webkit-slider-runnable-track {
+
+} */
+
+/* 单独、特殊 */
+
+/* 侧边栏收缩最小宽度 */
+/* 无奈之举 */
+#sidebar-top {
+    min-width: 66px;
+}
+
+.max-w-10 {
+    max-width: 2.5rem;
+}
+
+/* QR-code */
