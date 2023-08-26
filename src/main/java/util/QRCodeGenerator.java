@@ -15,15 +15,9 @@ import java.util.Base64;
 import java.util.UUID;
 
 public class QRCodeGenerator {
-    private static QRCodeDao qrCodeDao;
-
-    public static String generate(String cid) {
-        String data = "https://scuee.com/checkin?id="; // 签到链接前缀
+    public static String generate(String uniqueIdString, String cid) {
+        String data = "https://scuee.com/SCUEE/QRCode/scan?uid="; // 签到链接前缀
         String base64Code = null;
-
-        // 生成唯一标识符
-        UUID uniqueId = UUID.randomUUID();
-        String uniqueIdString = uniqueId.toString();
 
         // 拼接签到链接
         String checkinUrl = data + uniqueIdString;
@@ -35,10 +29,6 @@ public class QRCodeGenerator {
         try {
             base64Code = createQRCode(checkinUrl, qrCodeFilePath, size, cid);
             System.out.println("成功生成签到二维码。");
-
-            // TODO 将唯一标识符和其他信息存储到数据库或文件中，用于统计扫描的人
-
-
         } catch (WriterException | IOException e) {
             System.out.println("生成签到二维码时出错：" + e.getMessage());
         }
@@ -74,9 +64,6 @@ public class QRCodeGenerator {
         fileInputStream.read(bytes);
         fileInputStream.close();
         String base64String = Base64.getEncoder().encodeToString(bytes);
-
-        // 存入数据库
-        qrCodeDao.setQRCode(Integer.parseInt(cid), base64String);
 
         return base64String;
     }

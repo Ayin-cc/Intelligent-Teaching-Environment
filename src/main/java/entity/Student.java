@@ -4,17 +4,17 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Student {
-    private int id;
+    private String id;
     private String name;
     private int sex;
     private String passwd;
     private String phone;
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

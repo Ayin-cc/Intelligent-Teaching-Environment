@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Classroom {
-    private int id;
+    private String id;
     private String address;
     private String passwd;
     private String schedule;
@@ -13,7 +13,7 @@ public class Classroom {
     public Classroom() {
     }
 
-    public Classroom(int id, String address, String passwd, String schedule, QRcode qrCode) {
+    public Classroom(String id, String address, String passwd, String schedule, QRcode qrCode) {
         this.id = id;
         this.address = address;
         this.passwd = passwd;
@@ -22,11 +22,11 @@ public class Classroom {
     }
 
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
