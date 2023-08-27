@@ -2,6 +2,8 @@
 // Tray创建托盘
 const { app, BrowserWindow, Menu, Tray, ipcMain } = require('electron')
 const path = require('path')
+const qrcode = require('qrcode');
+const fs = require('fs');
 
 // 全局变量
 let mainWindow = null;
@@ -30,6 +32,7 @@ function createWindow() {
         frame: false,// 实现头部的隐藏
         webPreferences: { // 在渲染进程中使用node.js, 需要要配置webPreferences属性
             preload: path.join(__dirname, 'preload.js'), //
+            // cache: false, // 发行时需要缓存
         }
     })
 
@@ -105,18 +108,38 @@ function createTray() {
 
 // ipcMain创建的Listener
 function setupIPCListeners() {
-    // 
-    ipcMain.on('mainWindow',function(event, message){
-        if( message == 'minimize-window'){
+    // 最小化、最大化、关闭
+    ipcMain.on('mainWindow', function (event, message) {
+        if (message == 'minimize-window') {
             mainWindow.minimize(); // 最小化
-        }else if(message == 'fullscreen-window'){
+        } else if (message == 'fullscreen-window') {
             if (mainWindow.isMaximized()) {
                 mainWindow.unmaximize(); // 取消最大化
             } else {
                 mainWindow.maximize(); // 最大化
             }
-        }else if(message == 'close-window'){
+        } else if (message == 'close-window') {
             mainWindow.hide(); // 隐藏
         }
+    });
+    // 生成二维码
+    ipcMain.on('generateQRCode', (event, imagePath, code) => {
+        qrcode.toFile(imagePath, code, {
+            color: {
+                dark: '#000',  // QR 码颜色
+                light: '#fff'  // 背景颜色
+            },
+            correctLevel: 'H', // 纠错级别，可选值：L, M, Q, H;分别表示低、中、高和最高纠错级别
+            width: 2160, // 设置宽度
+            height: 2160, // 设置高度
+            margin: 1, // 边距，1代表一个黑(白)方块
+        }, (err) => {
+            if (err) {
+                event.sender.send('generationError', err.message);
+
+            } else {
+                event.sender.send('generationSuccess', imagePath);
+            }
+        });
     });
 }
