@@ -1,7 +1,7 @@
 {
   "name": "electron",
   "version": "1.0.0",
-  "description": "此Intelligent-Teaching-Environment仓库，是大创项目前端的代码，因为无法接纳寄生虫之辈，而被创建",
+  "description": "Intelligent-Teaching-Environment",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "electron": "^25.7.0"
+    "electron": "^25.7.0",
+    "qrcode": "^1.5.3"
   }
 }
