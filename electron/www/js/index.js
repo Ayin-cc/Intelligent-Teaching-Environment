@@ -1,5 +1,8 @@
 
+
+// ==================================================
 // 当纯 HTML 被完全加载以及解析时
+// ==================================================
 document.addEventListener("DOMContentLoaded", function () {
 
     // 消除选择(单击任意地方3秒后，清除选择)
@@ -24,6 +27,10 @@ document.addEventListener("DOMContentLoaded", function () {
     updateHomepage();
     // signIn的刷新
     updateSignIn();
+    updateRollCall();
+    updateRandomSelection();
+    updateMessage();
+    updateWallpaper();
 
 });
 
@@ -32,7 +39,9 @@ document.addEventListener("DOMContentLoaded", function () {
 // *    一般放在DOMContentLoaded监听触发后
 // *************************
 
+// ==================================================
 // 主要监听事件
+// ==================================================
 function updateWeb() {
     // 需要借助main中实现的：
     // 菜单栏操作(最小化，最大化，还原，关闭(隐藏))
@@ -306,8 +315,10 @@ function updateWeb() {
     });
 }
 
+// ==================================================
 // 首页
 // homepage(首页)
+// ==================================================
 function updateHomepage() {
     // 初始化：
     // 立即更新一次时间
@@ -357,9 +368,10 @@ function updateHomepageGreeting() {
         greetingHomepage.textContent = "夜深了，早点休息。";
     }
 }
-
+// ==================================================
 // 签到
 // signIn(签到)
+// ==================================================
 let signInStateMachine = 0;// 签到状态机 0.签到设置；1.正在签到；2.展现签到结果
 function updateSignIn() {
     updateInputTangeSignIn();// 更新滑动条显示数字
@@ -439,6 +451,7 @@ function signInStart() {
 // 没有获取学生信息，没有已签到学生数量、学生总数。遂只设置初始数据
 // 没有二维码
 function signInContinuing() {
+
     var signInSelect = document.getElementById('signIn-select');
     var signInInterface = document.getElementById('signIn-interface');
     var signInResult = document.getElementById('signIn-result');
@@ -510,7 +523,28 @@ function signInContinuing() {
             }
         }, 1000);
     }
+
+
+    updateQRCodeSignInContinuing(duration, frequency);
 }
+// debug测试用的功能
+// 以后会改，尤其是处理网址，加密等等
+function updateQRCodeSignInContinuing(duration, frequency) {
+    var code = '1234567890';
+    var imagePath = './www/img/qrcode/qrcode_signIn_students.png'; // 相对于main.js的path
+
+    var interval = setInterval(function () {
+        window.ipcRenderer.send('generateQRCode', imagePath, code);
+    }, frequency * 1000);
+
+    // 在指定的持续时间之后清除定时器
+    setTimeout(function () {
+        clearInterval(interval); // 清除定时器
+    }, duration * 1000);
+    
+}
+
+
 // 签到结束
 // (unfinished) 
 function signInFinished() {
@@ -526,18 +560,45 @@ function signInFinished() {
     });
 }
 
-
+// ==================================================
 // 点名
 // rollCall(点名)
+// ==================================================
+function updateRollCall() {
+
+}
 
 
+// ==================================================
 // 随机抽问
 // randomSelection(随机抽问)
+// ==================================================
+function updateRandomSelection() {
+    updateInputTangeRandomSelection();
+}
+function updateInputTangeRandomSelection() {
+    // 初始化
+    var randomSelectionCountInput = document.getElementById('randomSelection-count-input');
+    var randomSelectionCountLabel = document.getElementById('randomSelection-count-label');
+    randomSelectionCountLabel.textContent = randomSelectionCountInput.value;
+    // 持续
+    randomSelectionCountInput.addEventListener('input', function () {
+        randomSelectionCountLabel.textContent = randomSelectionCountInput.value;
+    });
+}
 
-
+// ==================================================
 // 通知
 // message(通知)
+// ==================================================
+function updateMessage() {
 
+}
 
+// ==================================================
 // 壁纸
 // wallpaper(壁纸)
+// ==================================================
+function updateWallpaper() {
+
+}
