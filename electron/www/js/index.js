@@ -256,10 +256,10 @@ function updateWeb() {
 
                 // -----改背景、':hover'与':before'-----
                 // (light mode)
-                item.classList.remove('bg-gray-100');
-                item.classList.remove('hover:bg-gray-200');
+                item.classList.remove('bg-purple-100');
+                item.classList.remove('hover:bg-puple-200');
                 item.classList.remove('before:bg-purple-600');
-                item.classList.add('hover:bg-gray-100');
+                item.classList.add('hover:bg-white');
                 item.classList.add('before:bg-slate-200');
                 item.classList.add('before:hover:bg-slate-400');
                 // (dark mode)
@@ -298,11 +298,11 @@ function updateWeb() {
 
             // -----改背景颜色-----
             // (light mode)
-            this.classList.remove('hover:bg-gray-100');
+            this.classList.remove('hover:bg-white');
             this.classList.remove('before:bg-slate-200');
             this.classList.remove('before:hover:bg-slate-400');
-            this.classList.add('bg-gray-100');
-            this.classList.add('hover:bg-gray-200');
+            this.classList.add('bg-purple-100');
+            this.classList.add('hover:bg-purple-200');
             this.classList.add('before:bg-purple-600');
             // (dark mode)
             this.classList.remove('dark:hover:bg-zinc-600');
