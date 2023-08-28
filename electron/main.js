@@ -4,9 +4,11 @@ const { app, BrowserWindow, Menu, Tray, ipcMain } = require('electron')
 const path = require('path')
 const qrcode = require('qrcode');
 const fs = require('fs');
+const electronDrag = require('electron-drag');
 
 // 全局变量
 let mainWindow = null;
+let qrCodeWindow = null;
 let tray = null;
 
 // 应用程序准备就绪时触发
@@ -40,7 +42,7 @@ function createWindow() {
     mainWindow.setMenu(null); // 关闭默认菜单
 
     mainWindow.webContents.openDevTools(); // 打开窗口的调试工具(debug)
-
+    electronDrag(mainWindow);
     // 创建托盘
     // 内含对mainWindow.close的截获，但好像并没有使用过
     createTray();
@@ -106,6 +108,32 @@ function createTray() {
 
 }
 
+// 创建子窗口QRCode
+function createQRCodeWindow() {
+    qrCodeWindow = new BrowserWindow({
+        width: 1080,
+        height: 1980,
+        icon: path.join(__dirname, './www/icons/icon.jpg'),
+        frame: false,// 实现头部的隐藏
+        webPreferences: { // 在渲染进程中使用node.js, 需要要配置webPreferences属性
+            preload: path.join(__dirname, 'preload.js'), //
+            // cache: false, // 发行时需要缓存
+        }
+    });
+    qrCodeWindow.loadFile('./www/pages/QRCode.html'); // 加载QRCode.html
+    qrCodeWindow.setMenu(null); // 关闭默认菜单
+    // 在子窗口关闭时释放资源
+    qrCodeWindow.on('closed', () => {
+        qrCodeWindow = null;
+    });
+
+}
+// 销毁子窗口QRCode
+function closeQRCodeWindow() {
+    if (qrCodeWindow) {
+        qrCodeWindow.close();
+    }
+}
 // ipcMain创建的Listener
 function setupIPCListeners() {
     // 最小化、最大化、关闭
@@ -122,24 +150,44 @@ function setupIPCListeners() {
             mainWindow.hide(); // 隐藏
         }
     });
+    // 拖拽
     // 生成二维码
-    ipcMain.on('generateQRCode', (event, imagePath, code) => {
-        qrcode.toFile(imagePath, code, {
-            color: {
-                dark: '#000',  // QR 码颜色
-                light: '#fff'  // 背景颜色
-            },
-            correctLevel: 'H', // 纠错级别，可选值：L, M, Q, H;分别表示低、中、高和最高纠错级别
-            width: 2160, // 设置宽度
-            height: 2160, // 设置高度
-            margin: 1, // 边距，1代表一个黑(白)方块
-        }, (err) => {
-            if (err) {
-                event.sender.send('generationError', err.message);
+    ipcMain.on('generateQRCode', (event, imagePath, code, duration, frequency) => {
+        // 设置定时器，生成QRCode
+        var interval = setInterval(function () {
+            qrcode.toFile(imagePath, code, {
+                color: {
+                    dark: '#000',  // QR 码颜色
+                    light: '#fff'  // 背景颜色
+                },
+                correctLevel: 'H', // 纠错级别，可选值：L, M, Q, H;分别表示低、中、高和最高纠错级别
+                width: 2160, // 设置宽度
+                height: 2160, // 设置高度
+                margin: 1, // 边距，1代表一个黑(白)方块
+            }, (err) => {
+                if (err) {
+                    event.sender.send('generationError', err.message);
 
-            } else {
-                event.sender.send('generationSuccess', imagePath);
-            }
-        });
+                } else {
+                    event.sender.send('generationSuccess', imagePath);
+                }
+            });
+        }, frequency * 1000);
+        // 在指定的持续时间之后清除定时器
+        setTimeout(function () {
+            clearInterval(interval); // 清除定时器
+        }, duration * 1000);
+
+
     });
-}
+    // 生成、销毁QRCode子窗口
+    ipcMain.on('QRCodeWindow', function (event, message) {
+        if (message == 'createWindow') {
+            createQRCodeWindow();
+            qrCodeWindow.maximize();
+        } else if (message == 'closeWindow') {
+            closeQRCodeWindow();
+        }
+    });
+    
+}   

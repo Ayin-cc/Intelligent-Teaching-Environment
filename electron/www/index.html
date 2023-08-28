@@ -9,9 +9,9 @@
     <title>ITE</title>
 </head>
 
-<body class="flex flex-col w-screen h-screen bg-zinc-100 dark:bg-zinc-950 overflow-hidden">
+<body class="flex flex-col w-screen h-screen bg-zinc-100 bg-opacity-90 dark:bg-zinc-950 overflow-hidden">
     <!-- 因为tailwind CSS是实时修改css的，故留下需要的样式 -->
-    <div class="ml-2 p-2 h-6 w-6 hidden bg-blue-400"></div>
+    <div class="ml-2 p-2 h-6 w-6 hidden"></div>
     <!-- header -->
     <div class="flex h-10 select-none">
         <!-- header-left(logo) -->
@@ -39,7 +39,7 @@
             </div>
         </div>
         <!-- header-blank -->
-        <div class="flex flex-grow"></div>
+        <div class="flex flex-grow" id="draggable-header"></div>
         <!-- header-menu -->
         <div class="flex items-center justify-center min-w-max" id="menu-header">
             <div class="flex h-8 w-8 mx-2 p-2 rounded-lg hover:bg-purple-200 dark:hover:bg-zinc-800"

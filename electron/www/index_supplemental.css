@@ -3,6 +3,11 @@
     transition: all 0.2s;
 }
 
+/* 可拖拽 */
+#draggable-header{
+    -webkit-app-region: drag; /* 可以拖拽的部分 */
+}
+
 
 /* 默认toggle */
 .toggle {
@@ -136,7 +141,7 @@
     content: url(./icons/d4d4d8/小方形.svg);
 }
 
-.dark #fullscreenWindow-controller-header .fullscreened{
+.dark #fullscreenWindow-controller-header .fullscreened {
     content: url(./icons/d4d4d8/复制2.svg);
 }
 
@@ -221,6 +226,7 @@
         /* 100% - 74px */
     ;
 }
+
 
 
 /* 定义滚动条的样式 */
