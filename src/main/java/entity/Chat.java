@@ -1,5 +1,8 @@
 package entity;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class Chat {
     private String sid;
     private String name;

@@ -9,7 +9,6 @@ dao\ChatBoxDao.class
 entity\Teacher.class
 entity\Classroom.class
 service\ChatBoxServiceImpl.class
-util\CheckUid.class
 util\JsonPackage.class
 controller\DistrMsgController.class
 service\CallStuService.class

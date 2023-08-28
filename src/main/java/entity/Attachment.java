@@ -1,5 +1,8 @@
 package entity;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class Attachment {
     private String name;
     private String url;

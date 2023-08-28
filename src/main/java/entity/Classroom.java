@@ -2,64 +2,91 @@ package entity;
 
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.Map;
+
 @Component
 public class Classroom {
-    private String id;
+    private String cid;
     private String address;
     private String passwd;
-    private String schedule;
-    private QRcode qrCode;
+    private List<Course> courseSchedule;
 
     public Classroom() {
     }
 
-    public Classroom(String id, String address, String passwd, String schedule, QRcode qrCode) {
-        this.id = id;
+    public Classroom(String cid, String address, String passwd, List<Course> courseSchedule) {
+        this.cid = cid;
         this.address = address;
         this.passwd = passwd;
-        this.schedule = schedule;
-        this.qrCode = qrCode;
+        this.courseSchedule = courseSchedule;
     }
 
-
-    public String getId() {
-        return id;
+    /**
+     * 获取
+     * @return cid
+     */
+    public String getCid() {
+        return cid;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    /**
+     * 设置
+     * @param cid
+     */
+    public void setCid(String cid) {
+        this.cid = cid;
     }
 
+    /**
+     * 获取
+     * @return address
+     */
     public String getAddress() {
         return address;
     }
 
+    /**
+     * 设置
+     * @param address
+     */
     public void setAddress(String address) {
         this.address = address;
     }
 
+    /**
+     * 获取
+     * @return passwd
+     */
     public String getPasswd() {
         return passwd;
     }
 
+    /**
+     * 设置
+     * @param passwd
+     */
     public void setPasswd(String passwd) {
         this.passwd = passwd;
     }
 
-    public String getSchedule() {
-        return schedule;
+    /**
+     * 获取
+     * @return courseSchedule
+     */
+    public List<Course> getCourseSchedule() {
+        return courseSchedule;
     }
 
-    public void setSchedule(String schedule) {
-        this.schedule = schedule;
+    /**
+     * 设置
+     * @param courseSchedule
+     */
+    public void setCourseSchedule(List<Course> courseSchedule) {
+        this.courseSchedule = courseSchedule;
     }
 
-    public QRcode getQRCode() {
-        return qrCode;
+    public String toString() {
+        return "Classroom{cid = " + cid + ", address = " + address + ", passwd = " + passwd + ", courseSchedule = " + courseSchedule + "}";
     }
-
-    public void setQRCode(QRcode qrCode) {
-        this.qrCode = qrCode;
-    }
-
 }

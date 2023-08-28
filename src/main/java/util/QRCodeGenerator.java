@@ -15,8 +15,8 @@ import java.util.Base64;
 import java.util.UUID;
 
 public class QRCodeGenerator {
-    public static String generate(String uniqueIdString, String cid) {
-        String data = "https://scuee.com/SCUEE/QRCode/scan?uid="; // 签到链接前缀
+    public static String generate(String uniqueIdString, String cid, String courseId) {
+        String data = "https://scuee.com/SCUEE/QRCode/scan?courseId=" + courseId + "&uid="; // 签到链接前缀
         String base64Code = null;
 
         // 拼接签到链接
@@ -27,7 +27,7 @@ public class QRCodeGenerator {
         int size = 250; // 二维码尺寸
 
         try {
-            base64Code = createQRCode(checkinUrl, qrCodeFilePath, size, cid);
+            base64Code = createQRCode(checkinUrl, qrCodeFilePath, size);
             System.out.println("成功生成签到二维码。");
         } catch (WriterException | IOException e) {
             System.out.println("生成签到二维码时出错：" + e.getMessage());
@@ -36,7 +36,7 @@ public class QRCodeGenerator {
         return base64Code;
     }
 
-    private static String createQRCode(String data, String filePath, int size, String cid)
+    private static String createQRCode(String data, String filePath, int size)
             throws WriterException, IOException {
         // 设置二维码参数
         QRCodeWriter qrCodeWriter = new QRCodeWriter();

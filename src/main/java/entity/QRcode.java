@@ -10,43 +10,32 @@ import java.util.List;
 public class QRcode {
     private String type = "qrcode";
     private String code;
+    private String courseId;
     private String cid;
     private String uid;
     private String time;
     private int count;
     private List<String> sid;
 
-    public QRcode() {
-    }
+    public QRcode(){}
 
-    public QRcode(String cid, String code) {
-        this.cid = cid;
+    public QRcode(String code, String cid, String uniqueIdString, String time, List<String> sid) {
         this.code = code;
+        this.cid = cid;
+        this.uid = uniqueIdString;
+        this.time = time;
+        this.sid = sid;
     }
 
-    public QRcode(String code, String cid, String uid, String time) {
+    public QRcode(String type, String code, String courseId, String cid, String uid, String time, int count, List<String> sid) {
         this.type = type;
         this.code = code;
+        this.courseId = courseId;
         this.cid = cid;
         this.uid = uid;
         this.time = time;
-        this.count = 0;
-    }
-
-    public String getId() {
-        return cid;
-    }
-
-    public void setId(String cid) {
-        this.cid = cid;
-    }
-
-    public String getUid() {
-        return uid;
-    }
-
-    public void setUid(String uid) {
-        this.uid = uid;
+        this.count = count;
+        this.sid = sid;
     }
 
     /**
@@ -83,6 +72,22 @@ public class QRcode {
 
     /**
      * 获取
+     * @return courseId
+     */
+    public String getCourseId() {
+        return courseId;
+    }
+
+    /**
+     * 设置
+     * @param courseId
+     */
+    public void setCourseId(String courseId) {
+        this.courseId = courseId;
+    }
+
+    /**
+     * 获取
      * @return cid
      */
     public String getCid() {
@@ -95,6 +100,22 @@ public class QRcode {
      */
     public void setCid(String cid) {
         this.cid = cid;
+    }
+
+    /**
+     * 获取
+     * @return uid
+     */
+    public String getUid() {
+        return uid;
+    }
+
+    /**
+     * 设置
+     * @param uid
+     */
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
     /**
@@ -146,6 +167,6 @@ public class QRcode {
     }
 
     public String toString() {
-        return "QRcode{type = " + type + ", code = " + code + ", cid = " + cid + ", uid = " + uid + ", time = " + time + ", count = " + count + ", sid = " + sid + "}";
+        return "QRcode{type = " + type + ", code = " + code + ", courseId = " + courseId + ", cid = " + cid + ", uid = " + uid + ", time = " + time + ", count = " + count + ", sid = " + sid + "}";
     }
 }

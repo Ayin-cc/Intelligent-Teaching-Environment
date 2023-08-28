@@ -1,6 +1,8 @@
 package controller;
 
+import entity.QRCodeResult;
 import entity.QRcode;
+import entity.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import service.QRCodeService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/QRCode")
@@ -34,8 +38,8 @@ public class QRCodeController {
 
     // 学生端扫描二维码接口
     @RequestMapping("/scan")
-    public ResponseEntity<String> scan(@RequestBody String token, String uid){
-        if(qrCodeService.scan(token, uid)){
+    public ResponseEntity<String> scan(@RequestBody String token, String courseId, String uid){
+        if(qrCodeService.scan(token, courseId, uid)){
             return new ResponseEntity<>("OK", HttpStatus.OK);
         }
         else{
@@ -43,14 +47,22 @@ public class QRCodeController {
         }
     }
 
+    // 教室端更新签到数据接口
+    @RequestMapping("/update")
+    public ResponseEntity<List<Student>> update(@RequestBody String uid){
+        List<Student> students = qrCodeService.update(uid);
+        return new ResponseEntity<>(students, HttpStatus.OK);
+    }
+
     // 查询签到数据接口
     @RequestMapping("/query")
-    public void query(@RequestBody String type, String cid){
+    public ResponseEntity<List<QRCodeResult>> query(@RequestBody String type, String uid, String courseName, String cid, String date, String courseId, String teacher){
         if(type.equals("qrcode")){
-
+            List<QRCodeResult> result = qrCodeService.query(uid, cid, date, courseName, courseId, teacher);
+            return new ResponseEntity<>(result, HttpStatus.OK);
         }
         else{
-
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 }
