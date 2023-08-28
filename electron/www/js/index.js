@@ -78,6 +78,8 @@ function updateWeb() {
         window.ipcRenderer.send('mainWindow', 'close-window');
     });
 
+    dragMainWindow();
+
 
     // 顶部的folder点击，切换显示状态
     // (done)
@@ -315,6 +317,13 @@ function updateWeb() {
     });
 }
 
+function dragMainWindow(){
+    // 获取渲染进程中的要拖拽的元素
+    const draggableHeader = document.getElementById('draggable-header');
+    
+}
+
+
 // ==================================================
 // 首页
 // homepage(首页)
@@ -449,7 +458,6 @@ function signInStart() {
 // 签到中
 // (unfinished)
 // 没有获取学生信息，没有已签到学生数量、学生总数。遂只设置初始数据
-// 没有二维码
 function signInContinuing() {
 
     var signInSelect = document.getElementById('signIn-select');
@@ -532,16 +540,12 @@ function signInContinuing() {
 function updateQRCodeSignInContinuing(duration, frequency) {
     var code = '1234567890';
     var imagePath = './www/img/qrcode/qrcode_signIn_students.png'; // 相对于main.js的path
-
-    var interval = setInterval(function () {
-        window.ipcRenderer.send('generateQRCode', imagePath, code);
-    }, frequency * 1000);
-
-    // 在指定的持续时间之后清除定时器
-    setTimeout(function () {
-        clearInterval(interval); // 清除定时器
-    }, duration * 1000);
-    
+    window.ipcRenderer.send('generateQRCode', imagePath, code, duration, frequency);
+    // 是否放大
+    var qrcodeContainer = document.getElementById('qrcode-container');
+    qrcodeContainer.addEventListener('click', function () {
+        window.ipcRenderer.send('QRCodeWindow', 'createWindow');
+    });
 }
 
 
