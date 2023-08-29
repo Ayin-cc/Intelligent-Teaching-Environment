@@ -20,7 +20,11 @@ public class QRCodeServiceImpl implements QRCodeService {
     private QRCodeDao qrCodeDao;
 
     @Override
-    public QRcode get(String cid) {
+    public QRcode get(String token, String cid) {
+        if(qrCodeDao.checkClassroomToken(token) == 0){
+            return null;
+        }
+
         if (cid != null) {
             // 判断教室cid是否存在
             if (qrCodeDao.checkCid(cid) == 1) {
@@ -65,7 +69,6 @@ public class QRCodeServiceImpl implements QRCodeService {
             if(qrCodeDao.checkStudentInCourse(token, courseId) == 0){
                 return false;
             }
-
             // 存入数据库
             qrCodeDao.updateQRCode(uid, qrCodeDao.selectStudentByToken(token).getSid());
 
@@ -77,13 +80,19 @@ public class QRCodeServiceImpl implements QRCodeService {
     }
 
     @Override
-    public List<Student> update(String uid){
+    public List<Student> update(String token, String uid){
+        if(qrCodeDao.checkClassroomToken(token) == 0){
+            return null;
+        }
         return qrCodeDao.selectStudentByUid(uid);
     }
 
     @Override
-    public List<QRCodeResult> query(String uid, String cid, String date, String courseName, String courseId, String teacher){
-        List<QRCodeResult> result = qrCodeDao.selectQRCodeByMulti(uid, cid, date, courseName, courseId, teacher);
+    public List<QRCodeResult> query(String token, String cid, String date, String courseName, String courseId, String teacher){
+        if(qrCodeDao.checkAdministratorToken(token) == 0){
+            return null;
+        }
+        List<QRCodeResult> result = qrCodeDao.selectQRCodeByMulti(cid, date, courseName, courseId, teacher);
         return result;
     }
 }

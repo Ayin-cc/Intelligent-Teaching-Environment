@@ -21,18 +21,13 @@ public class QRCodeController {
 
     // 教师端获取二维码接口
     @RequestMapping("/get")
-    public ResponseEntity<QRcode> get(@RequestBody String type, String cid) {
-        if(type.equals("qrcode")){
-            QRcode qRcode = qrCodeService.get(cid);
-            if(qRcode == null){
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            }
-            else {
-                return new ResponseEntity<>(qRcode, HttpStatus.OK);
-            }
-        }
-        else{
+    public ResponseEntity<QRcode> get(@RequestBody String token, String cid) {
+        QRcode qRcode = qrCodeService.get(token, cid);
+        if(qRcode == null){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        else {
+            return new ResponseEntity<>(qRcode, HttpStatus.OK);
         }
     }
 
@@ -49,20 +44,15 @@ public class QRCodeController {
 
     // 教室端更新签到数据接口
     @RequestMapping("/update")
-    public ResponseEntity<List<Student>> update(@RequestBody String uid){
-        List<Student> students = qrCodeService.update(uid);
+    public ResponseEntity<List<Student>> update(@RequestBody String token, String uid){
+        List<Student> students = qrCodeService.update(token, uid);
         return new ResponseEntity<>(students, HttpStatus.OK);
     }
 
     // 查询签到数据接口
     @RequestMapping("/query")
-    public ResponseEntity<List<QRCodeResult>> query(@RequestBody String type, String uid, String courseName, String cid, String date, String courseId, String teacher){
-        if(type.equals("qrcode")){
-            List<QRCodeResult> result = qrCodeService.query(uid, cid, date, courseName, courseId, teacher);
-            return new ResponseEntity<>(result, HttpStatus.OK);
-        }
-        else{
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<List<QRCodeResult>> query(@RequestBody String token, String uid, String courseName, String cid, String date, String courseId, String teacher){
+        List<QRCodeResult> result = qrCodeService.query(token, cid, date, courseName, courseId, teacher);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

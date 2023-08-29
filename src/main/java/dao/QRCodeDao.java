@@ -10,7 +10,7 @@ import java.util.List;
 public interface QRCodeDao {
     void createQRCode(@Param("qrcode") QRcode qrcode);
     void updateQRCode(@Param("uid") String uid, @Param("sid") String sid);
-    List<QRCodeResult> selectQRCodeByMulti(@Param("cid") String cid, @Param("date")  String date, @Param("uid") String uid, @Param("teacher") String teacher, @Param("name") String name, @Param("id") String id);
+    List<QRCodeResult> selectQRCodeByMulti(@Param("cid") String cid, @Param("date")  String date, @Param("teacher") String teacher, @Param("name") String name, @Param("id") String id);
     List<QRcode> selectQRCodeByCid(@Param("cid") String cid);
     List<String> selectStudentByCourseId(@Param("id") String id);
     Course selectCourseByDate(@Param("cid") String cid, @Param("date") String date, @Param("section") Integer section);
@@ -25,4 +25,6 @@ public interface QRCodeDao {
     int checkUid(@Param("uid") String uid);
     int checkScan(@Param("token") String token, @Param("uid") String uid);
     int checkStudentInCourse(@Param("token") String token, @Param("courseId") String courseId);
+    int checkClassroomToken(@Param("token")String token);
+    int checkAdministratorToken(@Param("token")String token);
 }

@@ -127,8 +127,8 @@ public class AdministratorController {
     }
 
     @RequestMapping("/deleteStudentFromCourse")
-    public ResponseEntity<String> deleteStudentFromCourse(@RequestBody Student student, Course course){
-        if(administratorService.deleteStudentFromCourse(student.getToken(), student, course)){
+    public ResponseEntity<String> deleteStudentFromCourse(@RequestBody String token, Student student, Course course){
+        if(administratorService.deleteStudentFromCourse(token, student, course)){
             return new ResponseEntity<>("OK", HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

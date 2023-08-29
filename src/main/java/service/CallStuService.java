@@ -1,6 +1,10 @@
 package service;
 
+import entity.Student;
+
+import java.util.List;
+
 public interface CallStuService {
-    void random(String cid);
-    void select(String cid, String sid);
+    List<Student> random(String token, int count, String uid);
+    boolean select(String token, String id, String sid);
 }

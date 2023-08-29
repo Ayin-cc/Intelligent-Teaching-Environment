@@ -6,5 +6,7 @@
 <mapper namespace="dao.CallStuDao">
 
 
+    <select id="checkToken" resultType="java.lang.Integer">
 
+    </select>
 </mapper>
