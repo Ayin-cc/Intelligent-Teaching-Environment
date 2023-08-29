@@ -42,7 +42,7 @@
     <resultMap id="classroomResultMap" type="entity.Classroom">
         <result column="cid" property="cid" />
         <result column="address" property="address" />
-        <result column="passwd" property="passwd" />
+        <result column="classroom_token" property="token" />
         <collection property="courseSchedule" resultMap="courseResultMap" />
     </resultMap>
     
@@ -89,7 +89,7 @@
                 and q.uid = #{uid}
             </if>
             <if test="teacher != null">
-                and c.course_teacher = #{teacher}
+                and c.course_teacher = concat('%', #{teacher}, '%')
             </if>
             <if test="name != null">
                 and c.course_name = concat('%', #{name}, '%')

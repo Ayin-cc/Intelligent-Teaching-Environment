@@ -9,15 +9,219 @@
         <result column="code" property="code" />
         <result column="class_id" property="cid" />
         <result column="count" property="count" />
+        <result column="course_id" property="courseId" />
         <collection property="sid" ofType="string">
             <result column="student_id" />
         </collection>
     </resultMap>
+
+    <resultMap id="studentResultMap" type="entity.Student">
+        <result column="sid" property="sid" />
+        <result column="student_token" property="token" />
+        <result column="student_name" property="name" />
+        <result column="student_major" property="major" />
+        <result column="student_college" property="college" />
+        <result column="student_sex" property="sex" />
+        <result column="student_passwd" property="passwd" />
+        <result column="student_phone" property="phone" />
+    </resultMap>
+
+    <resultMap id="courseResultMap" type="entity.Course">
+        <result column="id" property="courseId" />
+        <result column="course_name" property="name" />
+        <result column="course_teacher" property="teacher" />
+        <result column="course_site" property="site" />
+        <result column="startSection" property="startSection" />
+        <result column="endSection" property="endSection" />
+        <collection property="date" ofType="string">
+            <result column="course_date" />
+        </collection>
+        <collection property="students" resultMap="studentResultMap" />
+    </resultMap>
+
+    <resultMap id="classroomResultMap" type="entity.Classroom">
+        <result column="cid" property="cid" />
+        <result column="address" property="address" />
+        <result column="classroom_token" property="token" />
+        <collection property="courseSchedule" resultMap="courseResultMap" />
+    </resultMap>
     
-    <select id="createQRCode">
+    <insert id="createQRCode">
         insert into scuee.qrcode
-            (uid, code, class_id, time, count)
+            (uid, qrcode_code, class_id, qrcode_time, count)
         values
-            (#{qrcode.})
+            (#{qrcode.uid}, #{qrcode.code}, #{qrcode.cid}, #{qrcode.time}, 0);
+    </insert>
+
+    <insert id="updateQRCode">
+        insert into scuee.qrcode_student
+            (uid, student_id)
+        values
+            (#{uid}, #{sid});
+        update scuee.qrcode q
+        set
+            q.count = q.count + 1
+        where
+            q.uid = #{uid};
+    </insert>
+
+    <select id="selectQRCodeByMulti" resultMap="qrcodeResultMap">
+        select
+            scuee.qrcode.*, scuee.qrcode_student.student_id, scuee.course.*
+        from
+            scuee.qrcode q, scuee.qrcode_student s, scuee.course c
+        inner join
+                s
+        on
+            q.uid = s.student_id
+        inner join
+                c
+        on
+            q.course_id = c.id
+        where
+            <if test="cid != null">
+                q.class_id = #{cid}
+            </if>
+            <if test="date != null">
+                and q.qrcode_time like concat('%', #{date}, '%')
+            </if>
+            <if test="uid != null">
+                and q.uid = #{uid}
+            </if>
+            <if test="teacher != null">
+                and c.course_teacher = concat('%', #{teacher}, '%')
+            </if>
+            <if test="name != null">
+                and c.course_name = concat('%', #{name}, '%')
+            </if>
+            <if test="id != null">
+                and c.id = #{id}
+            </if>;
     </select>
+
+    <select id="selectQRCodeByCid" resultMap="qrcodeResultMap">
+        select
+            scuee.qrcode.*, scuee.qrcode_student.student_id
+        from
+            (select * from scuee.qrcode where class_id = #{cid})q
+        inner join
+                scuee.qrcode_student s
+        on
+            q.uid = s.uid;
+    </select>
+
+    <select id="selectStudentByCourseId" resultType="java.lang.String">
+        select
+            scuee.course_students.student_id
+        from
+            scuee.course_students
+        where
+            scuee.course_students.course_id = #{id};
+    </select>
+
+    <select id="selectCourseByDate" resultType="entity.Course">
+
+    </select>
+
+    <select id="selectQRCodeByDate" resultMap="qrcodeResultMap">
+        select
+            scuee.qrcode.*, scuee.qrcode_student.student_id
+        from
+            (select * from scuee.qrcode where date_format(qrcode_time, '%Y-%m-%d') = #{date})q
+        inner join
+                scuee.qrcode_student s
+        on
+            q.uid = s.uid;
+    </select>
+
+    <select id="selectCourseByTeacher" resultMap="courseResultMap">
+        select *
+        from
+            scuee.course c
+        where
+            c.course_teacher = #{teacher};
+    </select>
+
+    <select id="selectCourseByName" resultMap="courseResultMap">
+        select *
+        from
+            scuee.course c
+        where
+            c.course_name = #{name};
+    </select>
+
+    <select id="selectCourseByCourseId" resultMap="courseResultMap">
+        select *
+        from
+            scuee.course c
+        where
+            c.id = #{id};
+    </select>
+
+    <select id="selectStudentByUid" resultType="entity.Student">
+        select
+            scuee.student.*
+        from
+            scuee.student  s
+        inner join
+                (select * from scuee.qrcode_student q where q.uid = #{uid})qs
+        on
+            qs.student_id = s.sid
+    </select>
+
+    <select id="selectQRCodeByUid" resultMap="qrcodeResultMap">
+        select
+            scuee.qrcode.*, scuee.qrcode_student.student_id
+        from
+            (select * from scuee.qrcode where uid = #{uid})q
+        inner join
+                scuee.qrcode_student
+        on
+            scuee.qrcode.uid = scuee.qrcode_student.uid;
+    </select>
+
+    <select id="selectStudentByToken" resultMap="studentResultMap">
+        select
+            *
+        from
+            scuee.student
+        where
+            student_token = #{token};
+    </select>
+
+    <select id="checkCid" resultType="java.lang.Integer">
+        select exists(
+            select  *
+            from scuee.classroom
+            where cid = #{cid}
+                   );
+    </select>
+
+    <select id="checkUid" resultType="java.lang.Integer">
+        select exists(
+            select *
+            from scuee.student
+            where sid = #{sid}
+                   );
+    </select>
+
+    <select id="checkScan" resultType="java.lang.Integer">
+        select exists(
+            select *
+            from scuee.student, scuee.qrcode
+            where student_token=#{token} and uid=#{uid}
+                   );
+    </select>
+
+    <select id="checkStudentInCourse" resultType="java.lang.Integer">
+        select exists(
+            select *
+            from (select * from scuee.course_students where course_id=#{courseId})c
+            inner join (select * from scuee.student where student_token=#{token})s
+            on c.student_id=s.sid
+                   );
+    </select>
+
+
+
 </mapper>

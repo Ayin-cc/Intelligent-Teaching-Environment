@@ -9,16 +9,18 @@ import java.util.Map;
 public class Classroom {
     private String cid;
     private String address;
-    private String passwd;
+    private String token;
     private List<Course> courseSchedule;
+
 
     public Classroom() {
     }
 
-    public Classroom(String cid, String address, String passwd, List<Course> courseSchedule) {
+
+    public Classroom(String cid, String address, String token, List<Course> courseSchedule) {
         this.cid = cid;
         this.address = address;
-        this.passwd = passwd;
+        this.token = token;
         this.courseSchedule = courseSchedule;
     }
 
@@ -56,22 +58,6 @@ public class Classroom {
 
     /**
      * 获取
-     * @return passwd
-     */
-    public String getPasswd() {
-        return passwd;
-    }
-
-    /**
-     * 设置
-     * @param passwd
-     */
-    public void setPasswd(String passwd) {
-        this.passwd = passwd;
-    }
-
-    /**
-     * 获取
      * @return courseSchedule
      */
     public List<Course> getCourseSchedule() {
@@ -87,6 +73,22 @@ public class Classroom {
     }
 
     public String toString() {
-        return "Classroom{cid = " + cid + ", address = " + address + ", passwd = " + passwd + ", courseSchedule = " + courseSchedule + "}";
+        return "Classroom{cid = " + cid + ", address = " + address + ", courseSchedule = " + courseSchedule + "}";
+    }
+
+    /**
+     * 获取
+     * @return token
+     */
+    public String getToken() {
+        return token;
+    }
+
+    /**
+     * 设置
+     * @param token
+     */
+    public void setToken(String token) {
+        this.token = token;
     }
 }
