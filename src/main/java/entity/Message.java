@@ -1,25 +1,44 @@
 package entity;
 
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 @Component
 public class Message {
+    private int id;
     private String title;
     private String content;
     private String time;
-    private List<Attachment> attachment;
+    private List<MultipartFile> attachment;
 
 
     public Message() {
     }
 
-    public Message(String title, String content, String time, List<Attachment> attachment) {
+    public Message(int id, String title, String content, String time, List<MultipartFile> attachment) {
+        this.id = id;
         this.title = title;
         this.content = content;
         this.time = time;
         this.attachment = attachment;
+    }
+
+    /**
+     * 获取
+     * @return id
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * 设置
+     * @param id
+     */
+    public void setId(int id) {
+        this.id = id;
     }
 
     /**
@@ -74,7 +93,7 @@ public class Message {
      * 获取
      * @return attachment
      */
-    public List<Attachment> getAttachment() {
+    public List<MultipartFile> getAttachment() {
         return attachment;
     }
 
@@ -82,11 +101,11 @@ public class Message {
      * 设置
      * @param attachment
      */
-    public void setAttachment(List<Attachment> attachment) {
+    public void setAttachment(List<MultipartFile> attachment) {
         this.attachment = attachment;
     }
 
     public String toString() {
-        return "Message{title = " + title + ", content = " + content + ", time = " + time + ", attachment = " + attachment + "}";
+        return "Message{id = " + id + ", title = " + title + ", content = " + content + ", time = " + time + ", attachment = " + attachment + "}";
     }
 }

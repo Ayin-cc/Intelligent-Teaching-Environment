@@ -25,4 +25,9 @@ public class UserController {
     public void refreshToken(){
 
     }
+
+    @RequestMapping("/initMsg")
+    public void initMsg(){
+
+    }
 }

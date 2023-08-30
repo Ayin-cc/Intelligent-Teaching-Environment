@@ -11,22 +11,22 @@ import java.util.List;
 @Repository
 public interface AdministratorDao {
     String selectCidBySite(@Param("site")String site);
-    int addStudent(@Param("student")Student student);
-    int addClassroom(@Param("classroom")Classroom classroom);
-    int addCourseInf(@Param("course")Course course);
-    int addCourseSchedule(@Param("cid")String cid, @Param("section")int section, @Param("id")String id, @Param("date")String date);
-    int addStudentToCourse(@Param("id")String id, @Param("sid")String sid);
-    int changeStudent(@Param("student")Student student);
-    int changeClassroom(@Param("classroom")Classroom classroom);
-    int changeCourseInf(@Param("course")Course course);
-    int changeCourseSchedule(@Param("cid")String cid, @Param("section")int section, @Param("id")String id, @Param("date")String date);
+    void addStudent(@Param("student")Student student);
+    void addClassroom(@Param("classroom")Classroom classroom);
+    void addCourseInf(@Param("course")Course course);
+    void addCourseSchedule(@Param("cid")String cid, @Param("section")int section, @Param("id")String id, @Param("date")String date);
+    void addStudentToCourse(@Param("id")String id, @Param("sid")String sid);
+    void changeStudent(@Param("student")Student student);
+    void changeClassroom(@Param("classroom")Classroom classroom);
+    void changeCourseInf(@Param("course")Course course);
+    void changeCourseSchedule(@Param("cid")String cid, @Param("section")int section, @Param("id")String id, @Param("date")String date);
     List<Student> queryStudent(@Param("sid")String sid, @Param("name")String name, @Param("major")String major, @Param("college")String college, @Param("phone")String phone);
     List<Classroom> queryClassroom(@Param("cid")String cid, @Param("address")String address);
     List<Course> queryCourse(@Param("id")String id, @Param("name")String name, @Param("teacher")String teacher);
-    int deleteStudent(@Param("student")Student student);
-    int deleteClassroom(@Param("classroom")Classroom classroom);
-    int deleteCourseInf(@Param("course")Course course);
-    int deleteCourseSchedule(@Param("id")String id);
-    int deleteStudentFromCourse(@Param("id")String id, @Param("sid") String sid);
+    void deleteStudent(@Param("student")Student student);
+    void deleteClassroom(@Param("classroom")Classroom classroom);
+    void deleteCourseInf(@Param("course")Course course);
+    void deleteCourseSchedule(@Param("id")String id);
+    void deleteStudentFromCourse(@Param("id")String id, @Param("sid") String sid);
     int checkToken(@Param("token") String token);
 }

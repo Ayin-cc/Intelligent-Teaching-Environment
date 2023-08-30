@@ -4,5 +4,54 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="dao.DistrMsgDao">
+    <resultMap id="msgResultMap" type="entity.Message">
+        <result column="id" property="id" />
+        <result column="title" property="title" />
+        <result column="content" property="content" />
+        <result column="msg_time" property="time" />
+        <collection property="attachment">
+            <result column="attachment_url" />
+        </collection>
+    </resultMap>
+
+    <insert id="addMsg" useGeneratedKeys="true" keyProperty="id">
+        insert into scuee.message
+            (title, content, msg_time, is_published)
+        values
+            (#{msg.title}, #{msg.content}, #{msg.time}, 0);
+    </insert>
+
+    <insert id="addAttachment">
+        insert into scuee.msg_attachment
+            (msg_id, attachment_name, attachment_url)
+        values
+            (#{id}, #{name}, #{file});
+    </insert>
+
+    <select id="selectReadyMsg" resultMap="msgResultMap">
+        select *
+        from (
+            select * from scuee.message where msg_time < #{time} and is_published = 0
+             )m
+        inner join
+            scuee.msg_attachment ma
+        on
+            m.id = ma.msg_id;
+        update scuee.message m
+        set m.is_published = 1
+        where m.msg_time < #{time};
+    </select>
+
+    <select id="selectAttachment" resultType="org.springframework.web.multipart.MultipartFile">
+        select *
+        from scuee.msg_attachment ma
+        where ma.msg_id = #{id} and ma.attachment_name = #{name};
+    </select>
+
+    <select id="checkToken" resultType="java.lang.Integer">
+        select exists(
+            select * from scuee.administrator where token = #{token}
+                   );
+    </select>
 
 </mapper>

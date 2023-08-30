@@ -2,10 +2,16 @@ package controller;
 
 import entity.Message;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import service.DistrMsgService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/DistrMsg")
@@ -15,23 +21,24 @@ public class DistrMsgController {
 
     // 教务端发布新消息接口
     @RequestMapping("/create")
-    public void create(@RequestBody String type, Message message){
-        if(type.equals("msg")){
-            distrMsgService.create(message);
+    public ResponseEntity<String> create(@RequestBody String token, Message message){
+        if(distrMsgService.create(token, message)){
+            return new ResponseEntity<>("OK", HttpStatus.OK);
         }
-        else{
-            System.out.println("请求信息错误！");
-        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     // 教室或学生端获取消息接口
-    @RequestMapping("/get")
-    public void get(@RequestBody String type){
-        if(type.equals("init")){
-            distrMsgService.get();
-        }
-        else{
-            System.out.println("请求信息错误！");
-        }
+    @RequestMapping("/keepAlive")
+    public ResponseEntity<List<Message>> keepAlive(@RequestBody String id){
+        List<Message> message = distrMsgService.keepAlive(id);
+        return new ResponseEntity<>(message, HttpStatus.OK);
+    }
+
+    // 附件下载接口
+    @RequestMapping("/download")
+    public ResponseEntity<MultipartFile> download(@RequestBody int id, String name){
+        MultipartFile file = distrMsgService.download(id, name);
+        return new ResponseEntity<>(file, HttpStatus.OK);
     }
 }

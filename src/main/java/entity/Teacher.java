@@ -3,7 +3,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Teacher {
-    private int id;
+    private String id;
     private String name;
     private String phone;
     private String passwd;
@@ -12,7 +12,7 @@ public class Teacher {
     public Teacher() {
     }
 
-    public Teacher(int id, String name, String phone, String passwd) {
+    public Teacher(String id, String name, String phone, String passwd) {
         this.id = id;
         this.name = name;
         this.phone = phone;
@@ -23,7 +23,7 @@ public class Teacher {
      * 获取
      * @return id
      */
-    public int getId() {
+    public String getId() {
         return id;
     }
 
@@ -31,7 +31,7 @@ public class Teacher {
      * 设置
      * @param id
      */
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
