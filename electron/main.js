@@ -1,10 +1,9 @@
 // BrowserWindow控制应用生命周期和创建原生浏览器窗口的模块
 // Tray创建托盘
-const { app, BrowserWindow, Menu, Tray, ipcMain } = require('electron')
+const { app, BrowserWindow, Menu, Tray, ipcMain, Notification } = require('electron')
 const path = require('path')
 const qrcode = require('qrcode');
 const fs = require('fs');
-const electronDrag = require('electron-drag');
 
 // 全局变量
 let mainWindow = null;
@@ -42,7 +41,6 @@ function createWindow() {
     mainWindow.setMenu(null); // 关闭默认菜单
 
     mainWindow.webContents.openDevTools(); // 打开窗口的调试工具(debug)
-    electronDrag(mainWindow);
     // 创建托盘
     // 内含对mainWindow.close的截获，但好像并没有使用过
     createTray();
@@ -150,7 +148,6 @@ function setupIPCListeners() {
             mainWindow.hide(); // 隐藏
         }
     });
-    // 拖拽
     // 生成二维码
     ipcMain.on('generateQRCode', (event, imagePath, code, duration, frequency) => {
         // 设置定时器，生成QRCode
@@ -189,5 +186,14 @@ function setupIPCListeners() {
             closeQRCodeWindow();
         }
     });
-    
+    // 通知Windows
+    ipcMain.on('Notification', function (event, message_title, message_body, message_icon) {
+        const iconPath = message_icon ? message_icon : './www/icons/message.png';
+        let notification = new Notification({
+            title: message_title, //消息标题
+            body: message_body, //消息体内容
+            icon: iconPath, //消息图片
+        });
+        notification.show();
+    });
 }   
