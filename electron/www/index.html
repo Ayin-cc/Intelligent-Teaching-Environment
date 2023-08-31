@@ -119,6 +119,7 @@
                         </div>
                     </div>
                     <div class="flex flex-col">
+
                         <div class="flex h-10 mx-8 pl-2 my-0.5 rounded-xl items-center hover:bg-white before:w-0.5 before:h-full before:bg-slate-200 before:hover:bg-slate-400 dark:hover:bg-zinc-600 dark:before:bg-zinc-600 dark:before:hover:bg-zinc-400 resizable foldable clickable"
                             id="signIn-sidebar">
                             <div class="flex h-6 w-6 mx-4">
@@ -164,6 +165,17 @@
                         </div>
 
                         <div class="flex h-10 mx-8 pl-2 my-0.5 rounded-xl items-center hover:bg-white before:w-0.5 before:h-full before:bg-slate-200 before:hover:bg-slate-400 dark:hover:bg-zinc-600 dark:before:bg-zinc-600 dark:before:hover:bg-zinc-400 resizable foldable clickable"
+                            id="communication-sidebar">
+                            <div class="flex h-6 w-6 mx-4">
+                                <img draggable="false" src="./icons/333/沟通.svg" alt="" srcset="" />
+                            </div>
+                            <div class="flex font-medium text-zinc-950 dark:text-zinc-300 hide-able text">
+                                交流
+                            </div>
+                            <div class="flex flex-grow"></div>
+                        </div>
+
+                        <div class="flex h-10 mx-8 pl-2 my-0.5 rounded-xl items-center hover:bg-white before:w-0.5 before:h-full before:bg-slate-200 before:hover:bg-slate-400 dark:hover:bg-zinc-600 dark:before:bg-zinc-600 dark:before:hover:bg-zinc-400 resizable foldable clickable"
                             id="wallpaper-sidebar">
                             <div class="flex h-6 w-6 mx-4">
                                 <img draggable="false" src="./icons/333/相册.svg" alt="" srcset="" />
@@ -178,11 +190,13 @@
             </div>
 
             <!-- sidebar-bottom -->
-            <div class="flex flex-col h-36">
-                <div class="flex mx-8 p-4 rounded-lg items-center max-w-xs hover:shadow-md resizable">
+            <div class="flex flex-col w-full h-36">
+                <!-- sidebar-self -->
+                <div class="flex mx-8 p-4 rounded-lg items-center max-w-xs hover:shadow-md dark:shadow-zinc-900 dark:hover:ring-1 dark:ring-zinc-700 resizable"
+                    id="sidebar-self">
                     <div class="flex w-8 h-8 mx-1 rounded-full overflow-hidden hover:shadow-md"
                         id="photo-profile-sidebarBottom">
-                        <img draggable="false" src="./icons/333/用户.svg" alt="" srcset="" />
+                        <img draggable="false" src="./img/profile/profile_default_333.svg" alt="" srcset="" />
                     </div>
                     <div class="flex flex-grow px-5 overflow-hidden select-all selection:bg-purple-500 selection:text-white dark:text-zinc-300 dark:selection:bg-zinc-500 hide-able"
                         id="name-profile-sidebarBottom">
@@ -192,7 +206,177 @@
                         id="folder-profile-sidebarBottom">
                         <img draggable="false" src="./icons/333/更多.svg" alt="" />
                     </div>
+                    <!-- sidebar-self-extra -->
+                    <div class="absolute z-100" id="sidebar-self-extra">
+                        <div class="flex relative">
+                            <div class="flex w-20 h-20" id="left-blank-sidebar-self-extra"></div>
+                            <!-- extra card的数据 -->
+                            <div class="flex w-max h-max">
+                                <!-- 定位用 -->
+                                <div class="flex absolute w-60 py-4 -bottom-5 bg-white dark:bg-zinc-700 dark:bg-opacity-60 bg-opacity-80 shadow-xl border-2 border-zinc-100 dark:border-zinc-600 rounded-lg"
+                                    id="content-sidebar-self-extra">
+                                    <!-- 具体模块 -->
+                                    <div class="flex flex-col w-full h-max items-center bg-white dark:bg-zinc-700">
+                                        <div class="flex w-full h-max" id="username-sidebar-self-extra">
+                                            <div
+                                                class="flex w-full h-max px-4 py-2 hover:bg-purple-100 hover:font-bold dark:hover:bg-zinc-600">
+                                                <div class="flex h-full justify-center items-center">
+                                                    <img class="w-6 h-6" src="./icons/333/我的.svg" alt="" srcset="" />
+                                                </div>
+                                                <div class="flex h-full justify-center ml-2 dark:text-zinc-200">
+                                                    用户名
+                                                </div>
+                                                <div class="flex h-full flex-grow"></div>
+                                                <div
+                                                    class="flex h-full font-normal text-zinc-800 dark:text-zinc-400 truncate">
+                                                    默认
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="flex w-full h-max" id="authority-sidebar-self-extra">
+                                            <div
+                                                class="flex w-full h-max px-4 py-2 hover:bg-purple-100 hover:font-bold dark:hover:bg-zinc-600">
+                                                <div class="flex h-full justify-center items-center">
+                                                    <img class="w-6 h-6" src="./icons/333/身份证.svg" alt="" srcset="" />
+                                                </div>
+                                                <div class="flex h-full justify-center ml-2 dark:text-zinc-200">
+                                                    权限
+                                                </div>
+                                                <div class="flex h-full flex-grow"></div>
+                                                <div
+                                                    class="flex h-full font-normal text-zinc-800 dark:text-zinc-400 truncate">
+                                                    教室端
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- 分割线 -->
+                                        <div class="flex w-full h-0.25 my-1">
+                                            <div
+                                                class="flex w-full mx-2 h-full bg-purple-100 dark:bg-purple-300 dark:bg-opacity-50">
+                                            </div>
+                                        </div>
+                                        <div class="flex w-full h-max" id="setting-sidebar-self-extra">
+                                            <div
+                                                class="flex w-full h-max px-4 py-2 hover:bg-purple-100 hover:font-bold dark:hover:bg-zinc-600">
+                                                <div class="flex h-full justify-center items-center">
+                                                    <img class="w-6 h-6" src="./icons/333/设置2.svg" alt="" srcset="" />
+                                                </div>
+                                                <div class="flex h-full justify-center ml-2 dark:text-zinc-200">
+                                                    设置
+                                                </div>
+                                                <div class="flex h-full flex-grow"></div>
+                                                <div
+                                                    class="flex h-full font-normal text-zinc-800 dark:text-zinc-400 truncate">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="flex w-full h-max" id="help-sidebar-self-extra">
+                                            <div
+                                                class="flex w-full h-max px-4 py-2 hover:bg-purple-100 hover:font-bold dark:hover:bg-zinc-600">
+                                                <div class="flex h-full justify-center items-center">
+                                                    <img class="w-6 h-6" src="./icons/333/帮助中心.svg" alt="" srcset="" />
+                                                </div>
+                                                <div class="flex h-full justify-center ml-2 dark:text-zinc-200">
+                                                    帮助
+                                                </div>
+                                                <div class="flex h-full flex-grow"></div>
+                                                <div
+                                                    class="flex h-full font-normal text-zinc-800 dark:text-zinc-400 truncate">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- 分割线 -->
+                                        <div class="flex w-full h-0.25 my-1">
+                                            <div
+                                                class="flex w-full mx-2 h-full bg-purple-100 dark:bg-purple-300 dark:bg-opacity-50">
+                                            </div>
+                                        </div>
+                                        <div class="flex w-full h-max" id="login-sidebar-self-extra">
+                                            <div
+                                                class="flex w-full h-max px-4 py-2 hover:bg-purple-100 hover:font-bold dark:hover:bg-zinc-600">
+                                                <div class="flex h-full justify-center items-center">
+                                                    <img class="w-6 h-6" src="./icons/333/进入.svg" alt="" srcset="" />
+                                                </div>
+                                                <div class="flex h-full justify-center ml-2 dark:text-zinc-200">
+                                                    登录
+                                                </div>
+                                                <div class="flex h-full flex-grow"></div>
+                                                <div
+                                                    class="flex h-full font-normal text-zinc-800 dark:text-zinc-400 truncate">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="flex w-full h-max hide" id="logout-sidebar-self-extra">
+                                            <div
+                                                class="flex w-full h-max px-4 py-2 hover:bg-purple-100 hover:font-bold dark:hover:bg-zinc-600">
+                                                <div class="flex h-full justify-center items-center">
+                                                    <img class="w-6 h-6" src="./icons/333/退出.svg" alt="" srcset="" />
+                                                </div>
+                                                <div class="flex h-full justify-center ml-2 dark:text-zinc-200">
+                                                    登出
+                                                </div>
+                                                <div class="flex h-full flex-grow"></div>
+                                                <div
+                                                    class="flex h-full font-normal text-zinc-800 dark:text-zinc-400 truncate">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="flex w-full h-max" id="register-sidebar-self-extra">
+                                            <div
+                                                class="flex w-full h-max px-4 py-2 hover:bg-purple-100 hover:font-bold dark:hover:bg-zinc-600">
+                                                <div class="flex h-full justify-center items-center">
+                                                    <img class="w-6 h-6" src="./icons/333/发送.svg" alt="" srcset="" />
+                                                </div>
+                                                <div class="flex h-full justify-center ml-2 dark:text-zinc-200">
+                                                    注册
+                                                </div>
+                                                <div class="flex h-full flex-grow"></div>
+                                                <div
+                                                    class="flex h-full font-normal text-zinc-800 dark:text-zinc-400 truncate">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- 分割线 -->
+                                        <div class="flex w-full h-0.25 my-1">
+                                            <div
+                                                class="flex w-full mx-2 h-full bg-purple-100 dark:bg-purple-300 dark:bg-opacity-50">
+                                            </div>
+                                        </div>
+                                        <div class="flex h-4"></div>
+                                        <div class="flex w-full h-max">
+                                            <div class="flex w-full h-max px-4">
+                                                <div
+                                                    class="flex h-full justify-center text-zinc-600 dark:text-zinc-400">
+                                                    sid:
+                                                </div>
+                                                <div class="flex h-full flex-grow"></div>
+                                                <div
+                                                    class="flex h-full font-normal text-zinc-600 select-all selection:bg-purple-500 selection:text-white dark:text-zinc-400 dark:selection:bg-zinc-500">
+                                                    1001
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="flex w-full h-max">
+                                            <div class="flex w-full h-max px-4">
+                                                <div
+                                                    class="flex h-full justify-center text-zinc-600 dark:text-zinc-400">
+                                                    教室:
+                                                </div>
+                                                <div class="flex h-full flex-grow"></div>
+                                                <div
+                                                    class="flex h-full font-normal text-zinc-600 select-all selection:bg-purple-500 selection:text-white dark:text-zinc-400 dark:selection:bg-zinc-500">
+                                                    一教A101
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="flex h-4"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
                 <!-- sidebar-line -->
                 <div class="flex mx-12 my-2 w-auto h-0.5 bg-slate-400 hide-able"></div>
                 <!-- menu-btns -->
@@ -211,6 +395,7 @@
                 <div class="flex mb-3"></div>
             </div>
         </div>
+
         <!-- content -->
         <div class="flex flex-col bg-white w-full h-full rounded-3xl shadow-xl items-center dark:bg-zinc-900 select-none overflow-x-hidden"
             id="content">
@@ -506,6 +691,66 @@
                     </div>
                 </div>
                 <!-- rollCall-content -->
+                <div class="flex flex-col h-full w-full px-4" id="rollCall-content">
+                    <div class="w-full h-full py-2 columns-5xs gap-4 overflow-y-scroll">
+                        <!-- 已签到-未回答问题-按钮 -->
+                        <div
+                            class="flex p-1 m-1 w-48 h-max rounded-xl items-center bg-purple-200 bg-opacity-70 ring-1 ring-purple-500 hover:shadow-purple-300 hover:shadow-md
+                            dark:bg-zinc-600 dark:ring-2 dark:ring-zinc-500 dark:hover:ring-4 dark:hover:shadow-none">
+                            <div
+                                class="flex p-3 w-full rounded-lg items-center bg-purple-200
+                                dark:bg-zinc-700 dark:hover:bg-zinc-800">
+                                <!-- <div class="flex flex-grow"></div> -->
+                                <div
+                                    class="flex p-1 w-28 rounded-md text-lg text-zinc-800 truncate hover:overflow-visible hover:min-w-max hover:bg-purple-200 bg-opacity-100
+                                    dark:text-zinc-300 dark:hover:bg-zinc-800 hover:ring-1 ring-zinc-500 hover:z-50 hover:absolute">
+                                    张三李四·王五·SSXXZYZYbaba
+                                </div>
+                                <div class="flex flex-grow"></div>
+                                <div class="flex w-0.5 h-5 bg-purple-300"></div>
+                                <div class="flex flex-row-reverse min-w-max w-6 h-9 pl-2 items-center font-bold text-blue-600 dark:text-blue-400">0</div>
+                            </div>
+                        </div>
+                        
+                        <!-- 已签到-已回答问题-按钮 -->
+                        <div
+                            class="flex p-1 m-1 w-48 h-max rounded-xl items-center bg-purple-200 bg-opacity-100 hover:shadow-purple-300 hover:shadow-md
+                            dark:bg-zinc-600 dark:ring-zinc-500 dark:hover:ring-4 dark:hover:shadow-none">
+                            <div
+                                class="flex p-3 w-full rounded-lg items-center bg-purple-200
+                                dark:bg-zinc-700 dark:hover:bg-zinc-800">
+                                <!-- <div class="flex flex-grow"></div> -->
+                                <div
+                                    class="flex p-1 w-28 rounded-md text-lg text-zinc-600 truncate hover:overflow-visible hover:min-w-max hover:bg-purple-200 bg-opacity-100
+                                    dark:text-zinc-400 dark:hover:text-zinc-300 dark:hover:bg-zinc-800 hover:ring-1 ring-zinc-500 hover:z-50 hover:absolute">
+                                    XYCF
+                                </div>
+                                <div class="flex flex-grow"></div>
+                                <div class="flex w-0.5 h-5 bg-purple-500 bg-opacity-50"></div>
+                                <div class="flex flex-row-reverse min-w-max w-6 h-9 pl-2 items-center text-zinc-600 dark:text-zinc-300">432</div>
+                            </div>
+                        </div>
+                        
+                        <!-- 未签到-按钮 -->
+                        <div
+                            class="flex p-1 m-1 w-48 h-max rounded-xl items-center bg-zinc-200 bg-opacity-70 hover:shadow-zinc-300 hover:shadow-md
+                            dark:bg-zinc-800 dark:ring-zinc-500 dark:hover:ring-2 dark:hover:shadow-none">
+                            <div
+                                class="flex p-3 w-full rounded-lg items-center bg-zinc-200
+                                dark:bg-zinc-900 dark:hover:bg-zinc-800">
+                                <!-- <div class="flex flex-grow"></div> -->
+                                <div
+                                    class="flex p-1 w-28 rounded-md text-lg text-zinc-800 truncate hover:overflow-visible hover:min-w-max hover:bg-zinc-200 bg-opacity-100
+                                    dark:text-zinc-500 dark:hover:text-zinc-300 dark:hover:bg-zinc-800 hover:ring-1 ring-zinc-500 hover:z-50 hover:absolute">
+                                    XingYueChenFu
+                                </div>
+                                <div class="flex flex-grow"></div>
+                                <div class="flex w-0.5 h-5 bg-zinc-500 bg-opacity-50 dark:bg-zinc-300"></div>
+                                <div class="flex flex-row-reverse min-w-max w-6 h-9 pl-2 items-center text-red-700 dark:text-red-800">缺勤</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <!-- randomSelection -->
             <div class="flex flex-grow px-4 w-full h-full flex-col hide-able hide" id="randomSelection">
@@ -815,6 +1060,30 @@
                     </div>
                 </div>
             </div>
+
+            <!-- communication -->
+            <div class="flex flex-grow px-4 w-full h-full flex-col hide-able hide" id="communication">
+                <!-- communication-top -->
+                <!-- height为72+2=74px -->
+                <div class="flex flex-col w-full">
+                    <div class="flex items-center justify-center w-full">
+                        <div class="flex p-4 px-8 font-medium text-4xl dark:text-zinc-300">
+                            交流
+                        </div>
+                        <div class="flex flex-grow"></div>
+                        <!-- blank -->
+                    </div>
+                    <div class="flex w-full py-px px-2 bg-zinc-300 dark:bg-zinc-600">
+                        <div class="flex flex-grow"></div>
+                    </div>
+                </div>
+                <!-- communication-content -->
+                <div class="flex flex-col h-74px-to-full w-full px-4" id="communication-content">
+                    <!-- communication-select -->
+                    <div class="flex flex-col w-full h-full" id="communication-select"></div>
+                </div>
+            </div>
+
             <!-- wallpaper -->
             <div class="flex flex-grow px-4 w-full flex-col hide-able hide" id="wallpaper">
                 <!-- wallpaper-top -->
@@ -841,10 +1110,11 @@
                                 查看壁纸
                             </div>
                             <!-- (unfinished) -->
-                            <div class="max-w-full max-h-full h-16-to-full overflow-y-scroll justify-center columns-xs gap-6">
+                            <div
+                                class="max-w-full max-h-full h-16-to-full overflow-y-scroll justify-center columns-xs gap-6">
                                 <!-- 图片浏览 -->
                                 <div
-                                    class="flex flex-col m-2 p-4 max-w-full h-max items-center justify-center rounded-xl break-inside-avoid-column bg-zinc-50 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-600">
+                                    class="flex flex-col m-2 p-4 max-w-full h-max items-center justify-center rounded-xl break-inside-avoid-column bg-zinc-50 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700">
                                     <div class="flex w-full rounded-xl overflow-hidden">
                                         <img draggable="false" class="w-full"
                                             src="./img/wallpapers/(test_wallpaper)ganyu.jpg" alt="" />
@@ -859,7 +1129,7 @@
                                     </div>
                                 </div>
                                 <div
-                                    class="flex flex-col m-2 p-4 max-w-full h-max items-center justify-center rounded-xl break-inside-avoid-column bg-zinc-50 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-600">
+                                    class="flex flex-col m-2 p-4 max-w-full h-max items-center justify-center rounded-xl break-inside-avoid-column bg-zinc-50 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700">
                                     <div class="flex w-full rounded-xl overflow-hidden">
                                         <img draggable="false" class="w-full"
                                             src="./img/wallpapers/(test_wallpaper)cool_girl.jpg" alt="" />
@@ -874,7 +1144,7 @@
                                     </div>
                                 </div>
                                 <div
-                                    class="flex flex-col m-2 p-4 max-w-full h-max items-center justify-center rounded-xl break-inside-avoid-column bg-zinc-50 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-600">
+                                    class="flex flex-col m-2 p-4 max-w-full h-max items-center justify-center rounded-xl break-inside-avoid-column bg-zinc-50 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700">
                                     <div class="flex w-full rounded-xl overflow-hidden">
                                         <img draggable="false" class="w-full"
                                             src="./img/wallpapers/(test_wallpaper)girl.jpg" alt="" />
@@ -889,7 +1159,7 @@
                                     </div>
                                 </div>
                                 <div
-                                    class="flex flex-col m-2 p-4 max-w-full h-max items-center justify-center rounded-xl break-inside-avoid-column bg-zinc-50 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-600">
+                                    class="flex flex-col m-2 p-4 max-w-full h-max items-center justify-center rounded-xl break-inside-avoid-column bg-zinc-50 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700">
                                     <div class="flex w-full rounded-xl overflow-hidden">
                                         <img draggable="false" class="w-full"
                                             src="./img/wallpapers/(test_wallpaper)miku.jpg" alt="" />
@@ -904,7 +1174,7 @@
                                     </div>
                                 </div>
                                 <div
-                                    class="flex flex-col m-2 p-4 max-w-full h-max items-center justify-center rounded-xl break-inside-avoid-column bg-zinc-50 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-600">
+                                    class="flex flex-col m-2 p-4 max-w-full h-max items-center justify-center rounded-xl break-inside-avoid-column bg-zinc-50 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700">
                                     <div class="flex w-full rounded-xl overflow-hidden">
                                         <img draggable="false" class="w-full"
                                             src="./img/wallpapers/(test_wallpaper)nekomusume.jpg" alt="" />
@@ -919,7 +1189,7 @@
                                     </div>
                                 </div>
                                 <div
-                                    class="flex flex-col m-2 p-4 max-w-full h-max items-center justify-center rounded-xl break-inside-avoid-column bg-zinc-50 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-600">
+                                    class="flex flex-col m-2 p-4 max-w-full h-max items-center justify-center rounded-xl break-inside-avoid-column bg-zinc-50 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700">
                                     <div class="flex w-full rounded-xl overflow-hidden">
                                         <img draggable="false" class="w-full"
                                             src="./img/wallpapers/(test_wallpaper)抹茶_anmi.png" alt="" />
@@ -934,7 +1204,7 @@
                                     </div>
                                 </div>
                                 <div
-                                    class="flex flex-col m-2 p-4 max-w-full h-max items-center justify-center rounded-xl break-inside-avoid-column bg-zinc-50 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-600">
+                                    class="flex flex-col m-2 p-4 max-w-full h-max items-center justify-center rounded-xl break-inside-avoid-column bg-zinc-50 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700">
                                     <div class="flex w-full rounded-xl overflow-hidden">
                                         <img draggable="false" class="w-full"
                                             src="./img/wallpapers/(test_wallpaper)江南烧酒_anmi.jpg" alt="" />
@@ -949,7 +1219,7 @@
                                     </div>
                                 </div>
                                 <div
-                                    class="flex flex-col m-2 p-4 max-w-full h-max items-center justify-center rounded-xl break-inside-avoid-column bg-zinc-50 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-600">
+                                    class="flex flex-col m-2 p-4 max-w-full h-max items-center justify-center rounded-xl break-inside-avoid-column bg-zinc-50 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700">
                                     <div class="flex w-full rounded-xl overflow-hidden">
                                         <img draggable="false" class="w-full"
                                             src="./img/wallpapers/(test_wallpaper)铃兰_anmi.jpg" alt="" />
