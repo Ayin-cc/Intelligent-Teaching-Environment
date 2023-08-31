@@ -78,8 +78,6 @@ function updateWeb() {
         window.ipcRenderer.send('mainWindow', 'close-window');
     });
 
-    dragMainWindow();
-
 
     // 顶部的folder点击，切换显示状态
     // (done)
@@ -113,8 +111,6 @@ function updateWeb() {
             element.classList.toggle('hide');
         });
         // 调整间距
-
-
         var resizableElements = sidebar.querySelectorAll('.resizable');
         resizableElements.forEach(function (element) {
             if (element.classList.contains('mx-10')) {
@@ -157,8 +153,14 @@ function updateWeb() {
                 element.classList.remove('p-2');
                 element.classList.add('p-4');
             }
-
         });
+
+        var sidebarSelfExtra = document.getElementById('sidebar-self-extra');
+        if (sidebarSelfExtra.style.left != '10px') {
+            sidebarSelfExtra.style.left = '10px';
+        } else {
+            sidebarSelfExtra.style.left = '200px';
+        }
 
     });
 
@@ -317,12 +319,6 @@ function updateWeb() {
     });
 }
 
-function dragMainWindow(){
-    // 获取渲染进程中的要拖拽的元素
-    const draggableHeader = document.getElementById('draggable-header');
-    
-}
-
 
 // ==================================================
 // 首页
@@ -361,13 +357,14 @@ function updateHomepageDateTime() {
 function updateHomepageGreeting() {
     var greetingHomepage = document.getElementById('greeting-homepage');
     var currentHour = new Date().getHours();
+    var currentMinute = new Date().getMinutes();
     if (currentHour >= 5 && currentHour < 7) {
         greetingHomepage.textContent = "清晨好！新的一天开始了，希望你有个美好的开始。";
     } else if (currentHour >= 7 && currentHour < 12) {
         greetingHomepage.textContent = "早上好！新的一天开始了，希望你有个美好的开始!";
-    } else if (currentHour >= 12 && currentHour < 14) {
+    } else if (currentHour >= 12 && (currentHour < 14 && currentMinute < 50)) {
         greetingHomepage.textContent = "中午好！是时候休息一下啦。";
-    } else if (currentHour >= 14 && currentHour < 18) {
+    } else if ((currentHour >= 13 && currentMinute >= 50) && currentHour < 18) {
         greetingHomepage.textContent = "下午好！继续加油努力吧!";
     } else if (currentHour >= 18 && currentHour < 21) {
         greetingHomepage.textContent = "傍晚好！夕阳的余晖让一切都变得温暖。";
@@ -377,6 +374,8 @@ function updateHomepageGreeting() {
         greetingHomepage.textContent = "夜深了，早点休息。";
     }
 }
+
+
 // ==================================================
 // 签到
 // signIn(签到)
@@ -548,7 +547,6 @@ function updateQRCodeSignInContinuing(duration, frequency) {
     });
 }
 
-
 // 签到结束
 // (unfinished) 
 function signInFinished() {
@@ -596,7 +594,14 @@ function updateInputTangeRandomSelection() {
 // message(通知)
 // ==================================================
 function updateMessage() {
+    putMessageToWindows('Hello', 'The ITE is working!', './www/icons/message.png');
 
+}
+
+
+function putMessageToWindows(title, body, icon) {
+    window.ipcRenderer.send('Notification', title, body, icon);
+    console.log('index.js');
 }
 
 // ==================================================
