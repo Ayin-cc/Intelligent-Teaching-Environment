@@ -21,7 +21,7 @@ public class CallStuContoller {
 
     // 随机点名接口
     @RequestMapping("/random")
-    public ResponseEntity<List<Student>> random(@RequestBody @RequestParam("token") String token, int count, String uid){
+    public ResponseEntity<List<Student>> random(@RequestBody @RequestParam("token") String token, Integer count, String uid){
         List<Student> students = callStuService.random(token, count, uid);
         return new ResponseEntity<>(students, HttpStatus.OK);
     }
