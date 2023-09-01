@@ -15,13 +15,14 @@ public class ChatBoxController {
 
     // 发送消息接口
     @RequestMapping("/send")
-    public void send(@RequestBody String type, Chat chat){
-        if(type.equals("chat")){
-            chatBoxService.send(chat);
-        }
-        else{
-            System.out.println("请求信息错误！");
-        }
+    public void send() {
+
+    }
+
+    // 维持长连接
+    @RequestMapping("/keepAlive")
+    public void keepAlive(){
+
     }
 
 }

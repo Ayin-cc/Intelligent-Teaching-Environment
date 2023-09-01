@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import service.QRCodeService;
 
@@ -21,7 +22,7 @@ public class QRCodeController {
 
     // 教师端获取二维码接口
     @RequestMapping("/get")
-    public ResponseEntity<QRcode> get(@RequestBody String token, String cid) {
+    public ResponseEntity<QRcode> get(@RequestBody @RequestParam("token") String token, String cid) {
         QRcode qRcode = qrCodeService.get(token, cid);
         if(qRcode == null){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -33,7 +34,7 @@ public class QRCodeController {
 
     // 学生端扫描二维码接口
     @RequestMapping("/scan")
-    public ResponseEntity<String> scan(@RequestBody String token, String courseId, String uid){
+    public ResponseEntity<String> scan(@RequestBody @RequestParam("token") String token, String courseId, String uid){
         if(qrCodeService.scan(token, courseId, uid)){
             return new ResponseEntity<>("OK", HttpStatus.OK);
         }
@@ -44,14 +45,14 @@ public class QRCodeController {
 
     // 教室端更新签到数据接口
     @RequestMapping("/update")
-    public ResponseEntity<List<Student>> update(@RequestBody String token, String uid){
+    public ResponseEntity<List<Student>> update(@RequestBody @RequestParam("token") String token, String uid){
         List<Student> students = qrCodeService.update(token, uid);
         return new ResponseEntity<>(students, HttpStatus.OK);
     }
 
     // 查询签到数据接口
     @RequestMapping("/query")
-    public ResponseEntity<List<QRCodeResult>> query(@RequestBody String token, String uid, String courseName, String cid, String date, String courseId, String teacher){
+    public ResponseEntity<List<QRCodeResult>> query(@RequestBody @RequestParam("token") String token, String uid, String courseName, String cid, String date, String courseId, String teacher){
         List<QRCodeResult> result = qrCodeService.query(token, cid, date, courseName, courseId, teacher);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }

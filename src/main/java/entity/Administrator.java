@@ -4,7 +4,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Administrator {
-    private String token;
     private String id;
     private String passwd;
 
@@ -12,26 +11,9 @@ public class Administrator {
     public Administrator() {
     }
 
-    public Administrator(String token, String id, String passwd) {
-        this.token = token;
+    public Administrator(String id, String passwd) {
         this.id = id;
         this.passwd = passwd;
-    }
-
-    /**
-     * 获取
-     * @return token
-     */
-    public String getToken() {
-        return token;
-    }
-
-    /**
-     * 设置
-     * @param token
-     */
-    public void setToken(String token) {
-        this.token = token;
     }
 
     /**
@@ -67,6 +49,6 @@ public class Administrator {
     }
 
     public String toString() {
-        return "Administrator{token = " + token + ", id = " + id + ", passwd = " + passwd + "}";
+        return "Administrator{id = " + id + ", passwd = " + passwd + "}";
     }
 }

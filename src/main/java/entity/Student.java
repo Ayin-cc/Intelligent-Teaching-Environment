@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class Student {
     private String sid;
-    private String token;
     private String name;
     private String major;
     private String college;
@@ -13,12 +12,12 @@ public class Student {
     private String passwd;
     private String phone;
 
+
     public Student() {
     }
 
-    public Student(String sid, String token, String name, String major, String college, String sex, String passwd, String phone) {
+    public Student(String sid, String name, String major, String college, String sex, String passwd, String phone) {
         this.sid = sid;
-        this.token = token;
         this.name = name;
         this.major = major;
         this.college = college;
@@ -41,22 +40,6 @@ public class Student {
      */
     public void setSid(String sid) {
         this.sid = sid;
-    }
-
-    /**
-     * 获取
-     * @return token
-     */
-    public String getToken() {
-        return token;
-    }
-
-    /**
-     * 设置
-     * @param token
-     */
-    public void setToken(String token) {
-        this.token = token;
     }
 
     /**
@@ -156,6 +139,6 @@ public class Student {
     }
 
     public String toString() {
-        return "Student{sid = " + sid + ", token = " + token + ", name = " + name + ", major = " + major + ", college = " + college + ", sex = " + sex + ", passwd = " + passwd + ", phone = " + phone + "}";
+        return "Student{sid = " + sid + ", name = " + name + ", major = " + major + ", college = " + college + ", sex = " + sex + ", passwd = " + passwd + ", phone = " + phone + "}";
     }
 }

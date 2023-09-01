@@ -18,24 +18,14 @@ public class CourseScheduleController {
 
     // 获取课表接口
     @RequestMapping("/get")
-    public void get(@RequestBody String type, String sid, List<Course> set){
-        if(type.equals("schedule")){
-            courseSchedualeService.get(sid);
-        }
-        else{
-            System.out.println("请求信息错误！");
-        }
+    public void get(){
+
     }
 
     // 修改课表接口
     @RequestMapping("/change")
-    public void change(@RequestBody String type, List<Course> set){
-        if(type.equals("schedule")){
-            courseSchedualeService.change(set);
-        }
-        else{
-            System.out.println("请求信息错误！");
-        }
+    public void change(){
+
     }
 
 }

@@ -2,12 +2,14 @@ package controller;
 
 import entity.Classroom;
 import entity.Course;
+import entity.StatusCode;
 import entity.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import service.AdministratorService;
 
@@ -20,117 +22,108 @@ public class AdministratorController {
     private AdministratorService administratorService;
 
     @RequestMapping("/addStudent")
-    public ResponseEntity<String> addStudent(@RequestBody String token, Student student){
+    public ResponseEntity<StatusCode> addStudent(@RequestBody @RequestParam("token") String token, Student student){
         if(administratorService.addStudent(token, student)){
-            return new ResponseEntity<>("OK", HttpStatus.OK);
+            return new ResponseEntity<>(new StatusCode(1), HttpStatus.OK);
         }
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new StatusCode(0), HttpStatus.OK);
     }
 
     @RequestMapping("/changeStudent")
-    public ResponseEntity<String> changeStudent(@RequestBody String token, Student student){
+    public ResponseEntity<StatusCode> changeStudent(@RequestBody @RequestParam("token") String token, Student student){
         if(administratorService.changeStudent(token, student)){
-            return new ResponseEntity<>("OK", HttpStatus.OK);
+            return new ResponseEntity<>(new StatusCode(1), HttpStatus.OK);
         }
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new StatusCode(0), HttpStatus.OK);
     }
 
     @RequestMapping("/queryStudent")
-    public ResponseEntity<List<Student>> queryStudent(@RequestBody String token, String sid, String name, String major, String college, String phone){
+    public ResponseEntity<List<Student>> queryStudent(@RequestBody @RequestParam("token") String token, String sid, String name, String major, String college, String phone){
         List<Student> result = administratorService.queryStudent(token, sid, name, major, college, phone);
-        if(result != null){
-            return new ResponseEntity<>(result, HttpStatus.OK);
-        }
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @RequestMapping("/deleteStudent")
-    public ResponseEntity<String> deleteStudent(@RequestBody String token, Student student){
+    public ResponseEntity<StatusCode> deleteStudent(@RequestBody @RequestParam("token") String token, Student student){
         if(administratorService.deleteStudent(token, student)){
-            return new ResponseEntity<>("OK", HttpStatus.OK);
+            return new ResponseEntity<>(new StatusCode(1), HttpStatus.OK);
         }
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new StatusCode(0), HttpStatus.OK);
     }
 
     @RequestMapping("/addClassroom")
-    public ResponseEntity<String> addClassroom(@RequestBody String token, Classroom classroom){
+    public ResponseEntity<StatusCode> addClassroom(@RequestBody @RequestParam("token") String token, Classroom classroom){
         if(administratorService.addClassroom(token, classroom)){
-            return new ResponseEntity<>("OK", HttpStatus.OK);
+            return new ResponseEntity<>(new StatusCode(1), HttpStatus.OK);
         }
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new StatusCode(0), HttpStatus.OK);
     }
 
     @RequestMapping("/changeClassroom")
-    public ResponseEntity<String> changecClassroom(@RequestBody String token, Classroom classroom){
+    public ResponseEntity<StatusCode> changecClassroom(@RequestBody @RequestParam("token") String token, Classroom classroom){
         if(administratorService.changeClassroom(token, classroom)){
-            return new ResponseEntity<>("OK", HttpStatus.OK);
+            return new ResponseEntity<>(new StatusCode(1), HttpStatus.OK);
         }
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new StatusCode(0), HttpStatus.OK);
     }
 
     @RequestMapping("/queryClassroom")
-    public ResponseEntity<List<Classroom>> queryClassroom(@RequestBody String token, String cid, String address){
+    public ResponseEntity<List<Classroom>> queryClassroom(@RequestBody @RequestParam("token") String token, String cid, String address){
         List<Classroom> result = administratorService.queryClassroom(token, cid, address);
-        if(result != null){
-            return new ResponseEntity<>(result, HttpStatus.OK);
-        }
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @RequestMapping("/deleteClassroom")
-    public ResponseEntity<String> deleteClassroom(@RequestBody String token, Classroom classroom){
+    public ResponseEntity<StatusCode> deleteClassroom(@RequestBody @RequestParam("token") String token, Classroom classroom){
         if(administratorService.deleteClassroom(token, classroom)){
-            return new ResponseEntity<>("OK", HttpStatus.OK);
+            return new ResponseEntity<>(new StatusCode(1), HttpStatus.OK);
         }
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new StatusCode(0), HttpStatus.OK);
     }
 
     @RequestMapping("/addCourse")
-    public ResponseEntity<String> addCourse(@RequestBody String token, Course course){
+    public ResponseEntity<StatusCode> addCourse(@RequestBody @RequestParam("token") String token, Course course){
         if(administratorService.addCourse(token, course)){
-            return new ResponseEntity<>("OK", HttpStatus.OK);
+            return new ResponseEntity<>(new StatusCode(1), HttpStatus.OK);
         }
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new StatusCode(0), HttpStatus.OK);
     }
 
     @RequestMapping("/changeCourse")
-    public ResponseEntity<String> changeCourse(@RequestBody String token, Course course){
+    public ResponseEntity<StatusCode> changeCourse(@RequestBody @RequestParam("token") String token, Course course){
         if(administratorService.changeCourse(token, course)){
-            return new ResponseEntity<>("OK", HttpStatus.OK);
+            return new ResponseEntity<>(new StatusCode(1), HttpStatus.OK);
         }
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new StatusCode(0), HttpStatus.OK);
     }
 
     @RequestMapping("/queryCourse")
-    public ResponseEntity<List<Course>> queryCourse(@RequestBody String token, String id, String name, String teacher){
+    public ResponseEntity<List<Course>> queryCourse(@RequestBody @RequestParam("token") String token, String id, String name, String teacher){
         List<Course> result = administratorService.queryCourse(token, id, name, teacher);
-        if(result != null){
-            return new ResponseEntity<>(result, HttpStatus.OK);
-        }
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @RequestMapping("/deleteCourse")
-    public ResponseEntity<String> deleteCourse(@RequestBody String token, Course course){
+    public ResponseEntity<StatusCode> deleteCourse(@RequestBody @RequestParam("token") String token, Course course){
         if(administratorService.deleteCourse(token, course)){
-            return new ResponseEntity<>("OK", HttpStatus.OK);
+            return new ResponseEntity<>(new StatusCode(1), HttpStatus.OK);
         }
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new StatusCode(0), HttpStatus.OK);
     }
 
     @RequestMapping("/addStudentToCourse")
-    public ResponseEntity<String> addStudentToCourse(@RequestBody String token, String id, String sid){
+    public ResponseEntity<StatusCode> addStudentToCourse(@RequestBody @RequestParam("token") String token, String id, String sid){
         if(administratorService.addStudentToCourse(token, id, sid)){
-            return new ResponseEntity<>("OK", HttpStatus.OK);
+            return new ResponseEntity<>(new StatusCode(1), HttpStatus.OK);
         }
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new StatusCode(0), HttpStatus.OK);
     }
 
     @RequestMapping("/deleteStudentFromCourse")
-    public ResponseEntity<String> deleteStudentFromCourse(@RequestBody String token, Student student, Course course){
+    public ResponseEntity<StatusCode> deleteStudentFromCourse(@RequestBody @RequestParam("token") String token, Student student, Course course){
         if(administratorService.deleteStudentFromCourse(token, student, course)){
-            return new ResponseEntity<>("OK", HttpStatus.OK);
+            return new ResponseEntity<>(new StatusCode(1), HttpStatus.OK);
         }
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new StatusCode(0), HttpStatus.OK);
     }
 }
