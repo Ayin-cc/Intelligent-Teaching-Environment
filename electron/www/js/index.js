@@ -1,4 +1,7 @@
-
+// 全局变量
+var isLogin = 0;
+var isClassPeriod = 0;
+var isClassStarted = 0;
 
 // ==================================================
 // 当纯 HTML 被完全加载以及解析时
@@ -55,7 +58,6 @@ function updateWeb() {
     fullscreenWindowControllerHeader.addEventListener('click', function () {
         window.ipcRenderer.send('mainWindow', 'fullscreen-window');
         var imgElement = fullscreenWindowControllerHeader.querySelector('img');
-        console.log(imgElement.src);
         // 更改图标
         if (imgElement.classList.contains('fullscreened')) {
             imgElement.classList.add('h-6');
@@ -326,18 +328,30 @@ function updateWeb() {
 // ==================================================
 function updateHomepage() {
     // 初始化：
-    // 立即更新一次时间
-    updateHomepageDateTime();
-    updateHomepageGreeting();
+    // 立即更新课程表信息
+    updateHomepageSchedule()
+    // 立即更新一次
+    updateHomepageDateTime(); // 时间
+    updateHomepageGreeting(); // 问候语
+    updateHomepageScheduleDisplay(); // 课程
+    classStartHomepage(); // 开始上课
     // 持续性
     // 每秒钟更新一次时间
     setInterval(function () {
         updateHomepageDateTime();
         updateHomepageGreeting();
+        updateHomepageScheduleDisplay()
     }, 1000);
 
 
 }
+// 初始化时调用 注意设置某个时间段
+// unfinished
+function updateHomepageSchedule() {
+
+}
+
+// 
 // 更新homepage时间
 function updateHomepageDateTime() {
 
@@ -359,14 +373,14 @@ function updateHomepageGreeting() {
     var currentHour = new Date().getHours();
     var currentMinute = new Date().getMinutes();
     if (currentHour >= 5 && currentHour < 7) {
-        greetingHomepage.textContent = "清晨好！新的一天开始了，希望你有个美好的开始。";
+        greetingHomepage.textContent = "清晨好！一日之计在于晨!";
     } else if (currentHour >= 7 && currentHour < 12) {
-        greetingHomepage.textContent = "早上好！新的一天开始了，希望你有个美好的开始!";
-    } else if (currentHour >= 12 && (currentHour < 14 && currentMinute < 50)) {
+        greetingHomepage.textContent = "上午好！新的一天开始了!";
+    } else if (currentHour >= 12 && (currentHour < 13 || (currentHour == 13 && currentMinute < 50))) {
         greetingHomepage.textContent = "中午好！是时候休息一下啦。";
-    } else if ((currentHour >= 13 && currentMinute >= 50) && currentHour < 18) {
+    } else if ((currentHour == 13 && currentMinute >= 50 || currentHour > 13) && (currentHour < 18 || (currentHour == 18 && currentMinute < 25))) { // 13:50-18:25
         greetingHomepage.textContent = "下午好！继续加油努力吧!";
-    } else if (currentHour >= 18 && currentHour < 21) {
+    } else if (((currentHour = 18 && currentMinute >= 25) || currentHour > 18) && currentHour < 21) { // 18:25-21:00?
         greetingHomepage.textContent = "傍晚好！夕阳的余晖让一切都变得温暖。";
     } else if (currentHour >= 21 && currentHour < 23) {
         greetingHomepage.textContent = "晚上好！夜晚是创意和思考的好时机。";
@@ -374,8 +388,287 @@ function updateHomepageGreeting() {
         greetingHomepage.textContent = "夜深了，早点休息。";
     }
 }
+// 更新当前展示课程及上课状态(jQuery)
+function updateHomepageScheduleDisplay() {
+    var scheduleHomepage = $('#schedule-homepage').children();
+    var scheduleHomepageChiledren = scheduleHomepage.children();
+    var currentHour = new Date().getHours();
+    var currentMinute = new Date().getMinutes();
+    // 方框时间段中
+    
+    if (currentHour == 8 && currentMinute >= 15) { // 8:15-9:00 上午
+        scheduleHomepageChiledren.eq(0).addClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500');
+        scheduleHomepageChiledren.eq(0).removeClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700 hide');
+        for (var i = 0; ((i != 0) && i < scheduleHomepageChiledren.length); i++) {
+            scheduleHomepageChiledren.eq(i).removeClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500');
+            scheduleHomepageChiledren.eq(i).addClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700 hide');
+        }
+        scheduleHomepageChiledren.eq(1).removeClass('hide');
+        scheduleHomepageChiledren.eq(2).removeClass('hide');
+        isClassPeriod = 1;
+    } else if ((currentHour == 9 && currentMinute >= 10 || currentHour > 9) && (currentHour < 9 || (currentHour == 9 && currentMinute < 55))) { // 9:10-9:55
+        scheduleHomepageChiledren.eq(1).addClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500');
+        scheduleHomepageChiledren.eq(1).removeClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700 hide');
+        for (var i = 0; ((i != 1) && i < scheduleHomepageChiledren.length); i++) {
+            scheduleHomepageChiledren.eq(i).removeClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500');
+            scheduleHomepageChiledren.eq(i).addClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700 hide');
+        }
+        scheduleHomepageChiledren.eq(2).removeClass('hide');
+        scheduleHomepageChiledren.eq(3).removeClass('hide');
+        isClassPeriod = 1;
+    } else if ((currentHour >= 10 && currentMinute >= 15) && (currentHour < 11)) { // 10:15-11:00
+        scheduleHomepageChiledren.eq(2).addClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500');
+        scheduleHomepageChiledren.eq(2).removeClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700 hide');
+        for (var i = 0; ((i != 2) && i < scheduleHomepageChiledren.length); i++) {
+            scheduleHomepageChiledren.eq(i).removeClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500');
+            scheduleHomepageChiledren.eq(i).addClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700 hide');
+        }
+        scheduleHomepageChiledren.eq(3).removeClass('hide');
+        scheduleHomepageChiledren.eq(4).removeClass('hide');
+        isClassPeriod = 1;
+    } else if ((currentHour == 11 && currentMinute >= 10 || currentHour > 11) && (currentHour < 11 || (currentHour == 11 && currentMinute < 55))) { // 11:10-11:55
+        scheduleHomepageChiledren.eq(3).addClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500');
+        scheduleHomepageChiledren.eq(3).removeClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700 hide');
+        for (var i = 0; ((i != 3) && i < scheduleHomepageChiledren.length); i++) {
+            scheduleHomepageChiledren.eq(i).removeClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500');
+            scheduleHomepageChiledren.eq(i).addClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700 hide');
+        }
+        scheduleHomepageChiledren.eq(4).removeClass('hide');
+        scheduleHomepageChiledren.eq(5).removeClass('hide');
+        isClassPeriod = 1;
+    } else if ((currentHour == 13 && currentMinute >= 50 || currentHour > 13) && (currentHour < 14 || (currentHour == 14 && currentMinute < 35))) { // 13:50-14:35 下午
+        scheduleHomepageChiledren.eq(4).addClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500');
+        scheduleHomepageChiledren.eq(4).removeClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700 hide');
+        for (var i = 0; ((i != 4) && i < scheduleHomepageChiledren.length); i++) {
+            scheduleHomepageChiledren.eq(i).removeClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500');
+            scheduleHomepageChiledren.eq(i).addClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700 hide');
+        }
+        scheduleHomepageChiledren.eq(5).removeClass('hide');
+        scheduleHomepageChiledren.eq(6).removeClass('hide');
+        isClassPeriod = 1;
+    } else if ((currentHour == 14 && currentMinute >= 45 || currentHour > 14) && (currentHour < 15 || (currentHour == 15 && currentMinute < 30))) { // 14:45-15:30
+        scheduleHomepageChiledren.eq(5).addClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500');
+        scheduleHomepageChiledren.eq(5).removeClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700 hide');
+        for (var i = 0; ((i != 5) && i < scheduleHomepageChiledren.length); i++) {
+            scheduleHomepageChiledren.eq(i).removeClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500');
+            scheduleHomepageChiledren.eq(i).addClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700 hide');
+        }
+        scheduleHomepageChiledren.eq(6).removeClass('hide');
+        scheduleHomepageChiledren.eq(7).removeClass('hide');
+        isClassPeriod = 1;
+    } else if ((currentHour == 15 && currentMinute >= 40 || currentHour > 15) && (currentHour < 16 || (currentHour == 16 && currentMinute < 25))) { // 15:40-16:25
+        scheduleHomepageChiledren.eq(6).addClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500');
+        scheduleHomepageChiledren.eq(6).removeClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700 hide');
+        for (var i = 0; ((i != 6) && i < scheduleHomepageChiledren.length); i++) {
+            scheduleHomepageChiledren.eq(i).removeClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500');
+            scheduleHomepageChiledren.eq(i).addClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700 hide');
+        }
+        scheduleHomepageChiledren.eq(7).removeClass('hide');
+        scheduleHomepageChiledren.eq(8).removeClass('hide');
+        isClassPeriod = 1;
+    } else if ((currentHour == 16 && currentMinute >= 45 || currentHour > 16) && (currentHour < 17 || (currentHour == 17 && currentMinute < 30))) { // 16:45-17:30
+        scheduleHomepageChiledren.eq(7).addClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500');
+        scheduleHomepageChiledren.eq(7).removeClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700 hide');
+        for (var i = 0; ((i != 7) && i < scheduleHomepageChiledren.length); i++) {
+            scheduleHomepageChiledren.eq(i).removeClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500');
+            scheduleHomepageChiledren.eq(i).addClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700 hide');
+        }
+        scheduleHomepageChiledren.eq(8).removeClass('hide');
+        scheduleHomepageChiledren.eq(9).removeClass('hide');
+        isClassPeriod = 1;
+    } else if ((currentHour == 17 && currentMinute >= 40 || currentHour > 17) && (currentHour < 18 || (currentHour == 18 && currentMinute < 25))) { // 17:40-18:25
+        scheduleHomepageChiledren.eq(8).addClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500');
+        scheduleHomepageChiledren.eq(8).removeClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700 hide');
+        for (var i = 0; ((i != 8) && i < scheduleHomepageChiledren.length); i++) {
+            scheduleHomepageChiledren.eq(i).removeClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500');
+            scheduleHomepageChiledren.eq(i).addClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700 hide');
+        }
+        scheduleHomepageChiledren.eq(9).removeClass('hide');
+        scheduleHomepageChiledren.eq(10).removeClass('hide');
+        isClassPeriod = 1;
+    } else if ((currentHour == 19 && currentMinute >= 20 || currentHour > 19) && (currentHour < 20 || (currentHour == 20 && currentMinute < 5))) { // 19:20-20:05 晚上
+        scheduleHomepageChiledren.eq(9).addClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500');
+        scheduleHomepageChiledren.eq(9).removeClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700 hide');
+        for (var i = 0; ((i != 9) && i < scheduleHomepageChiledren.length); i++) {
+            scheduleHomepageChiledren.eq(i).removeClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500');
+            scheduleHomepageChiledren.eq(i).addClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700 hide');
+        }
+        scheduleHomepageChiledren.eq(10).removeClass('hide');
+        scheduleHomepageChiledren.eq(11).removeClass('hide');
+        isClassPeriod = 1;
+    } else if (currentHour == 20 && currentMinute >= 15) { // 20:15-21:00
+        scheduleHomepageChiledren.eq(10).addClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500');
+        scheduleHomepageChiledren.eq(10).removeClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700 hide');
+        for (var i = 0; ((i != 10) && i < scheduleHomepageChiledren.length); i++) {
+            scheduleHomepageChiledren.eq(i).removeClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500');
+            scheduleHomepageChiledren.eq(i).addClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700 hide');
+        }
+        scheduleHomepageChiledren.eq(11).removeClass('hide');
+        scheduleHomepageChiledren.eq(12).removeClass('hide');
+        isClassPeriod = 1;
+    } else if ((currentHour == 21 && currentMinute >= 10 || currentHour > 21) && (currentHour < 22 || (currentHour == 22 && currentMinute < 55))) { // 21:10-22:55
+        scheduleHomepageChiledren.eq(11).addClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500');
+        scheduleHomepageChiledren.eq(11).removeClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700 hide');
+        for (var i = 0; ((i != 11) && i < scheduleHomepageChiledren.length); i++) {
+            scheduleHomepageChiledren.eq(i).removeClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500');
+            scheduleHomepageChiledren.eq(i).addClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700 hide');
+        }
+        scheduleHomepageChiledren.eq(12).removeClass('hide');
+    } else if (((currentHour == 22 && currentMinute >= 55 || currentHour > 22) && (currentHour < 24)) || (currentHour >= 0 && currentHour < 5)) { // 22:55-24:00 || 0:00-5:00
+        scheduleHomepageChiledren.eq(12).addClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500');
+        scheduleHomepageChiledren.eq(12).removeClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700 hide');
+        for (var i = 0; ((i != 12) && i < scheduleHomepageChiledren.length); i++) {
+            scheduleHomepageChiledren.eq(i).removeClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500');
+            scheduleHomepageChiledren.eq(i).addClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700 hide');
+        }
+        isClassPeriod = 0;
+    }// 方框时间外
+    else if (currentHour >= 5 && (currentHour < 8 || (currentHour == 8 && currentMinute < 15))) { // 5:00-8:15
+        scheduleHomepageChiledren.eq(0).addClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700');
+        scheduleHomepageChiledren.eq(0).removeClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500 hide');
+        for (var i = 0; ((i != 0) && i < scheduleHomepageChiledren.length); i++) {
+            scheduleHomepageChiledren.eq(i).removeClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500');
+            scheduleHomepageChiledren.eq(i).addClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700 hide');
+        }
+        scheduleHomepageChiledren.eq(1).removeClass('hide');
+        scheduleHomepageChiledren.eq(2).removeClass('hide');
+        isClassPeriod = 0;
+    } else if (currentHour == 9 && currentMinute < 10) { // 9:00-9:10
+        scheduleHomepageChiledren.eq(1).addClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700');
+        scheduleHomepageChiledren.eq(1).removeClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500 hide');
+        for (var i = 0; ((i != 1) && i < scheduleHomepageChiledren.length); i++) {
+            scheduleHomepageChiledren.eq(i).removeClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500');
+            scheduleHomepageChiledren.eq(i).addClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700 hide');
+        }
+        scheduleHomepageChiledren.eq(2).removeClass('hide');
+        scheduleHomepageChiledren.eq(3).removeClass('hide');
+        isClassPeriod = 0;
+    } else if ((currentHour == 9 && currentMinute >= 55) || (currentHour == 10 && currentMinute < 15)) {// 9:55-10:15
+        scheduleHomepageChiledren.eq(2).addClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700');
+        scheduleHomepageChiledren.eq(2).removeClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500 hide');
+        for (var i = 0; ((i != 2) && i < scheduleHomepageChiledren.length); i++) {
+            scheduleHomepageChiledren.eq(i).removeClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500');
+            scheduleHomepageChiledren.eq(i).addClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700 hide');
+        }
+        scheduleHomepageChiledren.eq(3).removeClass('hide');
+        scheduleHomepageChiledren.eq(4).removeClass('hide');
+        isClassPeriod = 0;
+    } else if ((currentHour == 11 && currentMinute >= 0 || currentHour > 11) && (currentHour < 11 || (currentHour == 11 && currentMinute < 10))) { // 11:00-11:10
+        scheduleHomepageChiledren.eq(3).addClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700');
+        scheduleHomepageChiledren.eq(3).removeClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500 hide');
+        for (var i = 0; ((i != 3) && i < scheduleHomepageChiledren.length); i++) {
+            scheduleHomepageChiledren.eq(i).removeClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500');
+            scheduleHomepageChiledren.eq(i).addClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700 hide');
+        }
+        scheduleHomepageChiledren.eq(4).removeClass('hide');
+        scheduleHomepageChiledren.eq(5).removeClass('hide');
+        isClassPeriod = 0;
+    } else if ((currentHour == 11 && currentMinute >= 55 || currentHour > 11) && (currentHour < 13 || (currentHour == 13 && currentMinute < 50))) { // 11:55-13:50
+        scheduleHomepageChiledren.eq(4).addClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700');
+        scheduleHomepageChiledren.eq(4).removeClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500 hide');
+        for (var i = 0; ((i != 4) && i < scheduleHomepageChiledren.length); i++) {
+            scheduleHomepageChiledren.eq(i).removeClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500');
+            scheduleHomepageChiledren.eq(i).addClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700 hide');
+        }
+        scheduleHomepageChiledren.eq(5).removeClass('hide');
+        scheduleHomepageChiledren.eq(6).removeClass('hide');
+        isClassPeriod = 0;
+    } else if ((currentHour == 14 && currentMinute >= 35 || currentHour > 14) && (currentHour < 14 || (currentHour == 14 && currentMinute < 45))) { // 14:35-14:45
+        scheduleHomepageChiledren.eq(5).addClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700');
+        scheduleHomepageChiledren.eq(5).removeClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500 hide');
+        for (var i = 0; ((i != 5) && i < scheduleHomepageChiledren.length); i++) {
+            scheduleHomepageChiledren.eq(i).removeClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500');
+            scheduleHomepageChiledren.eq(i).addClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700 hide');
+        }
+        scheduleHomepageChiledren.eq(6).removeClass('hide');
+        scheduleHomepageChiledren.eq(7).removeClass('hide');
+        isClassPeriod = 0;
+    } else if ((currentHour == 15 && currentMinute >= 30 || currentHour > 15) && (currentHour < 15 || (currentHour == 15 && currentMinute < 40))) { // 15:30-15:40
+        scheduleHomepageChiledren.eq(6).addClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700');
+        scheduleHomepageChiledren.eq(6).removeClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500 hide');
+        for (var i = 0; ((i != 6) && i < scheduleHomepageChiledren.length); i++) {
+            scheduleHomepageChiledren.eq(i).removeClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500');
+            scheduleHomepageChiledren.eq(i).addClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700 hide');
+        }
+        scheduleHomepageChiledren.eq(7).removeClass('hide');
+        scheduleHomepageChiledren.eq(8).removeClass('hide');
+        isClassPeriod = 0;
+    } else if ((currentHour == 16 && currentMinute >= 25 || currentHour > 16) && (currentHour < 16 || (currentHour == 16 && currentMinute < 45))) { // 16:25-16:45
+        scheduleHomepageChiledren.eq(7).addClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700');
+        scheduleHomepageChiledren.eq(7).removeClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500 hide');
+        for (var i = 0; ((i != 7) && i < scheduleHomepageChiledren.length); i++) {
+            scheduleHomepageChiledren.eq(i).removeClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500');
+            scheduleHomepageChiledren.eq(i).addClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700 hide');
+        }
+        scheduleHomepageChiledren.eq(8).removeClass('hide');
+        scheduleHomepageChiledren.eq(9).removeClass('hide');
+        isClassPeriod = 0;
+    } else if ((currentHour == 17 && currentMinute >= 30 || currentHour > 17) && (currentHour < 17 || (currentHour == 17 && currentMinute < 40))) { // 17:30-17:40
+        scheduleHomepageChiledren.eq(8).addClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700');
+        scheduleHomepageChiledren.eq(8).removeClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500 hide');
+        for (var i = 0; ((i != 8) && i < scheduleHomepageChiledren.length); i++) {
+            scheduleHomepageChiledren.eq(i).removeClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500');
+            scheduleHomepageChiledren.eq(i).addClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700 hide');
+        }
+        scheduleHomepageChiledren.eq(9).removeClass('hide');
+        scheduleHomepageChiledren.eq(10).removeClass('hide');
+        isClassPeriod = 0;
+    } else if ((currentHour == 18 && currentMinute >= 25 || currentHour > 18) && (currentHour < 19 || (currentHour == 19 && currentMinute < 20))) { // 18:25-19:20
+        scheduleHomepageChiledren.eq(9).addClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700');
+        scheduleHomepageChiledren.eq(9).removeClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500 hide');
+        for (var i = 0; ((i != 9) && i < scheduleHomepageChiledren.length); i++) {
+            scheduleHomepageChiledren.eq(i).removeClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500');
+            scheduleHomepageChiledren.eq(i).addClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700 hide');
+        }
+        scheduleHomepageChiledren.eq(10).removeClass('hide');
+        scheduleHomepageChiledren.eq(11).removeClass('hide');
+        isClassPeriod = 0;
+        isClassPeriod = 0;
+    } else if ((currentHour == 20 && currentMinute >= 5 || currentHour > 20) && (currentHour < 20 || (currentHour == 20 && currentMinute < 15))) { // 20:05-20:15
+        scheduleHomepageChiledren.eq(10).addClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700');
+        scheduleHomepageChiledren.eq(10).removeClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500 hide');
+        for (var i = 0; ((i != 10) && i < scheduleHomepageChiledren.length); i++) {
+            scheduleHomepageChiledren.eq(i).removeClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500');
+            scheduleHomepageChiledren.eq(i).addClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700 hide');
+        }
+        scheduleHomepageChiledren.eq(11).removeClass('hide');
+        scheduleHomepageChiledren.eq(12).removeClass('hide');
+        isClassPeriod = 0;
+    } else if ((currentHour == 21 && currentMinute >= 0 || currentHour > 21) && (currentHour < 21 || (currentHour == 21 && currentMinute < 10))) { // 21:00-21:10
+        scheduleHomepageChiledren.eq(11).addClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700');
+        scheduleHomepageChiledren.eq(11).removeClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500 hide');
+        for (var i = 0; ((i != 11) && i < scheduleHomepageChiledren.length); i++) {
+            scheduleHomepageChiledren.eq(i).removeClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500');
+            scheduleHomepageChiledren.eq(i).addClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700 hide');
+        }
+        scheduleHomepageChiledren.eq(12).removeClass('hide');
+        isClassPeriod = 0;
+    }
+    var isClassPeriodHomepage = $('#isClassPeriod-homepage');
+    if(isClassPeriod == 0){
+        isClassPeriodHomepage.text('现在还不是上课时间!');
+    }else if(isClassPeriod == 1){
+        isClassPeriodHomepage.text('现在是上课时间段!');
+    }
+    
+    
 
+}
+// 开始上课
+function classStartHomepage(){
+    var classStartBtnHomepage = document.getElementById('classStartBtn-homepage');
+    classStartBtnHomepage.addEventListener('click',function(){
+        if(isClassStarted == 0){
+            isClassStarted = 1;
+            classStartBtnHomepage.textContent = '下课';
+            // 开启功能
+        }else if(isClassStarted == 1){
+            isClassStarted = 0;
+            classStartBtnHomepage.textContent = '上课';
+        }   // 关闭功能
+    });
 
+}
 // ==================================================
 // 签到
 // signIn(签到)
@@ -577,6 +870,7 @@ function updateRollCall() {
 // ==================================================
 function updateRandomSelection() {
     updateInputTangeRandomSelection();
+    randomSelectionStart();
 }
 function updateInputTangeRandomSelection() {
     // 初始化
@@ -588,6 +882,38 @@ function updateInputTangeRandomSelection() {
         randomSelectionCountLabel.textContent = randomSelectionCountInput.value;
     });
 }
+function randomSelectionStart(){
+    var count = 1;
+    var priority = false;
+    var randomSelectionStartBtn = document.getElementById('randomSelection-start-btn');
+    randomSelectionStartBtn.addEventListener('click',function(){
+        count = document.getElementById('randomSelection-count-input').value;
+        priority = document.getElementById('randomSelection-priority-toggle').checked;
+        randomSelectionDisplay(count, priority);
+    });
+    
+}
+
+function randomSelectionDisplay(count, priority){
+    var randomSelectionSelect = document.getElementById('randomSelection-select');
+    var randomSelectionResult = document.getElementById('randomSelection-result');
+    
+    var count = count;
+    var priority = priority;
+    
+    randomSelectionSelect.classList.add('hide');
+    randomSelectionResult.classList.remove('hide');
+    // 具体抽取，然后修改html的代码
+    // ...
+    // 具体抽取，然后修改html的代码
+    var randomSelectionRestartBtn = document.getElementById('randomSelection-restart-btn');
+    randomSelectionRestartBtn.addEventListener('click',function(){
+        randomSelectionResult.classList.add('hide');
+        randomSelectionSelect.classList.remove('hide');
+        return; // 结束监听，微微优化
+    });
+}
+
 
 // ==================================================
 // 通知
@@ -598,10 +924,8 @@ function updateMessage() {
 
 }
 
-
 function putMessageToWindows(title, body, icon) {
     window.ipcRenderer.send('Notification', title, body, icon);
-    console.log('index.js');
 }
 
 // ==================================================
