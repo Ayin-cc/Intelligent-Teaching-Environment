@@ -16,7 +16,7 @@ import java.util.UUID;
 
 public class QRCodeGenerator {
     public static String generate(String uniqueIdString, String cid, String courseId) {
-        String data = "https://scuee.com/SCUEE/QRCode/scan?courseId=" + courseId + "&uid="; // 签到链接前缀
+        String data = "https://scuee.com/SCUEE/QRCode/scan?cid=" + cid + "&courseId=" + courseId + "&uid="; // 签到链接前缀
         String base64Code = null;
 
         // 拼接签到链接

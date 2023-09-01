@@ -4,5 +4,28 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="dao.ChatBoxDao">
+    <resultMap id="chatResultMap" type="entity.Chat">
+        <result column="classroom_id" property="cid"/>
+        <result column="student_id" property="sid"/>
+        <result column="chat_name" property="name"/>
+        <result column="chat_content" property="content"/>
+    </resultMap>
 
+    <insert id="addChat">
+        insert into scuee.chat
+            (classroom_id, student_id, chat_name, chat_time, chat_content, is_sent)
+        values
+            (#{chat.cid}, #{chat.sid}, #{chat.name}, #{chat.time}, #{chat.content}, 0)
+    </insert>
+
+    <select id="selectChat" resultMap="chatResultMap">
+        select *
+        from scuee.chat c
+        where (c.classroom_id = #{id} or c.student_id = #{id})
+            and c.is_sent = 0;
+        update scuee.chat
+        set is_sent = 1;
+        where (c.classroom_id = #{id} or c.student_id = #{id})
+            and c.is_sent = 0;
+    </select>
 </mapper>

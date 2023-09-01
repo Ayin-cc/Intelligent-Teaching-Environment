@@ -1,10 +1,10 @@
 package service;
 
 import entity.Course;
+import entity.Student;
 
 import java.util.List;
 
 public interface CourseSchedualeService {
-    void get(String sid);
-    void change(List<Course> set);
+    List<Course> get(Student student);
 }

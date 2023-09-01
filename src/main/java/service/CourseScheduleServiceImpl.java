@@ -2,6 +2,7 @@ package service;
 
 import dao.CourseScheduleDao;
 import entity.Course;
+import entity.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,12 +14,7 @@ public class CourseScheduleServiceImpl implements CourseSchedualeService {
     private CourseScheduleDao courseScheduleDao;
 
     @Override
-    public void get(String sid){
-
-    }
-
-    @Override
-    public void change(List<Course> set){
-
+    public List<Course> get(Student student){
+        return courseScheduleDao.selectCourseBySid(student.getSid());
     }
 }

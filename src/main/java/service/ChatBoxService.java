@@ -2,6 +2,9 @@ package service;
 
 import entity.Chat;
 
+import java.util.List;
+
 public interface ChatBoxService {
-    void send(Chat chat);
+    boolean send(Chat chat);
+    List<Chat> keepAlive(String id);
 }

@@ -6,7 +6,6 @@
 <mapper namespace="dao.UserDao">
     <resultMap id="studentResultMap" type="entity.Student">
         <result column="sid" property="sid" />
-        <result column="student_token" property="token" />
         <result column="student_name" property="name" />
         <result column="student_major" property="major" />
         <result column="student_college" property="college" />
