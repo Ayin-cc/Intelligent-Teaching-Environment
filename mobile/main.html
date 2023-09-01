@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link href="../../tailwindcss/output.css" rel="stylesheet" />
+		<title>ITE</title>
+	</head>
+
+	<body>
+		<!-- 顶部栏 -->
+		<div class="flex flex-col h-38">
+			<!-- 头像栏 -->
+			<a href="file:///D:/programming/codebase/UIETP/moblie/mine.html"
+				class="flex items-center max-w-xs p-2 rounded-lg resizable">
+				<!-- 头像框 -->
+				<div class="flex w-8 h-10 mx-4 overflow-hidden rounded-full" id="photo-profile-sidebarBottom">
+					<img draggable="false" src="./icons/333/用户.svg" alt="用户" srcset="" />
+				</div>
+				<div>
+					<!-- 姓名 -->
+					<div class="flex flex-grow mx-6 overflow-hidden select-none" id="name-profile-sidebarBottom">
+						XYCF
+					</div>
+
+					<!-- 学号 -->
+					<div class="flex flex-grow py-1 overflow-hidden text-xs select-none"
+						id="number-profile-sidebarBottom">
+						2022xxxxxxxxx
+					</div>
+				</div>
+			</a>
+
+			<!-- sidebar-line -->
+			<div class="flex mx-2 w-auto h-0.5 bg-slate-400 hide-able"></div>
+		</div>
+		<!-- 功能模块 -->
+		<div class="flex flex-col">
+			<div class="flex h-10 mx-8 my-1 rounded-xl items-center
+                    hover:bg-gray-100 before:w-0.5 before:h-full before:bg-slate-400 before:hover:bg-slate-600
+                    dark:hover:bg-zinc-600 dark:before:bg-zinc-600 dark:before:hover:bg-zinc-400 resizable"
+				id="function-sidebar">
+				<div class="flex w-6 h-6 mx-4">
+					<img draggable="false" src="./icons/333/更多2.svg" alt="功能" srcset="" />
+				</div>
+				<div class="flex font-medium text-zinc-950 dark:text-zinc-300 hide-able text">功能</div>
+				<!-- blank -->
+				<div class="flex flex-grow"></div>
+				<div class="flex w-8 h-8 p-1 mx-4 rounded-lg hover:bg-purple-200 dark:hover:bg-zinc-950 hide-able"
+					id="folder-function-sidebar">
+					<img draggable="false" class="hide-able" src="./icons/333/下.svg" alt="展开" srcset="" />
+				</div>
+			</div>
+		</div>
+		<div class="flex flex-col">
+
+			<a href="file:///D:/programming/codebase/UIETP/moblie/message.html"
+				class="flex h-10 mx-8 pl-2 my-0.5 rounded-xl items-center
+		                        hover:bg-gray-100 before:w-0.5 before:h-full before:bg-slate-200 before:hover:bg-slate-400
+		                        dark:hover:bg-zinc-600 dark:before:bg-zinc-600 dark:before:hover:bg-zinc-400 resizable foldable clickable" id="message-sidebar">
+				<div class="flex w-6 h-6 mx-4">
+					<img draggable="false" class="p-0 m-0 hide-abg-left" src="./icons/333/消息.svg" alt="" srcset="" />
+					<!-- <img draggable="false" class="hide-abg-left" src="./icons/点点.svg" alt="未读" srcset="" /> -->
+				</div>
+				<div class="flex font-medium text-zinc-950 dark:text-zinc-300 hide-able text">通知</div>
+				<div class="flex flex-grow"></div>
+				<!-- blank -->
+				<div class="flex flex-grow"></div>
+			</a>
+
+			<img src="./icons/点点.svg" alt="未读提示"
+				class="absolute z-10 h-8 duration-300 left-16 top-28 ransition hover:opacity-75">
+
+			<a href="file:///D:/programming/codebase/UIETP/moblie/timetable.html"
+				class="flex h-10 mx-8 pl-2 my-0.5 rounded-xl items-center
+					                        hover:bg-gray-100 before:w-0.5 before:h-full before:bg-slate-200 before:hover:bg-slate-400
+					                        dark:hover:bg-zinc-600 dark:before:bg-zinc-600 dark:before:hover:bg-zinc-400 resizable foldable clickable" id="message-sidebar">
+				<div class="flex w-6 h-6 mx-4">
+					<img draggable="false" class="p-0 m-0 hide-abg-left" src="./icons/rsgl22.svg" alt="" srcset="" />
+				</div>
+				<div class="flex font-medium text-zinc-950 dark:text-zinc-300 hide-able text">课表</div>
+				<div class="flex flex-grow"></div>
+				<div class="flex flex-grow"></div>
+			</a>
+
+			<a href="file:///D:/programming/codebase/UIETP/moblie/sign.html" class="flex h-10 mx-8 pl-2 my-0.5 rounded-xl items-center
+				 hover:bg-gray-100 before:w-0.5 before:h-full before:bg-slate-200 before:hover:bg-slate-400
+				 dark:hover:bg-zinc-600 dark:before:bg-zinc-600 dark:before:hover:bg-zinc-400 resizable foldable clickable"
+				id="signIn-sidebar">
+				<div class="flex w-6 h-6 mx-4">
+					<img draggable="false" src="./icons/333/编辑.svg" alt="" srcset="" />
+				</div>
+				<div class="flex font-medium text-zinc-950 dark:text-zinc-300 hide-able text">签到</div>
+				<div class="flex flex-grow"></div>
+			</a>
+
+			<script>
+				// sidebar的"功能"按钮点击，切换折叠状态
+				// (done)
+				var functionSidebarBtn = document.getElementById('function-sidebar');
+				functionSidebarBtn.addEventListener('click', function () {
+					// 旋转图片
+					var folderBtn = document.getElementById('folder-function-sidebar');
+					var folderImg = folderBtn.querySelector('img');
+					var imgTransform = window.getComputedStyle(folderImg).getPropertyValue('transform');
+					if (imgTransform == 'none') {
+						folderImg.style.transform = 'rotate(90deg)';
+					} else {
+						folderImg.style.transform = 'none';
+					}
+					// 隐藏元素
+					var functionsSidebarBtn = document.getElementById('functions-sidebar');
+					var hideableElements = functionsSidebarBtn.querySelectorAll('.foldable');
+					hideableElements.forEach(function (element) {
+						element.classList.toggle('hide');
+					});
+
+				});
+			</script>
+	</body>
+
+</html>
