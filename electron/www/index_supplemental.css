@@ -197,7 +197,7 @@
 }
 /* sidebar-self-extra */
 .dark #username-sidebar-self-extra img {
-    content: url(./icons/d4d4d8/我的2.svg);
+    content: url(./icons/d4d4d8/我的.svg);
 }
 .dark #authority-sidebar-self-extra img {
     content: url(./icons/d4d4d8/身份证.svg);
@@ -216,6 +216,9 @@
 }
 .dark #register-sidebar-self-extra img {
     content: url(./icons/d4d4d8/发送.svg);
+}
+.dark .communication-message-body img {
+    content: url(./icons/d4d4d8/人员.svg);
 }
 
 /* 折叠、隐藏 */
@@ -244,18 +247,22 @@
 }
 
 .h-74px-to-full {
-    height: calc(100% - 74px)
-        /* 100% - 74px */
-    ;
+    height: calc(100% - 74px)/* 100% - 74px */;
 }
 
-.h-0\.25{
-    height: 0.0625rem;
-        /* 1px */
+.w-10-to-full{
+    width: calc(100% - 2.5rem)/* 100% - 40px */;
+}
+.w-20-to-full{
+    width: calc(100% - 5rem)/* 100% - 80px */;
 }
 
 .max-w-3xs{
     max-width: 16rem/* 256px */;
+}
+
+.max-w-10 {
+    max-width: 2.5rem;
 }
 .columns-5xs{
     columns: 12rem/* 96px */;
@@ -263,7 +270,9 @@
 
 /* 定义滚动条的样式 */
 .overflow-y-scroll::-webkit-scrollbar {
-    width: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 5px;
     /* 设置滚动条的宽度 */
 }
 
@@ -332,8 +341,6 @@
 }
 
 
-.max-w-10 {
-    max-width: 2.5rem;
-}
+/* homepage */
 
-/* QR-code */
+

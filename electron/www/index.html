@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="./icons/icon.jpg" type="image/x-icon" />
     <link href="./index.css" rel="stylesheet" />
+    <script src="./js/plugins/jquery-3.7.1.min.js"></script>
     <title>ITE</title>
 </head>
 
@@ -237,7 +238,7 @@
                                             <div
                                                 class="flex w-full h-max px-4 py-2 hover:bg-purple-100 hover:font-bold dark:hover:bg-zinc-600">
                                                 <div class="flex h-full justify-center items-center">
-                                                    <img class="w-6 h-6" src="./icons/333/身份证.svg" alt="" srcset="" />
+                                                    <img draggable="false" class="w-6 h-6" src="./icons/333/身份证.svg" alt="" srcset="" />
                                                 </div>
                                                 <div class="flex h-full justify-center ml-2 dark:text-zinc-200">
                                                     权限
@@ -250,7 +251,7 @@
                                             </div>
                                         </div>
                                         <!-- 分割线 -->
-                                        <div class="flex w-full h-0.25 my-1">
+                                        <div class="flex w-full h-px my-1">
                                             <div
                                                 class="flex w-full mx-2 h-full bg-purple-100 dark:bg-purple-300 dark:bg-opacity-50">
                                             </div>
@@ -259,7 +260,7 @@
                                             <div
                                                 class="flex w-full h-max px-4 py-2 hover:bg-purple-100 hover:font-bold dark:hover:bg-zinc-600">
                                                 <div class="flex h-full justify-center items-center">
-                                                    <img class="w-6 h-6" src="./icons/333/设置2.svg" alt="" srcset="" />
+                                                    <img draggable="false" class="w-6 h-6" src="./icons/333/设置2.svg" alt="" srcset="" />
                                                 </div>
                                                 <div class="flex h-full justify-center ml-2 dark:text-zinc-200">
                                                     设置
@@ -274,7 +275,7 @@
                                             <div
                                                 class="flex w-full h-max px-4 py-2 hover:bg-purple-100 hover:font-bold dark:hover:bg-zinc-600">
                                                 <div class="flex h-full justify-center items-center">
-                                                    <img class="w-6 h-6" src="./icons/333/帮助中心.svg" alt="" srcset="" />
+                                                    <img draggable="false" class="w-6 h-6" src="./icons/333/帮助中心.svg" alt="" srcset="" />
                                                 </div>
                                                 <div class="flex h-full justify-center ml-2 dark:text-zinc-200">
                                                     帮助
@@ -286,7 +287,7 @@
                                             </div>
                                         </div>
                                         <!-- 分割线 -->
-                                        <div class="flex w-full h-0.25 my-1">
+                                        <div class="flex w-full h-px my-1">
                                             <div
                                                 class="flex w-full mx-2 h-full bg-purple-100 dark:bg-purple-300 dark:bg-opacity-50">
                                             </div>
@@ -295,7 +296,7 @@
                                             <div
                                                 class="flex w-full h-max px-4 py-2 hover:bg-purple-100 hover:font-bold dark:hover:bg-zinc-600">
                                                 <div class="flex h-full justify-center items-center">
-                                                    <img class="w-6 h-6" src="./icons/333/进入.svg" alt="" srcset="" />
+                                                    <img draggable="false" class="w-6 h-6" src="./icons/333/进入.svg" alt="" srcset="" />
                                                 </div>
                                                 <div class="flex h-full justify-center ml-2 dark:text-zinc-200">
                                                     登录
@@ -310,7 +311,7 @@
                                             <div
                                                 class="flex w-full h-max px-4 py-2 hover:bg-purple-100 hover:font-bold dark:hover:bg-zinc-600">
                                                 <div class="flex h-full justify-center items-center">
-                                                    <img class="w-6 h-6" src="./icons/333/退出.svg" alt="" srcset="" />
+                                                    <img draggable="false" class="w-6 h-6" src="./icons/333/退出.svg" alt="" srcset="" />
                                                 </div>
                                                 <div class="flex h-full justify-center ml-2 dark:text-zinc-200">
                                                     登出
@@ -325,7 +326,7 @@
                                             <div
                                                 class="flex w-full h-max px-4 py-2 hover:bg-purple-100 hover:font-bold dark:hover:bg-zinc-600">
                                                 <div class="flex h-full justify-center items-center">
-                                                    <img class="w-6 h-6" src="./icons/333/发送.svg" alt="" srcset="" />
+                                                    <img draggable="false" class="w-6 h-6" src="./icons/333/发送.svg" alt="" srcset="" />
                                                 </div>
                                                 <div class="flex h-full justify-center ml-2 dark:text-zinc-200">
                                                     注册
@@ -337,7 +338,7 @@
                                             </div>
                                         </div>
                                         <!-- 分割线 -->
-                                        <div class="flex w-full h-0.25 my-1">
+                                        <div class="flex w-full h-px my-1">
                                             <div
                                                 class="flex w-full mx-2 h-full bg-purple-100 dark:bg-purple-300 dark:bg-opacity-50">
                                             </div>
@@ -400,7 +401,7 @@
         <div class="flex flex-col bg-white w-full h-full rounded-3xl shadow-xl items-center dark:bg-zinc-900 select-none overflow-x-hidden"
             id="content">
             <!-- homepage -->
-            <div class="flex flex-grow px-4 w-full h-full hide-able" id="homepage">
+            <div class="flex flex-col flex-grow px-4 w-full h-full hide-able" id="homepage">
                 <!-- hompage-top -->
                 <div class="flex flex-col w-full" id="homepage-top">
                     <div class="flex items-center justify-center w-full">
@@ -417,7 +418,141 @@
                         <div class="flex flex-grow"></div>
                     </div>
                 </div>
+                <!-- homepage-content -->
+                <div class="flex w-full p-4 h-3/4 flex-grow overflow-y-scroll" id="homepage-content">
+                    <!-- 课程表 -->
+                    <div class="flex p-4 h-full" id="schedule-homepage">
+                        <div class="flex flex-col px-2 overflow-y-scroll">
+                            <!-- 1-current -->
+                            <div
+                                class="flex flex-col w-40 p-4 my-4 items-center rounded-lg bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500">
+                                <div class="flex text-sm dark:text-zinc-400">第一节课</div>
+                                <div class="flex py-0.5 font-bold text-lg dark:text-zinc-300">课程01</div>
+                                <div class="flex text-zinc-600 dark:text-zinc-400">08:15-09:00</div>
+                                <div class="flex text-sm text-zinc-600 dark:text-zinc-400">教师01</div>
+                            </div>
+                            <!-- 2 -->
+                            <div
+                                class="flex flex-col w-40 p-4 my-4 items-center rounded-lg bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700">
+                                <div class="flex text-sm dark:text-zinc-400">第二节课</div>
+                                <div class="flex py-0.5 font-bold text-lg dark:text-zinc-300">课程02</div>
+                                <div class="flex text-zinc-600 dark:text-zinc-400">09:10-09:55</div>
+                                <div class="flex text-sm text-zinc-600 dark:text-zinc-400">教师02</div>
+                            </div>
+                            <!-- 3 -->
+                            <div
+                                class="flex flex-col w-40 p-4 my-4 items-center rounded-lg bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700">
+                                <div class="flex text-sm dark:text-zinc-400">第三节课</div>
+                                <div class="flex py-0.5 font-bold text-lg dark:text-zinc-300">课程03</div>
+                                <div class="flex text-zinc-600 dark:text-zinc-400">10:15-11:00</div>
+                                <div class="flex text-sm text-zinc-600 dark:text-zinc-400">教师03</div>
+                            </div>
+                            <!-- 4-hide -->
+                            <div
+                                class="flex flex-col w-40 p-4 my-4 items-center rounded-lg bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700 hide">
+                                <div class="flex text-sm dark:text-zinc-400">第四节课</div>
+                                <div class="flex py-0.5 font-bold text-lg dark:text-zinc-300">课程04</div>
+                                <div class="flex text-zinc-600 dark:text-zinc-400">11:10-11:55</div>
+                                <div class="flex text-sm text-zinc-600 dark:text-zinc-400">教师04</div>
+                            </div>
+                            <!-- 5-hide -->
+                            <div
+                                class="flex flex-col w-40 p-4 my-4 items-center rounded-lg bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700 hide">
+                                <div class="flex text-sm dark:text-zinc-400">第五节课</div>
+                                <div class="flex py-0.5 font-bold text-lg dark:text-zinc-300">课程05</div>
+                                <div class="flex text-zinc-600 dark:text-zinc-400">13:50-14:35</div>
+                                <div class="flex text-sm text-zinc-600 dark:text-zinc-400">教师05</div>
+                            </div>
+                            <!-- 6-hide -->
+                            <div
+                                class="flex flex-col w-40 p-4 my-4 items-center rounded-lg bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700 hide">
+                                <div class="flex text-sm dark:text-zinc-400">第六节课</div>
+                                <div class="flex py-0.5 font-bold text-lg dark:text-zinc-300">课程06</div>
+                                <div class="flex text-zinc-600 dark:text-zinc-400">14:45-15:30</div>
+                                <div class="flex text-sm text-zinc-600 dark:text-zinc-400">教师06</div>
+                            </div>
+                            <!-- 7-hide -->
+                            <div
+                                class="flex flex-col w-40 p-4 my-4 items-center rounded-lg bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700 hide">
+                                <div class="flex text-sm dark:text-zinc-400">第七节课</div>
+                                <div class="flex py-0.5 font-bold text-lg dark:text-zinc-300">课程07</div>
+                                <div class="flex text-zinc-600 dark:text-zinc-400">15:40-16:25</div>
+                                <div class="flex text-sm text-zinc-600 dark:text-zinc-400">教师07</div>
+                            </div>
+                            <!-- 8-hide -->
+                            <div
+                                class="flex flex-col w-40 p-4 my-4 items-center rounded-lg bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700 hide">
+                                <div class="flex text-sm dark:text-zinc-400">第八节课</div>
+                                <div class="flex py-0.5 font-bold text-lg dark:text-zinc-300">课程08</div>
+                                <div class="flex text-zinc-600 dark:text-zinc-400">16:45-17:30</div>
+                                <div class="flex text-sm text-zinc-600 dark:text-zinc-400">教师08</div>
+                            </div>
+                            <!-- 9-hide -->
+                            <div
+                                class="flex flex-col w-40 p-4 my-4 items-center rounded-lg bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700 hide">
+                                <div class="flex text-sm dark:text-zinc-400">第九节课</div>
+                                <div class="flex py-0.5 font-bold text-lg dark:text-zinc-300">课程09</div>
+                                <div class="flex text-zinc-600 dark:text-zinc-400">17:40-18:25</div>
+                                <div class="flex text-sm text-zinc-600 dark:text-zinc-400">教师09</div>
+                            </div>
+                            <!-- 10-hide -->
+                            <div
+                                class="flex flex-col w-40 p-4 my-4 items-center rounded-lg bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700 hide">
+                                <div class="flex text-sm dark:text-zinc-400">第十节课</div>
+                                <div class="flex py-0.5 font-bold text-lg dark:text-zinc-300">课程10</div>
+                                <div class="flex text-zinc-600 dark:text-zinc-400">19:20-20:05</div>
+                                <div class="flex text-sm text-zinc-600 dark:text-zinc-400">教师10</div>
+                            </div>
+                            <!-- 11-hide -->
+                            <div
+                                class="flex flex-col w-40 p-4 my-4 items-center rounded-lg bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700 hide">
+                                <div class="flex text-sm dark:text-zinc-400">第十一节课</div>
+                                <div class="flex py-0.5 font-bold text-lg dark:text-zinc-300">课程11</div>
+                                <div class="flex text-zinc-600 dark:text-zinc-400">20:15-21:00</div>
+                                <div class="flex text-sm text-zinc-600 dark:text-zinc-400">教师11</div>
+                            </div>
+                            <!-- 12-hide -->
+                            <div
+                                class="flex flex-col w-40 p-4 my-4 items-center rounded-lg bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700 hide">
+                                <div class="flex text-sm dark:text-zinc-400">第十二节课</div>
+                                <div class="flex py-0.5 font-bold text-lg dark:text-zinc-300">课程12</div>
+                                <div class="flex text-zinc-600 dark:text-zinc-400">21:10-21:55</div>
+                                <div class="flex text-sm text-zinc-600 dark:text-zinc-400">教师12</div>
+                            </div>
+                            <!-- 无-hide -->
+                            <div
+                                class="flex flex-col w-40 p-4 my-4 items-center rounded-lg bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700 hide">
+                                <div class="flex text-sm dark:text-zinc-400">不在上课时间段</div>
+                                <div class="flex py-0.5 font-bold text-lg dark:text-zinc-300">无课程</div>
+                                <div class="flex text-zinc-600 dark:text-zinc-400">21:55-次日8:15</div>
+                                <div class="flex text-sm text-zinc-600 dark:text-zinc-400">无</div>
+                            </div>
+                        </div>
 
+                    </div>
+                    <!-- 其他 -->
+                    <div class="flex w-full h-full py-8">
+                        <div
+                            class="flex flex-col w-full h-full p-4 rounded-xl shadow-inner bg-zinc-100 dark:bg-zinc-800">
+                            <div class="flex flex-col w-full h-max bg-white rounded-xl dark:bg-zinc-600">
+                                <!-- 16=4rem=64px -->
+                                <div class="flex p-4 px-4 font-bold text-2xl rounded-xl dark:text-zinc-300 justify-center hover:shadow-xl dark:hover:ring-2 dark:hover:ring-zinc-500"
+                                    id="classStartBtn-homepage">
+                                    上课
+                                </div>
+                                <!-- (unfinished) -->
+
+                            </div>
+                            <div class="flex flex-col p-4 px-4 max-w-full max-h-full h-16-to-full">
+                                <div class="flex justify-center text-zinc-600 dark:text-zinc-400">点击"上课"后，才能使用"签到"等功能
+                                </div>
+                                <div class="flex flex-grow"></div>
+                                <div class="flex justify-center text-zinc-600 dark:text-zinc-400"
+                                    id="isClassPeriod-homepage">现在还不是上课时间!</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="flex"></div>
             </div>
 
@@ -439,7 +574,7 @@
                     </div>
                 </div>
                 <!-- signIn-content -->
-                <div class="flex flex-col h-full w-full px-4" id="signIn-content">
+                <div class="flex flex-col h-full w-full px-4 overflow-y-scroll" id="signIn-content">
                     <!-- signIn-select -->
                     <div class="flex flex-col w-full" id="signIn-select">
                         <!-- 签到选项设置 -->
@@ -691,62 +826,84 @@
                     </div>
                 </div>
                 <!-- rollCall-content -->
-                <div class="flex flex-col h-full w-full px-4" id="rollCall-content">
+                <div class="flex flex-col h-full w-full px-4 overflow-y-scroll" id="rollCall-content">
                     <div class="w-full h-full py-2 columns-5xs gap-4 overflow-y-scroll">
                         <!-- 已签到-未回答问题-按钮 -->
-                        <div
-                            class="flex p-1 m-1 w-48 h-max rounded-xl items-center bg-purple-200 bg-opacity-70 ring-1 ring-purple-500 hover:shadow-purple-300 hover:shadow-md
+                        <div class="flex p-1 m-1 w-48 h-max rounded-xl items-center bg-purple-200 bg-opacity-70 ring-1 ring-purple-500 hover:shadow-purple-300 hover:shadow-md
                             dark:bg-zinc-600 dark:ring-2 dark:ring-zinc-500 dark:hover:ring-4 dark:hover:shadow-none">
-                            <div
-                                class="flex p-3 w-full rounded-lg items-center bg-purple-200
+                            <div class="flex p-3 w-full rounded-lg items-center bg-purple-200
                                 dark:bg-zinc-700 dark:hover:bg-zinc-800">
                                 <!-- <div class="flex flex-grow"></div> -->
                                 <div
                                     class="flex p-1 w-28 rounded-md text-lg text-zinc-800 truncate hover:overflow-visible hover:min-w-max hover:bg-purple-200 bg-opacity-100
                                     dark:text-zinc-300 dark:hover:bg-zinc-800 hover:ring-1 ring-zinc-500 hover:z-50 hover:absolute">
-                                    张三李四·王五·SSXXZYZYbaba
+                                    张三
                                 </div>
                                 <div class="flex flex-grow"></div>
                                 <div class="flex w-0.5 h-5 bg-purple-300"></div>
-                                <div class="flex flex-row-reverse min-w-max w-6 h-9 pl-2 items-center font-bold text-blue-600 dark:text-blue-400">0</div>
+                                <div
+                                    class="flex flex-row-reverse min-w-max w-6 h-9 pl-2 items-center font-bold text-blue-600 dark:text-blue-400">
+                                    0
+                                </div>
                             </div>
                         </div>
-                        
+
                         <!-- 已签到-已回答问题-按钮 -->
-                        <div
-                            class="flex p-1 m-1 w-48 h-max rounded-xl items-center bg-purple-200 bg-opacity-100 hover:shadow-purple-300 hover:shadow-md
+                        <div class="flex p-1 m-1 w-48 h-max rounded-xl items-center bg-purple-200 bg-opacity-100 hover:shadow-purple-300 hover:shadow-md
                             dark:bg-zinc-600 dark:ring-zinc-500 dark:hover:ring-4 dark:hover:shadow-none">
-                            <div
-                                class="flex p-3 w-full rounded-lg items-center bg-purple-200
+                            <div class="flex p-3 w-full rounded-lg items-center bg-purple-200
                                 dark:bg-zinc-700 dark:hover:bg-zinc-800">
                                 <!-- <div class="flex flex-grow"></div> -->
                                 <div
                                     class="flex p-1 w-28 rounded-md text-lg text-zinc-600 truncate hover:overflow-visible hover:min-w-max hover:bg-purple-200 bg-opacity-100
                                     dark:text-zinc-400 dark:hover:text-zinc-300 dark:hover:bg-zinc-800 hover:ring-1 ring-zinc-500 hover:z-50 hover:absolute">
-                                    XYCF
+                                    李四
                                 </div>
                                 <div class="flex flex-grow"></div>
                                 <div class="flex w-0.5 h-5 bg-purple-500 bg-opacity-50"></div>
-                                <div class="flex flex-row-reverse min-w-max w-6 h-9 pl-2 items-center text-zinc-600 dark:text-zinc-300">432</div>
+                                <div
+                                    class="flex flex-row-reverse min-w-max w-6 h-9 pl-2 items-center text-zinc-600 dark:text-zinc-300">
+                                    1
+                                </div>
                             </div>
                         </div>
-                        
+
                         <!-- 未签到-按钮 -->
-                        <div
-                            class="flex p-1 m-1 w-48 h-max rounded-xl items-center bg-zinc-200 bg-opacity-70 hover:shadow-zinc-300 hover:shadow-md
+                        <div class="flex p-1 m-1 w-48 h-max rounded-xl items-center bg-zinc-200 bg-opacity-70 hover:shadow-zinc-300 hover:shadow-md
                             dark:bg-zinc-800 dark:ring-zinc-500 dark:hover:ring-2 dark:hover:shadow-none">
-                            <div
-                                class="flex p-3 w-full rounded-lg items-center bg-zinc-200
+                            <div class="flex p-3 w-full rounded-lg items-center bg-zinc-200
                                 dark:bg-zinc-900 dark:hover:bg-zinc-800">
                                 <!-- <div class="flex flex-grow"></div> -->
                                 <div
                                     class="flex p-1 w-28 rounded-md text-lg text-zinc-800 truncate hover:overflow-visible hover:min-w-max hover:bg-zinc-200 bg-opacity-100
                                     dark:text-zinc-500 dark:hover:text-zinc-300 dark:hover:bg-zinc-800 hover:ring-1 ring-zinc-500 hover:z-50 hover:absolute">
-                                    XingYueChenFu
+                                    王五
                                 </div>
                                 <div class="flex flex-grow"></div>
                                 <div class="flex w-0.5 h-5 bg-zinc-500 bg-opacity-50 dark:bg-zinc-300"></div>
-                                <div class="flex flex-row-reverse min-w-max w-6 h-9 pl-2 items-center text-red-700 dark:text-red-800">缺勤</div>
+                                <div
+                                    class="flex flex-row-reverse min-w-max w-6 h-9 pl-2 items-center text-red-700 dark:text-red-800">
+                                    缺勤
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 默认占位按钮 -->
+                        <div
+                            class="flex p-1 m-1 w-48 h-max rounded-xl items-center bg-purple-200 bg-opacity-70 ring-1 ring-purple-500 hover:shadow-purple-300 hover:shadow-md
+                                dark:bg-zinc-600 dark:ring-2 dark:ring-zinc-500 dark:hover:ring-4 dark:hover:shadow-none opacity-0 pointer-events-none">
+                            <div class="flex p-3 w-full rounded-lg items-center bg-purple-200
+                                    dark:bg-zinc-700 dark:hover:bg-zinc-800">
+                                <div
+                                    class="flex p-1 w-28 rounded-md text-lg text-zinc-800 truncate hover:overflow-visible hover:min-w-max hover:bg-purple-200 bg-opacity-100
+                                        dark:text-zinc-300 dark:hover:bg-zinc-800 hover:ring-1 ring-zinc-500 hover:z-50 hover:absolute">
+                                    默认占位
+                                </div>
+                                <div class="flex flex-grow"></div>
+                                <div class="flex w-0.5 h-5 bg-purple-300"></div>
+                                <div
+                                    class="flex flex-row-reverse min-w-max w-6 h-9 pl-2 items-center font-bold text-blue-600 dark:text-blue-400">
+                                    0
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -767,7 +924,7 @@
                     </div>
                 </div>
                 <!-- randomSelection-content -->
-                <div class="flex flex-col h-full w-full px-4" id="randomSelection-content">
+                <div class="flex flex-col h-full w-full px-4 overflow-y-scroll" id="randomSelection-content">
                     <!-- randomSelection-select -->
                     <div class="flex flex-col w-full" id="randomSelection-select">
                         <!-- 随机抽取选项设置 -->
@@ -776,7 +933,7 @@
                                 抽取设置
                             </div>
                             <div class="flex flex-col p-4 rounded-lg bg-zinc-50 dark:bg-zinc-800">
-                                <div class="flex items-center">
+                                <div class="flex items-center py-2">
                                     <div class="flex text-lg pr-4 dark:text-zinc-300">
                                         抽取人数
                                     </div>
@@ -791,6 +948,21 @@
                                         <div class="flex w-10 min-w-max items-center dark:text-zinc-300">
                                             人
                                         </div>
+                                    </div>
+                                    <div class="flex w-2"></div>
+                                </div>
+
+                                <div class="flex items-center py-2">
+                                    <div class="flex text-lg pr-4 dark:text-zinc-300">
+                                        优先抽取未回答问题的
+                                    </div>
+                                    <!-- <div class="flex flex-grow"></div> -->
+
+                                    <!-- 滑块按钮 -->
+                                    <div class="flex items-center justify-center">
+                                        <input type="checkbox" class="toggle" id="randomSelection-priority-toggle" />
+                                        <label for="randomSelection-priority-toggle"
+                                            class="mx-10 hover:shadow-lg bg-zinc-400 dark:bg-zinc-800"></label>
                                     </div>
                                     <div class="flex w-2"></div>
                                 </div>
@@ -815,6 +987,64 @@
                     </div>
                     <!-- randomSelection-during -->
                     <!-- randomSelection-result -->
+                    <div class="flex flex-col w-full h-full hide" id="randomSelection-result">
+                        <!-- 返回 -->
+                        <div class="flex flex-col w-full">
+                            <div class="flex flex-col p-4 mt-4 rounded-lg bg-zinc-50 dark:bg-zinc-800">
+                                <div class="flex items-center justify-center">
+                                    <div class="flex min-w-max">
+                                        <div class="flex px-10 py-4 rounded-lg bg-blue-500 text-white text-xl border hover:bg-blue-600 dark:bg-blue-700 dark:text-zinc-200 dark:hover:bg-blue-800"
+                                            id="randomSelection-restart-btn">
+                                            重新抽问
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-full h-full py-2 columns-5xs gap-4 overflow-y-scroll">
+                            <!-- 抽取结果1 -->
+                            <div
+                                class="flex p-1 m-1 w-48 h-max rounded-xl items-center bg-purple-200 bg-opacity-100 hover:shadow-purple-300 hover:shadow-md
+                                                dark:bg-zinc-600 dark:ring-zinc-500 dark:hover:ring-4 dark:hover:shadow-none">
+                                <div class="flex p-3 w-full rounded-lg items-center bg-purple-200
+                                                    dark:bg-zinc-700 dark:hover:bg-zinc-800">
+                                    <div
+                                        class="flex p-1 w-28 rounded-md text-lg text-zinc-700 truncate hover:overflow-visible hover:min-w-max hover:bg-purple-200 bg-opacity-100
+                                                        dark:text-zinc-300 dark:hover:text-zinc-200 dark:hover:bg-zinc-800 hover:ring-1 ring-zinc-500 hover:z-50 hover:absolute">
+                                        李四
+                                    </div>
+                                    <div class="flex flex-grow"></div>
+                                    <div class="flex w-0.5 h-5 bg-purple-500 bg-opacity-50"></div>
+                                    <div
+                                        class="flex flex-row-reverse min-w-max w-6 h-9 pl-2 items-center text-zinc-600 dark:text-zinc-300">
+                                        1
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 默认占位按钮 -->
+                            <div
+                                class="flex p-1 m-1 w-48 h-max rounded-xl items-center bg-purple-200 bg-opacity-70 ring-1 ring-purple-500 hover:shadow-purple-300 hover:shadow-md
+                                dark:bg-zinc-600 dark:ring-2 dark:ring-zinc-500 dark:hover:ring-4 dark:hover:shadow-none opacity-0 pointer-events-none">
+                                <div class="flex p-3 w-full rounded-lg items-center bg-purple-200
+                                    dark:bg-zinc-700 dark:hover:bg-zinc-800">
+                                    <div
+                                        class="flex p-1 w-28 rounded-md text-lg text-zinc-800 truncate hover:overflow-visible hover:min-w-max hover:bg-purple-200 bg-opacity-100
+                                        dark:text-zinc-300 dark:hover:bg-zinc-800 hover:ring-1 ring-zinc-500 hover:z-50 hover:absolute">
+                                        默认占位
+                                    </div>
+                                    <div class="flex flex-grow"></div>
+                                    <div class="flex w-0.5 h-5 bg-purple-300"></div>
+                                    <div
+                                        class="flex flex-row-reverse min-w-max w-6 h-9 pl-2 items-center font-bold text-blue-600 dark:text-blue-400">
+                                        0
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
                 </div>
             </div>
             <!-- message -->
@@ -834,7 +1064,7 @@
                     </div>
                 </div>
                 <!-- message-content -->
-                <div class="flex flex-col h-74px-to-full w-full px-4" id="message-content">
+                <div class="flex flex-col h-74px-to-full w-full px-4 overflow-y-scroll" id="message-content">
                     <!-- message-select -->
                     <div class="flex flex-col w-full h-full" id="message-select">
                         <!-- 通知展示 -->
@@ -844,7 +1074,7 @@
                                 查看通知
                             </div>
                             <!-- (unfinished) -->
-                            <div class="flex flex-col max-w-full max-h-full h-16-to-full overflow-y-scroll">
+                            <div class="flex flex-col max-w-full max-h-full h-16-to-full">
                                 <!-- 某重要通知(未读) -->
                                 <div
                                     class="flex flex-col pt-4 px-4 rounded-lg min-w-0 hover:bg-zinc-100 dark:hover:bg-zinc-800 after:mt-2 after:h-px after:w-full after:bg-zinc-300 importantNotice">
@@ -1032,7 +1262,7 @@
                                             <img draggable="false" class="w-8 h-8 p-1" src="./icons/333/已读邮件.svg" />
                                         </div>
                                         <!-- 重要等级图标 -->
-                                        <div
+                                            <div
                                             class="flex p-1 min-w-fit min-h-fit ml-8 rounded-full bg-green-300 hover:bg-green-500 dark:bg-green-950 dark:hover:bg-green-800">
                                             <img draggable="false" class="w-8 h-8 p-1" src="./icons/ffffff/消息.svg"
                                                 alt="" />
@@ -1060,7 +1290,6 @@
                     </div>
                 </div>
             </div>
-
             <!-- communication -->
             <div class="flex flex-grow px-4 w-full h-full flex-col hide-able hide" id="communication">
                 <!-- communication-top -->
@@ -1078,9 +1307,50 @@
                     </div>
                 </div>
                 <!-- communication-content -->
-                <div class="flex flex-col h-74px-to-full w-full px-4" id="communication-content">
-                    <!-- communication-select -->
-                    <div class="flex flex-col w-full h-full" id="communication-select"></div>
+                <div class="flex flex-col h-74px-to-full w-full px-4 overflow-y-scroll" id="communication-content">
+                    <!-- communication-display -->
+                    <div class="flex flex-col w-full h-full p-6 overflow-y-scroll" id="communication-display">
+                        <div
+                            class="flex flex-col w-full h-full p-4 rounded-xl shadow-inner bg-zinc-100 dark:bg-zinc-800 overflow-y-scroll">
+                            <!-- 消息1 -->
+                            <div class="flex flex-col my-3 w-full communication-message-body">
+                                <div class="flex w-full justify-center text-zinc-600 text-sm dark:text-zinc-400">8:15</div>
+                                <div class="flex w-full">
+                                    <div
+                                        class="flex h-10 w-10 p-1 rounded-full items-center justify-center bg-purple-200 dark:bg-purple-700">
+                                        <img draggable="false" class="h-8 w-8" src="./icons/333/人员.svg" alt="" srcset="">
+                                    </div>
+                                    <div class="flex w-20-to-full flex-col ml-4">
+                                        <div class="flex text-zinc-600 max-w-xl text-sm truncate dark:text-zinc-400 select-text">
+                                            XYCF
+                                        </div>
+                                        <div class="flex w-full">
+                                            <div class="max-w-full p-4 rounded-xl bg-white dark:bg-zinc-900 dark:text-zinc-300 break-words select-text">The longest word in any of the major English language dictionaries is pneumonoultramicroscopicsilicovolcanoconiosis, a word that refers to a lung disease contracted from the inhalation of very fine silica particles, specifically from a volcano; medically, it is the same as silicosis.</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 消息2 -->
+                            <div class="flex flex-col my-3 w-full communication-message-body">
+                                <div class="flex w-full justify-center text-zinc-600 text-sm dark:text-zinc-400">8:20</div>
+                                <div class="flex w-full">
+                                    <div
+                                        class="flex h-10 w-10 p-1 rounded-full items-center justify-center bg-purple-200 dark:bg-purple-700">
+                                        <img draggable="false" class="h-8 w-8" src="./icons/333/人员.svg" alt="" srcset="">
+                                    </div>
+                                    <div class="flex w-20-to-full flex-col ml-4">
+                                        <div class="flex text-zinc-600 max-w-xl text-sm truncate dark:text-zinc-400 select-text">
+                                            XYCF
+                                        </div>
+                                        <div class="flex w-full">
+                                            <div class="max-w-full p-4 rounded-xl bg-white dark:bg-zinc-900 dark:text-zinc-300 break-words select-text">XYCFXYCFXYCFXYCFXYCFXYCFXYCFXYCFXYCFXYCFXYCFXYCFXYCFXYCFXYCFXYCFXYCFXYCFXYCFXYCFXYCFXYCFXYCFXYCFXYCFXYCFXYCFXYCFXYCF</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
             </div>
 
@@ -1100,7 +1370,7 @@
                     </div>
                 </div>
                 <!-- wallpaper-content -->
-                <div class="flex flex-col h-74px-to-full w-full px-4" id="wallpaper-content">
+                <div class="flex flex-col h-74px-to-full w-full px-4 overflow-y-scroll" id="wallpaper-content">
                     <!-- wallpaper-select -->
                     <div class="flex flex-col w-full h-full" id="wallpaper-select">
                         <!-- 壁纸展示 -->
