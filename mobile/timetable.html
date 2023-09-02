@@ -6,6 +6,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>ITE</title>
 		<link href="output.css" rel="stylesheet" />
+<!--		<script src="saoma/jquery.min.js"/>-->
 	</head>
 
 	<body>
@@ -29,6 +30,12 @@
 							id="number-profile-sidebarBottom">
 							2022xxxxxxxxx
 						</div>
+					</div>
+					<div>
+						<!--刷新按钮-->
+						<form method="post" action="">
+							<input type="button" onclick="get()" value="2022xxxxxxxx">
+						</form>
 					</div>
 				</div>
 
@@ -77,37 +84,37 @@
 						<td class="text-xs border border-gray-400">
 							<p id="1-1-2">课程</p>
 							<p id="1-1-3">@综合楼C304</p>
-							<p id="1-1-4">教师</p><p class="week">时间</p>
+							<p id="1-1-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="2-1-2">课程 1</p>
 							<p id="2-1-3">@综合楼C304</p>
-							<p id="2-1-4">教师</p><p class="week">时间</p>
+							<p id="2-1-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="3-1-2">课程 1</p>
 							<p id="3-1-3">@综合楼C304</p>
-							<p id="3-1-4">教师</p><p class="week">时间</p>
+							<p id="3-1-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="4-1-2">课程 1</p>
 							<p id="4-1-3">@综合楼C304</p>
-							<p id="4-1-4">教师</p><p class="week">时间</p>
+							<p id="4-1-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="5-1-2">课程 1</p>
 							<p id="5-1-3">@综合楼C304</p>
-							<p id="5-1-4">教师</p><p class="week">时间</p>
+							<p id="5-1-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="6-1-2">课程 1</p>
 							<p id="6-1-3">@综合楼C304</p>
-							<p id="6-1-4">教师</p><p class="week">时间</p>
+							<p id="6-1-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="7-1-2">课程 1</p>
 							<p id="7-1-3">@综合楼C304</p>
-							<p id="7-1-4">教师</p><p class="week">时间</p>
+							<p id="7-1-4">教师</p>
 						</td>
 					</tr>
 
@@ -120,37 +127,37 @@
 						<td class="text-xs border border-gray-400">
 							<p id="1-2-2">课程 1</p>
 							<p id="1-2-3">@综合楼C304</p>
-							<p id="1-2-4">教师</p><p class="week">时间</p>
+							<p id="1-2-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="2-2-2">课程 1</p>
 							<p id="2-2-3">@综合楼C304</p>
-							<p id="2-2-4">教师</p><p class="week">时间</p>
+							<p id="2-2-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="3-2-2">课程 1</p>
 							<p id="3-2-3">@综合楼C304</p>
-							<p id="3-2-4">教师</p><p class="week">时间</p>
+							<p id="3-2-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="4-2-2">课程 1</p>
 							<p id="4-2-3">@综合楼C304</p>
-							<p id="4-2-4">教师</p><p class="week">时间</p>
+							<p id="4-2-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="5-2-2">课程 1</p>
 							<p id="5-2-3">@综合楼C304</p>
-							<p id="5-2-4">教师</p><p class="week">时间</p>
+							<p id="5-2-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="6-2-2">课程 1</p>
 							<p id="6-2-3">@综合楼C304</p>
-							<p id="6-2-4">教师</p><p class="week">时间</p>
+							<p id="6-2-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="7-2-2">课程 1</p>
 							<p id="7-2-3">@综合楼C304</p>
-							<p id="7-1-4">教师</p><p class="week">时间</p>
+							<p id="7-2-4">教师</p>
 						</td>
 					</tr>
 
@@ -163,7 +170,7 @@
 						<td class="text-xs border border-gray-400">
 							<p id="1-3-2">课程 1</p>
 							<p id="1-3-3">综合楼C304</p>
-							<p id="1-3-4">教师</p><p class="week">时间</p>
+							<p id="1-3-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="2-3-2">课程 1</p>
@@ -173,7 +180,7 @@
 						<td class="text-xs border border-gray-400">
 							<p id="3-3-2">课程 1</p>
 							<p id="3-3-3">综合楼C304</p>
-							<p id="3-3-4">教师</p><p class="week">时间</p>
+							<p id="3-3-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="4-3-2">课程 1</p>
@@ -183,17 +190,17 @@
 						<td class="text-xs border border-gray-400">
 							<p id="5-3-2">课程 1</p>
 							<p id="5-3-3">综合楼C304</p>
-							<p id="5-3-4">教师</p><p class="week">时间</p>
+							<p id="5-3-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="6-3-2">课程 1</p>
 							<p id="6-3-3">综合楼C304</p>
-							<p id="6-3-4">教师</p><p class="week">时间</p>
+							<p id="6-3-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="7-3-2">课程 1</p>
 							<p id="7-3-3">综合楼C304</p>
-							<p id="7-3-4">教师</p><p class="week">时间</p>
+							<p id="7-3-4">教师</p>
 						</td>
 					</tr>
 
@@ -206,37 +213,37 @@
 						<td class="text-xs border border-gray-400">
 							<p id="1-4-2">课程 1</p>
 							<p id="1-4-3">综合楼C304</p>
-							<p id="1-4-4">教师</p><p class="week">时间</p>
+							<p id="1-4-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="2-4-2">课程 1</p>
 							<p id="2-4-3">综合楼C304</p>
-							<p id="2-4-4">教师</p><p class="week">时间</p>
+							<p id="2-4-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="3-4-2">课程 1</p>
 							<p id="3-4-3">综合楼C304</p>
-							<p id="3-4-4">教师</p><p class="week">时间</p>
+							<p id="3-4-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="4-4-2">课程 4</p>
 							<p id="4-4-3">综合楼C304</p>
-							<p id="4-4-4">教师</p><p class="week">时间</p>
+							<p id="4-4-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="5-4-2">课程 1</p>
 							<p id="5-4-3">综合楼C304</p>
-							<p id="5-4-4">教师</p><p class="week">时间</p>
+							<p id="5-4-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="6-4-2">课程 1</p>
 							<p id="6-4-3">综合楼C304</p>
-							<p id="6-4-4">教师</p><p class="week">时间</p>
+							<p id="6-4-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="7-4-2">课程 1</p>
 							<p id="7-4-3">综合楼C304</p>
-							<p id="7-4-4">教师</p><p class="week">时间</p>
+							<p id="7-4-4">教师</p>
 						</td>
 					</tr>
 
@@ -251,37 +258,37 @@
 						<td class="text-xs border border-gray-400">
 							<p id="1-5-2">课程 1</p>
 							<p id="1-5-3">综合楼C304</p>
-							<p id="1-5-4">教师</p><p class="week">时间</p>
+							<p id="1-5-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="2-5-2">课程 1</p>
 							<p id="2-5-3">综合楼C304</p>
-							<p id="2-5-4">教师</p><p class="week">时间</p>
+							<p id="2-5-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="3-5-2">课程 1</p>
 							<p id="3-5-3">综合楼C304</p>
-							<p id="3-5-4">教师</p><p class="week">时间</p>
+							<p id="3-5-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="4-5-2">课程 1</p>
 							<p id="4-5-3">综合楼C304</p>
-							<p id="4-5-4">教师</p><p class="week">时间</p>
+							<p id="4-5-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="5-5-2">课程 1</p>
 							<p id="5-5-3">综合楼C304</p>
-							<p id="5-5-4">教师</p><p class="week">时间</p>
+							<p id="5-5-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="6-5-2">课程 1</p>
 							<p id="6-5-3">综合楼C304</p>
-							<p id="6-5-4">教师</p><p class="week">时间</p>
+							<p id="6-5-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="7-5-2">课程 1</p>
 							<p id="7-5-3">综合楼C304</p>
-							<p id="7-5-4">教师</p><p class="week">时间</p>
+							<p id="7-5-4">教师</p>
 						</td>
 					</tr>
 
@@ -295,37 +302,37 @@
 						<td class="text-xs border border-gray-400">
 							<p id="1-6-2">课程 1</p>
 							<p id="1-6-3">综合楼C304</p>
-							<p id="1-6-4">教师</p><p class="week">时间</p>
+							<p id="1-6-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="2-6-2">课程 1</p>
 							<p id="2-6-3">综合楼C304</p>
-							<p id="2-6-4">教师</p><p class="week">时间</p>
+							<p id="2-6-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="3-6-2">课程 1</p>
 							<p id="3-6-3">综合楼C304</p>
-							<p id="3-6-4">教师</p><p class="week">时间</p>
+							<p id="3-6-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="4-6-2">课程 1</p>
 							<p id="4-6-3">综合楼C304</p>
-							<p id="4-6-4">教师</p><p class="week">时间</p>
+							<p id="4-6-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="5-6-2">课程 1</p>
 							<p id="5-6-3">综合楼C304</p>
-							<p id="5-6-4">教师</p><p class="week">时间</p>
+							<p id="5-6-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="6-6-2">课程 1</p>
 							<p id="6-6-3">综合楼C304</p>
-							<p id="6-6-4">教师</p><p class="week">时间</p>
+							<p id="6-6-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="7-6-2">课程 1</p>
 							<p id="7-6-3">综合楼C304</p>
-							<p id="7-6-4">教师</p><p class="week">时间</p>
+							<p id="7-6-4">教师</p>
 						</td>
 					</tr>
 
@@ -339,37 +346,37 @@
 						<td class="text-xs border border-gray-400">
 							<p id="1-7-2">课程 1</p>
 							<p id="1-7-3">综合楼C304</p>
-							<p id="1-7-4">教师</p><p class="week">时间</p>
+							<p id="1-7-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="2-7-2">课程 1</p>
 							<p id="2-7-3">综合楼C304</p>
-							<p id="2-7-4">教师</p><p class="week">时间</p>
+							<p id="2-7-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="3-7-2">课程 1</p>
 							<p id="3-7-3">综合楼C304</p>
-							<p id="3-7-4">教师</p><p class="week">时间</p>
+							<p id="3-7-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="4-7-2">课程 1</p>
 							<p id="4-7-3">综合楼C304</p>
-							<p id="4-7-4">教师</p><p class="week">时间</p>
+							<p id="4-7-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="5-7-2">课程 1</p>
 							<p id="5-7-3">综合楼C304</p>
-							<p id="5-7-4">教师</p><p class="week">时间</p>
+							<p id="5-7-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="6-7-2">课程 1</p>
 							<p id="6-7-3">综合楼C304</p>
-							<p id="6-7-4">教师</p><p class="week">时间</p>
+							<p id="6-7-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="7-7-2">课程 1</p>
 							<p id="7-7-3">综合楼C304</p>
-							<p id="7-7-4">教师</p><p class="week">时间</p>
+							<p id="7-7-4">教师</p>
 						</td>
 					</tr>
 
@@ -382,37 +389,37 @@
 						<td class="text-xs border border-gray-400">
 							<p id="1-8-2">课程 1</p>
 							<p id="1-8-3">综合楼C304</p>
-							<p id="1-8-4">教师</p><p class="week">时间</p>
+							<p id="1-8-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="2-8-2">课程 1</p>
 							<p id="2-8-3">综合楼C304</p>
-							<p id="2-8-4">教师</p><p class="week">时间</p>
+							<p id="2-8-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="3-8-2">课程 1</p>
 							<p id="3-8-3">综合楼C304</p>
-							<p id="3-8-4">教师</p><p class="week">时间</p>
+							<p id="3-8-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="4-8-2">课程 1</p>
 							<p id="4-8-3">综合楼C304</p>
-							<p id="4-8-4">教师</p><p class="week">时间</p>
+							<p id="4-8-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="5-8-2">课程 1</p>
 							<p id="5-8-3">综合楼C304</p>
-							<p id="5-8-4">教师</p><p class="week">时间</p>
+							<p id="5-8-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="6-8-2">课程 1</p>
 							<p id="6-8-3">综合楼C304</p>
-							<p id="6-8-4">教师</p><p class="week">时间</p>
+							<p id="6-8-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="7-8-2">课程 1</p>
 							<p id="7-8-3">综合楼C304</p>
-							<p id="7-8-4">教师</p><p class="week">时间</p>
+							<p id="7-8-4">教师</p>
 						</td>
 					</tr>
 
@@ -425,37 +432,37 @@
 						<td class="text-xs border border-gray-400">
 							<p id="1-9-2">课程 1</p>
 							<p id="1-9-3">综合楼C304</p>
-							<p id="1-9-4">教师</p><p class="week">时间</p>
+							<p id="1-9-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="2-9-2">课程 1</p>
 							<p id="2-9-3">综合楼C304</p>
-							<p id="2-9-4">教师</p><p class="week">时间</p>
+							<p id="2-9-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="3-9-2">课程 1</p>
 							<p id="3-9-3">综合楼C304</p>
-							<p id="3-9-4">教师</p><p class="week">时间</p>
+							<p id="3-9-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="4-9-2">课程 1</p>
 							<p id="4-9-3">综合楼C304</p>
-							<p id="4-9-4">教师</p><p class="week">时间</p>
+							<p id="4-9-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="5-9-2">课程 1</p>
 							<p id="5-9-3">综合楼C304</p>
-							<p id="5-9-4">教师</p><p class="week">时间</p>
+							<p id="5-9-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="6-9-2">课程 1</p>
 							<p id="6-9-3">综合楼C304</p>
-							<p id="6-9-4">教师</p><p class="week">时间</p>
+							<p id="6-9-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="7-9-2">课程 1</p>
 							<p id="7-9-3">综合楼C304</p>
-							<p id="7-9-4">教师</p><p class="week">时间</p>
+							<p id="7-9-4">教师</p>
 						</td>
 					</tr>
 
@@ -471,81 +478,81 @@
 						<td class="text-xs border border-gray-400">
 							<p id="1-10-2">课程 1</p>
 							<p id="1-10-3">综合楼C304</p>
-							<p id="1-10-4">教师</p><p class="week">时间</p>
+							<p id="1-10-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="2-10-2">课程 1</p>
 							<p id="2-10-3">综合楼C304</p>
-							<p id="2-10-4">教师</p><p class="week">时间</p>
+							<p id="2-10-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="3-10-2">课程 1</p>
 							<p id="3-10-3">综合楼C304</p>
-							<p id="3-1-4">教师</p><p class="week">时间</p>
+							<p id="3-10-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="4-10-2">课程 1</p>
 							<p id="4-10-3">综合楼C304</p>
-							<p id="4-10-4">教师</p><p class="week">时间</p>
+							<p id="4-10-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="5-10-2">课程 1</p>
 							<p id="5-10-3">综合楼C304</p>
-							<p id="5-10-4">教师</p><p class="week">时间</p>
+							<p id="5-10-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="6-10-2">课程 1</p>
 							<p id="6-10-3">综合楼C304</p>
-							<p id="6-10-4">教师</p><p class="week">时间</p>
+							<p id="6-10-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="7-10-2">课程 1</p>
 							<p id="7-10-3">综合楼C304</p>
-							<p id="7-10-4">教师</p><p class="week">时间</p>
+							<p id="7-10-4">教师</p>
 						</td>
 					</tr>
 
 					<tr>
 						<td class="h-20 p-1 mx-auto text-xs text-center border border-gray-400">
 							<p class="my-3 text-xs text-black">第十一节</p>
-							<p class="text-gray-400" id="0-12-2">20:15</p>
-							<p class="text-gray-400" id="0-12-3">21:00</p>
+							<p class="text-gray-400" id="0-11-2">20:15</p>
+							<p class="text-gray-400" id="0-11-3">21:00</p>
 
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="1-11-2">课程 1</p>
 							<p id="1-11-3">综合楼C304</p>
-							<p id="1-11-4">教师</p><p class="week">时间</p>
+							<p id="1-11-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="2-11-2">课程 1</p>
 							<p id="2-11-3">综合楼C304</p>
-							<p id="2-11-4">教师</p><p class="week">时间</p>
+							<p id="2-11-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="3-11-2">课程 1</p>
 							<p id="3-11-3">综合楼C304</p>
-							<p id="3-11-4">教师</p><p class="week">时间</p>
+							<p id="3-11-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="4-11-2">课程 1</p>
 							<p id="4-11-3">综合楼C304</p>
-							<p id="4-11-4">教师</p><p class="week">时间</p>
+							<p id="4-11-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="5-11-2">课程 1</p>
 							<p id="5-11-3">综合楼C304</p>
-							<p id="5-11-4">教师</p><p class="week">时间</p>
+							<p id="5-11-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="6-11-2">课程 1</p>
 							<p id="6-11-3">综合楼C304</p>
-							<p id="6-11-4">教师</p><p class="week">时间</p>
+							<p id="6-11-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="7-11-2">课程 1</p>
 							<p id="7-11-3">综合楼C304</p>
-							<p id="7-11-4">教师</p><p class="week">时间</p>
+							<p id="7-11-4">教师</p>
 						</td>
 					</tr>
 
@@ -559,37 +566,37 @@
 						<td class="text-xs border border-gray-400">
 							<p id="1-12-2">课程 1</p>
 							<p id="1-12-3">综合楼C304</p>
-							<p id="1-12-4">教师</p><p class="week">时间</p>
+							<p id="1-12-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="2-12-2">课程 1</p>
 							<p id="2-12-3">综合楼C304</p>
-							<p id="2-12-4">教师</p><p class="week">时间</p>
+							<p id="2-12-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="3-12-2">课程 1</p>
 							<p id="3-12-3">综合楼C304</p>
-							<p id="3-12-4">教师</p><p class="week">时间</p>
+							<p id="3-12-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="4-12-2">课程 1</p>
 							<p id="4-12-3">综合楼C304</p>
-							<p id="4-12-4">教师</p><p class="week">时间</p>
+							<p id="4-12-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="5-12-2">课程 1</p>
 							<p id="5-12-3">综合楼C304</p>
-							<p id="5-12-4">教师</p><p class="week">时间</p>
+							<p id="5-12-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="6-12-2">课程 1</p>
 							<p id="6-12-3">综合楼C304</p>
-							<p id="6-12-4">教师</p><p class="week">时间</p>
+							<p id="6-12-4">教师</p>
 						</td>
 						<td class="text-xs border border-gray-400">
 							<p id="7-12-2">课程 1</p>
 							<p id="7-12-3">综合楼C304</p>
-							<p id="7-12-4">教师</p><p class="week">时间</p>
+							<p id="7-12-4">教师</p>
 						</td>
 					</tr>
 					<!-- 添加更多时间段和课程行 -->
@@ -778,6 +785,59 @@
 			// 接受课表信息
 			{
 
+			}
+		</script>
+		<script type="text/javascript">
+			// 判断日期是否在本周
+			function isCurrentWeek(past) {
+				const pastTime = new Date(past).getTime()
+				const today = new Date(new Date().toLocaleDateString())
+				let day = today.getDay()
+				day = day == 0 ? 7 : day
+				const oneDayTime = 60*60*24*1000
+				const monday = new Date(today.getTime() - (oneDayTime * (day - 1)))
+				const nextMonday = new Date(today.getTime() + (oneDayTime * (8 - day)))
+				if(monday.getTime() <= pastTime && nextMonday.getTime() > pastTime) {
+					return true
+				} else {
+					return false
+				}
+			}
+
+			// 获取并解析课表数据
+			function get() {
+				const sid = document.getElementById("number-profile-sidebarBottom").value;
+				$.ajax({
+					type: "POST",
+					dataType: "json",
+					url: 'http://162.14.107.35/SCUEE/CourseSchedule/get',
+					contentType: "application/json",
+					data: JSON.stringify({"sid": sid}),
+					success: function (result) {
+						if (result.code == 200) {
+							courses = JSON.parse(result);
+							for (var i = 0; i < courses.length; i++) {
+								var dates = courses[i].get("date");
+								var j = 0;
+								while (j < dates.length) {
+									if (isCurrentWeek(dates[j])) {
+										var day = dates[j].getDay()
+										if (day == 0) day = 7;
+										for (var k = courses[i].get("startSection"); k <= courses[i].get("endSection"); k++) {
+											var courseName = document.getElementById(day.toString() + "-" + k.toString() + "-2");
+											var courseSite = document.getElementById(day.toString() + "-" + k.toString() + "-3");
+											var courseTeacher = document.getElementById(day.toString() + "-" + k.toString() + "-4");
+											courseName.innerHTML = courses[i].get("name");
+											courseSite.innerHTML = courses[i].get("site");
+											courseTeacher.innerHTML = courses[i].get("teacher");
+										}
+									}
+									j++;
+								}
+							}
+						}
+					}
+				})
 			}
 		</script>
 	</body>
