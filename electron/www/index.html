@@ -12,7 +12,7 @@
 
 <body class="flex flex-col w-screen h-screen bg-zinc-100 bg-opacity-90 dark:bg-zinc-950 overflow-hidden">
     <!-- 因为tailwind CSS是实时修改css的，故留下需要的样式 -->
-    <div class="ml-2 p-2 h-6 w-6 hidden"></div>
+    <div class="ml-2 p-2 h-6 w-6 hidden ring-inset ring ring-purple-200 dark:ring-zinc-700"></div>
     <!-- header -->
     <div class="flex h-10 select-none">
         <!-- header-left(logo) -->
@@ -53,7 +53,7 @@
                 <img draggable="false" src="./icons/333/刷新.svg" alt="" srcset="" />
             </div>
             <div class="flex h-8 w-8 mx-2 p-2 rounded-lg hover:bg-purple-200 dark:hover:bg-zinc-800 hide-able"
-                id="help-menu-header">
+                id="about-menu-header">
                 <img draggable="false" src="./icons/333/帮助.svg" alt="" srcset="" />
             </div>
             <div class="flex h-8 w-8 mx-2 p-2 rounded-lg hover:bg-purple-200 dark:hover:bg-zinc-800 hide-able"
@@ -176,16 +176,6 @@
                             <div class="flex flex-grow"></div>
                         </div>
 
-                        <div class="flex h-10 mx-8 pl-2 my-0.5 rounded-xl items-center hover:bg-white before:w-0.5 before:h-full before:bg-slate-200 before:hover:bg-slate-400 dark:hover:bg-zinc-600 dark:before:bg-zinc-600 dark:before:hover:bg-zinc-400 resizable foldable clickable"
-                            id="wallpaper-sidebar">
-                            <div class="flex h-6 w-6 mx-4">
-                                <img draggable="false" src="./icons/333/相册.svg" alt="" srcset="" />
-                            </div>
-                            <div class="flex font-medium text-zinc-950 dark:text-zinc-300 hide-able text">
-                                壁纸
-                            </div>
-                            <div class="flex flex-grow"></div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -218,6 +208,7 @@
                                     id="content-sidebar-self-extra">
                                     <!-- 具体模块 -->
                                     <div class="flex flex-col w-full h-max items-center bg-white dark:bg-zinc-700">
+                                        <div class="flex h-4"></div>
                                         <div class="flex w-full h-max" id="username-sidebar-self-extra">
                                             <div
                                                 class="flex w-full h-max px-4 py-2 hover:bg-purple-100 hover:font-bold dark:hover:bg-zinc-600">
@@ -238,7 +229,8 @@
                                             <div
                                                 class="flex w-full h-max px-4 py-2 hover:bg-purple-100 hover:font-bold dark:hover:bg-zinc-600">
                                                 <div class="flex h-full justify-center items-center">
-                                                    <img draggable="false" class="w-6 h-6" src="./icons/333/身份证.svg" alt="" srcset="" />
+                                                    <img draggable="false" class="w-6 h-6" src="./icons/333/身份证.svg"
+                                                        alt="" srcset="" />
                                                 </div>
                                                 <div class="flex h-full justify-center ml-2 dark:text-zinc-200">
                                                     权限
@@ -260,7 +252,8 @@
                                             <div
                                                 class="flex w-full h-max px-4 py-2 hover:bg-purple-100 hover:font-bold dark:hover:bg-zinc-600">
                                                 <div class="flex h-full justify-center items-center">
-                                                    <img draggable="false" class="w-6 h-6" src="./icons/333/设置2.svg" alt="" srcset="" />
+                                                    <img draggable="false" class="w-6 h-6" src="./icons/333/设置2.svg"
+                                                        alt="" srcset="" />
                                                 </div>
                                                 <div class="flex h-full justify-center ml-2 dark:text-zinc-200">
                                                     设置
@@ -271,14 +264,15 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="flex w-full h-max" id="help-sidebar-self-extra">
+                                        <div class="flex w-full h-max" id="about-sidebar-self-extra">
                                             <div
                                                 class="flex w-full h-max px-4 py-2 hover:bg-purple-100 hover:font-bold dark:hover:bg-zinc-600">
                                                 <div class="flex h-full justify-center items-center">
-                                                    <img draggable="false" class="w-6 h-6" src="./icons/333/帮助中心.svg" alt="" srcset="" />
+                                                    <img draggable="false" class="w-6 h-6" src="./icons/333/帮助中心.svg"
+                                                        alt="" srcset="" />
                                                 </div>
                                                 <div class="flex h-full justify-center ml-2 dark:text-zinc-200">
-                                                    帮助
+                                                    关于
                                                 </div>
                                                 <div class="flex h-full flex-grow"></div>
                                                 <div
@@ -296,7 +290,8 @@
                                             <div
                                                 class="flex w-full h-max px-4 py-2 hover:bg-purple-100 hover:font-bold dark:hover:bg-zinc-600">
                                                 <div class="flex h-full justify-center items-center">
-                                                    <img draggable="false" class="w-6 h-6" src="./icons/333/进入.svg" alt="" srcset="" />
+                                                    <img draggable="false" class="w-6 h-6" src="./icons/333/进入.svg"
+                                                        alt="" srcset="" />
                                                 </div>
                                                 <div class="flex h-full justify-center ml-2 dark:text-zinc-200">
                                                     登录
@@ -311,7 +306,8 @@
                                             <div
                                                 class="flex w-full h-max px-4 py-2 hover:bg-purple-100 hover:font-bold dark:hover:bg-zinc-600">
                                                 <div class="flex h-full justify-center items-center">
-                                                    <img draggable="false" class="w-6 h-6" src="./icons/333/退出.svg" alt="" srcset="" />
+                                                    <img draggable="false" class="w-6 h-6" src="./icons/333/退出.svg"
+                                                        alt="" srcset="" />
                                                 </div>
                                                 <div class="flex h-full justify-center ml-2 dark:text-zinc-200">
                                                     登出
@@ -326,7 +322,8 @@
                                             <div
                                                 class="flex w-full h-max px-4 py-2 hover:bg-purple-100 hover:font-bold dark:hover:bg-zinc-600">
                                                 <div class="flex h-full justify-center items-center">
-                                                    <img draggable="false" class="w-6 h-6" src="./icons/333/发送.svg" alt="" srcset="" />
+                                                    <img draggable="false" class="w-6 h-6" src="./icons/333/发送.svg"
+                                                        alt="" srcset="" />
                                                 </div>
                                                 <div class="flex h-full justify-center ml-2 dark:text-zinc-200">
                                                     注册
@@ -334,39 +331,6 @@
                                                 <div class="flex h-full flex-grow"></div>
                                                 <div
                                                     class="flex h-full font-normal text-zinc-800 dark:text-zinc-400 truncate">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- 分割线 -->
-                                        <div class="flex w-full h-px my-1">
-                                            <div
-                                                class="flex w-full mx-2 h-full bg-purple-100 dark:bg-purple-300 dark:bg-opacity-50">
-                                            </div>
-                                        </div>
-                                        <div class="flex h-4"></div>
-                                        <div class="flex w-full h-max">
-                                            <div class="flex w-full h-max px-4">
-                                                <div
-                                                    class="flex h-full justify-center text-zinc-600 dark:text-zinc-400">
-                                                    sid:
-                                                </div>
-                                                <div class="flex h-full flex-grow"></div>
-                                                <div
-                                                    class="flex h-full font-normal text-zinc-600 select-all selection:bg-purple-500 selection:text-white dark:text-zinc-400 dark:selection:bg-zinc-500">
-                                                    1001
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="flex w-full h-max">
-                                            <div class="flex w-full h-max px-4">
-                                                <div
-                                                    class="flex h-full justify-center text-zinc-600 dark:text-zinc-400">
-                                                    教室:
-                                                </div>
-                                                <div class="flex h-full flex-grow"></div>
-                                                <div
-                                                    class="flex h-full font-normal text-zinc-600 select-all selection:bg-purple-500 selection:text-white dark:text-zinc-400 dark:selection:bg-zinc-500">
-                                                    一教A101
                                                 </div>
                                             </div>
                                         </div>
@@ -544,7 +508,8 @@
 
                             </div>
                             <div class="flex flex-col p-4 px-4 max-w-full max-h-full h-16-to-full">
-                                <div class="flex justify-center text-zinc-600 dark:text-zinc-400">点击"上课"后，才能使用"签到"等功能
+                                <div class="flex justify-center text-zinc-600 dark:text-zinc-400"
+                                    id="startClass-help-homepage">点击"上课"后，才能使用大部分功能
                                 </div>
                                 <div class="flex flex-grow"></div>
                                 <div class="flex justify-center text-zinc-600 dark:text-zinc-400"
@@ -574,7 +539,13 @@
                     </div>
                 </div>
                 <!-- signIn-content -->
-                <div class="flex flex-col h-full w-full px-4 overflow-y-scroll" id="signIn-content">
+                <div class="flex flex-col h-full w-full px-4 relative overflow-y-scroll" id="signIn-content">
+                    <!-- signIn-mask -->
+                    <div class="w-8-to-full h-full absolute z-50 bg-zinc-50 dark:bg-zinc-800 opacity-95 unstart-mask" id="signIn-mask">
+                        <div class="flex w-full h-full justify-center items-center">
+                            <div class="flex text-3xl text-zinc-700 dark:text-zinc-400">请在"首页"中点击"上课"</div>
+                        </div>
+                    </div>
                     <!-- signIn-select -->
                     <div class="flex flex-col w-full" id="signIn-select">
                         <!-- 签到选项设置 -->
@@ -826,7 +797,14 @@
                     </div>
                 </div>
                 <!-- rollCall-content -->
-                <div class="flex flex-col h-full w-full px-4 overflow-y-scroll" id="rollCall-content">
+                <div class="flex flex-col h-full w-full px-4 relative overflow-y-scroll" id="rollCall-content">
+                    <!-- rollCall-mask -->
+                    <div class="w-8-to-full h-full absolute z-50 bg-zinc-50 dark:bg-zinc-800 opacity-95 unstart-mask" id="rollCall-mask">
+                        <div class="flex w-full h-full justify-center items-center">
+                            <div class="flex text-3xl text-zinc-700 dark:text-zinc-400">请在"首页"中点击"上课"</div>
+                        </div>
+                    </div>
+                    <!-- rollCall-result -->
                     <div class="w-full h-full py-2 columns-5xs gap-4 overflow-y-scroll">
                         <!-- 已签到-未回答问题-按钮 -->
                         <div class="flex p-1 m-1 w-48 h-max rounded-xl items-center bg-purple-200 bg-opacity-70 ring-1 ring-purple-500 hover:shadow-purple-300 hover:shadow-md
@@ -924,7 +902,14 @@
                     </div>
                 </div>
                 <!-- randomSelection-content -->
-                <div class="flex flex-col h-full w-full px-4 overflow-y-scroll" id="randomSelection-content">
+                <div class="flex flex-col h-full w-full px-4 relative overflow-y-scroll" id="randomSelection-content">
+                    <!-- randomSelection-mask -->
+                    <div class="w-8-to-full h-full absolute z-50 bg-zinc-50 dark:bg-zinc-800 opacity-95 unstart-mask"
+                        id="randomSelection-mask">
+                        <div class="flex w-full h-full justify-center items-center">
+                            <div class="flex text-3xl text-zinc-700 dark:text-zinc-400">请在"首页"中点击"上课"</div>
+                        </div>
+                    </div>
                     <!-- randomSelection-select -->
                     <div class="flex flex-col w-full" id="randomSelection-select">
                         <!-- 随机抽取选项设置 -->
@@ -1002,6 +987,7 @@
                             </div>
                         </div>
                         <div class="w-full h-full py-2 columns-5xs gap-4 overflow-y-scroll">
+
                             <!-- 抽取结果1 -->
                             <div
                                 class="flex p-1 m-1 w-48 h-max rounded-xl items-center bg-purple-200 bg-opacity-100 hover:shadow-purple-300 hover:shadow-md
@@ -1064,7 +1050,7 @@
                     </div>
                 </div>
                 <!-- message-content -->
-                <div class="flex flex-col h-74px-to-full w-full px-4 overflow-y-scroll" id="message-content">
+                <div class="flex flex-col h-74px-to-full w-full px-4 relative overflow-y-scroll" id="message-content">
                     <!-- message-select -->
                     <div class="flex flex-col w-full h-full" id="message-select">
                         <!-- 通知展示 -->
@@ -1074,15 +1060,16 @@
                                 查看通知
                             </div>
                             <!-- (unfinished) -->
-                            <div class="flex flex-col max-w-full max-h-full h-16-to-full">
+                            <!-- message-container -->
+                            <div class="flex flex-col max-w-full max-h-full h-16-to-full" id="message-container">
                                 <!-- 某重要通知(未读) -->
                                 <div
-                                    class="flex flex-col pt-4 px-4 rounded-lg min-w-0 hover:bg-zinc-100 dark:hover:bg-zinc-800 after:mt-2 after:h-px after:w-full after:bg-zinc-300 importantNotice">
+                                    class="flex flex-col pt-4 px-4 rounded-lg min-w-0 hover:bg-zinc-100 dark:hover:bg-zinc-800 after:mt-2 after:h-px after:w-full after:bg-zinc-300 after:dark:bg-zinc-600 importantNotice">
                                     <!-- 消息体 -->
                                     <div class="flex pb-2 items-center min-w-0">
                                         <!-- 状态图标 -->
                                         <div
-                                            class="flex p-1 min-w-fit min-h-fit rounded-xl bg-amber-200 hover:bg-amber-400 dark:bg-amber-600 dark:hover:bg-amber-500">
+                                            class="flex p-1 min-w-fit min-h-fit rounded-xl bg-amber-300 hover:bg-amber-400 dark:bg-amber-600 dark:hover:bg-amber-500">
                                             <img draggable="false" class="w-8 h-8 p-1" src="./icons/333/邮件.svg" />
                                         </div>
                                         <!-- 重要等级图标 -->
@@ -1093,13 +1080,13 @@
                                         </div>
                                         <!-- 标题 -->
                                         <div class="flex px-2 w-40">
-                                            <div class="truncate dark:text-zinc-300 font-bold">
+                                            <div class="truncate dark:text-zinc-300 font-bold message-title">
                                                 Debug
                                             </div>
                                         </div>
                                         <!-- 内容简介 -->
                                         <div class="flex min-w-0">
-                                            <div class="truncate dark:text-zinc-300">
+                                            <div class="truncate dark:text-zinc-300 message-detail">
                                                 This is a message for testing! It' s an unread
                                                 important notice!
                                             </div>
@@ -1113,7 +1100,7 @@
                                 </div>
                                 <!-- 某重要通知(已读) -->
                                 <div
-                                    class="flex flex-col pt-4 px-4 rounded-lg min-w-0 hover:bg-zinc-100 dark:hover:bg-zinc-800 after:mt-2 after:h-px after:w-full after:bg-zinc-300 importantNotice read">
+                                    class="flex flex-col pt-4 px-4 rounded-lg min-w-0 hover:bg-zinc-100 dark:hover:bg-zinc-800 after:mt-2 after:h-px after:w-full after:bg-zinc-300 after:dark:bg-zinc-600 importantNotice read">
                                     <!-- 消息体 -->
                                     <div class="flex pb-2 items-center min-w-0">
                                         <!-- 状态图标 -->
@@ -1129,11 +1116,11 @@
                                         </div>
                                         <!-- 标题 -->
                                         <div class="flex px-2 w-40">
-                                            <div class="truncate dark:text-zinc-300">Debug</div>
+                                            <div class="truncate dark:text-zinc-300 message-title">Debug</div>
                                         </div>
                                         <!-- 内容简介 -->
                                         <div class="flex min-w-0">
-                                            <div class="truncate dark:text-zinc-300">
+                                            <div class="truncate dark:text-zinc-300 message-detail">
                                                 This is a message for testing! It' s an read important
                                                 notice!
                                             </div>
@@ -1147,7 +1134,7 @@
                                 </div>
                                 <!-- 某一般通知(未读) -->
                                 <div
-                                    class="flex flex-col pt-4 px-4 rounded-lg min-w-0 hover:bg-zinc-100 dark:hover:bg-zinc-800 after:mt-2 after:h-px after:w-full after:bg-zinc-300 commonNotice">
+                                    class="flex flex-col pt-4 px-4 rounded-lg min-w-0 hover:bg-zinc-100 dark:hover:bg-zinc-800 after:mt-2 after:h-px after:w-full after:bg-zinc-300 after:dark:bg-zinc-600 commonNotice">
                                     <!-- 消息内容 -->
                                     <div class="flex pb-2 items-center min-w-0">
                                         <!-- 状态图标 -->
@@ -1163,13 +1150,13 @@
                                         </div>
                                         <!-- 标题 -->
                                         <div class="flex px-2 w-40">
-                                            <div class="truncate font-bold dark:text-zinc-300">
+                                            <div class="truncate font-bold dark:text-zinc-300 message-title">
                                                 Debug
                                             </div>
                                         </div>
                                         <!-- 内容简介 -->
                                         <div class="flex min-w-0">
-                                            <div class="truncate dark:text-zinc-300">
+                                            <div class="truncate dark:text-zinc-300 message-detail">
                                                 This is a message for testing! It' s an unread common
                                                 notice!
                                             </div>
@@ -1183,7 +1170,7 @@
                                 </div>
                                 <!-- 某一般通知(已读) -->
                                 <div
-                                    class="flex flex-col pt-4 px-4 rounded-lg min-w-0 hover:bg-zinc-100 dark:hover:bg-zinc-800 after:mt-2 after:h-px after:w-full after:bg-zinc-300 commonNotice read">
+                                    class="flex flex-col pt-4 px-4 rounded-lg min-w-0 hover:bg-zinc-100 dark:hover:bg-zinc-800 after:mt-2 after:h-px after:w-full after:bg-zinc-300 after:dark:bg-zinc-600 commonNotice read">
                                     <!-- 消息内容 -->
                                     <div class="flex pb-2 items-center min-w-0">
                                         <!-- 状态图标 -->
@@ -1199,11 +1186,11 @@
                                         </div>
                                         <!-- 标题 -->
                                         <div class="flex px-2 w-40">
-                                            <div class="truncate dark:text-zinc-300">Debug</div>
+                                            <div class="truncate dark:text-zinc-300 message-title">Debug</div>
                                         </div>
                                         <!-- 内容简介 -->
                                         <div class="flex min-w-0">
-                                            <div class="truncate dark:text-zinc-300">
+                                            <div class="truncate dark:text-zinc-300 message-detail">
                                                 This is a message for testing! It' s an unread common
                                                 notice!
                                             </div>
@@ -1217,12 +1204,12 @@
                                 </div>
                                 <!-- 某宣传通知(未读) -->
                                 <div
-                                    class="flex flex-col pt-4 px-4 rounded-lg min-w-0 hover:bg-zinc-100 dark:hover:bg-zinc-800 after:mt-2 after:h-px after:w-full after:bg-zinc-300 publicizeNotice">
+                                    class="flex flex-col pt-4 px-4 rounded-lg min-w-0 hover:bg-zinc-100 dark:hover:bg-zinc-800 after:mt-2 after:h-px after:w-full after:bg-zinc-300 after:dark:bg-zinc-600 publicizeNotice">
                                     <!-- 消息内容 -->
                                     <div class="flex pb-2 items-center min-w-0">
                                         <!-- 状态图标 -->
                                         <div
-                                            class="flex p-1 min-w-fit min-h-fit rounded-xl bg-amber-200 hover:bg-amber-400 dark:bg-amber-600 dark:hover:bg-amber-500">
+                                            class="flex p-1 min-w-fit min-h-fit rounded-xl bg-amber-300 hover:bg-amber-400 dark:bg-amber-600 dark:hover:bg-amber-500">
                                             <img draggable="false" class="w-8 h-8 p-1" src="./icons/333/邮件.svg" />
                                         </div>
                                         <!-- 重要等级图标 -->
@@ -1233,13 +1220,13 @@
                                         </div>
                                         <!-- 标题 -->
                                         <div class="flex px-2 w-40">
-                                            <div class="truncate font-bold dark:text-zinc-300">
+                                            <div class="truncate font-bold dark:text-zinc-300 message-title">
                                                 Debug
                                             </div>
                                         </div>
                                         <!-- 内容简介 -->
                                         <div class="flex min-w-0">
-                                            <div class="truncate dark:text-zinc-300">
+                                            <div class="truncate dark:text-zinc-300 message-detail">
                                                 This is a message for testing! It' s an unread common
                                                 notice!
                                             </div>
@@ -1253,7 +1240,7 @@
                                 </div>
                                 <!-- 某宣传通知(已读) -->
                                 <div
-                                    class="flex flex-col pt-4 px-4 rounded-lg min-w-0 hover:bg-zinc-100 dark:hover:bg-zinc-800 after:mt-2 after:h-px after:w-full after:bg-zinc-300 publicizeNotice read">
+                                    class="flex flex-col pt-4 px-4 rounded-lg min-w-0 hover:bg-zinc-100 dark:hover:bg-zinc-800 after:mt-2 after:h-px after:w-full after:bg-zinc-300 after:dark:bg-zinc-600 publicizeNotice read">
                                     <!-- 消息内容 -->
                                     <div class="flex pb-2 items-center min-w-0">
                                         <!-- 状态图标 -->
@@ -1262,18 +1249,18 @@
                                             <img draggable="false" class="w-8 h-8 p-1" src="./icons/333/已读邮件.svg" />
                                         </div>
                                         <!-- 重要等级图标 -->
-                                            <div
+                                        <div
                                             class="flex p-1 min-w-fit min-h-fit ml-8 rounded-full bg-green-300 hover:bg-green-500 dark:bg-green-950 dark:hover:bg-green-800">
                                             <img draggable="false" class="w-8 h-8 p-1" src="./icons/ffffff/消息.svg"
                                                 alt="" />
                                         </div>
                                         <!-- 标题 -->
                                         <div class="flex px-2 w-40">
-                                            <div class="truncate dark:text-zinc-300">Debug</div>
+                                            <div class="truncate dark:text-zinc-300 message-title">Debug</div>
                                         </div>
                                         <!-- 内容简介 -->
                                         <div class="flex min-w-0">
-                                            <div class="truncate dark:text-zinc-300">
+                                            <div class="truncate dark:text-zinc-300 message-detail">
                                                 This is a message for testing! It' s an unread common
                                                 notice!
                                             </div>
@@ -1307,43 +1294,64 @@
                     </div>
                 </div>
                 <!-- communication-content -->
-                <div class="flex flex-col h-74px-to-full w-full px-4 overflow-y-scroll" id="communication-content">
+                <div class="flex flex-col h-74px-to-full w-full px-4 relative overflow-y-scroll" id="communication-content">
+                    <!-- communication-mask -->
+                    <div class="w-8-to-full h-full absolute z-50 bg-zinc-50 dark:bg-zinc-800 opacity-95 unstart-mask" id="communication-mask">
+                        <div class="flex w-full h-full justify-center items-center">
+                            <div class="flex text-3xl text-zinc-700 dark:text-zinc-400">请在"首页"中点击"上课"</div>
+                        </div>
+                    </div>
                     <!-- communication-display -->
                     <div class="flex flex-col w-full h-full p-6 overflow-y-scroll" id="communication-display">
                         <div
                             class="flex flex-col w-full h-full p-4 rounded-xl shadow-inner bg-zinc-100 dark:bg-zinc-800 overflow-y-scroll">
                             <!-- 消息1 -->
                             <div class="flex flex-col my-3 w-full communication-message-body">
-                                <div class="flex w-full justify-center text-zinc-600 text-sm dark:text-zinc-400">8:15</div>
+                                <div class="flex w-full justify-center text-zinc-600 text-sm dark:text-zinc-400">8:15
+                                </div>
                                 <div class="flex w-full">
                                     <div
                                         class="flex h-10 w-10 p-1 rounded-full items-center justify-center bg-purple-200 dark:bg-purple-700">
-                                        <img draggable="false" class="h-8 w-8" src="./icons/333/人员.svg" alt="" srcset="">
+                                        <img draggable="false" class="h-8 w-8" src="./icons/333/人员.svg" alt=""
+                                            srcset="">
                                     </div>
                                     <div class="flex w-20-to-full flex-col ml-4">
-                                        <div class="flex text-zinc-600 max-w-xl text-sm truncate dark:text-zinc-400 select-text">
+                                        <div
+                                            class="flex text-zinc-600 max-w-xl text-sm truncate dark:text-zinc-400 select-text">
                                             XYCF
                                         </div>
                                         <div class="flex w-full">
-                                            <div class="max-w-full p-4 rounded-xl bg-white dark:bg-zinc-900 dark:text-zinc-300 break-words select-text">The longest word in any of the major English language dictionaries is pneumonoultramicroscopicsilicovolcanoconiosis, a word that refers to a lung disease contracted from the inhalation of very fine silica particles, specifically from a volcano; medically, it is the same as silicosis.</div>
+                                            <div
+                                                class="max-w-full p-4 rounded-xl bg-white dark:bg-zinc-900 dark:text-zinc-300 break-words select-text">
+                                                The longest word in any of the major English language dictionaries is
+                                                pneumonoultramicroscopicsilicovolcanoconiosis, a word that refers to a
+                                                lung disease contracted from the inhalation of very fine silica
+                                                particles, specifically from a volcano; medically, it is the same as
+                                                silicosis.</div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <!-- 消息2 -->
                             <div class="flex flex-col my-3 w-full communication-message-body">
-                                <div class="flex w-full justify-center text-zinc-600 text-sm dark:text-zinc-400">8:20</div>
+                                <div class="flex w-full justify-center text-zinc-600 text-sm dark:text-zinc-400">8:20
+                                </div>
                                 <div class="flex w-full">
                                     <div
                                         class="flex h-10 w-10 p-1 rounded-full items-center justify-center bg-purple-200 dark:bg-purple-700">
-                                        <img draggable="false" class="h-8 w-8" src="./icons/333/人员.svg" alt="" srcset="">
+                                        <img draggable="false" class="h-8 w-8" src="./icons/333/人员.svg" alt=""
+                                            srcset="">
                                     </div>
                                     <div class="flex w-20-to-full flex-col ml-4">
-                                        <div class="flex text-zinc-600 max-w-xl text-sm truncate dark:text-zinc-400 select-text">
+                                        <div
+                                            class="flex text-zinc-600 max-w-xl text-sm truncate dark:text-zinc-400 select-text">
                                             XYCF
                                         </div>
                                         <div class="flex w-full">
-                                            <div class="max-w-full p-4 rounded-xl bg-white dark:bg-zinc-900 dark:text-zinc-300 break-words select-text">XYCFXYCFXYCFXYCFXYCFXYCFXYCFXYCFXYCFXYCFXYCFXYCFXYCFXYCFXYCFXYCFXYCFXYCFXYCFXYCFXYCFXYCFXYCFXYCFXYCFXYCFXYCFXYCFXYCF</div>
+                                            <div
+                                                class="max-w-full p-4 rounded-xl bg-white dark:bg-zinc-900 dark:text-zinc-300 break-words select-text">
+                                                XYCFXYCFXYCFXYCFXYCFXYCFXYCFXYCFXYCFXYCFXYCFXYCFXYCFXYCFXYCFXYCFXYCFXYCFXYCFXYCFXYCFXYCFXYCFXYCFXYCFXYCFXYCFXYCFXYCF
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -1354,160 +1362,7 @@
                 </div>
             </div>
 
-            <!-- wallpaper -->
-            <div class="flex flex-grow px-4 w-full flex-col hide-able hide" id="wallpaper">
-                <!-- wallpaper-top -->
-                <div class="flex flex-col w-full">
-                    <div class="flex items-center justify-center w-full">
-                        <div class="flex p-4 px-8 font-medium text-4xl dark:text-zinc-300">
-                            壁纸
-                        </div>
-                        <div class="flex flex-grow"></div>
-                        <!-- blank -->
-                    </div>
-                    <div class="flex w-full py-px px-2 bg-zinc-300 dark:bg-zinc-600">
-                        <div class="flex flex-grow"></div>
-                    </div>
-                </div>
-                <!-- wallpaper-content -->
-                <div class="flex flex-col h-74px-to-full w-full px-4 overflow-y-scroll" id="wallpaper-content">
-                    <!-- wallpaper-select -->
-                    <div class="flex flex-col w-full h-full" id="wallpaper-select">
-                        <!-- 壁纸展示 -->
-                        <div class="flex flex-col w-full h-full">
-                            <!-- 16=4rem=64px -->
-                            <div class="flex p-4 px-4 font-medium text-2xl dark:text-zinc-300">
-                                查看壁纸
-                            </div>
-                            <!-- (unfinished) -->
-                            <div
-                                class="max-w-full max-h-full h-16-to-full overflow-y-scroll justify-center columns-xs gap-6">
-                                <!-- 图片浏览 -->
-                                <div
-                                    class="flex flex-col m-2 p-4 max-w-full h-max items-center justify-center rounded-xl break-inside-avoid-column bg-zinc-50 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700">
-                                    <div class="flex w-full rounded-xl overflow-hidden">
-                                        <img draggable="false" class="w-full"
-                                            src="./img/wallpapers/(test_wallpaper)ganyu.jpg" alt="" />
-                                    </div>
-                                    <div class="flex w-full p-4 items-center justify-center">
-                                        <div class="flex max-w-full text-lg truncate dark:text-zinc-300">
-                                            甘雨(test_wallpaper)
-                                        </div>
-                                    </div>
-                                    <div class="flex text-sm text-zinc-400 dark:text-zinc-600">
-                                        2023/8/25
-                                    </div>
-                                </div>
-                                <div
-                                    class="flex flex-col m-2 p-4 max-w-full h-max items-center justify-center rounded-xl break-inside-avoid-column bg-zinc-50 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700">
-                                    <div class="flex w-full rounded-xl overflow-hidden">
-                                        <img draggable="false" class="w-full"
-                                            src="./img/wallpapers/(test_wallpaper)cool_girl.jpg" alt="" />
-                                    </div>
-                                    <div class="flex w-full p-4 items-center justify-center">
-                                        <div class="flex max-w-full text-lg truncate dark:text-zinc-300">
-                                            cool_girl(test_wallpaper)
-                                        </div>
-                                    </div>
-                                    <div class="flex text-sm text-zinc-400 dark:text-zinc-600">
-                                        2023/8/25
-                                    </div>
-                                </div>
-                                <div
-                                    class="flex flex-col m-2 p-4 max-w-full h-max items-center justify-center rounded-xl break-inside-avoid-column bg-zinc-50 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700">
-                                    <div class="flex w-full rounded-xl overflow-hidden">
-                                        <img draggable="false" class="w-full"
-                                            src="./img/wallpapers/(test_wallpaper)girl.jpg" alt="" />
-                                    </div>
-                                    <div class="flex w-full p-4 items-center justify-center">
-                                        <div class="flex max-w-full text-lg truncate dark:text-zinc-300">
-                                            girl(test_wallpaper)
-                                        </div>
-                                    </div>
-                                    <div class="flex text-sm text-zinc-400 dark:text-zinc-600">
-                                        2023/8/25
-                                    </div>
-                                </div>
-                                <div
-                                    class="flex flex-col m-2 p-4 max-w-full h-max items-center justify-center rounded-xl break-inside-avoid-column bg-zinc-50 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700">
-                                    <div class="flex w-full rounded-xl overflow-hidden">
-                                        <img draggable="false" class="w-full"
-                                            src="./img/wallpapers/(test_wallpaper)miku.jpg" alt="" />
-                                    </div>
-                                    <div class="flex w-full p-4 items-center justify-center">
-                                        <div class="flex max-w-full text-lg truncate dark:text-zinc-300">
-                                            miku(test_wallpaper)
-                                        </div>
-                                    </div>
-                                    <div class="flex text-sm text-zinc-400 dark:text-zinc-600">
-                                        2023/8/25
-                                    </div>
-                                </div>
-                                <div
-                                    class="flex flex-col m-2 p-4 max-w-full h-max items-center justify-center rounded-xl break-inside-avoid-column bg-zinc-50 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700">
-                                    <div class="flex w-full rounded-xl overflow-hidden">
-                                        <img draggable="false" class="w-full"
-                                            src="./img/wallpapers/(test_wallpaper)nekomusume.jpg" alt="" />
-                                    </div>
-                                    <div class="flex w-full p-4 items-center justify-center">
-                                        <div class="flex max-w-full text-lg truncate dark:text-zinc-300">
-                                            nekomusume(test_wallpaper)
-                                        </div>
-                                    </div>
-                                    <div class="flex text-sm text-zinc-400 dark:text-zinc-600">
-                                        2023/8/25
-                                    </div>
-                                </div>
-                                <div
-                                    class="flex flex-col m-2 p-4 max-w-full h-max items-center justify-center rounded-xl break-inside-avoid-column bg-zinc-50 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700">
-                                    <div class="flex w-full rounded-xl overflow-hidden">
-                                        <img draggable="false" class="w-full"
-                                            src="./img/wallpapers/(test_wallpaper)抹茶_anmi.png" alt="" />
-                                    </div>
-                                    <div class="flex w-full p-4 items-center justify-center">
-                                        <div class="flex max-w-full text-lg truncate dark:text-zinc-300">
-                                            抹茶_anmi(test_wallpaper)
-                                        </div>
-                                    </div>
-                                    <div class="flex text-sm text-zinc-400 dark:text-zinc-600">
-                                        2023/8/28
-                                    </div>
-                                </div>
-                                <div
-                                    class="flex flex-col m-2 p-4 max-w-full h-max items-center justify-center rounded-xl break-inside-avoid-column bg-zinc-50 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700">
-                                    <div class="flex w-full rounded-xl overflow-hidden">
-                                        <img draggable="false" class="w-full"
-                                            src="./img/wallpapers/(test_wallpaper)江南烧酒_anmi.jpg" alt="" />
-                                    </div>
-                                    <div class="flex w-full p-4 items-center justify-center">
-                                        <div class="flex max-w-full text-lg truncate dark:text-zinc-300">
-                                            江南烧酒_anmi(test_wallpaper)
-                                        </div>
-                                    </div>
-                                    <div class="flex text-sm text-zinc-400 dark:text-zinc-600">
-                                        2023/8/28
-                                    </div>
-                                </div>
-                                <div
-                                    class="flex flex-col m-2 p-4 max-w-full h-max items-center justify-center rounded-xl break-inside-avoid-column bg-zinc-50 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700">
-                                    <div class="flex w-full rounded-xl overflow-hidden">
-                                        <img draggable="false" class="w-full"
-                                            src="./img/wallpapers/(test_wallpaper)铃兰_anmi.jpg" alt="" />
-                                    </div>
-                                    <div class="flex w-full p-4 items-center justify-center">
-                                        <div class="flex max-w-full text-lg truncate dark:text-zinc-300">
-                                            铃兰_anmi(test_wallpaper)
-                                        </div>
-                                    </div>
-                                    <div class="flex text-sm text-zinc-400 dark:text-zinc-600">
-                                        2023/8/28
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
 
             <!-- 示例 -->
             <!-- 不想要就删掉 -->
@@ -1515,7 +1370,7 @@
                 <div
                     class="p-6 max-w-sm h-max mx-auto bg-white rounded-xl shadow-lg flex items-center space-x-4 hover:bg-slate-50">
                     <div class="shrink-0">
-                        <img draggable="false" class="h-12 w-12" src="./img/logo.svg" alt="" />
+                        <img draggable="false" class="h-12 w-12" src="./icons/icon.jpg" alt="" />
                     </div>
                     <div>
                         <div class="text-xl font-medium text-black">Message</div>

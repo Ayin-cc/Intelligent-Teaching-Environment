@@ -179,9 +179,6 @@
     content: url(./icons/d4d4d8/沟通.svg);
 }
 
-.dark #wallpaper-sidebar img {
-    content: url(./icons/d4d4d8/相册.svg);
-}
 
 /* sidebar的bottom的图标 */
 .dark #photo-profile-sidebarBottom img {
@@ -250,13 +247,21 @@
     height: calc(100% - 74px)/* 100% - 74px */;
 }
 
+.w-8-to-full{
+    width: calc(100% - 2rem)/* 100% - 32px */;
+}
 .w-10-to-full{
     width: calc(100% - 2.5rem)/* 100% - 40px */;
 }
 .w-20-to-full{
     width: calc(100% - 5rem)/* 100% - 80px */;
 }
-
+.w-100-to-full{
+    width: calc(100% - 25rem)/* 100% - 400px */;
+}
+.z-100{
+    z-index: 100;
+}
 .max-w-3xs{
     max-width: 16rem/* 256px */;
 }

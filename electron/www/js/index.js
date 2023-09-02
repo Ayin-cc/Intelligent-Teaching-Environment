@@ -2,6 +2,7 @@
 var isLogin = 0;
 var isClassPeriod = 0;
 var isClassStarted = 0;
+var initializeData = null;
 
 // ==================================================
 // 当纯 HTML 被完全加载以及解析时
@@ -10,20 +11,22 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // 消除选择(单击任意地方3秒后，清除选择)
     // (done)
-    var clickTimeout;
-    document.addEventListener("click", function () {
-        if (clickTimeout) {
-            clearTimeout(clickTimeout);
-        }
+    // var clickTimeout;
+    // document.addEventListener("click", function () {
+    //     if (clickTimeout) {
+    //         clearTimeout(clickTimeout);
+    //     }
 
-        clickTimeout = setTimeout(function () {
-            if (window.getSelection) {
-                var selection = window.getSelection();
-                selection.removeAllRanges();
-            }
-        }, 3000); // 3s
-    });
+    //     clickTimeout = setTimeout(function () {
+    //         if (window.getSelection) {
+    //             var selection = window.getSelection();
+    //             selection.removeAllRanges();
+    //         }
+    //     }, 3000); // 3s
+    // });
 
+    // 初始化wed
+    initializeWeb();
     // web的刷新
     updateWeb();
     // homepage的刷新
@@ -33,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
     updateRollCall();
     updateRandomSelection();
     updateMessage();
-    updateWallpaper();
+    updateCommunication();
 
 });
 
@@ -43,12 +46,44 @@ document.addEventListener("DOMContentLoaded", function () {
 // *************************
 
 // ==================================================
-// 主要监听事件
+// 初始化
+// ==================================================
+function initializeWeb() {
+    initializeStaticData()
+    initializeSave();
+}
+// 初始化静态数据
+function initializeStaticData() {
+    fetch('./data/data.json')
+        .then(response => response.json())
+        .then(data => {
+            // 在这里可以操作获取到的 JSON 数据
+            console.log(data);
+            initializeData = data;
+        })
+        .catch(error => {
+            // 处理错误
+            console.error('读取 JSON 文件时出错：', error);
+        });
+
+}
+// 初始化动态数据
+function initializeSave() {
+
+}
+
+// ==================================================
+// 动态更新网页
 // ==================================================
 function updateWeb() {
+    webListener();
+}
+// 主要监听事件
+function webListener() {
     // 需要借助main中实现的：
     // 菜单栏操作(最小化，最大化，还原，关闭(隐藏))
     // (done)
+
     var minimizeWindowControllerHeader = document.getElementById('minimizeWindow-controller-header');
     var fullscreenWindowControllerHeader = document.getElementById('fullscreenWindow-controller-header');
     var closeWindowControllerHeader = document.getElementById('closeWindow-controller-header');
@@ -79,6 +114,28 @@ function updateWeb() {
     closeWindowControllerHeader.addEventListener('click', function () {
         window.ipcRenderer.send('mainWindow', 'close-window');
     });
+
+
+    // 创建次要窗口
+
+    var aboutMenuHeader = document.getElementById('about-menu-header');
+    var settingMenuHeader = document.getElementById('setting-menu-header');
+    var aboutSidebarSelfExtra = document.getElementById('about-sidebar-self-extra');
+    var settingSidebarSelfExtra = document.getElementById('setting-sidebar-self-extra');
+
+    aboutMenuHeader.addEventListener('click', function () {
+        window.ipcRenderer.send('aboutWindow', 'create-window');
+    });
+    aboutSidebarSelfExtra.addEventListener('click', function () {
+        window.ipcRenderer.send('aboutWindow', 'create-window');
+    });
+    settingMenuHeader.addEventListener('click', function () {
+        window.ipcRenderer.send('settingWindow', 'create-window');
+    });
+    settingSidebarSelfExtra.addEventListener('click', function () {
+        window.ipcRenderer.send('settingWindow', 'create-window');
+    });
+
 
 
     // 顶部的folder点击，切换显示状态
@@ -220,8 +277,10 @@ function updateWeb() {
                 var hideableId = hideableElement.id;
                 // 如果 hideableElement 的 id 包含 clickedId，则移除 hide 类，否则添加 hide 类
                 if (clickedId.includes(hideableId)) {
+                    // 该界面
                     hideableElement.classList.remove('hide');
                 } else {
+                    // 其他界面
                     hideableElement.classList.add('hide');
                 }
             });
@@ -321,7 +380,6 @@ function updateWeb() {
     });
 }
 
-
 // ==================================================
 // 首页
 // homepage(首页)
@@ -395,7 +453,7 @@ function updateHomepageScheduleDisplay() {
     var currentHour = new Date().getHours();
     var currentMinute = new Date().getMinutes();
     // 方框时间段中
-    
+
     if (currentHour == 8 && currentMinute >= 15) { // 8:15-9:00 上午
         scheduleHomepageChiledren.eq(0).addClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500');
         scheduleHomepageChiledren.eq(0).removeClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700 hide');
@@ -645,26 +703,38 @@ function updateHomepageScheduleDisplay() {
         isClassPeriod = 0;
     }
     var isClassPeriodHomepage = $('#isClassPeriod-homepage');
-    if(isClassPeriod == 0){
+    if (isClassPeriod == 0) {
         isClassPeriodHomepage.text('现在还不是上课时间!');
-    }else if(isClassPeriod == 1){
+    } else if (isClassPeriod == 1) {
         isClassPeriodHomepage.text('现在是上课时间段!');
     }
-    
-    
+
+
 
 }
 // 开始上课
-function classStartHomepage(){
+// (unfinished)
+function classStartHomepage() {
     var classStartBtnHomepage = document.getElementById('classStartBtn-homepage');
-    classStartBtnHomepage.addEventListener('click',function(){
-        if(isClassStarted == 0){
+    var startClassHelpHomepage = document.getElementById('startClass-help-homepage');
+    var unstartMasks = document.getElementsByClassName('unstart-mask');
+    classStartBtnHomepage.addEventListener('click', function () {
+        if (isClassStarted == 0) {
             isClassStarted = 1;
             classStartBtnHomepage.textContent = '下课';
+            startClassHelpHomepage.textContent = '在结束当次使用后，请点击"下课"';
+            for (var i = 0; i < unstartMasks.length; i++) {
+                unstartMasks[i].classList.add('hidden');
+            }
             // 开启功能
-        }else if(isClassStarted == 1){
+        } else if (isClassStarted == 1) {
             isClassStarted = 0;
             classStartBtnHomepage.textContent = '上课';
+            startClassHelpHomepage.textContent = '点击"上课"后，才能使用大部分功能';
+            for (var i = 0; i < unstartMasks.length; i++) {
+                unstartMasks[i].classList.remove('hidden');
+            }
+
         }   // 关闭功能
     });
 
@@ -836,7 +906,7 @@ function updateQRCodeSignInContinuing(duration, frequency) {
     // 是否放大
     var qrcodeContainer = document.getElementById('qrcode-container');
     qrcodeContainer.addEventListener('click', function () {
-        window.ipcRenderer.send('QRCodeWindow', 'createWindow');
+        window.ipcRenderer.send('QRCodeWindow', 'create-window');
     });
 }
 
@@ -882,32 +952,32 @@ function updateInputTangeRandomSelection() {
         randomSelectionCountLabel.textContent = randomSelectionCountInput.value;
     });
 }
-function randomSelectionStart(){
+function randomSelectionStart() {
     var count = 1;
     var priority = false;
     var randomSelectionStartBtn = document.getElementById('randomSelection-start-btn');
-    randomSelectionStartBtn.addEventListener('click',function(){
+    randomSelectionStartBtn.addEventListener('click', function () {
         count = document.getElementById('randomSelection-count-input').value;
         priority = document.getElementById('randomSelection-priority-toggle').checked;
         randomSelectionDisplay(count, priority);
     });
-    
+
 }
 
-function randomSelectionDisplay(count, priority){
+function randomSelectionDisplay(count, priority) {
     var randomSelectionSelect = document.getElementById('randomSelection-select');
     var randomSelectionResult = document.getElementById('randomSelection-result');
-    
+
     var count = count;
     var priority = priority;
-    
+
     randomSelectionSelect.classList.add('hide');
     randomSelectionResult.classList.remove('hide');
     // 具体抽取，然后修改html的代码
     // ...
     // 具体抽取，然后修改html的代码
     var randomSelectionRestartBtn = document.getElementById('randomSelection-restart-btn');
-    randomSelectionRestartBtn.addEventListener('click',function(){
+    randomSelectionRestartBtn.addEventListener('click', function () {
         randomSelectionResult.classList.add('hide');
         randomSelectionSelect.classList.remove('hide');
         return; // 结束监听，微微优化
@@ -920,18 +990,88 @@ function randomSelectionDisplay(count, priority){
 // message(通知)
 // ==================================================
 function updateMessage() {
-    putMessageToWindows('Hello', 'The ITE is working!', './www/icons/message.png');
-
+    // putMessageToWindows('Hello', 'The ITE is working!', './www/icons/message.png');
+    clickMessage();
 }
 
 function putMessageToWindows(title, body, icon) {
     window.ipcRenderer.send('Notification', title, body, icon);
 }
+// 展开消息(jQuery)
+function clickMessage() {
 
-// ==================================================
-// 壁纸
-// wallpaper(壁纸)
-// ==================================================
-function updateWallpaper() {
+    var messageContainer = $('#message-container');
+    var messages = messageContainer.children();
+    messages.each(function () {
+        $(this).on('click', function () {
+            // 切换是否读过
+            var element = $(this);
+            var messageBody = element.children().eq(0);
+            if (element.hasClass('importantNotice')) {
+                if (element.hasClass('read')) {
+                    // 无
+                } else {
+                    messageBody.addClass('read');
+                    messageBody.children().eq(0).removeClass('bg-amber-300 hover:bg-amber-400 dark:bg-amber-600 dark:hover:bg-amber-500');
+                    messageBody.children().eq(0).addClass('bg-amber-50 hover:bg-amber-100 dark:bg-zinc-800 dark:hover:bg-zinc-600');
+                    messageBody.children().eq(0).find("img").attr("src", "./icons/333/已读邮件.svg");
+                    messageBody.children().eq(1).removeClass('bg-red-500 hover:bg-red-700 dark:bg-red-800 dark:hover:bg-red-700');
+                    messageBody.children().eq(1).addClass('bg-red-400 hover:bg-red-500 dark:bg-red-950 dark:hover:bg-red-800');
+                    messageBody.children().eq(1).find("img").attr("src", "./icons/ffffff/消息.svg");
+                }
+            } else if (element.hasClass('commonNotice')) {
+                if (element.hasClass('read')) {
+                    // 无
+                } else {
+                    messageBody.addClass('read');
+                    messageBody.children().eq(0).removeClass('bg-amber-300 hover:bg-amber-400 dark:bg-amber-600 dark:hover:bg-amber-500');
+                    messageBody.children().eq(0).addClass('bg-amber-50 hover:bg-amber-100 dark:bg-zinc-800 dark:hover:bg-zinc-600');
+                    messageBody.children().eq(0).find("img").attr("src", "./icons/333/已读邮件.svg");
+                    messageBody.children().eq(1).removeClass('bg-orange-400 hover:bg-orange-600 dark:bg-orange-700 dark:hover:bg-orange-600');
+                    messageBody.children().eq(1).addClass('bg-orange-200 hover:bg-orange-500 dark:bg-orange-900 dark:hover:bg-orange-800');
+                    messageBody.children().eq(1).find("img").attr("src", "./icons/ffffff/消息.svg");
+                }
+            } else if (element.hasClass('publicizeNotice')) {
+                if (element.hasClass('read')) {
+                    // 无
+                } else {
+                    messageBody.addClass('read');
+                    messageBody.children().eq(0).removeClass('bg-amber-300 hover:bg-amber-400 dark:bg-amber-600 dark:hover:bg-amber-500');
+                    messageBody.children().eq(0).addClass('bg-amber-50 hover:bg-amber-100 dark:bg-zinc-800 dark:hover:bg-zinc-600');
+                    messageBody.children().eq(0).find("img").attr("src", "./icons/333/已读邮件.svg");
+                    messageBody.children().eq(1).removeClass('bg-green-500 hover:bg-green-600 dark:bg-green-700 dark:hover:bg-green-600');
+                    messageBody.children().eq(1).addClass('bg-green-300 hover:bg-green-500 dark:bg-green-950 dark:hover:bg-green-800');
+                    messageBody.children().eq(1).find("img").attr("src", "./icons/ffffff/消息.svg");
+                }
+            }
+
+            // 点击后的，展开通知
+            var detail = element.find('.message-detail');
+            var title = element.find('.message-title');
+            if (detail.hasClass('truncate')) {
+                element.addClass('ring-inset ring ring-purple-200 dark:ring-zinc-700');
+                detail.removeClass('truncate');
+                detail.addClass('break-words');
+                title.removeClass('truncate');
+                title.addClass('break-words');
+            } else {
+                element.removeClass('ring-inset ring ring-purple-200 dark:ring-zinc-700');
+                detail.addClass('truncate');
+                detail.removeClass('break-words');
+                title.removeClass('truncate');
+                title.addClass('break-words');
+            }
+        });
+    });
 
 }
+
+
+// ==================================================
+// 交流
+// communication(交流)
+// ==================================================
+function updateCommunication() {
+
+}
+

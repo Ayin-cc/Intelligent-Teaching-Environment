@@ -14,6 +14,16 @@
     height: calc(100% - 2rem)/* 100% - 32px */;
 }
 
+.list-detail:nth-child(even) {
+    background-color: rgb(255, 255, 255);
+}
+
+.list-detail:nth-child(odd) {
+    background-color: rgb(244, 244, 245);
+}
+
+
+
 /* y向滑动条 */
 /* 整体 */
 .overflow-y-scroll::-webkit-scrollbar {
