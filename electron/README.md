@@ -181,14 +181,18 @@ ___
 # 2023/8/31
 更新点名的基础界面
 
-~~笔记本键盘废了，难受。现在不修，开学就更不能了，寄~~
+~~笔记本键盘废了，难受。现在不修，开学就更不能了，寄！~~
 
 # 2023/9/1
-忘了Commit change…
+**忘了Commit change…**，只好用回想的方式记录
 
-寄，大概更新了homepage，randomSelection与communication的部分样式
+~~笔记本键盘又好了，怪哉！~~
+
+寄，大概更新了homepage，randomSelection与communication的部分样式，更新sidebar-bottom-extra卡片
+
 重点是homepage和communication
 
+~~黑夜模式是大坑，但沉没成本太高，放不下哩\~~~
 # 2023/9/2
 删除wallpaper功能，及其相关文件、代码。
 ~~心疼ing~~
@@ -197,7 +201,7 @@ ___
 
 更新message，现在可以点击消息，展开查看
 
-更新sidebar-bottom-extra卡片
+更改sidebar-bottom-extra卡片
 
 现在关于、设置有界面及其js了（~~setting偷懒了~~）。
 
