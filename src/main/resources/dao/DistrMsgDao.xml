@@ -31,7 +31,7 @@
     <select id="selectReadyMsg" resultMap="msgResultMap">
         select *
         from (
-            select * from scuee.message where msg_time < #{time} and is_published = 0
+            select * from scuee.message where msg_time &lt;= #{time} and is_published = 0
              )m
         inner join
             scuee.msg_attachment ma
@@ -39,7 +39,7 @@
             m.id = ma.msg_id;
         update scuee.message m
         set m.is_published = 1
-        where m.msg_time < #{time};
+        where m.msg_time &lt;= #{time};
     </select>
 
     <select id="selectAttachment" resultType="org.springframework.web.multipart.MultipartFile">
