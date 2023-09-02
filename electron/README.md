@@ -182,3 +182,32 @@ ___
 更新点名的基础界面
 
 ~~笔记本键盘废了，难受。现在不修，开学就更不能了，寄~~
+
+# 2023/9/1
+忘了Commit change…
+
+寄，大概更新了homepage，randomSelection与communication的部分样式
+重点是homepage和communication
+
+# 2023/9/2
+删除wallpaper功能，及其相关文件、代码。
+~~心疼ing~~
+
+更新mask模块，不点**上课**就不能使用大部分功能
+
+更新message，现在可以点击消息，展开查看
+
+更新sidebar-bottom-extra卡片
+
+现在关于、设置有界面及其js了（~~setting偷懒了~~）。
+
+about可以读取data.json初始化
+
+更新main.js，现在可以创建about与setting的子窗口，且目前的三个子窗口(含QRCodeWindow)创建时都会锁定父窗口mainWindow（即index.html）
+
+规范了部分代码，微微增强统一性
+
+修复几个微小显示bug
+
+# 2023/9/3
+
