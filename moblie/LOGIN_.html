@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>登录</title>
+		<link href="output.css" rel="stylesheet">
+		<link href="all_else.css" rel="stylesheet" />
+	</head>
+
+	<body class="flex items-center justify-center min-h-screen bg-gray-100 no-x-scroll">
+		<div class="p-8 bg-white shadow-xl w-80 rounded-xl">
+			<h2 class="text-2xl font-semibold" id="top-tip">登录</h2>
+			<form class="mt-10">
+				<div class="mb-4">
+					<label for="username" class="block mb-2 font-medium text-gray-600">学工号</label>
+					<input type="text" id="username" name="username"
+						class="w-full p-2 border border-gray-300 rounded-md focus:bg-slate-100 bg-slate-50 focus:outline-none focus:border-blue-500 ">
+				</div>
+				<div class="mb-4">
+					<label for="password" class="block mb-2 font-medium text-gray-600">密码</label>
+					<input type="password" id="password" name="password"
+						class="w-full p-2 border border-gray-300 rounded-md focus:bg-slate-100 bg-slate-50 focus:outline-none focus:border-blue-500">
+				</div>
+				<div class="hidden mb-4" id="pswd-again">
+					<label for="password" class="block mb-2 font-medium text-gray-600">确认密码</label>
+					<input type="password" id="password" name="password"
+						class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500">
+				</div>
+				<div class="flex items-center justify-between mt-16 mb-4">
+					<div class="text-blue-500">
+						忘记密码？
+					</div>
+					<button id="sign-button"
+						class="px-4 py-2 text-white bg-blue-400 rounded-md focus:outline-none focus:bg-blue-600">
+						注册
+					</button>
+					<button id="log-button"
+						class="px-4 py-2 text-white bg-blue-500 rounded-md focus:outline-none focus:bg-blue-600">
+						登录
+					</button>
+				</div>
+			</form>
+		</div>
+		<script>
+			const top_tip = document.getElementById('top-tip');
+			const pswd_again = document.getElementById('pswd-again');
+			const sign_button = document.getElementById('sign-button');
+			const log_button = document.getElementById('log-button');
+			var log_sin_status = 1;
+
+			function change_top_tip() {
+				if (log_sin_status == 1) {
+					top_tip.textContent = '登录';
+					pswd_again.classList.add('hidden');
+				} else if (log_sin_status == 0) {
+					top_tip.textContent = '注册';
+					pswd_again.classList.remove('hidden');
+				}
+			}
+
+			sign_button.addEventListener('click', () => {
+				event.preventDefault();
+				log_sin_status = 0;
+				change_top_tip();
+			});
+			log_button.addEventListener('click', () => {
+				event.preventDefault();
+				log_sin_status = 1;
+				change_top_tip();
+			});
+
+			// 舒适化
+			change_top_tip();
+
+
+		</script>
+	</body>
+
+</html>

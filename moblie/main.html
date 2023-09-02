@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link href="output.css" rel="stylesheet" />
+		<title>ITE</title>
+		<style>
+			/* 未登录提示框 */
+			.nolog-tips {
+				display: none;
+				position: fixed;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+				padding: 20px;
+				background-color: #ffffff;
+				color: #333;
+				text-align: center;
+				border-radius: 8px;
+				/* 添加圆角 */
+				box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+				/* 添加阴影 */
+				transition: opacity 0.5s ease;
+				/* 添加过渡效果 */
+				z-index: 1000;
+			}
+		</style>
+	</head>
+
+	<body class="no-x-scroll">
+		<!-- 顶部栏 -->
+		<div class="flex flex-col h-38">
+			<!-- 头像栏 -->
+			<div class="flex items-center max-w-xs p-2 mx-0 rounded-lg resizable">
+				<!-- 头像框 -->
+				<div class="flex flex-row" id="user_all">
+					<div class="flex w-8 h-10 mx-4 my-1 overflow-hidden rounded-full" id="photo-profile-sidebarBottom">
+						<img draggable="false" src="./icons/用户.svg" alt="" />
+					</div>
+					<!-- <div class="hidden" id="user_inf"> -->
+					<div class="flex flex-col" id="user_inf">
+						<!-- 姓名 -->
+						<div class="flex flex-grow mx-6 overflow-hidden select-none" id="name-profile-sidebarBottom">
+							XYCF
+						</div>
+
+						<!-- 学号 -->
+						<div class="flex flex-grow py-1 overflow-hidden text-xs select-none"
+							id="number-profile-sidebarBottom">
+							2022xxxxxxxxx
+						</div>
+					</div>
+					<div class="flex flex-grow mx-2 my-3 overflow-hidden select-none" id="user_no">未登录</div>
+				</div>
+			</div>
+
+			<!-- sidebar-line -->
+			<div class="flex mx-2 w-auto h-0.5 bg-slate-400 hide-able"></div>
+		</div>
+		<!-- 功能模块 -->
+		<div class="flex flex-col">
+			<div class="flex h-10 mx-8 my-1 rounded-xl items-center
+                    hover:bg-gray-100 before:w-0.5 before:h-full before:bg-slate-400 before:hover:bg-slate-600
+                    dark:hover:bg-zinc-600 dark:before:bg-zinc-600 dark:before:hover:bg-zinc-400 resizable"
+				id="function-sidebar">
+				<div class="flex w-6 h-6 mx-4">
+					<img draggable="false" src="./icons/更多2.svg" alt="" />
+				</div>
+				<div class="flex font-medium text-zinc-950 dark:text-zinc-300 hide-able text">功能</div>
+				<!-- blank -->
+				<div class="flex flex-grow"></div>
+				<div class="flex w-8 h-8 p-1 mx-4 rounded-lg hover:bg-purple-200 dark:hover:bg-zinc-950 hide-able"
+					id="folder-function-sidebar">
+					<img draggable="false" class="hide-able" src="./icons/下.svg" alt="" />
+				</div>
+			</div>
+		</div>
+		<div class="flex flex-col">
+			<div class="flex h-10 mx-8 pl-2 my-0.5 rounded-xl items-center
+		                        hover:bg-gray-100 before:w-0.5 before:h-full before:bg-slate-200 before:hover:bg-slate-400
+		                        dark:hover:bg-zinc-600 dark:before:bg-zinc-600 dark:before:hover:bg-zinc-400 resizable foldable clickable"
+				id="message-sidebar">
+				<div class="flex w-6 h-6 mx-4">
+					<img draggable="false" class="p-0 m-0 hide-abg-left" src="./icons/消息.svg" alt="" />
+				</div>
+				<div class="flex font-medium text-zinc-950 dark:text-zinc-300 hide-able text">通知</div>
+				<div class="flex flex-grow"></div>
+				<!-- blank -->
+				<div class="flex flex-grow"></div>
+			</div>
+
+			<img src="./icons/点点.svg" alt=""
+				class="absolute z-10 h-8 duration-300 left-16 top-28 ransition hover:opacity-75">
+
+			<div class="flex h-10 mx-8 pl-2 my-0.5 rounded-xl items-center
+					                        hover:bg-gray-100 before:w-0.5 before:h-full before:bg-slate-200 before:hover:bg-slate-400
+					                        dark:hover:bg-zinc-600 dark:before:bg-zinc-600 dark:before:hover:bg-zinc-400 resizable foldable clickable"
+				id="timetable-sidebar">
+				<div class="flex w-6 h-6 mx-4">
+					<img draggable="false" class="p-0 m-0 hide-abg-left" src="./icons/rsgl22.svg" alt="" />
+				</div>
+				<div class="flex font-medium text-zinc-950 dark:text-zinc-300 hide-able text">课表</div>
+				<div class="flex flex-grow"></div>
+				<div class="flex flex-grow"></div>
+			</div>
+
+			<div class="flex h-10 mx-8 pl-2 my-0.5 rounded-xl items-center
+				 hover:bg-gray-100 before:w-0.5 before:h-full before:bg-slate-200 before:hover:bg-slate-400
+				 dark:hover:bg-zinc-600 dark:before:bg-zinc-600 dark:before:hover:bg-zinc-400 resizable foldable clickable"
+				id="signIn-sidebar">
+				<div class="flex w-6 h-6 mx-4">
+					<img draggable="false" src="./icons/编辑.svg" alt="" />
+				</div>
+				<div class="flex font-medium text-zinc-950 dark:text-zinc-300 hide-able text">签到</div>
+				<div class="flex flex-grow"></div>
+			</div>
+		</div>
+		<div id="messageBox" class="hidden nolog-tips">
+			<p id="message" class="my-1">请登录后再尝试</p>
+			<p id="countdown" class="my-1 mt-2 text-xs">3 秒后自动跳转至登陆界面</p>
+			<p class="mb-1 text-xs">点击取消</p>
+		</div>
+		<script src="main.js"></script>
+	</body>
+
+</html>
