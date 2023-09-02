@@ -8,7 +8,11 @@ const fs = require('fs');
 // 全局变量
 let mainWindow = null;
 let qrCodeWindow = null;
+let aboutWindow = null;
+let settingWindow = null;
 let tray = null;
+
+
 
 // 应用程序准备就绪时触发
 app.whenReady().then(() => {
@@ -109,13 +113,13 @@ function createTray() {
 // 创建子窗口QRCode
 function createQRCodeWindow() {
     qrCodeWindow = new BrowserWindow({
+        parent: mainWindow, modal: true, // 模态对话框
         width: 1080,
         height: 1980,
         icon: path.join(__dirname, './www/icons/icon.jpg'),
         frame: false,// 实现头部的隐藏
         webPreferences: { // 在渲染进程中使用node.js, 需要要配置webPreferences属性
             preload: path.join(__dirname, 'preload.js'), //
-            // cache: false, // 发行时需要缓存
         }
     });
     qrCodeWindow.loadFile('./www/pages/QRCode.html'); // 加载QRCode.html
@@ -132,8 +136,64 @@ function closeQRCodeWindow() {
         qrCodeWindow.close();
     }
 }
+// 创建子窗口about
+function createAboutWindow() {
+    aboutWindow = new BrowserWindow({
+        parent: mainWindow, modal: true, // 模态对话框
+        width: 280, minWidth: 280,
+        height: 500, minHeight: 500,
+        icon: path.join(__dirname, './www/icons/icon.jpg'),
+        frame: false,// 实现头部的隐藏
+        webPreferences: {
+            preload: path.join(__dirname, 'preload.js'), //
+        }
+    });
+    aboutWindow.loadFile('./www/pages/about.html');
+    aboutWindow.setMenu(null); // 关闭默认菜单
+
+    // 在子窗口关闭时释放资源
+    aboutWindow.on('closed', () => {
+        aboutWindow = null;
+    });
+
+}
+// 销毁子窗口about
+function closeAboutWindow() {
+    if (aboutWindow) {
+        aboutWindow.close();
+    }
+}
+// 创建子窗口setting
+function createSettingWindow() {
+    settingWindow = new BrowserWindow({
+        parent: mainWindow, modal: true, // 模态对话框
+        width: 700, minWidth: 900,
+        height: 700, minHeight: 900,
+        icon: path.join(__dirname, './www/icons/icon.jpg'),
+        frame: false,// 实现头部的隐藏
+        webPreferences: {
+            preload: path.join(__dirname, 'preload.js'), //
+        }
+    });
+    settingWindow.loadFile('./www/pages/setting.html');
+    settingWindow.setMenu(null); // 关闭默认菜单
+
+    // 在子窗口关闭时释放资源
+    settingWindow.on('closed', () => {
+        settingWindow = null;
+    });
+
+}
+// 销毁子窗口setting
+function closeSettingWindow() {
+    if (settingWindow) {
+        settingWindow.close();
+    }
+}
+
 // ipcMain创建的Listener
 function setupIPCListeners() {
+    // mainWindow
     // 最小化、最大化、关闭
     ipcMain.on('mainWindow', function (event, message) {
         if (message == 'minimize-window') {
@@ -179,14 +239,30 @@ function setupIPCListeners() {
     });
     // 生成、销毁QRCode子窗口
     ipcMain.on('QRCodeWindow', function (event, message) {
-        if (message == 'createWindow') {
+        if (message == 'create-window') {
             createQRCodeWindow();
             qrCodeWindow.maximize();
-        } else if (message == 'closeWindow') {
+        } else if (message == 'close-window') {
             closeQRCodeWindow();
         }
     });
-    // 通知Windows
+    // 生成、销毁about子窗口
+    ipcMain.on('aboutWindow', function (event, message) {
+        if (message == 'create-window') {
+            createAboutWindow();
+        } else if (message == 'close-window') {
+            closeAboutWindow();
+        }
+    });
+    // 生成、销毁setting子窗口
+    ipcMain.on('settingWindow', function (event, message) {
+        if (message == 'create-window') {
+            createSettingWindow();
+        } else if (message == 'close-window') {
+            closeSettingWindow();
+        }
+    });
+    // 在Windows通知
     ipcMain.on('Notification', function (event, message_title, message_body, message_icon) {
         const iconPath = message_icon ? message_icon : './www/icons/message.png';
         let notification = new Notification({
@@ -196,4 +272,6 @@ function setupIPCListeners() {
         });
         notification.show();
     });
+
+
 }   
