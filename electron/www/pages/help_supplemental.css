@@ -1,4 +1,0 @@
-/* 可拖拽 */
-#draggable-header{
-    -webkit-app-region: drag; /* 可以拖拽的部分 */
-}
