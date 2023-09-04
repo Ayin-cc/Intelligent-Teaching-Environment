@@ -92,7 +92,7 @@ timetable_button.addEventListener('click', () => {
 	if (login_status == 0) {
 		nologtip();
 	} else {
-		window.location.href = 'timetable.html';
+		window.location.href = 'timetable1.0.html';
 	}
 });
 

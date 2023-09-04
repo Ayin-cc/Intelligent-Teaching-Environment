@@ -5,6 +5,12 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>动态生成 HTML 元素</title>
 		<link href="output.css" rel="stylesheet" />
+		<script src="jquery-3.7.1.min.js">
+		</script>
+		<script>
+			$(document).ready(function (){
+			})
+		</script>
 	</head>
 
 	<body>
@@ -32,7 +38,7 @@
 					<div>
 						<!--刷新按钮-->
 						<form method="post" action="">
-							<input type="button" onclick="get()" value="F5">
+							<input type="button" onclick="getCourse()" value="F5">
 						</form>
 					</div>
 				</div>
@@ -81,6 +87,7 @@
 	<script type="text/javascript">
 		// 判断日期是否在本周
 		function isCurrentWeek(past) {
+			console.info(past.toString());
 			const pastTime = new Date(past).getTime()
 			const today = new Date(new Date().toLocaleDateString())
 			let day = today.getDay()
@@ -95,38 +102,43 @@
 			}
 		}
 
-		// 获取并解析课表数据
-		function get() {
-			const sid = document.getElementById("number-profile-sidebarBottom").value;
+		// 解析课表数据
+		function parmCourse(courses){
+			console.info(courses);
+			for (var i = 0; i < courses.length; i++) {
+				var dates = courses[i].date;
+				var j = 0;
+				while (j < dates.length) {
+					if (isCurrentWeek(dates[j])) {
+						var day = new Date(dates[j]).getDay();
+						if (day == 0) day = 7;
+						for (var k = courses[i].startSection; k <= courses[i].endSection; k++) {
+							var courseName = document.getElementById(day.toString() + "-" + k.toString() + "-1");
+							var courseSite = document.getElementById(day.toString() + "-" + k.toString() + "-2");
+							var courseTeacher = document.getElementById(day.toString() + "-" + k.toString() + "-3");
+							courseName.innerHTML = courses[i].name;
+							courseSite.innerHTML = courses[i].site;
+							courseTeacher.innerHTML = courses[i].teacher;
+						}
+					}
+					j++;
+				}
+			}
+		}
+
+		// 获取课表数据
+		function getCourse() {
+			console.info("start...");
+			const sid = $("#sid").text();
+			console.log(sid);
 			$.ajax({
 				type: "POST",
 				dataType: "json",
-				url: 'http://162.14.107.35/SCUEE/CourseSchedule/get',
+				url: 'http://localhost:18083/SCUEE/CourseSchedule/get',
 				contentType: "application/json",
 				data: JSON.stringify({ "sid": sid }),
 				success: function (result) {
-					if (result.code == 200) {
-						courses = JSON.parse(result);
-						for (var i = 0; i < courses.length; i++) {
-							var dates = courses[i].get("date");
-							var j = 0;
-							while (j < dates.length) {
-								if (isCurrentWeek(dates[j])) {
-									var day = dates[j].getDay()
-									if (day == 0) day = 7;
-									for (var k = courses[i].get("startSection"); k <= courses[i].get("endSection"); k++) {
-										var courseName = document.getElementById(day.toString() + "-" + k.toString() + "-2");
-										var courseSite = document.getElementById(day.toString() + "-" + k.toString() + "-3");
-										var courseTeacher = document.getElementById(day.toString() + "-" + k.toString() + "-4");
-										courseName.innerHTML = courses[i].get("name");
-										courseSite.innerHTML = courses[i].get("site");
-										courseTeacher.innerHTML = courses[i].get("teacher");
-									}
-								}
-								j++;
-							}
-						}
-					}
+					parmCourse(result);
 				}
 			})
 		}
