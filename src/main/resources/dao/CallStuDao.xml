@@ -4,6 +4,13 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="dao.CallStuDao">
+    <resultMap id="callResultMap" type="entity.CallStudent">
+        <result column="course_id" property="id"/>
+        <result column="call_date" property="callDate"/>
+        <result column="call_time" property="callTime"/>
+        <result column="student_id" property="sid"/>
+    </resultMap>
+
     <resultMap id="studentResultMap" type="entity.Student">
         <result column="sid" property="sid" />
         <result column="student_name" property="name" />

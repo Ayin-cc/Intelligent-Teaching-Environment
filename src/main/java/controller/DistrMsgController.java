@@ -1,5 +1,6 @@
 package controller;
 
+import entity.Attachment;
 import entity.Message;
 import entity.StatusCode;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class DistrMsgController {
 
     // 教务端发布新消息接口
     @RequestMapping("/create")
-    public ResponseEntity<StatusCode> create(@RequestBody @RequestParam("token") String token, Message message){
+    public ResponseEntity<StatusCode> create(@RequestBody @CookieValue("token") String token, Message message){
         if(distrMsgService.create(token, message)){
             return new ResponseEntity<>(new StatusCode(1), HttpStatus.OK);
         }
@@ -28,16 +29,15 @@ public class DistrMsgController {
 
     // 教室或学生端获取消息接口
     @RequestMapping("/keepAlive")
-    public ResponseEntity<List<Message>> keepAlive(@RequestBody String id){
-        return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-        //List<Message> message = distrMsgService.keepAlive(id);
-        //return new ResponseEntity<>(message, HttpStatus.OK);
+    public ResponseEntity<List<Message>> keepAlive(){
+        List<Message> message = distrMsgService.keepAlive();
+        return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
     // 附件下载接口
     @RequestMapping("/download")
-    public ResponseEntity<MultipartFile> download(@RequestBody int id, String name){
-        MultipartFile file = distrMsgService.download(id, name);
+    public ResponseEntity<Attachment> download(@RequestBody Attachment attachment){
+        Attachment file = distrMsgService.download(attachment.getId(), attachment.getName());
         return new ResponseEntity<>(file, HttpStatus.OK);
     }
 }

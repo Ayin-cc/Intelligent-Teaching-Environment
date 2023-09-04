@@ -149,9 +149,9 @@ public class AdministratorServiceImpl implements AdministratorService{
     }
 
     @Override
-    public boolean deleteStudentFromCourse(String token, Student student, Course course) {
+    public boolean deleteStudentFromCourse(String token, String sid, String id) {
         if(administratorDao.checkToken(token) == 1){
-            administratorDao.deleteStudentFromCourse(course.getCourseId(), student.getSid());
+            administratorDao.deleteStudentFromCourse(id, sid);
             return true;
         }
         return false;

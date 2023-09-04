@@ -11,13 +11,12 @@ public class Message {
     private String title;
     private String content;
     private String time;
-    private List<MultipartFile> attachment;
-
+    private List<Attachment> attachment;
 
     public Message() {
     }
 
-    public Message(int id, String title, String content, String time, List<MultipartFile> attachment) {
+    public Message(int id, String title, String content, String time, List<Attachment> attachment) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -93,7 +92,7 @@ public class Message {
      * 获取
      * @return attachment
      */
-    public List<MultipartFile> getAttachment() {
+    public List<Attachment> getAttachment() {
         return attachment;
     }
 
@@ -101,7 +100,7 @@ public class Message {
      * 设置
      * @param attachment
      */
-    public void setAttachment(List<MultipartFile> attachment) {
+    public void setAttachment(List<Attachment> attachment) {
         this.attachment = attachment;
     }
 

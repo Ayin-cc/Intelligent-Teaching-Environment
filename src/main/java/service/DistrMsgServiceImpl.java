@@ -1,6 +1,7 @@
 package service;
 
 import dao.DistrMsgDao;
+import entity.Attachment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import entity.Message;
@@ -21,14 +22,14 @@ public class DistrMsgServiceImpl implements DistrMsgService {
         if(msgDao.checkToken(token) == 1){
             msgDao.addMsg(msg);
             for(int i = 0; i < msg.getAttachment().size(); i++){
-                msgDao.addAttachment(msg.getId(), msg.getAttachment().get(i).getOriginalFilename(), msg.getAttachment().get(i));
+                msgDao.addAttachment(msg.getId(), msg.getAttachment().get(i).getName(), msg.getAttachment().get(i).getFile());
             }
         }
         return false;
     }
 
     @Override
-    public List<Message> keepAlive(String id) {
+    public List<Message> keepAlive() {
         Date time = new Date();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String timeStr = format.format(time);
@@ -40,8 +41,8 @@ public class DistrMsgServiceImpl implements DistrMsgService {
     }
 
     @Override
-    public MultipartFile download(int id, String name) {
-        MultipartFile file = msgDao.selectAttachment(id, name);
+    public Attachment download(int id, String name) {
+        Attachment file = msgDao.selectAttachment(id, name);
         return file;
     }
 }

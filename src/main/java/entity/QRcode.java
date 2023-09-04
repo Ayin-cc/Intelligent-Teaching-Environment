@@ -11,26 +11,32 @@ public class QRcode {
     private String type = "qrcode";
     private String code;
     private String courseId;
+    private String courseName;
+    private String teacher;
     private String cid;
     private String uid;
     private String time;
     private int count;
     private List<String> sid;
 
-    public QRcode(){}
 
-    public QRcode(String code, String cid, String uniqueIdString, String time, List<String> sid) {
+    public QRcode() {
+    }
+
+    public QRcode(String code, String cid, String uid, String time, List<String> sid){
         this.code = code;
         this.cid = cid;
-        this.uid = uniqueIdString;
+        this.uid = uid;
         this.time = time;
         this.sid = sid;
     }
 
-    public QRcode(String type, String code, String courseId, String cid, String uid, String time, int count, List<String> sid) {
+    public QRcode(String type, String code, String courseId, String courseName, String teacher, String cid, String uid, String time, int count, List<String> sid) {
         this.type = type;
         this.code = code;
         this.courseId = courseId;
+        this.courseName = courseName;
+        this.teacher = teacher;
         this.cid = cid;
         this.uid = uid;
         this.time = time;
@@ -84,6 +90,38 @@ public class QRcode {
      */
     public void setCourseId(String courseId) {
         this.courseId = courseId;
+    }
+
+    /**
+     * 获取
+     * @return courseName
+     */
+    public String getCourseName() {
+        return courseName;
+    }
+
+    /**
+     * 设置
+     * @param courseName
+     */
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
+    }
+
+    /**
+     * 获取
+     * @return teacher
+     */
+    public String getTeacher() {
+        return teacher;
+    }
+
+    /**
+     * 设置
+     * @param teacher
+     */
+    public void setTeacher(String teacher) {
+        this.teacher = teacher;
     }
 
     /**
@@ -167,6 +205,6 @@ public class QRcode {
     }
 
     public String toString() {
-        return "QRcode{type = " + type + ", code = " + code + ", courseId = " + courseId + ", cid = " + cid + ", uid = " + uid + ", time = " + time + ", count = " + count + ", sid = " + sid + "}";
+        return "QRcode{type = " + type + ", code = " + code + ", courseId = " + courseId + ", courseName = " + courseName + ", teacher = " + teacher + ", cid = " + cid + ", uid = " + uid + ", time = " + time + ", count = " + count + ", sid = " + sid + "}";
     }
 }

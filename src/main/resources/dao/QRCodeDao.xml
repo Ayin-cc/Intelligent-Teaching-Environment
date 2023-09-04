@@ -115,8 +115,10 @@
             scuee.course_students.course_id = #{id};
     </select>
 
-    <select id="selectCourseByDate" resultType="entity.Course">
-
+    <select id="selectCourseByDate" resultMap="courseResultMap">
+        select *
+        from classroom_courses
+        where course_date=#{date} and course_section=#{section};
     </select>
 
     <select id="selectQRCodeByDate" resultMap="qrcodeResultMap">
@@ -154,7 +156,7 @@
             course.id = #{id};
     </select>
 
-    <select id="selectStudentByUid" resultType="entity.Student">
+    <select id="selectStudentByUid" resultMap="studentResultMap">
         select
             scuee.student.*
         from

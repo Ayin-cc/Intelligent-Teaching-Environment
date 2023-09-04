@@ -1,16 +1,16 @@
 package controller;
 
+import entity.CallStudent;
+import entity.QRcode;
 import entity.StatusCode;
 import entity.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import service.CallStuService;
 
+import java.util.Calendar;
 import java.util.List;
 
 @RestController
@@ -21,15 +21,15 @@ public class CallStuContoller {
 
     // 随机点名接口
     @RequestMapping("/random")
-    public ResponseEntity<List<Student>> random(@RequestBody @RequestParam("token") String token, Integer count, String uid){
-        List<Student> students = callStuService.random(token, count, uid);
+    public ResponseEntity<List<Student>> random(@RequestBody @CookieValue("token") String token, QRcode qRcode){
+        List<Student> students = callStuService.random(token, qRcode.getCount(), qRcode.getUid());
         return new ResponseEntity<>(students, HttpStatus.OK);
     }
 
     // 直接点名接口
     @RequestMapping("/select")
-    public ResponseEntity<StatusCode> select(@RequestBody @RequestParam("token") String token, String id, String sid){
-        if(callStuService.select(token, id, sid)){
+    public ResponseEntity<StatusCode> select(@RequestBody @CookieValue("token") String token, CallStudent callStudent){
+        if(callStuService.select(token, callStudent.getId(), callStudent.getSid())){
             return new ResponseEntity<>(new StatusCode(1), HttpStatus.OK);
         }
         return new ResponseEntity<>(new StatusCode(0), HttpStatus.OK);

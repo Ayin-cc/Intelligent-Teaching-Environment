@@ -4,14 +4,18 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="dao.DistrMsgDao">
+    <resultMap id="attachmentResultMap" type="entity.Attachment">
+        <result column="msg_id" property="id"/>
+        <result column="attachment_name" property="name" />
+        <result column="attachment_url" property="file"/>
+    </resultMap>
+
     <resultMap id="msgResultMap" type="entity.Message">
         <result column="id" property="id" />
         <result column="title" property="title" />
         <result column="content" property="content" />
         <result column="msg_time" property="time" />
-        <collection property="attachment">
-            <result column="attachment_url" />
-        </collection>
+        <collection property="attachment" resultMap="attachmentResultMap"/>
     </resultMap>
 
     <insert id="addMsg" useGeneratedKeys="true" keyProperty="id">
@@ -45,7 +49,7 @@
             m.id = msg_attachment.msg_id;
     </select>
 
-    <select id="selectAttachment" resultType="org.springframework.web.multipart.MultipartFile">
+    <select id="selectAttachment" resultMap="attachmentResultMap">
         select *
         from scuee.msg_attachment
         where msg_attachment.msg_id = #{id} and msg_attachment.attachment_name = #{name};
