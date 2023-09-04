@@ -14,4 +14,5 @@ public interface DistrMsgDao {
     List<Message> selectReadyMsg(@Param("time")String time);
     MultipartFile selectAttachment(@Param("id")int id, @Param("name")String name);
     int checkToken(@Param("token")String token);
+    void updateMsg(@Param("msg")Message msg);
 }

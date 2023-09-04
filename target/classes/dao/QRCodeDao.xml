@@ -77,8 +77,9 @@
         on
             qrcode.course_id = course.id
         where
+            1=1
             <if test="cid != null">
-                qrcode.class_id = #{cid}
+                and qrcode.class_id = #{cid}
             </if>
             <if test="date != null">
                 and qrcode.qrcode_time like concat('%', #{date}, '%')

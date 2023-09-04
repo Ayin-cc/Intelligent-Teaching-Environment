@@ -18,14 +18,15 @@
             (#{chat.cid}, #{chat.sid}, #{chat.name}, #{chat.time}, #{chat.content}, 0)
     </insert>
 
-    <select id="selectChat" resultMap="chatResultMap">
-        select *
-        from scuee.chat
-        where (course.classroom_id = #{id} or course.student_id = #{id})
-            and course.is_sent = 0;
+    <update id="updateChat">
         update scuee.chat
-        set is_sent = 1;
-        where (course.classroom_id = #{id} or course.student_id = #{id})
-            and course.is_sent = 0;
+        set is_sent = 1
+        where classroom_id=#{chat.cid} and student_id=#{chat.sid};
+    </update>
+
+    <select id="selectChat" resultMap="chatResultMap">
+        select scuee.chat.classroom_id,scuee.chat.student_id,scuee.chat.chat_name,scuee.chat.chat_time,scuee.chat.chat_content
+        from scuee.chat
+        where scuee.chat.classroom_id = #{cid} and scuee.chat.is_sent = 0;
     </select>
 </mapper>

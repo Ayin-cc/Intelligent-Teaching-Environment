@@ -28,6 +28,12 @@
             (#{id}, #{name}, #{file});
     </insert>
 
+    <update id="updateMsg">
+        update scuee.message
+        set message.is_published = 1
+        where message.msg_time &lt;= #{msg.time};
+    </update>
+
     <select id="selectReadyMsg" resultMap="msgResultMap">
         select *
         from (
@@ -37,9 +43,6 @@
             scuee.msg_attachment
         on
             m.id = msg_attachment.msg_id;
-        update scuee.message m
-        set m.is_published = 1
-        where m.msg_time &lt;= #{time};
     </select>
 
     <select id="selectAttachment" resultType="org.springframework.web.multipart.MultipartFile">

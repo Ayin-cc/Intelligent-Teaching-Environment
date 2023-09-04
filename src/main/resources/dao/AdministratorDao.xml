@@ -69,67 +69,67 @@
     </insert>
 
     <update id="changeStudent">
-        update scuee.student s
+        update scuee.student
         set
-            s.student_token = #{student.token},
-            s.student_name = #{student.name},
-            s.student_major = #{student.major},
-            s.student_college = #{student.college},
-            s.student_sex = #{student.sex},
-            s.student_passwd = #{student.passwd},
-            s.student_phone = #{student.phone}
+            student.student_token = #{student.token},
+            student.student_name = #{student.name},
+            student.student_major = #{student.major},
+            student.student_college = #{student.college},
+            student.student_sex = #{student.sex},
+            student.student_passwd = #{student.passwd},
+            student.student_phone = #{student.phone}
         where
-            s.sid = #{student.sid};
+            student.sid = #{student.sid};
     </update>
 
     <update id="changeClassroom">
-        update scuee.classroom c
+        update scuee.classroom
         set
-            c.address = #{classroom.address}
+            classroom.address = #{classroom.address}
         where
-            c.cid = #{classroom.cid};
+            classroom.cid = #{classroom.cid};
     </update>
 
     <update id="changeCourseInf">
-        update scuee.course c
+        update scuee.course
         set
-            c.course_name = #{course.name},
-            c.course_teacher = #{course.teacher},
-            c.course_site = #{course.site},
-            c.start_section = #{course.startSection},
-            c.end_section = #{course.endSection}
+            course.course_name = #{course.name},
+            course.course_teacher = #{course.teacher},
+            course.course_site = #{course.site},
+            course.start_section = #{course.startSection},
+            course.end_section = #{course.endSection}
         where
-            c.id = #{course.courseId};
+            course.id = #{course.courseId};
     </update>
 
     <update id="changeCourseSchedule">
-        update scuee.classroom_courses cc
+        update scuee.classroom_courses
         set
-            cc.cid = #{cid},
-            cc.course_date = #{date},
-            cc.course_section = #{section}
+            classroom_courses.cid = #{cid},
+            classroom_courses.course_date = #{date},
+            classroom_courses.course_section = #{section}
         where
-            cc.course_id = #{id};
+            classroom_courses.course_id = #{id};
     </update>
 
     <delete id="deleteStudent">
-        delete from scuee.student s
-        where s.sid = #{student.sid};
+        delete from scuee.student
+        where student.sid = #{student.sid};
     </delete>
 
     <delete id="deleteClassroom">
-        delete from scuee.classroom c
-        where  c.cid = #{classroom.cid};
+        delete from scuee.classroom
+        where  classroom.cid = #{classroom.cid};
     </delete>
 
     <delete id="deleteCourseInf">
-        delete from scuee.course c
-        where c.id = #{course.courseId};
+        delete from scuee.course
+        where course.id = #{course.courseId};
     </delete>
 
     <delete id="deleteCourseSchedule">
-        delete from scuee.classroom_courses cc
-        where cc.course_id = #{id};
+        delete from scuee.classroom_courses
+        where classroom_courses.course_id = #{id};
     </delete>
 
     <delete id="deleteStudentFromCourse">
@@ -145,34 +145,36 @@
 
     <select id="queryStudent" resultMap="studentResultMap">
         select *
-        from scuee.student s
+        from scuee.student
         where
+            1=1
             <if test="sid != null">
-                s.sid = #{sid}
+                and student.sid = #{sid}
             </if>
             <if test="name != null">
-                and s.student_name like concat('%', #{name}, '%')
+                and student.student_name like concat('%', #{name}, '%')
             </if>
             <if test="major != null">
-                and s.student_major like concat('%', #{major}, '%')
+                and student.student_major like concat('%', #{major}, '%')
             </if>
             <if test="college != null">
-                and s.student_college like concat('%', #{college}, '%')
+                and student.student_college like concat('%', #{college}, '%')
             </if>
             <if test="phone != null">
-                and s.student_phone like concat(#{phone}, '%')
+                and student.student_phone like concat(#{phone}, '%')
             </if>;
     </select>
 
     <select id="queryClassroom" resultMap="classroomResultMap">
         select *
-        from scuee.classroom c
-        where 
+        from scuee.classroom
+        where
+            1=1
             <if test="cid != null">
-                c.cid = #{cid}
+                and classroom.cid = #{cid}
             </if>
             <if test="address != null">
-                and c.address like concat(#{address}, '%')
+                and classroom.address like concat(#{address}, '%')
             </if>;
     </select>
 
@@ -182,8 +184,9 @@
             select *
             from scuee.course
             where
+                1=1
                 <if test="id != null">
-                    id = #{id}
+                    and id = #{id}
                 </if>
                 <if test="name != null">
                     and course_name like concat('%', #{name}, '%')

@@ -20,6 +20,10 @@ public class ChatBoxServiceImpl implements ChatBoxService {
 
     @Override
     public List<Chat> keepAlive(String id) {
-        return chatBoxDao.selectChat(id);
+        List<Chat> result = chatBoxDao.selectChat(id);
+        for (int i = 0; i < result.size(); i++){
+            chatBoxDao.updateChat(result.get(i));
+        }
+        return result;
     }
 }

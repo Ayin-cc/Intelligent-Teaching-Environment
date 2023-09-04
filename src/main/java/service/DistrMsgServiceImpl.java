@@ -33,6 +33,9 @@ public class DistrMsgServiceImpl implements DistrMsgService {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String timeStr = format.format(time);
         List<Message> msg = msgDao.selectReadyMsg(timeStr);
+        for (int i = 0; i < msg.size(); i++) {
+            msgDao.updateMsg(msg.get(i));
+        }
         return msg;
     }
 

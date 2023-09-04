@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import service.ChatBoxService;
 
@@ -29,8 +30,8 @@ public class ChatBoxController {
 
     // 维持长连接
     @RequestMapping("/keepAlive")
-    public ResponseEntity<List<Chat>> keepAlive(@RequestBody String id){
-        List<Chat> chats = chatBoxService.keepAlive(id);
+    public ResponseEntity<List<Chat>> keepAlive(@RequestBody Chat chat){
+        List<Chat> chats = chatBoxService.keepAlive(chat.getCid());
         return new ResponseEntity<>(chats, HttpStatus.OK);
     }
 
