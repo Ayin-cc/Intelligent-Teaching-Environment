@@ -85,9 +85,21 @@
 		</div>
 	</body>
 	<script type="text/javascript">
+		// 寻找cookie的值
+		function getCookie(cname)
+		{
+			var name = cname + "=";
+			var ca = document.cookie.split(';');
+			for(var i=0; i<ca.length; i++)
+			{
+				var c = ca[i].trim();
+				if (c.indexOf(name)==0) return c.substring(name.length,c.length);
+			}
+			return "";
+		}
+
 		// 判断日期是否在本周
 		function isCurrentWeek(past) {
-			console.info(past.toString());
 			const pastTime = new Date(past).getTime()
 			const today = new Date(new Date().toLocaleDateString())
 			let day = today.getDay()
@@ -104,7 +116,6 @@
 
 		// 解析课表数据
 		function parmCourse(courses){
-			console.info(courses);
 			for (var i = 0; i < courses.length; i++) {
 				var dates = courses[i].date;
 				var j = 0;
@@ -128,8 +139,7 @@
 
 		// 获取课表数据
 		function getCourse() {
-			console.info("start...");
-			const sid = $("#sid").text();
+			const sid = getCookie("sid");
 			console.log(sid);
 			$.ajax({
 				type: "POST",
