@@ -30,8 +30,8 @@
         <result column="course_name" property="name" />
         <result column="course_teacher" property="teacher" />
         <result column="course_site" property="site" />
-        <result column="startSection" property="startSection" />
-        <result column="endSection" property="endSection" />
+        <result column="start_section" property="startSection" />
+        <result column="end_section" property="endSection" />
         <collection property="date" ofType="string">
             <result column="course_date" />
         </collection>
@@ -56,41 +56,41 @@
             (uid, student_id)
         values
             (#{uid}, #{sid});
-        update scuee.qrcode q
+        update scuee.qrcode
         set
-            q.count = q.count + 1
+            qrcode.count = qrcode.count + 1
         where
-            q.uid = #{uid};
+            qrcode.uid = #{uid};
     </insert>
 
     <select id="selectQRCodeByMulti" resultMap="qrcodeResultMap">
         select
             scuee.qrcode.*, scuee.qrcode_student.student_id, scuee.course.*
         from
-            scuee.qrcode q, scuee.qrcode_student s, scuee.course c
+            scuee.qrcode, scuee.qrcode_student, scuee.course
         inner join
-                s
+                qrcode_student
         on
-            q.uid = s.student_id
+            qrcode.uid = qrcode_student.student_id
         inner join
-                c
+            course
         on
-            q.course_id = c.id
+            qrcode.course_id = course.id
         where
             <if test="cid != null">
-                q.class_id = #{cid}
+                qrcode.class_id = #{cid}
             </if>
             <if test="date != null">
-                and q.qrcode_time like concat('%', #{date}, '%')
+                and qrcode.qrcode_time like concat('%', #{date}, '%')
             </if>
             <if test="teacher != null">
-                and c.course_teacher = concat('%', #{teacher}, '%')
+                and course.course_teacher like concat('%', #{teacher}, '%')
             </if>
             <if test="name != null">
-                and c.course_name = concat('%', #{name}, '%')
+                and course.course_name like concat('%', #{name}, '%')
             </if>
             <if test="id != null">
-                and c.id = #{id}
+                and course.id = #{id}
             </if>;
     </select>
 
@@ -100,9 +100,9 @@
         from
             (select * from scuee.qrcode where class_id = #{cid})q
         inner join
-                scuee.qrcode_student s
+                scuee.qrcode_student
         on
-            q.uid = s.uid;
+            q.uid = qrcode_student.uid;
     </select>
 
     <select id="selectStudentByCourseId" resultType="java.lang.String">
@@ -124,44 +124,44 @@
         from
             (select * from scuee.qrcode where date_format(qrcode_time, '%Y-%m-%d') = #{date})q
         inner join
-                scuee.qrcode_student s
+                scuee.qrcode_student
         on
-            q.uid = s.uid;
+            q.uid = qrcode_student.uid;
     </select>
 
     <select id="selectCourseByTeacher" resultMap="courseResultMap">
         select *
         from
-            scuee.course c
+            scuee.course
         where
-            c.course_teacher = #{teacher};
+            course.course_teacher = #{teacher};
     </select>
 
     <select id="selectCourseByName" resultMap="courseResultMap">
         select *
         from
-            scuee.course c
+            scuee.course
         where
-            c.course_name = #{name};
+            course.course_name = #{name};
     </select>
 
     <select id="selectCourseByCourseId" resultMap="courseResultMap">
         select *
         from
-            scuee.course c
+            scuee.course
         where
-            c.id = #{id};
+            course.id = #{id};
     </select>
 
     <select id="selectStudentByUid" resultType="entity.Student">
         select
             scuee.student.*
         from
-            scuee.student  s
+            scuee.student
         inner join
                 (select * from scuee.qrcode_student q where q.uid = #{uid})qs
         on
-            qs.student_id = s.sid
+            qs.student_id = student.sid
     </select>
 
     <select id="selectQRCodeByUid" resultMap="qrcodeResultMap">
@@ -220,16 +220,16 @@
     <select id="checkClassroomToken" resultType="java.lang.Integer">
         select exists(
             select *
-            from scuee.classroom c
-            where c.classroom_token = #{token}
+            from scuee.classroom
+            where classroom.classroom_token = #{token}
                    );
     </select>
 
     <select id="checkAdministratorToken" resultType="java.lang.Integer">
         select exists(
             select *
-            from scuee.administrator a
-            where a.token = #{token}
+            from scuee.administrator
+            where administrator.token = #{token}
                    );
     </select>
 

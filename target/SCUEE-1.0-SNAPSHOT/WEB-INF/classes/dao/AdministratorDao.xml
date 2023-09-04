@@ -192,16 +192,16 @@
                     and course_teacher like concat('%', #{teacher}, '%')
                 </if>
              )c
-        inner join classroom_courses cc
-        on course.id = cc.course_id
-        inner join course_students cs
-        on c.id = cs.course_id
+        inner join classroom_courses
+        on c.id = classroom_courses.course_id
+        inner join course_students
+        on c.id = course_students.course_id
     </select>
 
     <select id="selectCidBySite" resultType="java.lang.String">
         select *
-        from scuee.classroom c
-        where c.address = #{site};
+        from scuee.classroom
+        where classroom.address = #{site};
     </select>
 
 </mapper>
