@@ -20,12 +20,12 @@
 
     <select id="selectChat" resultMap="chatResultMap">
         select *
-        from scuee.chat c
-        where (c.classroom_id = #{id} or c.student_id = #{id})
-            and c.is_sent = 0;
+        from scuee.chat
+        where (course.classroom_id = #{id} or course.student_id = #{id})
+            and course.is_sent = 0;
         update scuee.chat
         set is_sent = 1;
-        where (c.classroom_id = #{id} or c.student_id = #{id})
-            and c.is_sent = 0;
+        where (course.classroom_id = #{id} or course.student_id = #{id})
+            and course.is_sent = 0;
     </select>
 </mapper>

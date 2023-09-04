@@ -67,7 +67,7 @@
         select
             scuee.qrcode.*, scuee.qrcode_student.student_id, scuee.course.*
         from
-            scuee.qrcode, scuee.qrcode_student, scuee.course
+            scuee.qrcode
         inner join
                 qrcode_student
         on

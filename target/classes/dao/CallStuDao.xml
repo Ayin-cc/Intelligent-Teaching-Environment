@@ -24,17 +24,16 @@
     <select id="checkToken" resultType="java.lang.Integer">
         select exists(
             select *
-            from scuee.classroom c
+            from scuee.classroom
             where
-                c.classroom_token = #{token}
+                classroom.classroom_token = #{token}
                    );
     </select>
 
     <select id="selectStudentByUid" resultMap="studentResultMap">
         select student.*
-        from
-            (select * from scuee.qrcode_student where uid = #{uid})qs
-        inner join scuee.student s
-        on qs.student_id = s.sid;
+        from (select * from scuee.qrcode_student where uid=#{uid})qr
+        inner join scuee.student
+        on qr.student_id = student.sid;
     </select>
 </mapper>

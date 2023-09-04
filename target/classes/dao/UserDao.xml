@@ -29,8 +29,8 @@
         <result column="course_name" property="name" />
         <result column="course_teacher" property="teacher" />
         <result column="course_site" property="site" />
-        <result column="startSection" property="startSection" />
-        <result column="endSection" property="endSection" />
+        <result column="start_section" property="startSection" />
+        <result column="end_section" property="endSection" />
         <collection property="date" ofType="string">
             <result column="course_date" />
         </collection>
@@ -38,22 +38,22 @@
     </resultMap>
 
     <update id="updateStudent">
-        update scuee.student s
-        set s.student_name = #{student.name},
-            s.student_major = #{student.major},
-            s.student_college = #{student.college},
-            s.student_sex = #{student.sex},
-            s.student_passwd = #{student.passwd},
-            s.student_phone = #{student.phone}
-        where s.sid = #{student.sid};
+        update scuee.student
+        set student.student_name = #{student.name},
+            student.student_major = #{student.major},
+            student.student_college = #{student.college},
+            student.student_sex = #{student.sex},
+            student.student_passwd = #{student.passwd},
+            student.student_phone = #{student.phone}
+        where student.sid = #{student.sid};
     </update>
 
     <update id="updateTeacher">
-        update scuee.teacher t
-        set t.name = #{teacher.name},
-            t.passwd = #{teacher.passwd},
-            t.phone = #{teacher.phone}
-        where t.id = #{teacher.id};
+        update scuee.teacher
+        set teacher.name = #{teacher.name},
+            teacher.passwd = #{teacher.passwd},
+            teacher.phone = #{teacher.phone}
+        where teacher.id = #{teacher.id};
     </update>
 
     <insert id="addAdministrator">
@@ -64,21 +64,21 @@
     </insert>
 
     <update id="updateStudentToken">
-        update scuee.student s
-        set s.student_token = #{token}
-        where s.sid = #{id};
+        update scuee.student
+        set student.student_token = #{token}
+        where student.sid = #{id};
     </update>
 
     <update id="updateClassroomToken">
-        update scuee.classroom c
-        set c.classroom_token = #{token}
-        where c.cid = #{id};
+        update scuee.classroom
+        set classroom.classroom_token = #{token}
+        where classroom.cid = #{id};
     </update>
 
     <update id="updateAdministratorToken">
-        update scuee.administrator a
-        set a.token = #{token}
-        where a.id = #{id};
+        update scuee.administrator
+        set administrator.token = #{token}
+        where administrator.id = #{id};
     </update>
 
     <select id="queryStudent" resultType="java.lang.Integer">
@@ -130,10 +130,10 @@
         from(
             select * from scuee.classroom_courses where course_date = #{date}
             )cc
-        inner join scuee.course c
-        on cc.course_id = c.id
-        inner join scuee.course_students cs
-        on cc.course_id = cs.course_id;
+        inner join scuee.course
+        on cc.course_id = course.id
+        inner join scuee.course_students
+        on cc.course_id = course_students.course_id;
     </select>
 
 </mapper>

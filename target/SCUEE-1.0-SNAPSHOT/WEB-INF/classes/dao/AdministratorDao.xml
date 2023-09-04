@@ -25,8 +25,8 @@
         <result column="course_name" property="name" />
         <result column="course_teacher" property="teacher" />
         <result column="course_site" property="site" />
-        <result column="startSection" property="startSection" />
-        <result column="endSection" property="endSection" />
+        <result column="start_section" property="startSection" />
+        <result column="end_section" property="endSection" />
         <collection property="date" ofType="string">
             <result column="course_date" />
         </collection>

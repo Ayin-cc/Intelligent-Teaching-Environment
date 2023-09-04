@@ -30,8 +30,8 @@
         <result column="course_name" property="name" />
         <result column="course_teacher" property="teacher" />
         <result column="course_site" property="site" />
-        <result column="startSection" property="startSection" />
-        <result column="endSection" property="endSection" />
+        <result column="start_section" property="startSection" />
+        <result column="end_section" property="endSection" />
         <collection property="date" ofType="string">
             <result column="course_date" />
         </collection>
@@ -67,7 +67,7 @@
         select
             scuee.qrcode.*, scuee.qrcode_student.student_id, scuee.course.*
         from
-            scuee.qrcode, scuee.qrcode_student, scuee.course
+            scuee.qrcode
         inner join
                 qrcode_student
         on

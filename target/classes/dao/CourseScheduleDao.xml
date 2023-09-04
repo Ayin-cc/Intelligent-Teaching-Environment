@@ -19,8 +19,8 @@
         <result column="course_name" property="name" />
         <result column="course_teacher" property="teacher" />
         <result column="course_site" property="site" />
-        <result column="startSection" property="startSection" />
-        <result column="endSection" property="endSection" />
+        <result column="start_section" property="startSection" />
+        <result column="end_section" property="endSection" />
         <collection property="date" ofType="string">
             <result column="course_date" />
         </collection>
@@ -28,12 +28,10 @@
 
     <select id="selectCourseBySid" resultMap="courseResultMap">
         select scuee.course.*, scuee.classroom_courses.course_date
-        from (
-            select * from scuee.course_students where student_id = #{sid}
-             )cs
-        inner join scuee.course c
-        on cs.course_id = c.id
-        inner join scuee.classroom_courses cc
-        on cs.course_id = cc.course_id;
+        from scuee.course
+        inner join scuee.classroom_courses
+        on classroom_courses.course_id = course.id
+        inner join (select * from scuee.course_students where course_students.student_id = #{sid})cst
+        on course.id = cst.course_id
     </select>
 </mapper>

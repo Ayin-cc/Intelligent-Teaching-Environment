@@ -31,21 +31,21 @@
     <select id="selectReadyMsg" resultMap="msgResultMap">
         select *
         from (
-            select * from scuee.message where msg_time < #{time} and is_published = 0
+            select * from scuee.message where msg_time &lt;= #{time} and is_published = 0
              )m
         inner join
-            scuee.msg_attachment ma
+            scuee.msg_attachment
         on
-            m.id = ma.msg_id;
+            m.id = msg_attachment.msg_id;
         update scuee.message m
         set m.is_published = 1
-        where m.msg_time < #{time};
+        where m.msg_time &lt;= #{time};
     </select>
 
     <select id="selectAttachment" resultType="org.springframework.web.multipart.MultipartFile">
         select *
-        from scuee.msg_attachment ma
-        where ma.msg_id = #{id} and ma.attachment_name = #{name};
+        from scuee.msg_attachment
+        where msg_attachment.msg_id = #{id} and msg_attachment.attachment_name = #{name};
     </select>
 
     <select id="checkToken" resultType="java.lang.Integer">
