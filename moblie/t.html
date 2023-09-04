@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<!-- 引入 Tailwind CSS 样式表 -->
+		<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.7/dist/tailwind.min.css" rel="stylesheet">
+		<style>
+			p.overflow-ellipsis1 {
+				text-overflow: ellipsis;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="w-32 whitespace-nowrap" id="1">
+			<!-- 使用 w-32 来设置宽度，overflow-hidden 来隐藏溢出的文本 -->
+			<p class="overflow-hidden overflow-ellipsis ">这是一个非常长的文本，它将被省略号结尾。</p>
+		</div>
+	</body>
+	<script>
+		var element_1 = document.getElementById('1');
+		var a = `<div class="w-32 whitespace-nowrap"> <!-- 使用 w-32 来设置宽度，overflow-hidden 来隐藏溢出的文本 --> <p class="overflow-hidden overflow-ellipsis " > 这是一个非常长的文本，它将被省略号结尾。</p></div> `;
+		element_1.innerHTML = element_1.innerHTML + a;
+	</script>
+
+</html>

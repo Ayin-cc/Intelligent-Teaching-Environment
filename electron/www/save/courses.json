@@ -1,0 +1,157 @@
+[
+    {
+        "courseId": "0000000001",
+        "name": "微积分",
+        "teacher": "教师A",
+        "site": "za101",
+        "date": [
+            "2023-9-4",
+            "2023-9-11",
+            "2023-9-18"
+        ],
+        "startSection": "1",
+        "endSection": "2",
+        "students": [
+            {
+                "sid": "2022141460001",
+                "token": "token",
+                "name": "赵",
+                "major": "计算机科学",
+                "college": "计算机学院",
+                "sex": "男",
+                "passwd": "123456",
+                "phone": "12345678909"
+            },
+            {
+                "sid": "2022141460002",
+                "token": "token",
+                "name": "钱",
+                "major": "人工智能",
+                "college": "计算机学院",
+                "sex": "女",
+                "passwd": "654321",
+                "phone": "98765432101"
+            },
+            {
+                "sid": "2022141460003",
+                "token": "token",
+                "name": "孙",
+                "major": "人工智能",
+                "college": "计算机学院",
+                "sex": "女",
+                "passwd": "654321",
+                "phone": "98765432101"
+            },
+            {
+                "sid": "2022141460004",
+                "token": "token",
+                "name": "李",
+                "major": "人工智能",
+                "college": "计算机学院",
+                "sex": "男",
+                "passwd": "654321",
+                "phone": "98765432101"
+            },
+            {
+                "sid": "2022141460005",
+                "token": "token",
+                "name": "周",
+                "major": "人工智能",
+                "college": "计算机学院",
+                "sex": "男",
+                "passwd": "654321",
+                "phone": "98765432101"
+            },
+            {
+                "sid": "2022141460006",
+                "token": "token",
+                "name": "吴",
+                "major": "人工智能",
+                "college": "计算机学院",
+                "sex": "男",
+                "passwd": "654321",
+                "phone": "98765432101"
+            },
+            {
+                "sid": "2022141460007",
+                "token": "token",
+                "name": "郑",
+                "major": "人工智能",
+                "college": "计算机学院",
+                "sex": "男",
+                "passwd": "654321",
+                "phone": "98765432101"
+            },
+            {
+                "sid": "2022141460008",
+                "token": "token",
+                "name": "王",
+                "major": "人工智能",
+                "college": "计算机学院",
+                "sex": "男",
+                "passwd": "654321",
+                "phone": "98765432101"
+            }
+        ]
+    },
+    {
+        "courseId": "0000000002",
+        "name": "大学物理",
+        "teacher": "教师B",
+        "site": "za101",
+        "date": [
+            "2023-9-4",
+            "2023-9-11",
+            "2023-9-18"
+        ],
+        "startSection": "3",
+        "endSection": "4",
+        "students": [
+            {
+                "sid": "2022141460001",
+                "token": "token",
+                "name": "赵",
+                "major": "计算机科学",
+                "college": "计算机学院",
+                "sex": "男",
+                "passwd": "123456",
+                "phone": "12345678909"
+            },
+            {
+                "sid": "2022141460002",
+                "token": "token",
+                "name": "钱",
+                "major": "人工智能",
+                "college": "计算机学院",
+                "sex": "女",
+                "passwd": "654321",
+                "phone": "98765432101"
+            }
+        ]
+    },
+    {
+        "courseId": "0000000003",
+        "name": "离散数学",
+        "teacher": "教师C",
+        "site": "za101",
+        "date": [
+            "2023-9-4",
+            "2023-9-11",
+            "2023-9-18"
+        ],
+        "startSection": "6",
+        "endSection": "9",
+        "students": [
+            {
+                "sid": "2022141460001",
+                "token": "token",
+                "name": "赵",
+                "major": "计算机科学",
+                "college": "计算机学院",
+                "sex": "男",
+                "passwd": "123456",
+                "phone": "12345678909"
+            }
+        ]
+    }
+]

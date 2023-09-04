@@ -2,7 +2,15 @@
 var isLogin = 0;
 var isClassPeriod = 0;
 var isClassStarted = 0;
+// 课程表
+var currentSection = 0; // 在updateHomepageScheduleDisplay()中，下课切换回'0'有'1分钟'延时 可以Ctrl+f 查找'1 * 60 *1000'
+var scheduleHomepageFlag = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]; // 1为无课 0为有课s
+var continuousClasses = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]; // （还有，不包括现在）0为无 1为一节课 2为连续两节……  // 比如1~3的微积分[2,1,0,……]
+
+
 var initializeData = null;
+var saveData = null;
+var students = null;
 
 // ==================================================
 // 当纯 HTML 被完全加载以及解析时
@@ -54,12 +62,12 @@ function initializeWeb() {
 }
 // 初始化静态数据
 function initializeStaticData() {
+    // 相对路径默认目录为www（index.html决定的吗？）
     fetch('./data/data.json')
         .then(response => response.json())
         .then(data => {
-            // 在这里可以操作获取到的 JSON 数据
-            console.log(data);
             initializeData = data;
+            // 在这里可以操作获取到的 JSON 数据
         })
         .catch(error => {
             // 处理错误
@@ -68,8 +76,50 @@ function initializeStaticData() {
 
 }
 // 初始化动态数据
-function initializeSave() {
 
+// 尚未请求数据
+// 读取数据
+// (unfinished)
+function initializeSave() {
+    fetch('./save/courses.json')
+        .then(response => response.json())
+        .then(data => {
+            console.log('courses.json:');
+            console.log(data)
+            saveData = data;
+            // 在这里可以操作获取到的 JSON 数据 
+            initializeSaveHomepage()
+
+        })
+        .catch(error => {
+            // 处理错误
+            console.error('初始化动态数据出错：', error);
+        });
+
+}
+function initializeSaveHomepage() {
+    var courseCount = saveData.length;
+    var scheduleHomepageDetail = $('#schedule-homepage').children().eq(0).children();
+    for (var i = 0; i < courseCount; i++) {
+        var startSection = saveData[i]['startSection'];
+        var endSection = saveData[i]['endSection'];
+        for (var j = (startSection - 1); j < (endSection); j++) {
+            scheduleHomepageFlag[j] = 1;
+            scheduleHomepageDetail.eq(j).children().eq(1).text(saveData[i]['name']);
+            scheduleHomepageDetail.eq(j).children().eq(3).text(saveData[i]['teacher']);
+        }
+        var continuousCount = endSection - startSection;
+        for (var j = continuousCount; j > 0; j--) {
+            continuousClasses[endSection - j - 1] = j;
+        }
+
+    }
+    for (var i = 0; i < 12; i++) {
+        if (scheduleHomepageFlag[i] == 0) {
+            scheduleHomepageDetail.eq(i).children().eq(1).text('无课程');
+            scheduleHomepageDetail.eq(i).children().eq(3).text('无');
+        }
+    }
 }
 
 // ==================================================
@@ -464,6 +514,7 @@ function updateHomepageScheduleDisplay() {
         scheduleHomepageChiledren.eq(1).removeClass('hide');
         scheduleHomepageChiledren.eq(2).removeClass('hide');
         isClassPeriod = 1;
+        currentSection = 1;
     } else if ((currentHour == 9 && currentMinute >= 10 || currentHour > 9) && (currentHour < 9 || (currentHour == 9 && currentMinute < 55))) { // 9:10-9:55
         scheduleHomepageChiledren.eq(1).addClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500');
         scheduleHomepageChiledren.eq(1).removeClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700 hide');
@@ -474,6 +525,7 @@ function updateHomepageScheduleDisplay() {
         scheduleHomepageChiledren.eq(2).removeClass('hide');
         scheduleHomepageChiledren.eq(3).removeClass('hide');
         isClassPeriod = 1;
+        currentSection = 2;
     } else if ((currentHour >= 10 && currentMinute >= 15) && (currentHour < 11)) { // 10:15-11:00
         scheduleHomepageChiledren.eq(2).addClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500');
         scheduleHomepageChiledren.eq(2).removeClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700 hide');
@@ -484,6 +536,7 @@ function updateHomepageScheduleDisplay() {
         scheduleHomepageChiledren.eq(3).removeClass('hide');
         scheduleHomepageChiledren.eq(4).removeClass('hide');
         isClassPeriod = 1;
+        currentSection = 3;
     } else if ((currentHour == 11 && currentMinute >= 10 || currentHour > 11) && (currentHour < 11 || (currentHour == 11 && currentMinute < 55))) { // 11:10-11:55
         scheduleHomepageChiledren.eq(3).addClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500');
         scheduleHomepageChiledren.eq(3).removeClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700 hide');
@@ -494,6 +547,7 @@ function updateHomepageScheduleDisplay() {
         scheduleHomepageChiledren.eq(4).removeClass('hide');
         scheduleHomepageChiledren.eq(5).removeClass('hide');
         isClassPeriod = 1;
+        currentSection = 4;
     } else if ((currentHour == 13 && currentMinute >= 50 || currentHour > 13) && (currentHour < 14 || (currentHour == 14 && currentMinute < 35))) { // 13:50-14:35 下午
         scheduleHomepageChiledren.eq(4).addClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500');
         scheduleHomepageChiledren.eq(4).removeClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700 hide');
@@ -504,6 +558,7 @@ function updateHomepageScheduleDisplay() {
         scheduleHomepageChiledren.eq(5).removeClass('hide');
         scheduleHomepageChiledren.eq(6).removeClass('hide');
         isClassPeriod = 1;
+        currentSection = 5;
     } else if ((currentHour == 14 && currentMinute >= 45 || currentHour > 14) && (currentHour < 15 || (currentHour == 15 && currentMinute < 30))) { // 14:45-15:30
         scheduleHomepageChiledren.eq(5).addClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500');
         scheduleHomepageChiledren.eq(5).removeClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700 hide');
@@ -514,6 +569,7 @@ function updateHomepageScheduleDisplay() {
         scheduleHomepageChiledren.eq(6).removeClass('hide');
         scheduleHomepageChiledren.eq(7).removeClass('hide');
         isClassPeriod = 1;
+        currentSection = 6;
     } else if ((currentHour == 15 && currentMinute >= 40 || currentHour > 15) && (currentHour < 16 || (currentHour == 16 && currentMinute < 25))) { // 15:40-16:25
         scheduleHomepageChiledren.eq(6).addClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500');
         scheduleHomepageChiledren.eq(6).removeClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700 hide');
@@ -524,6 +580,7 @@ function updateHomepageScheduleDisplay() {
         scheduleHomepageChiledren.eq(7).removeClass('hide');
         scheduleHomepageChiledren.eq(8).removeClass('hide');
         isClassPeriod = 1;
+        currentSection = 7;
     } else if ((currentHour == 16 && currentMinute >= 45 || currentHour > 16) && (currentHour < 17 || (currentHour == 17 && currentMinute < 30))) { // 16:45-17:30
         scheduleHomepageChiledren.eq(7).addClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500');
         scheduleHomepageChiledren.eq(7).removeClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700 hide');
@@ -534,6 +591,7 @@ function updateHomepageScheduleDisplay() {
         scheduleHomepageChiledren.eq(8).removeClass('hide');
         scheduleHomepageChiledren.eq(9).removeClass('hide');
         isClassPeriod = 1;
+        currentSection = 8;
     } else if ((currentHour == 17 && currentMinute >= 40 || currentHour > 17) && (currentHour < 18 || (currentHour == 18 && currentMinute < 25))) { // 17:40-18:25
         scheduleHomepageChiledren.eq(8).addClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500');
         scheduleHomepageChiledren.eq(8).removeClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700 hide');
@@ -544,6 +602,7 @@ function updateHomepageScheduleDisplay() {
         scheduleHomepageChiledren.eq(9).removeClass('hide');
         scheduleHomepageChiledren.eq(10).removeClass('hide');
         isClassPeriod = 1;
+        currentSection = 9;
     } else if ((currentHour == 19 && currentMinute >= 20 || currentHour > 19) && (currentHour < 20 || (currentHour == 20 && currentMinute < 5))) { // 19:20-20:05 晚上
         scheduleHomepageChiledren.eq(9).addClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500');
         scheduleHomepageChiledren.eq(9).removeClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700 hide');
@@ -554,6 +613,7 @@ function updateHomepageScheduleDisplay() {
         scheduleHomepageChiledren.eq(10).removeClass('hide');
         scheduleHomepageChiledren.eq(11).removeClass('hide');
         isClassPeriod = 1;
+        currentSection = 10;
     } else if (currentHour == 20 && currentMinute >= 15) { // 20:15-21:00
         scheduleHomepageChiledren.eq(10).addClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500');
         scheduleHomepageChiledren.eq(10).removeClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700 hide');
@@ -564,7 +624,8 @@ function updateHomepageScheduleDisplay() {
         scheduleHomepageChiledren.eq(11).removeClass('hide');
         scheduleHomepageChiledren.eq(12).removeClass('hide');
         isClassPeriod = 1;
-    } else if ((currentHour == 21 && currentMinute >= 10 || currentHour > 21) && (currentHour < 22 || (currentHour == 22 && currentMinute < 55))) { // 21:10-22:55
+        currentSection = 11;
+    } else if ((currentHour == 21 && currentMinute >= 10 || currentHour > 21) && (currentHour < 21 || (currentHour == 21 && currentMinute < 55))) { // 21:10-21:55
         scheduleHomepageChiledren.eq(11).addClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500');
         scheduleHomepageChiledren.eq(11).removeClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700 hide');
         for (var i = 0; ((i != 11) && i < scheduleHomepageChiledren.length); i++) {
@@ -572,7 +633,8 @@ function updateHomepageScheduleDisplay() {
             scheduleHomepageChiledren.eq(i).addClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700 hide');
         }
         scheduleHomepageChiledren.eq(12).removeClass('hide');
-    } else if (((currentHour == 22 && currentMinute >= 55 || currentHour > 22) && (currentHour < 24)) || (currentHour >= 0 && currentHour < 5)) { // 22:55-24:00 || 0:00-5:00
+        currentSection = 12;
+    } else if (((currentHour == 21 && currentMinute >= 55 || currentHour > 21) && (currentHour < 24)) || (currentHour >= 0 && currentHour < 5)) { // 21:55-24:00 || 0:00-5:00
         scheduleHomepageChiledren.eq(12).addClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500');
         scheduleHomepageChiledren.eq(12).removeClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700 hide');
         for (var i = 0; ((i != 12) && i < scheduleHomepageChiledren.length); i++) {
@@ -580,6 +642,8 @@ function updateHomepageScheduleDisplay() {
             scheduleHomepageChiledren.eq(i).addClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700 hide');
         }
         isClassPeriod = 0;
+        currentSection = 0;
+
     }// 方框时间外
     else if (currentHour >= 5 && (currentHour < 8 || (currentHour == 8 && currentMinute < 15))) { // 5:00-8:15
         scheduleHomepageChiledren.eq(0).addClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700');
@@ -591,6 +655,7 @@ function updateHomepageScheduleDisplay() {
         scheduleHomepageChiledren.eq(1).removeClass('hide');
         scheduleHomepageChiledren.eq(2).removeClass('hide');
         isClassPeriod = 0;
+        currentSection = 0;
     } else if (currentHour == 9 && currentMinute < 10) { // 9:00-9:10
         scheduleHomepageChiledren.eq(1).addClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700');
         scheduleHomepageChiledren.eq(1).removeClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500 hide');
@@ -601,6 +666,7 @@ function updateHomepageScheduleDisplay() {
         scheduleHomepageChiledren.eq(2).removeClass('hide');
         scheduleHomepageChiledren.eq(3).removeClass('hide');
         isClassPeriod = 0;
+
     } else if ((currentHour == 9 && currentMinute >= 55) || (currentHour == 10 && currentMinute < 15)) {// 9:55-10:15
         scheduleHomepageChiledren.eq(2).addClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700');
         scheduleHomepageChiledren.eq(2).removeClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500 hide');
@@ -611,6 +677,7 @@ function updateHomepageScheduleDisplay() {
         scheduleHomepageChiledren.eq(3).removeClass('hide');
         scheduleHomepageChiledren.eq(4).removeClass('hide');
         isClassPeriod = 0;
+
     } else if ((currentHour == 11 && currentMinute >= 0 || currentHour > 11) && (currentHour < 11 || (currentHour == 11 && currentMinute < 10))) { // 11:00-11:10
         scheduleHomepageChiledren.eq(3).addClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700');
         scheduleHomepageChiledren.eq(3).removeClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500 hide');
@@ -621,6 +688,7 @@ function updateHomepageScheduleDisplay() {
         scheduleHomepageChiledren.eq(4).removeClass('hide');
         scheduleHomepageChiledren.eq(5).removeClass('hide');
         isClassPeriod = 0;
+
     } else if ((currentHour == 11 && currentMinute >= 55 || currentHour > 11) && (currentHour < 13 || (currentHour == 13 && currentMinute < 50))) { // 11:55-13:50
         scheduleHomepageChiledren.eq(4).addClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700');
         scheduleHomepageChiledren.eq(4).removeClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500 hide');
@@ -631,6 +699,7 @@ function updateHomepageScheduleDisplay() {
         scheduleHomepageChiledren.eq(5).removeClass('hide');
         scheduleHomepageChiledren.eq(6).removeClass('hide');
         isClassPeriod = 0;
+
     } else if ((currentHour == 14 && currentMinute >= 35 || currentHour > 14) && (currentHour < 14 || (currentHour == 14 && currentMinute < 45))) { // 14:35-14:45
         scheduleHomepageChiledren.eq(5).addClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700');
         scheduleHomepageChiledren.eq(5).removeClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500 hide');
@@ -641,6 +710,7 @@ function updateHomepageScheduleDisplay() {
         scheduleHomepageChiledren.eq(6).removeClass('hide');
         scheduleHomepageChiledren.eq(7).removeClass('hide');
         isClassPeriod = 0;
+
     } else if ((currentHour == 15 && currentMinute >= 30 || currentHour > 15) && (currentHour < 15 || (currentHour == 15 && currentMinute < 40))) { // 15:30-15:40
         scheduleHomepageChiledren.eq(6).addClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700');
         scheduleHomepageChiledren.eq(6).removeClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500 hide');
@@ -651,6 +721,7 @@ function updateHomepageScheduleDisplay() {
         scheduleHomepageChiledren.eq(7).removeClass('hide');
         scheduleHomepageChiledren.eq(8).removeClass('hide');
         isClassPeriod = 0;
+
     } else if ((currentHour == 16 && currentMinute >= 25 || currentHour > 16) && (currentHour < 16 || (currentHour == 16 && currentMinute < 45))) { // 16:25-16:45
         scheduleHomepageChiledren.eq(7).addClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700');
         scheduleHomepageChiledren.eq(7).removeClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500 hide');
@@ -661,6 +732,7 @@ function updateHomepageScheduleDisplay() {
         scheduleHomepageChiledren.eq(8).removeClass('hide');
         scheduleHomepageChiledren.eq(9).removeClass('hide');
         isClassPeriod = 0;
+
     } else if ((currentHour == 17 && currentMinute >= 30 || currentHour > 17) && (currentHour < 17 || (currentHour == 17 && currentMinute < 40))) { // 17:30-17:40
         scheduleHomepageChiledren.eq(8).addClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700');
         scheduleHomepageChiledren.eq(8).removeClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500 hide');
@@ -671,6 +743,7 @@ function updateHomepageScheduleDisplay() {
         scheduleHomepageChiledren.eq(9).removeClass('hide');
         scheduleHomepageChiledren.eq(10).removeClass('hide');
         isClassPeriod = 0;
+
     } else if ((currentHour == 18 && currentMinute >= 25 || currentHour > 18) && (currentHour < 19 || (currentHour == 19 && currentMinute < 20))) { // 18:25-19:20
         scheduleHomepageChiledren.eq(9).addClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700');
         scheduleHomepageChiledren.eq(9).removeClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500 hide');
@@ -682,6 +755,7 @@ function updateHomepageScheduleDisplay() {
         scheduleHomepageChiledren.eq(11).removeClass('hide');
         isClassPeriod = 0;
         isClassPeriod = 0;
+
     } else if ((currentHour == 20 && currentMinute >= 5 || currentHour > 20) && (currentHour < 20 || (currentHour == 20 && currentMinute < 15))) { // 20:05-20:15
         scheduleHomepageChiledren.eq(10).addClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700');
         scheduleHomepageChiledren.eq(10).removeClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500 hide');
@@ -692,6 +766,7 @@ function updateHomepageScheduleDisplay() {
         scheduleHomepageChiledren.eq(11).removeClass('hide');
         scheduleHomepageChiledren.eq(12).removeClass('hide');
         isClassPeriod = 0;
+
     } else if ((currentHour == 21 && currentMinute >= 0 || currentHour > 21) && (currentHour < 21 || (currentHour == 21 && currentMinute < 10))) { // 21:00-21:10
         scheduleHomepageChiledren.eq(11).addClass('bg-purple-50 hover:ring-1 hover:ring-purple-200 dark:bg-purple-900 dark:hover:ring-purple-700');
         scheduleHomepageChiledren.eq(11).removeClass('bg-purple-200 hover:ring-2 hover:ring-purple-300 dark:bg-purple-700 dark:hover:ring-purple-500 hide');
@@ -701,6 +776,7 @@ function updateHomepageScheduleDisplay() {
         }
         scheduleHomepageChiledren.eq(12).removeClass('hide');
         isClassPeriod = 0;
+
     }
     var isClassPeriodHomepage = $('#isClassPeriod-homepage');
     if (isClassPeriod == 0) {
@@ -727,6 +803,8 @@ function classStartHomepage() {
                 unstartMasks[i].classList.add('hidden');
             }
             // 开启功能
+            initializeRollCall();
+
         } else if (isClassStarted == 1) {
             isClassStarted = 0;
             classStartBtnHomepage.textContent = '上课';
@@ -932,7 +1010,55 @@ function signInFinished() {
 function updateRollCall() {
 
 }
+// 初始化，在"classStartHomepage()"中调用
+function initializeRollCall() {
+    // 目前有课
+    if (scheduleHomepageFlag[currentSection - 1] == 1) {
+        var courseCount = saveData.length;
+        for (var i = 0; i < courseCount; i++) {
+            var startSection = saveData[i]['startSection'];
+            var endSection = saveData[i]['endSection'];
+            if ((startSection <= currentSection) && (currentSection <= endSection)) {
+                students = saveData[i]['students'];
+                console.log(students);
+                updateRollCallList(students)
+            }
+        }
+    } else { // 目前没课
+        var rollCallResult = $('#rollCall-result');
+        rollCallResult.empty();
+        // 别删末尾的defaultElement，否则排版出问题
+        var newElements = '';
+        var beforeStudentName = `<div class="flex p-1 m-1 w-48 h-max rounded-xl items-center bg-zinc-200 bg-opacity-70 hover:shadow-zinc-300 hover:shadow-md dark:bg-zinc-800 dark:ring-zinc-500 dark:hover:ring-2 dark:hover:shadow-none"><div class="flex p-3 w-full rounded-lg items-center bg-zinc-200 dark:bg-zinc-900 dark:hover:bg-zinc-800"><div class="flex p-1 w-28 rounded-md text-lg text-zinc-800 truncate hover:overflow-visible hover:min-w-max hover:bg-zinc-200 bg-opacity-100 dark:text-zinc-500 dark:hover:text-zinc-300 dark:hover:bg-zinc-800 hover:ring-1 ring-zinc-500 hover:z-50 hover:absolute">`
+        var afterStudentName = `</div><div class="flex flex-grow"></div><div class="flex w-0.5 h-5 bg-zinc-500 bg-opacity-50 dark:bg-zinc-300"></div><div class="flex flex-row-reverse min-w-max w-6 h-9 pl-2 items-center text-red-700 dark:text-red-800">无</div></div></div>`
+        var studentName = '提醒消息：没有检测到当前的学生';
+        var newElement = beforeStudentName+studentName+afterStudentName; 
+        newElements += newElement;
+        var defaultElement = `<div class="flex p-1 m-1 w-48 h-max rounded-xl items-center bg-purple-200 bg-opacity-70 ring-1 ring-purple-500 hover:shadow-purple-300 hover:shadow-md dark:bg-zinc-600 dark:ring-2 dark:ring-zinc-500 dark:hover:ring-4 dark:hover:shadow-none opacity-0 pointer-events-none"><div class="flex p-3 w-full rounded-lg items-center bg-purple-200 dark:bg-zinc-700 dark:hover:bg-zinc-800"><div class="flex p-1 w-28 rounded-md text-lg text-zinc-800 truncate hover:overflow-visible hover:min-w-max hover:bg-purple-200 bg-opacity-100 dark:text-zinc-300 dark:hover:bg-zinc-800 hover:ring-1 ring-zinc-500 hover:z-50 hover:absolute">默认占位，当你看到这个时，应当反省自己做了什么</div><div class="flex flex-grow"></div><div class="flex w-0.5 h-5 bg-purple-300"></div><div class="flex flex-row-reverse min-w-max w-6 h-9 pl-2 items-center font-bold text-blue-600 dark:text-blue-400">null</div></div></div>`
+        newElements+= defaultElement;
+        rollCallResult.append(newElements);
+        
 
+    }
+}
+function updateRollCallList(students) {
+    var newElements = '';
+    var defaultElement = `<div class="flex p-1 m-1 w-48 h-max rounded-xl items-center bg-purple-200 bg-opacity-70 ring-1 ring-purple-500 hover:shadow-purple-300 hover:shadow-md dark:bg-zinc-600 dark:ring-2 dark:ring-zinc-500 dark:hover:ring-4 dark:hover:shadow-none opacity-0 pointer-events-none"><div class="flex p-3 w-full rounded-lg items-center bg-purple-200 dark:bg-zinc-700 dark:hover:bg-zinc-800"><div class="flex p-1 w-28 rounded-md text-lg text-zinc-800 truncate hover:overflow-visible hover:min-w-max hover:bg-purple-200 bg-opacity-100 dark:text-zinc-300 dark:hover:bg-zinc-800 hover:ring-1 ring-zinc-500 hover:z-50 hover:absolute">默认占位，当你看到这个时，应当反省自己做了什么</div><div class="flex flex-grow"></div><div class="flex w-0.5 h-5 bg-purple-300"></div><div class="flex flex-row-reverse min-w-max w-6 h-9 pl-2 items-center font-bold text-blue-600 dark:text-blue-400">null</div></div></div>`
+    // 定义名字前后的标签
+    var beforeStudentName = `<div class="flex p-1 m-1 w-48 h-max rounded-xl items-center bg-zinc-200 bg-opacity-70 hover:shadow-zinc-300 hover:shadow-md dark:bg-zinc-800 dark:ring-zinc-500 dark:hover:ring-2 dark:hover:shadow-none"><div class="flex p-3 w-full rounded-lg items-center bg-zinc-200 dark:bg-zinc-900 dark:hover:bg-zinc-800"><div class="flex p-1 w-28 rounded-md text-lg text-zinc-800 truncate hover:overflow-visible hover:min-w-max hover:bg-zinc-200 bg-opacity-100 dark:text-zinc-500 dark:hover:text-zinc-300 dark:hover:bg-zinc-800 hover:ring-1 ring-zinc-500 hover:z-50 hover:absolute">`
+    var afterStudentName = `</div><div class="flex flex-grow"></div><div class="flex w-0.5 h-5 bg-zinc-500 bg-opacity-50 dark:bg-zinc-300"></div><div class="flex flex-row-reverse min-w-max w-6 h-9 pl-2 items-center text-red-700 dark:text-red-800">缺勤</div></div></div>`
+    var studentNum = students.length;
+    for (var i = 0; i < studentNum; i++){
+        var studentName = studentNum[i]['name'];
+        var newElement = beforeStudentName+studentName+afterStudentName;
+        newElements += newElement;
+    }
+    newElements+=defaultElement; // 别删末尾的defaultElement，否则排版出问题
+    // 先清空，再添加
+    var rollCallResult = $('#rollCall-result');
+    rollCallResult.empty();
+    rollCallResult.append(newElements);
+}
 
 // ==================================================
 // 随机抽问
