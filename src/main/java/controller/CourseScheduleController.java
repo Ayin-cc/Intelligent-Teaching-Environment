@@ -15,7 +15,6 @@ import service.CourseSchedualeService;
 import java.util.List;
 
 @RestController
-@CrossOrigin(value = "*", allowCredentials = "true")
 @RequestMapping("/CourseSchedule")
 public class CourseScheduleController {
     @Autowired
