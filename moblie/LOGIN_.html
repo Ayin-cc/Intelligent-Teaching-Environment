@@ -6,15 +6,14 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>登录</title>
 		<link href="output.css" rel="stylesheet">
-		<link href="all_else.css" rel="stylesheet" />
-		<script src="jquery-3.7.1.min.js"/>
+		<script src="jquery-3.7.1.min.js" ></script>
 		<script>
-			$(document).ready(function (){
+			$(document).ready(function () {
 			})
 		</script>
 	</head>
 
-	<body class="flex items-center justify-center min-h-screen bg-gray-100 no-x-scroll">
+	<body class="flex items-center justify-center min-h-screen bg-gray-100">
 		<div class="p-8 bg-white shadow-xl w-80 rounded-xl">
 			<h2 class="text-2xl font-semibold" id="top-tip">登录</h2>
 			<form class="mt-10">
@@ -37,19 +36,21 @@
 					<a class="text-blue-500" href="" id="reset-password">
 						忘记密码？
 					</a>
-					<button id="sign-button" class="px-4 py-2 text-white bg-blue-400 rounded-md focus:outline-none focus:bg-blue-600">
+					<button id="sign-button"
+						class="px-4 py-2 text-white bg-blue-400 rounded-md focus:outline-none focus:bg-blue-600">
 						注册
 					</button>
-					<button id="log-button" class="px-4 py-2 text-white bg-blue-500 rounded-md focus:outline-none focus:bg-blue-600" onclick="login()">
+					<button id="log-button"
+						class="px-4 py-2 text-white bg-blue-500 rounded-md focus:outline-none focus:bg-blue-600"
+						onclick="login()">
 						登录
 					</button>
 				</div>
 			</form>
 		</div>
-
 		<script>
 			// 验证通过，进入主界面
-			function enter(userId, passwd){
+			function enter(userId, passwd) {
 				var token;
 				// 获取token
 				$.ajax({
@@ -71,7 +72,7 @@
 			}
 
 			// 登录功能
-			function login(){
+			function login() {
 				const userId = document.getElementById("username");
 				const passwd = document.getElementById("password");
 				$.ajax({
@@ -79,12 +80,12 @@
 					dataType: "json",
 					url: 'http://localhost:18083/SCUEE/user/loginStudent',
 					contentType: "application/json",
-					data: JSON.stringify({ "sid": userId, "passwd":passwd }),
+					data: JSON.stringify({ "sid": userId, "passwd": passwd }),
 					success: function (result) {
-						if(result == 1){
+						if (result == 1) {
 							enter(userId, passwd);
 						}
-						if(result == 0){
+						if (result == 0) {
 							alert("登录失败！请检查账号密码是否正确！");
 						}
 					}
@@ -92,11 +93,11 @@
 			}
 
 			// 注册功能
-			function register(){
+			function register() {
 				const userId = document.getElementById("username");
 				const passwd = document.getElementById("password");
 				const passwdConfirm = document.getElementById("password-confirm");
-				if(passwd != passwdConfirm){
+				if (passwd != passwdConfirm) {
 					alert("密码不一致！");
 					return;
 				}
@@ -105,19 +106,18 @@
 					dataType: "json",
 					url: 'http://localhost:18083/SCUEE/user/loginStudent',
 					contentType: "application/json",
-					data: JSON.stringify({ "sid": userId, "passwd":passwd }),
+					data: JSON.stringify({ "sid": userId, "passwd": passwd }),
 					success: function (result) {
-						if(result == 200){
+						if (result == 200) {
 							enter(userId, passwd);
 						}
-						if(result == 401){
+						if (result == 401) {
 							alert("注册失败！用户已存在！");
 						}
 					}
 				})
 			}
 		</script>
-
 		<script>
 			const top_tip = document.getElementById('top-tip');
 			const pswd_again = document.getElementById('pswd-again');

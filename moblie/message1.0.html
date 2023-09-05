@@ -5,13 +5,13 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link href="output.css" rel="stylesheet" />
-		<link href="all_else.css" rel="stylesheet" />
 		<title>ITE</title>
 	</head>
 
-	<body class="w-screen no-x-scroll">
+	<body class="w-screen">
 		<!-- 顶部栏 -->
-		<div class="flex flex-col w-screen h-30">
+
+		<div class="flex flex-col w-screen h-12 bg-white" style="position: fixed;">
 			<!-- 头像栏 -->
 			<div class="flex items-center justify-center w-screen p-2 rounded-lg resizable">
 				<h2 class="flex items-center justify-center overflow-hidden text-center rounded-lg hover:bg-gray-100 "
@@ -28,49 +28,98 @@
 			<!-- sidebar-line -->
 			<div class="flex mx-2 w-auto h-0.5 bg-slate-400 "></div>
 		</div>
+		<div class="pt-12">
+			<!-- 通知 -->
+			<div class="flex flex-col flex-grow w-screen h-full max-w-full max-h-full overflow-x-hidden overflow-y-scroll"
+				id="class-message">
+				<!-- 某重要通知(未读) -->
+				<div class="flex flex-col items-center w-full min-w-0 px-1 py-2 rounded-lg hover:bg-zinc-100">
 
-		<!-- 通知 -->
-		<div class="flex flex-col flex-grow w-screen h-full max-w-full max-h-full px-2 overflow-y-scroll no-x-scroll h-16-to-full h-74px-to-full"
-			id="class-message">
-			<!-- 某重要通知(未读) -->
-			<div class="flex flex-col items-center w-full min-w-0 px-1 pt-2 pb-2 rounded-lg hover:bg-zinc-100">
-
-				<div class="flex w-full">
-					<!-- 状态图标 -->
-					<div class="flex items-center justify-center w-12 h-12">
-						<div class="flex items-center justify-center w-10 h-10 bg-red-500 rounded-xl">
-							<img draggable="false" class="w-8 h-8 p-1" src="./icons/333/邮件.svg">
-						</div>
-					</div>
-
-					<div class="flex flex-col whitespace-nowrap">
-						<!-- 发件人---时间 -->
-						<div class="flex flex-row">
-							<!-- 发件人 -->
-							<div class="flex px-2 font-bold truncate" style="max-width: 80px;">
-								程老师
-							</div>
-							<!-- <div class="flex flex-grow"></div> -->
-							<!-- 通知时间 -->
-							<div class="absolute flex items-end justify-end pt-2 text-xs min-w-max text-zinc-400 text-end right-4">
-								08/22
+					<div class="flex w-full">
+						<!-- 状态图标 -->
+						<div class="flex items-center justify-center w-12 h-12">
+							<div class="flex items-center justify-center w-10 h-10 bg-red-500 rounded-xl">
+								<img draggable="false" class="w-8 h-8 p-1" src="./icons/ffffff/邮件.svg">
 							</div>
 						</div>
-						<!-- 标题 -->
-						<div class="px-2 overflow-hidden overflow-ellipsis text-slate-600 w-72 whitespace-nowrap">
-							Debug
+						<!-- 邮件 -->
+						<div class="flex flex-col whitespace-nowrap">
+							<!-- 发件人---时间 -->
+							<div class="flex flex-row">
+								<!-- 发件人 -->
+								<div class="flex px-2 font-bold truncate" style="max-width: 80px;">
+									程老师
+								</div>
+								<!-- 通知时间 -->
+								<div
+									class="absolute flex items-end justify-end pt-2 text-xs min-w-max text-zinc-400 text-end right-4">
+									08/22
+								</div>
+							</div>
+							<!-- 标题 -->
+							<div class="px-2 overflow-hidden overflow-ellipsis text-slate-600 w-72 whitespace-nowrap">
+								Debug
+							</div>
 						</div>
 					</div>
+					<!-- 内容开头 -->
+					<div
+						class="w-full pr-2 overflow-hidden text-sm pl-14 overflow-ellipsis text-slate-400 whitespace-nowrap">
+						This is a message for testing! It' s an unread important notice!
+					</div>
+					<div class="flex h-0.5 w-64 bg-slate-100 mt-1"></div>
+				</div>
 
-				</div>
-				<!-- 内容开头 -->
-				<div class="w-full pr-2 overflow-hidden text-sm pl-14 overflow-ellipsis text-slate-400 whitespace-nowrap">
-					This is a message for testing! It' s an unread important notice!
-				</div>
 			</div>
 		</div>
-
 		<script>
+			function setMessage(n=4) {
+				var all_message = document.getElementById('class-message');
+				var sum_message = '';
+				for (let i = 0; i < n; i++) {
+					var message_st = `<div class="flex flex-col items-center w-full min-w-0 px-1 py-2 rounded-lg hover:bg-zinc-100">
+					<div class="flex w-full">
+						<div class="flex items-center justify-center w-12 h-12">
+							<div class="flex items-center justify-center w-10 h-10 `;
+					var message_color = `bg-red-500`;
+					let isimportance = i % 3;
+					if (isimportance == 0) message_color = 'bg-orange-400';
+					else if (isimportance == 1) message_color = 'bg-green-500';
+					var message_nd = ` rounded-xl">
+								<img draggable="false" class="w-8 h-8 p-1" src="./icons/ffffff/邮件.svg">
+							</div>
+						</div>
+						<div class="flex flex-col whitespace-nowrap">
+							<div class="flex flex-row">
+								<div class="flex px-2 font-bold truncate" style="max-width: 80px;">`;
+					var message_name = `程老师${i}`;
+					var message_rd = `</div>
+								<div
+									class="absolute flex items-end justify-end pt-2 text-xs min-w-max text-zinc-400 text-end right-4">`;
+					var message_time = `08/22`;
+
+					var message_fo = `</div>
+							</div>
+							<div class="px-2 overflow-hidden overflow-ellipsis text-slate-600 w-72 whitespace-nowrap">`;
+					var message_title = `Debug`;
+					var message_fi = `</div>
+						</div>
+					</div>
+					<div
+						class="w-full pr-2 overflow-hidden text-sm pl-14 overflow-ellipsis text-slate-400 whitespace-nowrap">`;
+					var message_context = `This is a message for testing! It' s an unread important notice!`;
+					var message_s = `</div>
+					<div class="flex h-0.5 w-64 bg-slate-100 mt-1"></div>
+					</div> `;
+					var new_message = message_st + message_color + message_nd + message_name + message_rd + message_time + message_fo + message_title + message_fi + message_context + message_s;
+					sum_message = new_message + sum_message;
+				}
+				all_message.innerHTML = sum_message + all_message.innerHTML;
+
+			}
+			setMessage();
+
+
 		</script>
 	</body>
 

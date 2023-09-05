@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,14 +9,14 @@
 		<script src="jquery-3.7.1.min.js">
 		</script>
 		<script>
-			$(document).ready(function (){
+			$(document).ready(function () {
 			})
 		</script>
 	</head>
 
 	<body>
 		<!-- 顶部栏 -->
-		<div class="flex flex-col h-38">
+		<div class="flex flex-col">
 			<div class="flex flex-row items-center">
 				<!-- 头像栏 -->
 				<div class="flex items-center justify-center max-w-xs p-2 rounded-lg resizable">
@@ -35,12 +36,7 @@
 							2022xxxxxxxxx
 						</div>
 					</div>
-					<div>
-						<!--刷新按钮-->
-						<form method="post" action="">
-							<input type="button" onclick="getCourse()" value="F5">
-						</form>
-					</div>
+
 				</div>
 
 				<div class="flex flex-grow"></div>
@@ -86,14 +82,12 @@
 	</body>
 	<script type="text/javascript">
 		// 寻找cookie的值
-		function getCookie(cname)
-		{
+		function getCookie(cname) {
 			var name = cname + "=";
 			var ca = document.cookie.split(';');
-			for(var i=0; i<ca.length; i++)
-			{
+			for (var i = 0; i < ca.length; i++) {
 				var c = ca[i].trim();
-				if (c.indexOf(name)==0) return c.substring(name.length,c.length);
+				if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
 			}
 			return "";
 		}
@@ -115,7 +109,7 @@
 		}
 
 		// 解析课表数据
-		function parmCourse(courses){
+		function parmCourse(courses) {
 			for (var i = 0; i < courses.length; i++) {
 				var dates = courses[i].date;
 				var j = 0;
@@ -153,98 +147,107 @@
 				}
 			})
 		}
+
+		// 按钮 主动刷新 获取课表数据
+		const refresh = document.getElementById('refresh-menu-header');
+		refresh.addEventListener('click', () => { getCourse(); });
 	</script>
 	<script>
-		function setNewtr_spc(time) {
-			const newtd = document.createElement('td');
-			// 设置元素的属性
-			newtd.setAttribute('class', 'text-xs text-center bg-gray-300 w-full');
-			newtd.setAttribute('colspan', '8');
-			// 设置元素的文本内容
-			if (time == 1) newtd.textContent = '午休';
-			else if (time == 2) newtd.textContent = '晚休';
-			// 将新的 div 元素添加到页面中的容器中
-			const tbody = document.getElementById('table-body');
-			tbody.appendChild(newtd);
-		}
-
-		function setNewtr(n) {
-			for (let i = 1; i <= n; i++) {
-				if (i == 5) setNewtr_spc(1);
-				else if (i == 10) setNewtr_spc(2);
-				const newtr = document.createElement('tr');
-				const trId = `row${i}`;
+		// 生成表格
+		{
+			function setNewtr_spc(time) {
+				const newtd = document.createElement('td');
 				// 设置元素的属性
-				newtr.setAttribute('id', trId);
-				newtr.setAttribute('class', 'text-center h-20');
-
+				newtd.setAttribute('class', 'text-xs text-center bg-gray-300 w-full');
+				newtd.setAttribute('colspan', '8');
 				// 设置元素的文本内容
-				// newtr.textContent = i;
+				if (time == 1) newtd.textContent = '午休';
+				else if (time == 2) newtd.textContent = '晚休';
 				// 将新的 div 元素添加到页面中的容器中
 				const tbody = document.getElementById('table-body');
-				tbody.appendChild(newtr);
-				setNewtd(i, 8);
+				tbody.appendChild(newtd);
 			}
-		}
 
-		function setNewtd(i, n) {
-			for (let j = 0; j < n; j++) {
-				const newtd = document.createElement('td');
-				const tdId = `${i}-${j}`;
-
-				// 设置元素的属性
-				newtd.setAttribute('id', tdId);
-				newtd.setAttribute('class', 'text-xs border border-gray-400 text-center');
-
-				// 设置元素的文本内容
-				// newtd.textContent = j;
-				// 将新的 div 元素添加到页面中的容器中
-				const trId = `row${i}`;
-				const tr = document.getElementById(trId);
-				tr.appendChild(newtd);
-				setNewp(i, j, 3);
-			}
-		}
-		function setNewp(i, j, n) {
-			let k = 1;
-			if (j == 0) {
-				for (; k <= n; k++) {
-					const newp = document.createElement('p');
-					const pId = `${j}-${i}-${k}`;
-
+			function setNewtr(n) {
+				for (let i = 1; i <= n; i++) {
+					if (i == 5) setNewtr_spc(1);
+					else if (i == 10) setNewtr_spc(2);
+					const newtr = document.createElement('tr');
+					const trId = `row${i}`;
 					// 设置元素的属性
-					newp.setAttribute('id', pId);
-					if (k != 1) {
-						newp.setAttribute('class', 'my-1 text-xs text-gray-400');
-						// 设置元素的文本内容
-					} else if (k == 1) {
-						newp.textContent = `${i}`;
-						newp.setAttribute('class', 'my-3 text-black');
-					}
-					// 将新的 div 元素添加到页面中的容器中
-					const tdId = `${i}-${j}`;
-					const td = document.getElementById(tdId);
-					td.appendChild(newp);
-				}
-			} else {
-				for (; k <= n; k++) {
-					const newp = document.createElement('p');
-					const pId = `${j}-${i}-${k}`;
+					newtr.setAttribute('id', trId);
+					newtr.setAttribute('class', 'text-center h-20');
 
-					// 设置元素的属性
-					newp.setAttribute('id', pId);
 					// 设置元素的文本内容
-					newp.textContent = `@综合楼`;
+					// newtr.textContent = i;
 					// 将新的 div 元素添加到页面中的容器中
+					const tbody = document.getElementById('table-body');
+					tbody.appendChild(newtr);
+					setNewtd(i, 8);
+				}
+			}
+
+			function setNewtd(i, n) {
+				for (let j = 0; j < n; j++) {
+					const newtd = document.createElement('td');
 					const tdId = `${i}-${j}`;
-					const td = document.getElementById(tdId);
-					td.appendChild(newp);
+
+					// 设置元素的属性
+					newtd.setAttribute('id', tdId);
+					newtd.setAttribute('class', 'text-xs border border-gray-400 text-center');
+
+					// 设置元素的文本内容
+					// newtd.textContent = j;
+					// 将新的 div 元素添加到页面中的容器中
+					const trId = `row${i}`;
+					const tr = document.getElementById(trId);
+					tr.appendChild(newtd);
+					setNewp(i, j, 3);
+				}
+			}
+
+			function setNewp(i, j, n) {
+				let k = 1;
+				if (j == 0) {
+					for (; k <= n; k++) {
+						const newp = document.createElement('p');
+						const pId = `${j}-${i}-${k}`;
+
+						// 设置元素的属性
+						newp.setAttribute('id', pId);
+						if (k != 1) {
+							newp.setAttribute('class', 'my-1 text-xs text-gray-400');
+							// 设置元素的文本内容
+						} else if (k == 1) {
+							newp.textContent = `${i}`;
+							newp.setAttribute('class', 'my-3 text-black');
+						}
+						// 将新的 div 元素添加到页面中的容器中
+						const tdId = `${i}-${j}`;
+						const td = document.getElementById(tdId);
+						td.appendChild(newp);
+					}
+				} else {
+					for (; k <= n; k++) {
+						const newp = document.createElement('p');
+						const pId = `${j}-${i}-${k}`;
+
+						// 设置元素的属性
+						newp.setAttribute('id', pId);
+						// 设置元素的文本内容
+						newp.textContent = `@综合楼`;
+						// 将新的 div 元素添加到页面中的容器中
+						const tdId = `${i}-${j}`;
+						const td = document.getElementById(tdId);
+						td.appendChild(newp);
+					}
 				}
 			}
 		}
 
 		// 更改校区对应的时间
 		{
+			// 控制的按钮
 			const box1 = document.getElementById('college-choice');
 			const box2 = document.getElementById('xiaoqu');
 			const boxA = document.getElementById('jiangan');
@@ -273,6 +276,7 @@
 				}
 
 			}
+
 			function change_choice(abc) {
 				if (abc == 1) {
 					now = '江安';
@@ -423,5 +427,7 @@
 		let which_college = 1;
 		setNewtr(12);
 		change_time(which_college);
+		getCourse();
 	</script>
+
 </html>
