@@ -1,5 +1,6 @@
 package service;
 
+import entity.Administrator;
 import entity.Classroom;
 import entity.Course;
 import entity.Student;
@@ -7,6 +8,9 @@ import entity.Student;
 import java.util.List;
 
 public interface AdministratorService {
+    boolean login(Administrator administrator);
+    int register(Administrator administrator);
+    String refreshToken(Administrator administrator);
     boolean addStudent(String token, Student student);
     boolean changeStudent(String token, Student student);
     List<Student> queryStudent(String token, String sid, String name, String major, String college, String phone);

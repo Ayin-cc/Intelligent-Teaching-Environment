@@ -1,0 +1,65 @@
+package controller;
+
+import dao.UserDao;
+import entity.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import service.StudentService;
+import service.UserService;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/Student")
+public class StudentController {
+    @Autowired
+    private StudentService studentService;
+    private UserService userService;
+
+    @RequestMapping("/entrance")
+    public String entrance(){
+        return "redirect:login";
+    }
+
+    @RequestMapping("/mainWindow")
+    public String mainWindow(){
+        return "main";
+    }
+
+    @RequestMapping("/login")
+    public ResponseEntity<StatusCode> login(@RequestBody Student student){
+        if(studentService.login(student)){
+            return new ResponseEntity<>(new StatusCode(1), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(new StatusCode(0), HttpStatus.OK);
+    }
+
+    @RequestMapping("/register")
+    public ResponseEntity<StatusCode> register(@RequestBody Student student){
+        int code = studentService.register(student);
+        return new ResponseEntity<>(new StatusCode(code), HttpStatus.OK);
+    }
+
+    @RequestMapping("/refreshToken")
+    public ResponseEntity<Token> refreshToken(@RequestBody Student student){
+        String token = studentService.refreshToken(student);
+        return new ResponseEntity<>(new Token(token), HttpStatus.OK);
+    }
+
+    @RequestMapping("/initMsg")
+    public ResponseEntity<List<Message>> initMsg(){
+        List<Message> messages = userService.initMsg();
+        return new ResponseEntity<>(messages, HttpStatus.OK);
+    }
+
+    @RequestMapping("/initCourseSchedule")
+    public ResponseEntity<List<Course>> initCourseSchedule(@RequestBody Classroom classroom){
+        List<Course> courses = userService.initCourseSchedule(classroom);
+        return new ResponseEntity<>(courses, HttpStatus.OK);
+    }
+}

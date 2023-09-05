@@ -10,6 +10,16 @@
         http://www.springframework.org/schema/mvc
         http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
+    <!--  配置视图解析器  -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/Client/"/>
+        <property name="suffix" value=".html"/>
+        <property name="order" value="1"/>
+    </bean>
+
+    <mvc:default-servlet-handler/>
+    <mvc:annotation-driven/>
+
     <!-- 配置Controller的Bean -->
     <context:component-scan base-package="controller" />
     <!-- 配置Dao的Bean -->
@@ -18,9 +28,6 @@
     <context:component-scan base-package="entity" />
     <!-- 配置Service的Bean -->
     <context:component-scan base-package="service" />
-
-    <mvc:default-servlet-handler/>
-    <mvc:annotation-driven/>
 
     <!-- 加载数据库连接信息的属性文件 -->
     <context:property-placeholder location="classpath:jdbc-config.properties"/>

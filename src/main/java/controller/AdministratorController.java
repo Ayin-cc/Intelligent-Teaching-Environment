@@ -1,12 +1,10 @@
 package controller;
 
-import entity.Classroom;
-import entity.Course;
-import entity.StatusCode;
-import entity.Student;
+import entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import service.AdministratorService;
 
@@ -17,6 +15,26 @@ import java.util.List;
 public class AdministratorController {
     @Autowired
     private AdministratorService administratorService;
+
+    @RequestMapping("/login")
+    public ResponseEntity<StatusCode> login(@RequestBody Administrator administrator){
+        if(administratorService.login(administrator)){
+            return new ResponseEntity<>(new StatusCode(1), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(new StatusCode(0), HttpStatus.OK);
+    }
+
+    @RequestMapping("/register")
+    public ResponseEntity<StatusCode> register(@RequestBody Administrator administrator){
+        int code = administratorService.register(administrator);
+        return new ResponseEntity<>(new StatusCode(code), HttpStatus.OK);
+    }
+
+    @RequestMapping("/refreshToken")
+    public ResponseEntity<Token> refreshToken(@RequestBody Administrator administrator){
+        String token = administratorService.refreshToken(administrator);
+        return new ResponseEntity<>(new Token(token), HttpStatus.OK);
+    }
 
     @RequestMapping("/addStudent")
     public ResponseEntity<StatusCode> addStudent(@RequestBody @CookieValue("token") String token, Student student){

@@ -10,12 +10,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import service.CallStuService;
 
-import java.util.Calendar;
 import java.util.List;
 
 @RestController
 @RequestMapping("/CallStu")
-public class CallStuContoller {
+public class CallStuController {
     @Autowired
     private CallStuService callStuService;
 

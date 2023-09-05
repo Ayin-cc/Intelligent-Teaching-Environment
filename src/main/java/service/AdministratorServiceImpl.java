@@ -1,11 +1,14 @@
 package service;
 
 import dao.AdministratorDao;
+import dao.UserDao;
+import entity.Administrator;
 import entity.Classroom;
 import entity.Course;
 import entity.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import util.GenerateToken;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -14,6 +17,34 @@ import java.util.List;
 public class AdministratorServiceImpl implements AdministratorService{
     @Autowired
     private AdministratorDao administratorDao;
+    private UserDao userDao;
+
+    @Override
+    public boolean login(Administrator administrator) {
+        if(userDao.checkAdministrator(administrator) == 1){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public int register(Administrator administrator) {
+        userDao.addAdministrator(administrator);
+        return 200;
+    }
+
+    @Override
+    public String refreshToken(Administrator administrator) {
+        String token = GenerateToken.generateToken();
+        while (true){
+            if(userDao.checkToken(token) == 0){
+                break;
+            }
+            token = GenerateToken.generateToken();
+        }
+        userDao.updateAdministratorToken(administrator.getId(), token);
+        return token;
+    }
 
     @Override
     public boolean addStudent(String token, Student student) {
