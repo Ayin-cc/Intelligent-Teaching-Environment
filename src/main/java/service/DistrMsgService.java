@@ -10,4 +10,5 @@ public interface DistrMsgService {
     boolean create(String token, Message msg);
     List<Message> keepAlive();
     Attachment download(int id, String name);
+    Message get(int id);
 }

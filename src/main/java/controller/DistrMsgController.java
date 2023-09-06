@@ -13,6 +13,7 @@ import service.DistrMsgService;
 import java.util.List;
 
 @RestController
+@CrossOrigin(value = "*", allowCredentials = "true")
 @RequestMapping( "/DistrMsg")
 public class DistrMsgController {
     @Autowired
@@ -31,6 +32,20 @@ public class DistrMsgController {
     @RequestMapping("/keepAlive")
     public ResponseEntity<List<Message>> keepAlive(){
         List<Message> message = distrMsgService.keepAlive();
+        if(message.isEmpty()){
+            return new ResponseEntity<>(null, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(message, HttpStatus.OK);
+    }
+
+    // 获取某条消息的具体内容
+    @RequestMapping("/get")
+    public ResponseEntity<Message> get(@RequestBody String id){
+        Message message = distrMsgService.get(Integer.parseInt(id));
+        if(message == null){
+            return new ResponseEntity<>(null, HttpStatus.OK);
+        }
+
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 

@@ -13,6 +13,7 @@ import service.CallStuService;
 import java.util.List;
 
 @RestController
+@CrossOrigin(value = "*", allowCredentials = "true")
 @RequestMapping("/CallStu")
 public class CallStuController {
     @Autowired

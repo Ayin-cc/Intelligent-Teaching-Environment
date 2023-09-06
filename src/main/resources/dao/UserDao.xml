@@ -14,14 +14,18 @@
         <result column="student_phone" property="phone" />
     </resultMap>
 
+    <resultMap id="attachmentResultMap" type="entity.Attachment">
+        <result column="msg_id" property="id"/>
+        <result column="attachment_name" property="name" />
+        <result column="attachment_url" property="file"/>
+    </resultMap>
+
     <resultMap id="msgResultMap" type="entity.Message">
         <result column="id" property="id" />
         <result column="title" property="title" />
         <result column="content" property="content" />
         <result column="msg_time" property="time" />
-        <collection property="attachment">
-            <result column="attachment_url" />
-        </collection>
+        <collection property="attachment" resultMap="attachmentResultMap"/>
     </resultMap>
 
     <resultMap id="courseResultMap" type="entity.Course">
@@ -100,10 +104,10 @@
     </select>
 
     <select id="selectMsg" resultMap="msgResultMap">
-        select scuee.message.*, scuee.msg_attachment.attachment_url
+        select *
         from scuee.message
         inner join scuee.msg_attachment
-        on msg_id = id
+        on id = id
         where is_published = 1;
     </select>
 

@@ -5,6 +5,7 @@ import entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,10 +15,12 @@ import service.UserService;
 import java.util.List;
 
 @RestController
+@CrossOrigin(value = "*", allowCredentials = "true")
 @RequestMapping("/Classroom")
 public class ClassroomController {
     @Autowired
     private ClassroomService classroomService;
+    @Autowired
     private UserService userService;
 
     @RequestMapping("/login")
@@ -43,6 +46,9 @@ public class ClassroomController {
     @RequestMapping("/initMsg")
     public ResponseEntity<List<Message>> initMsg(){
         List<Message> messages = userService.initMsg();
+        if(messages.isEmpty()){
+            return new ResponseEntity<>(null, HttpStatus.OK);
+        }
         return new ResponseEntity<>(messages, HttpStatus.OK);
     }
 

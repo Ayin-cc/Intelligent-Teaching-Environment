@@ -10,7 +10,8 @@ import service.AdministratorService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/administrator")
+@CrossOrigin(value = "*", allowCredentials = "true")
+@RequestMapping("/Administrator")
 public class AdministratorController {
     @Autowired
     private AdministratorService administratorService;

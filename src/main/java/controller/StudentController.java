@@ -6,30 +6,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import service.StudentService;
 import service.UserService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@CrossOrigin(value = "*", allowCredentials = "true")
 @RequestMapping("/Student")
 public class StudentController {
     @Autowired
     private StudentService studentService;
+    @Autowired
     private UserService userService;
-
-    @RequestMapping("/entrance")
-    public String entrance(){
-        return "redirect:login";
-    }
-
-    @RequestMapping("/mainWindow")
-    public String mainWindow(){
-        return "main";
-    }
 
     @RequestMapping("/login")
     public ResponseEntity<StatusCode> login(@RequestBody Student student){
@@ -55,11 +49,5 @@ public class StudentController {
     public ResponseEntity<List<Message>> initMsg(){
         List<Message> messages = userService.initMsg();
         return new ResponseEntity<>(messages, HttpStatus.OK);
-    }
-
-    @RequestMapping("/initCourseSchedule")
-    public ResponseEntity<List<Course>> initCourseSchedule(@RequestBody Classroom classroom){
-        List<Course> courses = userService.initCourseSchedule(classroom);
-        return new ResponseEntity<>(courses, HttpStatus.OK);
     }
 }

@@ -45,4 +45,10 @@ public class DistrMsgServiceImpl implements DistrMsgService {
         Attachment file = msgDao.selectAttachment(id, name);
         return file;
     }
+
+    @Override
+    public Message get(int id) {
+        Message message = msgDao.selectMsgById(id);
+        return message;
+    }
 }

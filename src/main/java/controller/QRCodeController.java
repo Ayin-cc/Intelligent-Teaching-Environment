@@ -13,6 +13,7 @@ import service.QRCodeService;
 import java.util.List;
 
 @RestController
+@CrossOrigin(value = "*", allowCredentials = "true")
 @RequestMapping("/QRCode")
 public class QRCodeController {
     @Autowired

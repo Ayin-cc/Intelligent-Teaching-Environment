@@ -14,6 +14,7 @@ public interface DistrMsgDao {
     void addAttachment(@Param("id")int id, @Param("name")String name, @Param("file")Byte file);
     List<Message> selectReadyMsg(@Param("time")String time);
     Attachment selectAttachment(@Param("id")int id, @Param("name")String name);
+    Message selectMsgById(@Param("id") int id);
     int checkToken(@Param("token")String token);
     void updateMsg(@Param("msg")Message msg);
 }

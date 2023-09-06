@@ -61,4 +61,13 @@
                    );
     </select>
 
+    <select id="selectMsgById" resultMap="msgResultMap">
+        select *
+        from (select * from scuee.message where id = #{id})m
+        inner join
+             scuee.msg_attachment
+        on
+            m.id = msg_attachment.msg_id;
+    </select>
+
 </mapper>
