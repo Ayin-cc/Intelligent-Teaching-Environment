@@ -6,8 +6,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>动态生成 HTML 元素</title>
 		<link href="../css/output.css" rel="stylesheet" />
-		<script src="../js/jquery-3.7.1.min.js">
-		</script>
+		<script src="../js/jquery-3.7.1.min.js"></script>
 		<script>
 			$(document).ready(function () {
 			})
@@ -139,7 +138,7 @@
 			$.ajax({
 				type: "POST",
 				dataType: "json",
-				url: 'http://localhost:18083/SCUEE/CourseSchedule/get',
+				url: 'http://162.14.107.35/SCUEE/CourseSchedule/get',
 				contentType: "application/json",
 				data: JSON.stringify({ "sid": sid }),
 				success: function (result) {
