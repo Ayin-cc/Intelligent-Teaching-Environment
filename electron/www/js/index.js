@@ -6,11 +6,12 @@ var isClassStarted = 0;
 var currentSection = 0; // 在updateHomepageScheduleDisplay()中，下课切换回'0'有'1分钟'延时 可以Ctrl+f 查找'1 * 60 *1000'
 var scheduleHomepageFlag = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]; // 1为无课 0为有课s
 var continuousClasses = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]; // （还有，不包括现在）0为无 1为一节课 2为连续两节……  // 比如1~3的微积分[2,1,0,……]
-
+var studentAnswersNum = []; // 在initializeSignIn()中定义的数组，若不为[]，则-1表示缺勤，0表示到但未回答问题，1,2,3……表示回答次数
 
 var initializeData = null;
 var saveData = null;
 var students = null;
+var chatMessage = null;
 
 // ==================================================
 // 当纯 HTML 被完全加载以及解析时
@@ -76,11 +77,11 @@ function initializeStaticData() {
 
 }
 // 初始化动态数据
-
 // 尚未请求数据
 // 读取数据
 // (unfinished)
 function initializeSave() {
+    // 
     fetch('./save/courses.json')
         .then(response => response.json())
         .then(data => {
@@ -93,7 +94,22 @@ function initializeSave() {
         })
         .catch(error => {
             // 处理错误
-            console.error('初始化动态数据出错：', error);
+            console.error('初始化动态数据出错：' + ' 获取课程信息时出错/n', error);
+        });
+    // 
+    fetch('./save/chatMessage.json')
+        .then(response => response.json())
+        .then(data => {
+            console.log('chatMessage.json:');
+            console.log(data)
+            chatMessage = data;
+            // 在这里可以操作获取到的 JSON 数据 
+            initializeSaveHomepage()
+
+        })
+        .catch(error => {
+            // 处理错误
+            console.error('初始化动态数据出错：' + ' 获取交流消息时出错/n', error);
         });
 
 }
@@ -798,16 +814,27 @@ function classStartHomepage() {
         if (isClassStarted == 0) {
             isClassStarted = 1;
             classStartBtnHomepage.textContent = '下课';
+            classStartBtnHomepage.classList.add('text-red-600');
+            classStartBtnHomepage.classList.add('dark:text-red-300');
+            classStartBtnHomepage.classList.remove('dark:text-zinc-300');
+
             startClassHelpHomepage.textContent = '在结束当次使用后，请点击"下课"';
             for (var i = 0; i < unstartMasks.length; i++) {
                 unstartMasks[i].classList.add('hidden');
             }
             // 开启功能
+            initializeSignIn();
             initializeRollCall();
+            initializeRandomSelection();
+            initializeCommunication();
 
         } else if (isClassStarted == 1) {
             isClassStarted = 0;
             classStartBtnHomepage.textContent = '上课';
+            classStartBtnHomepage.classList.add('dark:text-zinc-300');
+            classStartBtnHomepage.classList.remove('text-red-600');
+            classStartBtnHomepage.classList.remove('dark:text-red-300');
+
             startClassHelpHomepage.textContent = '点击"上课"后，才能使用大部分功能';
             for (var i = 0; i < unstartMasks.length; i++) {
                 unstartMasks[i].classList.remove('hidden');
@@ -829,6 +856,57 @@ function updateSignIn() {
     // 已将“签到持续中”调到“发起签到”函数中
     // 已将“签到结束”调到“签到持续中”中
 
+}
+// 初始化，在"classStartHomepage()"中调用
+function initializeSignIn() {
+    // 目前有课
+    if (scheduleHomepageFlag[currentSection - 1] == 1) {
+        var courseCount = saveData.length;
+        for (var i = 0; i < courseCount; i++) {
+            var startSection = saveData[i]['startSection'];
+            var endSection = saveData[i]['endSection'];
+            if ((startSection <= currentSection) && (currentSection <= endSection)) {
+                students = saveData[i]['students'];
+                // 初始化变量
+                // 定义学生回答次数
+                if (saveData[i]['students'].length > 0) {
+                    studentAnswersNum = new studentAnswersNumay(saveData[i]['students'].length).fill(-1);
+                } else {
+                    studentAnswersNum = new studentAnswersNumay(1).fill(-1);
+                }
+                updateSignInList(students)
+            }
+        }
+    } else { // 目前没课
+        var signInDisplay = $('#signIn-display');
+        signInDisplay.empty();
+        var newElements = '';
+        var studentBefore = `<div class="flex p-1 m-1 w-48 h-max rounded-xl items-center bg-zinc-200 bg-opacity-70 hover:shadow-zinc-300 hover:shadow-md dark:bg-zinc-800 dark:ring-zinc-500 dark:hover:ring-4 dark:hover:shadow-none dark:hover:ring-red-700"><div class="flex flex-col p-3 w-full rounded-lg items-center bg-zinc-200 dark:bg-zinc-900 dark:hover:bg-zinc-800"><div class="flex w-full h-8 items-center relative"><div class="flex max-w-full min-w-full py-1 px-2 rounded-lg truncate hover:absolute hover:ring-1 hover:ring-red-400 hover:max-w-max hover:z-50 hover:left-0 hover:bg-zinc-200 bg-opacity-100 dark:text-zinc-300 dark:hover:bg-zinc-700 dark:hover:ring-zinc-500"><div class="flex flex-grow"></div><div class="flex select-all">`
+        var studentMiddle = `</div><div class="flex flex-grow"></div></div></div><div class="flex w-full justify-center text-sm text-zinc-700 dark:text-red-400 select-all">`
+        var studentAfter = `</div></div></div>`
+        var newElement = studentBefore + '没有检测到学生' + studentMiddle + '提醒消息' + studentAfter;
+        newElements += newElement;
+        signInDisplay.append(newElements);
+    }
+}
+function updateSignInList(students) {
+    var newElements = '';
+    // 定义标签
+    var studentBefore = `<div class="flex p-1 m-1 w-48 h-max rounded-xl items-center bg-zinc-200 bg-opacity-70 hover:shadow-zinc-300 hover:shadow-md dark:bg-zinc-800 dark:ring-zinc-500 dark:hover:ring-4 dark:hover:shadow-none dark:hover:ring-red-700"><div class="flex flex-col p-3 w-full rounded-lg items-center bg-zinc-200 dark:bg-zinc-900 dark:hover:bg-zinc-800"><div class="flex w-full h-8 items-center relative"><div class="flex max-w-full min-w-full py-1 px-2 rounded-lg truncate hover:absolute hover:ring-1 hover:ring-red-400 hover:max-w-max hover:z-50 hover:left-0 hover:bg-zinc-200 bg-opacity-100 dark:text-zinc-300 dark:hover:bg-zinc-700 dark:hover:ring-zinc-500"><div class="flex flex-grow"></div><div class="flex select-all">`
+    var studentMiddle = `</div><div class="flex flex-grow"></div></div></div><div class="flex w-full justify-center text-sm text-zinc-700 dark:text-red-400 select-all">`
+    var studentAfter = `</div></div></div>`
+
+    var studentNum = students.length;
+    for (var i = 0; i < studentNum; i++) {
+        var studentName = students[i]['name'];
+        var studentId = students[i]['sid'];
+        var newElement = studentBefore + studentName + studentMiddle + studentId + studentAfter;
+        newElements += newElement;
+    }
+    // 先清空，再添加
+    var signInDisplay = $('#signIn-display');
+    signInDisplay.empty();
+    signInDisplay.append(newElements);
 }
 // 更新滑动条显示数字
 function updateInputTangeSignIn() {
@@ -885,6 +963,7 @@ function customSignIn() {
 }
 // 开始签到(没有初始化，偷懒放在`signInContinuing()`中了)
 function signInStart() {
+    // 开始签到
     var signInStartBtn = document.getElementById('signIn-start-btn');
     var signInSelect = document.getElementById('signIn-select');
     var signInInterface = document.getElementById('signIn-interface');
@@ -892,7 +971,21 @@ function signInStart() {
         signInSelect.classList.add('hide');
         signInInterface.classList.remove('hide');
         signInStateMachine = 1;
-        signInContinuing()// 签到持续中
+        signInContinuing();// 签到持续中
+    });
+    // 查看教室信息
+    var aboutSignIn = document.getElementById('about-signIn');
+    aboutSignIn.addEventListener('click', function () {
+        window.ipcRenderer.send('aboutWindow', 'create-window');
+    });
+    // 查看数据
+    var checkResultSignIn = document.getElementById('checkResult-signIn');
+    var signInSelect = document.getElementById('signIn-select');
+    var signInResult = document.getElementById('signIn-result');
+    checkResultSignIn.addEventListener('click', function () {
+        signInSelect.classList.add('hide');
+        signInResult.classList.remove('hide');
+        signInFinished();
     });
 }
 // 签到中
@@ -906,7 +999,7 @@ function signInContinuing() {
 
     if (signInStateMachine == 1) {
         // 返回
-        var signInRestartBtn = document.getElementById('signIn-restart-btn');
+        var signInRestartBtn = document.getElementById('signIn-reset-btn');
         signInRestartBtn.addEventListener('click', function () {
             signInInterface.classList.add('hide');
             signInSelect.classList.remove('hide');
@@ -919,6 +1012,7 @@ function signInContinuing() {
             signInResult.classList.remove('hide');
             signInStateMachine = 2;
         });
+
         // 获取网页数据
         var signInCustomDurationInputToggle = document.getElementById('signIn-custom-duration-input-toggle');
         var duration = 10 * 60;
@@ -931,16 +1025,26 @@ function signInContinuing() {
         } else {
             var signInDurationInput = document.getElementById('signIn-duration-input');
             var signInFrequencyInput = document.getElementById('signIn-frequency-input');
-            duration = signInDurationInput.value * 60;
+            duration = signInDurationInput.value;
             frequency = signInFrequencyInput.value;
         }
         // 没有获取学生信息，没有已签到学生数量、学生总数。遂只设置初始数据（unfinished）
         var totalCount = 50;
         var signedCount = 0;
 
+        var countdownTime = document.getElementById('countdown-signIn');
+        var signedInCountToplimitSignIn = document.getElementById('signedInCount-toplimit-signIn');
+        var countdownToplimitSignIn = document.getElementById('countdown-toplimit-signIn');
+
+        signedInCountToplimitSignIn.textContent = String(totalCount);
+        countdownToplimitSignIn.textContent = duration < 10 ? ('0' + String(duration) + ':00') : (String(duration) + ':00');
+        countdownTime.textContent = duration < 10 ? ('0' + String(duration) + ':00') : (String(duration) + ':00');
+
+
+        duration *= 60; // 分->秒
         // 持续性改变消息
         // 倒计时
-        var countdownTime = document.getElementById('countdownSignInTime');
+
         const now = new Date().getTime();
         const endTime = now + duration * 1000;
 
@@ -1020,40 +1124,50 @@ function initializeRollCall() {
             var endSection = saveData[i]['endSection'];
             if ((startSection <= currentSection) && (currentSection <= endSection)) {
                 students = saveData[i]['students'];
-                console.log(students);
                 updateRollCallList(students)
             }
         }
     } else { // 目前没课
         var rollCallResult = $('#rollCall-result');
         rollCallResult.empty();
-        // 别删末尾的defaultElement，否则排版出问题
         var newElements = '';
         var beforeStudentName = `<div class="flex p-1 m-1 w-48 h-max rounded-xl items-center bg-zinc-200 bg-opacity-70 hover:shadow-zinc-300 hover:shadow-md dark:bg-zinc-800 dark:ring-zinc-500 dark:hover:ring-2 dark:hover:shadow-none"><div class="flex p-3 w-full rounded-lg items-center bg-zinc-200 dark:bg-zinc-900 dark:hover:bg-zinc-800"><div class="flex p-1 w-28 rounded-md text-lg text-zinc-800 truncate hover:overflow-visible hover:min-w-max hover:bg-zinc-200 bg-opacity-100 dark:text-zinc-500 dark:hover:text-zinc-300 dark:hover:bg-zinc-800 hover:ring-1 ring-zinc-500 hover:z-50 hover:absolute">`
-        var afterStudentName = `</div><div class="flex flex-grow"></div><div class="flex w-0.5 h-5 bg-zinc-500 bg-opacity-50 dark:bg-zinc-300"></div><div class="flex flex-row-reverse min-w-max w-6 h-9 pl-2 items-center text-red-700 dark:text-red-800">无</div></div></div>`
-        var studentName = '提醒消息：没有检测到当前的学生';
-        var newElement = beforeStudentName+studentName+afterStudentName; 
+        var afterStudentName = `</div><div class="flex flex-grow"></div><div class="flex w-0.5 h-5 bg-zinc-500 bg-opacity-50 dark:bg-zinc-300"></div><div class="flex flex-row-reverse min-w-max w-6 h-9 pl-2 items-center text-red-700 dark:text-red-800">`
+        var afterAnswerCount = `</div></div></div>`
+        var newElement = beforeStudentName + '提醒消息：没有检测到当前的学生' + afterStudentName + '无' + afterAnswerCount;
         newElements += newElement;
-        var defaultElement = `<div class="flex p-1 m-1 w-48 h-max rounded-xl items-center bg-purple-200 bg-opacity-70 ring-1 ring-purple-500 hover:shadow-purple-300 hover:shadow-md dark:bg-zinc-600 dark:ring-2 dark:ring-zinc-500 dark:hover:ring-4 dark:hover:shadow-none opacity-0 pointer-events-none"><div class="flex p-3 w-full rounded-lg items-center bg-purple-200 dark:bg-zinc-700 dark:hover:bg-zinc-800"><div class="flex p-1 w-28 rounded-md text-lg text-zinc-800 truncate hover:overflow-visible hover:min-w-max hover:bg-purple-200 bg-opacity-100 dark:text-zinc-300 dark:hover:bg-zinc-800 hover:ring-1 ring-zinc-500 hover:z-50 hover:absolute">默认占位，当你看到这个时，应当反省自己做了什么</div><div class="flex flex-grow"></div><div class="flex w-0.5 h-5 bg-purple-300"></div><div class="flex flex-row-reverse min-w-max w-6 h-9 pl-2 items-center font-bold text-blue-600 dark:text-blue-400">null</div></div></div>`
-        newElements+= defaultElement;
         rollCallResult.append(newElements);
-        
+
+
 
     }
 }
 function updateRollCallList(students) {
     var newElements = '';
-    var defaultElement = `<div class="flex p-1 m-1 w-48 h-max rounded-xl items-center bg-purple-200 bg-opacity-70 ring-1 ring-purple-500 hover:shadow-purple-300 hover:shadow-md dark:bg-zinc-600 dark:ring-2 dark:ring-zinc-500 dark:hover:ring-4 dark:hover:shadow-none opacity-0 pointer-events-none"><div class="flex p-3 w-full rounded-lg items-center bg-purple-200 dark:bg-zinc-700 dark:hover:bg-zinc-800"><div class="flex p-1 w-28 rounded-md text-lg text-zinc-800 truncate hover:overflow-visible hover:min-w-max hover:bg-purple-200 bg-opacity-100 dark:text-zinc-300 dark:hover:bg-zinc-800 hover:ring-1 ring-zinc-500 hover:z-50 hover:absolute">默认占位，当你看到这个时，应当反省自己做了什么</div><div class="flex flex-grow"></div><div class="flex w-0.5 h-5 bg-purple-300"></div><div class="flex flex-row-reverse min-w-max w-6 h-9 pl-2 items-center font-bold text-blue-600 dark:text-blue-400">null</div></div></div>`
     // 定义名字前后的标签
-    var beforeStudentName = `<div class="flex p-1 m-1 w-48 h-max rounded-xl items-center bg-zinc-200 bg-opacity-70 hover:shadow-zinc-300 hover:shadow-md dark:bg-zinc-800 dark:ring-zinc-500 dark:hover:ring-2 dark:hover:shadow-none"><div class="flex p-3 w-full rounded-lg items-center bg-zinc-200 dark:bg-zinc-900 dark:hover:bg-zinc-800"><div class="flex p-1 w-28 rounded-md text-lg text-zinc-800 truncate hover:overflow-visible hover:min-w-max hover:bg-zinc-200 bg-opacity-100 dark:text-zinc-500 dark:hover:text-zinc-300 dark:hover:bg-zinc-800 hover:ring-1 ring-zinc-500 hover:z-50 hover:absolute">`
-    var afterStudentName = `</div><div class="flex flex-grow"></div><div class="flex w-0.5 h-5 bg-zinc-500 bg-opacity-50 dark:bg-zinc-300"></div><div class="flex flex-row-reverse min-w-max w-6 h-9 pl-2 items-center text-red-700 dark:text-red-800">缺勤</div></div></div>`
+    var absent_1st = `<div class="flex p-1 m-1 w-48 h-max rounded-xl items-center bg-zinc-200 bg-opacity-70 hover:shadow-zinc-300 hover:shadow-md dark:bg-zinc-800 dark:ring-zinc-500 dark:hover:ring-2 dark:hover:shadow-none"><div class="flex p-3 w-full rounded-lg items-center bg-zinc-200 dark:bg-zinc-900 dark:hover:bg-zinc-800"><div class="flex p-1 w-28 rounded-md text-lg text-zinc-800 truncate hover:overflow-visible hover:min-w-max hover:bg-zinc-200 bg-opacity-100 dark:text-zinc-500 dark:hover:text-zinc-300 dark:hover:bg-zinc-800 hover:ring-1 ring-zinc-500 hover:z-50 hover:absolute">`;
+    var absent_2nd = `</div><div class="flex flex-grow"></div><div class="flex w-0.5 h-5 bg-zinc-500 bg-opacity-50 dark:bg-zinc-300"></div><div class="flex flex-row-reverse min-w-max w-6 h-9 pl-2 items-center text-red-700 dark:text-red-800">`;
+    var absent_3rd = `</div></div></div>`; // -1
+    var notAnswered_1st = `<div class="flex p-1 m-1 w-48 h-max rounded-xl items-center bg-purple-200 bg-opacity-70 ring-1 ring-purple-500 hover:shadow-purple-300 hover:shadow-md dark:bg-zinc-600 dark:ring-2 dark:ring-zinc-500 dark:hover:ring-4 dark:hover:shadow-none"><div class="flex p-3 w-full rounded-lg items-center bg-purple-200 dark:bg-zinc-700 dark:hover:bg-zinc-800"><div class="flex p-1 w-28 rounded-md text-lg text-zinc-800 truncate hover:overflow-visible hover:min-w-max hover:bg-purple-200 bg-opacity-100 dark:text-zinc-300 dark:hover:bg-zinc-800 hover:ring-1 ring-zinc-500 hover:z-50 hover:absolute">`;
+    var notAnswered_2nd = `</div><div class="flex flex-grow"></div><div class="flex w-0.5 h-9 p-2 bg-purple-300"></div><div class="flex flex-row-reverse min-w-max w-6 h-9 pl-2 items-center font-bold text-blue-600 dark:text-blue-400">`;
+    var notAnswered_3rd = `</div></div></div>`; // 0
+    var answered_1st = `<div class="flex p-1 m-1 w-48 h-max rounded-xl items-center bg-purple-200 bg-opacity-100 hover:shadow-purple-300 hover:shadow-md dark:bg-zinc-600 dark:ring-zinc-500 dark:hover:ring-4 dark:hover:shadow-none"><div class="flex p-3 w-full rounded-lg items-center bg-purple-200 dark:bg-zinc-700 dark:hover:bg-zinc-800"><div class="flex p-1 w-28 rounded-md text-lg text-zinc-600 truncate hover:overflow-visible hover:min-w-max hover:bg-purple-200 bg-opacity-100 dark:text-zinc-400 dark:hover:text-zinc-300 dark:hover:bg-zinc-800 hover:ring-1 ring-zinc-500 hover:z-50 hover:absolute">`;
+    var answered_2nd = `</div><div class="flex flex-grow"></div><div class="flex w-0.5 h-5 bg-purple-500 bg-opacity-50"></div><div class="flex flex-row-reverse min-w-max w-6 h-9 pl-2 items-center text-zinc-600 dark:text-zinc-300">`;
+    var answered_3rd = `</div></div></div>`; // >0
+    // 元素生成
     var studentNum = students.length;
-    for (var i = 0; i < studentNum; i++){
-        var studentName = studentNum[i]['name'];
-        var newElement = beforeStudentName+studentName+afterStudentName;
+    for (var i = 0; i < studentNum; i++) {
+        var studentName = students[i]['name'];
+        var answerCount = studentAnswersNum[i] >= 0 ? String(studentAnswersNum[i]) : '缺勤';
+        if (studentAnswersNum[i] == -1) { // 未签到
+            newElement = absent_1st + studentName + absent_2nd + answerCount + absent_3rd;
+        } else if (studentAnswersNum[i] == 0) { // 签到，未回答
+            newElement = notAnswered_1st + studentName + notAnswered_2nd + answerCount + notAnswered_3rd;
+        } else if (studentAnswersNum[i] > 0) { // 签到，已回答
+            newElement = answered_1st + studentName + answered_2nd + answerCount + answered_3rd;
+        }
         newElements += newElement;
     }
-    newElements+=defaultElement; // 别删末尾的defaultElement，否则排版出问题
     // 先清空，再添加
     var rollCallResult = $('#rollCall-result');
     rollCallResult.empty();
@@ -1068,6 +1182,39 @@ function updateRandomSelection() {
     updateInputTangeRandomSelection();
     randomSelectionStart();
 }
+// 初始化，在"classStartHomepage()"中调用
+
+function initializeRandomSelection() {
+    // 目前有课
+    if (scheduleHomepageFlag[currentSection - 1] == 1) {
+        var courseCount = saveData.length;
+        for (var i = 0; i < courseCount; i++) {
+            var startSection = saveData[i]['startSection'];
+            var endSection = saveData[i]['endSection'];
+            if ((startSection <= currentSection) && (currentSection <= endSection)) {
+                $('#randomSelection-display').empty();
+                updateRandomSelectionList('没有检测到学生', '初始化提醒')
+            }
+        }
+    } else { // 目前没课
+        $('#randomSelection-display').empty();
+        updateRandomSelectionList('当前没有课', '提醒消息')
+    }
+}
+// 添加到randomSelection-display中 的 末尾
+// (unfinished)没有样式判断
+function updateRandomSelectionList(studentName, answerCount) {
+    var newElements = '';
+    // 定义名字前后的标签
+
+    var studentBefore = `<div class="flex p-1 m-1 w-48 h-max rounded-xl items-center bg-zinc-200 bg-opacity-70 hover:shadow-zinc-300 hover:shadow-md dark:bg-zinc-800 dark:ring-zinc-500 dark:hover:ring-4 dark:hover:shadow-none dark:hover:ring-red-700"><div class="flex flex-col p-3 w-full rounded-lg items-center bg-zinc-200 dark:bg-zinc-900 dark:hover:bg-zinc-800"><div class="flex w-full h-8 items-center relative"><div class="flex max-w-full min-w-full py-1 px-2 rounded-lg truncate hover:absolute hover:ring-1 hover:ring-red-400 hover:max-w-max hover:z-50 hover:left-0 hover:bg-zinc-200 bg-opacity-100 dark:text-zinc-300 dark:hover:bg-zinc-700 dark:hover:ring-zinc-500"><div class="flex flex-grow"></div><div class="flex select-all">`
+    var studentMiddle = `</div><div class="flex flex-grow"></div></div></div><div class="flex w-full justify-center text-sm text-zinc-700 dark:text-red-400 select-all">`
+    var studentAfter = `</div></div></div>`
+    var newElement = studentBefore + studentName + studentMiddle + answerCount + studentAfter;
+    newElements += newElement;
+    $('#randomSelection-display').append(newElements);
+}
+
 function updateInputTangeRandomSelection() {
     // 初始化
     var randomSelectionCountInput = document.getElementById('randomSelection-count-input');
@@ -1089,19 +1236,70 @@ function randomSelectionStart() {
     });
 
 }
-
+// (unfinished)获取选择学生数量，结合签到or否，比较防超出，随机生成，记录回答次数
 function randomSelectionDisplay(count, priority) {
     var randomSelectionSelect = document.getElementById('randomSelection-select');
     var randomSelectionResult = document.getElementById('randomSelection-result');
-
-    var count = count;
-    var priority = priority;
-
+    // 清空
+    $('#randomSelection-display').empty();
     randomSelectionSelect.classList.add('hide');
     randomSelectionResult.classList.remove('hide');
-    // 具体抽取，然后修改html的代码
-    // ...
-    // 具体抽取，然后修改html的代码
+
+    // 具体抽取，然后修改html
+    if (priority == true) { // 优先抽取未回答问题的同学
+        // 最多抽取人数，以及记录'值为0'的'索引'
+        var indices = [];
+        for (let i = 0; i < studentAnswersNum.length; i++) {
+            if (studentAnswersNum[i] == 0) {
+                indices.push(i);
+            }
+        }
+        var maxCount = indices.length;
+        // 分情况生成
+        if (maxCount == 0) {
+            updateRandomSelectionList('没有未回答过的学生', '提醒消息')
+        } else if (maxCount > 0) {
+            // 获得抽取结果的"索引数组"
+            var count = count > maxCount ? maxCount : count;
+            var randomIndices = [];
+            while (randomIndices.length < count) {
+                const randomIndex = Math.floor(Math.random() * indices.length);
+                randomIndices.push(indices[randomIndex]);
+                indices.splice(randomIndex, 1);
+            }
+            for(var i = 0; i < randomIndices.length; i++){
+                studentAnswersNum[i]++;
+                updateRandomSelectionList(students[i]['name'], studentAnswersNum[i]);
+            }
+        }
+    } else if (priority == false) {
+        // 最多抽取人数，以及记录'值大于0'的'索引'
+        var indices = [];
+        for (let i = 0; i < studentAnswersNum.length; i++) {
+            if (studentAnswersNum[i] >= 0) {
+                indices.push(i);
+            }
+        }
+        var maxCount = indices.length;
+        // 分情况生成
+        if (maxCount == 0) {
+            updateRandomSelectionList('没有已签到的学生', '提醒消息')
+        } else if (maxCount > 0) {
+            // 获得抽取结果的"索引数组"
+            var count = count > maxCount ? maxCount : count;
+            var randomIndices = [];
+            while (randomIndices.length < count) {
+                const randomIndex = Math.floor(Math.random() * indices.length);
+                randomIndices.push(indices[randomIndex]);
+                indices.splice(randomIndex, 1);
+            }
+            for(var i = 0; i < randomIndices.length; i++){
+                studentAnswersNum[i]++;
+                updateRandomSelectionList(students[i]['name'], studentAnswersNum[i]);
+            }
+        }
+    }
+
     var randomSelectionRestartBtn = document.getElementById('randomSelection-restart-btn');
     randomSelectionRestartBtn.addEventListener('click', function () {
         randomSelectionResult.classList.add('hide');
@@ -1119,7 +1317,9 @@ function updateMessage() {
     // putMessageToWindows('Hello', 'The ITE is working!', './www/icons/message.png');
     clickMessage();
 }
+function initializeMessage() {
 
+}
 function putMessageToWindows(title, body, icon) {
     window.ipcRenderer.send('Notification', title, body, icon);
 }
@@ -1200,4 +1400,39 @@ function clickMessage() {
 function updateCommunication() {
 
 }
+// 初始化，在"classStartHomepage()"中调用
+// (unfinished)
+function initializeCommunication() {
+    // 目前有课
+    if (scheduleHomepageFlag[currentSection - 1] == 1) {
+        var courseCount = saveData.length;
+        for (var i = 0; i < courseCount; i++) {
+            var startSection = saveData[i]['startSection'];
+            var endSection = saveData[i]['endSection'];
+            if ((startSection <= currentSection) && (currentSection <= endSection)) {
+                updateCommunicationList()
+            }
+        }
+    } else { // 目前没课
+        var communicationDisplay = $('#communication-display').children(0);
+        communicationDisplay.empty();
+        var newElements = '';
+        var timeBefore = `<div class="flex flex-col my-3 w-full communication-message-body"><div class="flex w-full justify-center text-zinc-600 text-sm dark:text-zinc-400">`;
+        var studentBefore = `</div><div class="flex w-full"><div class="flex h-10 w-10 p-1 rounded-full items-center justify-center bg-purple-200 dark:bg-purple-700"><img draggable="false" class="h-8 w-8" src="./icons/333/人员.svg" alt="" srcset=""></div><div class="flex w-20-to-full flex-col ml-4"><div class="flex text-zinc-600 max-w-xl text-sm truncate dark:text-zinc-400 select-text">`;
+        var messageBefore = `</div><div class="flex w-full"><div class="max-w-full p-4 rounded-xl bg-white dark:bg-zinc-900 dark:text-zinc-300 break-words select-text">`;
+        var studentAfter = `</div></div></div></div></div>`;
+        function getCurrentTime() {
+            const now = new Date();
+            const hours = now.getHours().toString(); // 获取小时，不确保两位数显示
+            const minutes = now.getMinutes().toString().padStart(2, '0'); // 获取分钟，并确保两位数显示
+            return `${hours}:${minutes}`;
+        }
+        var newElement = timeBefore + getCurrentTime() + studentBefore + '系统' + messageBefore + '当前无课' + studentAfter;
+        newElements += newElement;
 
+        communicationDisplay.append(newElements);
+    }
+}
+function updateCommunicationList() {
+
+}
