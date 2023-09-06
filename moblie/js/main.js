@@ -78,7 +78,7 @@ message_button.addEventListener('click', () => {
 	if (login_status == 0) {
 		nologtip();
 	} else {
-		window.location.href = 'html/message.html';
+		window.location.href = 'html/message1.0.html';
 	}
 });
 signIn_button.addEventListener('click', () => {
