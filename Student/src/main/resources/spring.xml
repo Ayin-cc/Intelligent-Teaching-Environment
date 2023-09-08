@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <bean id="viewResolver" class="org.thymeleaf.spring5.view.ThymeleafViewResolver">
+        <property name="order" value="1"/>
+        <property name="characterEncoding" value="UTF-8"/>
+        <property name="templateEngine">
+            <bean class="org.thymeleaf.spring5.SpringTemplateEngine">
+                <property name="templateResolver">
+                    <bean class="org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver">
+                        <property name="prefix" value="/WEB-INF/templates/"/>
+                        <property name="suffix" value=".html"/>
+                        <property name="templateMode" value="HTML5"/>
+                        <property name="characterEncoding" value="UTF-8" />
+                    </bean>
+                </property>
+            </bean>
+        </property>
+    </bean>
+
+    <context:component-scan base-package="controller"/>
+    <mvc:default-servlet-handler/>
+
+    <!--静态资源配置-->
+    <mvc:resources mapping="/css/**" location="/WEB-INF/templates/css/"/>
+    <mvc:resources mapping="/js/**" location="/WEB-INF/templates/js/"/>
+    <mvc:resources mapping="/icons/**" location="/WEB-INF/templates/icons/"/>
+    <mvc:resources mapping="/html/**" location="/WEB-INF/templates/html/"/>
+    <mvc:resources mapping="/**" location="/WEB-INF/templates/"/>
+    <mvc:view-controller path="/main" view-name="main"></mvc:view-controller>
+
+</beans>

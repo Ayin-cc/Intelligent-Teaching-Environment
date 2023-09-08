@@ -12,6 +12,10 @@
 			function addNew(msgs) {
 				for (var i = 0; i < msgs.length; i++) {
 					var msg = msgs[i];
+					if (i == 0) {
+						setMessage(msg.id, msg.time, msg.title, msg.content);
+						continue;
+					}
 					setMessage(msg.id, msg.time, msg.title, msg.content);
 				}
 			}
@@ -65,7 +69,7 @@
 					通知
 				</h2>
 				<!-- 返回按键 -->
-				<a href="../main.html"
+				<a href="../main"
 					class="absolute items-center justify-end w-8 h-8 max-w-xs overflow-hidden rounded-h-full right-2"
 					id="message-returnBottom">
 					<img draggable="false" src="../icons/左.svg" alt="" />
