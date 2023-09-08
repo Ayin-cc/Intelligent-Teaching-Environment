@@ -7,6 +7,39 @@
         <link href="../css/output.css" rel="stylesheet" />
         <title>ITE</title>
         <script src="../js/jquery-3.7.1.min.js"></script>
+        <script>
+            var title = "";
+            var content = "";
+            var time = "";
+            var attachment;
+
+            function getdetail_mes() {
+                var mids = sessionStorage.getItem('mid');
+                console.log("id:" + mids);
+                return mids;
+            }
+
+            $(document).ready(function (){
+                $.ajax({
+                    type: "POST",
+                    dataType: "json",
+                    url: 'http://162.14.107.35/SCUEE/DistrMsg/get',
+                    contentType: "application/json",
+                    data: JSON.stringify({"id":getdetail_mes()}),
+                    success: function (result) {
+                        if (!result != "") {
+                            title = result.title;
+                            content = result.content;
+                            time = result.time;
+                            attachment = result.attachment;
+                            document.getElementById("message-title").innerHTML = title;
+                            document.getElementById("message-content").innerHTML = content;
+                            document.getElementById("message-time").innerHTML = time;
+                        }
+                    }
+                })
+            })
+        </script>
     </head>
 
     <body class="w-screen">
@@ -32,11 +65,11 @@
         <div class="flex flex-col flex-grow w-screen h-full max-w-full max-h-full overflow-x-hidden overflow-y-scroll"
             id="class-message">
             <div class="flex flex-row">
-                <div class="flex px-3 pt-2 overflow-hidden text-lg rounded-lg">
+                <div class="flex px-3 pt-2 overflow-hidden text-lg rounded-lg" id="message-title">
                     标题
                 </div>
                 <div class="flex flex-grow"></div>
-                <div class="flex items-end px-3 pt-2 overflow-hidden text-sm text-gray-400 rounded-lg text-end">
+                <div class="flex items-end px-3 pt-2 overflow-hidden text-sm text-gray-400 rounded-lg text-end" id="message-time">
                     time
                 </div>
             </div>
@@ -64,7 +97,7 @@
                 </div> -->
                 <div class="flex mx-2 w-auto h-0.5 bg-slate-100 hide-able mb-2"></div>
                 <!-- 正文 -->
-                <div class="flex px-3 overflow-hidden rounded-lg">
+                <div class="flex px-3 overflow-hidden rounded-lg" id="message-content">
                     正文：
                 </div>
             </div>
@@ -95,15 +128,6 @@
                 });
                 isShows();
             */
-
-            function getdetail_mes() {
-                var mids = sessionStorage.getItem('mid');
-                console.log("id:" + mids);
-                sessionStorage.removeItem('mid');
-            }
-
-
-            getdetail_mes();
 
         </script>
     </body>

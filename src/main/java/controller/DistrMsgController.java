@@ -40,12 +40,9 @@ public class DistrMsgController {
 
     // 获取某条消息的具体内容
     @RequestMapping("/get")
-    public ResponseEntity<Message> get(@RequestBody String id){
-        Message message = distrMsgService.get(Integer.parseInt(id));
-        if(message == null){
-            return new ResponseEntity<>(null, HttpStatus.OK);
-        }
-
+    public ResponseEntity<Message> get(@RequestBody Message msg){
+        System.out.println(msg.getId());
+        Message message = distrMsgService.get(msg.getId());
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
