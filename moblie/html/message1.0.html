@@ -12,7 +12,7 @@
 			function addNew(msgs) {
 				for (var i = 0; i < msgs.length; i++) {
 					var msg = msgs[i];
-					if(i == 0) {
+					if (i == 0) {
 						setMessage(msg.id, msg.time, msg.title, msg.content, false);
 						continue;
 					}
@@ -20,7 +20,7 @@
 				}
 			}
 
-			$(document).ready(function (){
+			$(document).ready(function () {
 				// 初始化消息列表
 				$.ajax({
 					type: "POST",
@@ -30,14 +30,14 @@
 					data: "",
 					success: function (result) {
 						console.info(result);
-						if(result != ""){
+						if (result != "") {
 							addNew(result);
 						}
 					}
 				})
 
 				// 不断发送心跳包维持连接
-				function keepAlive(){
+				function keepAlive() {
 					console.log("send...");
 					$.ajax({
 						type: "POST",
@@ -46,14 +46,14 @@
 						contentType: "application/json",
 						data: "",
 						success: function (result) {
-							if(!result != ""){
+							if (!result != "") {
 								addNew(result);
 							}
 						}
 					})
 				}
-				window.onload = setInterval(keepAlive, 5000);
 
+				window.onload = setInterval(keepAlive, 5000);
 			})
 		</script>
 	</head>
@@ -82,49 +82,64 @@
 			<!-- 通知 -->
 			<div class="flex flex-col flex-grow w-screen h-full max-w-full max-h-full overflow-x-hidden overflow-y-scroll"
 				id="class-message">
+
 			</div>
 		</div>
 		<script>
 			function setMessage(message_id, message_time, message_title, message_context, is_created = true) {
 				var all_message = document.getElementById('class-message');
-				var sum_message = '';
 
-				var message_st = `<div class="flex flex-col items-center w-full min-w-0 px-1 py-2 rounded-lg hover:bg-zinc-100">
-				<div class="flex w-full">
-					<div class="flex items-center justify-center w-12 h-12">
-						<div class="flex items-center justify-center w-10 h-10 `;
-				var message_color = `bg-red-500 rounded-xl">`;
-				var message_nd = `
-							<img draggable="false" class="w-8 h-8 p-1" src="../icons/ffffff/邮件.svg">
+				all_message.innerHTML = `<div class="flex flex-col items-center w-full min-w-0 px-1 py-2 rounded-lg hover:bg-zinc-100" id="${message_id}
+								var message_nd = " onclick="detail_message(${message_id})">
+					<div class="flex w-full" onclick="detail_message(${message_id})">
+						<div class="flex items-center justify-center w-12 h-12" onclick="detail_message(${message_id})">
+							<div class="flex items-center justify-center w-10 h-10 bg-red-500 rounded-xl">
+								<img draggable="false" class="w-8 h-8 p-1" src="../icons/ffffff/邮件.svg">
+							</div>
+						</div>
+						<div class="flex flex-col whitespace-nowrap" onclick="detail_message(${message_id})">
+							<div class="flex flex-row" onclick="detail_message(${message_id})">
+								<div class="flex px-2 font-bold truncate" style="max-width: 80px;">
+									${message_title}
+									<!--$ {message_name}-->
+									</div>
+								<div onclick="detail_message(${message_id})"
+									class="absolute flex items-end justify-end pt-2 text-xs min-w-max text-zinc-400 text-end right-4">
+									${message_time}
+									</div>
+							</div>
+							<div class="px-2 overflow-hidden overflow-ellipsis text-slate-600 w-72 whitespace-nowrap"
+								onclick="detail_message(${message_id})">
+								${message_context}
+								<!--${message_title}-->
+								</div>
 						</div>
 					</div>
-					<div class="flex flex-col whitespace-nowrap">
-						<div class="flex flex-row">
-							<div class="flex px-2 font-bold truncate" style="max-width: 80px;">`;
-				// message_name = `程老师${i}`;
-				var message_rd = `</div>
-							<div
-								class="absolute flex items-end justify-end pt-2 text-xs min-w-max text-zinc-400 text-end right-4">`;
-				// message_time = `08/22`;
-				var message_fo = `</div>
-						</div>
-						<div class="px-2 overflow-hidden overflow-ellipsis text-slate-600 w-72 whitespace-nowrap">`;
-				// message_title = `Debug`;
-				var message_fi = `</div>
-					</div>
-				</div>
-				<div
-					class="w-full pr-2 overflow-hidden text-sm pl-14 overflow-ellipsis text-slate-400 whitespace-nowrap">`;
-				// message_context = `This is a message for testing! It's an unread important notice!`;
-				var message_s = `</div>
-				<div class="flex h-0.5 w-60 bg-slate-100 mt-1"></div>
-				</div> `;
-				var new_message = message_st + message_color + message_nd + message_title + message_rd + message_time + message_fo + message_context + message_fi + message_id + message_s;
-				sum_message = new_message + sum_message;
-
-				all_message.innerHTML = sum_message;
+					<!-- <div onclick="detail_message(${message_id})"
+						class="w-full pr-2 overflow-hidden text-sm pl-14 overflow-ellipsis text-slate-400 whitespace-nowrap">
+						${message_context}
+						</div> -->
+					 <div class="flex h-0.5 w-64 bg-slate-100 mt-1" onclick="detail_message(${message_id})"></div>
+				</div>`;
 			}
-			setMessage();
+			setMessage(124, 1, 2, 3, 4);
+			setMessage(123, 5, 6, 7, 8);
+
+
+
+			function detail_message(mids) {
+				sessionStorage.setItem('mid', mids);
+				console.log('被点击的链接的id是：' + mids);
+				window.location.href = 'message_view.html';
+			}
+
+		</script>
+		<script>
+			$(document).ready(function () {
+				window.onload = (function () {
+					// 检测cookie信息
+				})
+			})
 		</script>
 	</body>
 
