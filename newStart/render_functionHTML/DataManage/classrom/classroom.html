@@ -3,18 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="./classroom.css">
+    <title>教室</title>
 </head>
 <body>
-    <input id="searchInput1" type="text" placeholder="教室id">
-    <input id="searchInput2" type="text" placeholder="地址">
+    <!-- 查询条件 -->
+    <button id="back">返回</button>
+    <div class="propertyInput">
 
-    <button id="searchButton">查询</button>
-    <div id="results"></div>
-    <div class="btn-box back">
-        <a href="../DataManage.html" target="iframe">
-            <div class="btn-name">返回</div>
-        </a>
+        <div>选择教学楼</div>
+        <div class="postion">
+            <select name="RoomPostion" id="RP">
+                <option value="ya">一教A座</option>
+                <option value="yb">一教B座</option>
+                <option value="yc">一教C座</option>
+                <option value="yd">一教D座</option>
+                <option value="ea">二基楼A座</option>
+                <option value="eb">二基楼B座</option>
+                <option value="zb">综合楼A座</option>
+                <option value="zb">综合楼B座</option>
+            </select>
+        </div>
+        <div>教室编号</div>
+        <div class="PNumber">
+            <input type="text" id="PN" placeholder="101">
+        </div>
+        <div>教室cid</div>
+        <div class="id">
+            <input type="text" id="id">
+        </div>
+        <button id="butAdd">添加</button>
+        <button id="butQuery">查询</button>
+    </div>
+    <script src="./classroom.js"></script>
+
+
+
+
+    <!-- 查询结果 -->
+    <div class="results">
+        显示教室信息
     </div>
 </body>
 </html>

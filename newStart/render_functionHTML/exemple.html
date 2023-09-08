@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>查询功能示例</title>
+  <style>
+    /* 隐藏下拉操作框 */
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f1f1f1;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+    }
+
+    /* 样式化文本 */
+    .dropdown-text {
+        cursor: pointer;
+        color: blue;
+        text-decoration: underline;
+    }
+
+    /* 显示下拉操作框 */
+    .show {
+        display: block;
+    }
+</style>
+</head>
+<body>
+
+<h1>点击文本显示下拉操作框示例</h1>
+
+
+    <!-- 点击文本触发下拉操作框显示 -->
+    <p><span class="dropdown-text">
+      点击 这里查看下拉操作框1。
+        <div></div>
+    </span> </p>
+
+    <!-- 下拉操作框内容 -->
+    <div id="dropdown" class="dropdown-content">
+        <a href="#">选项1</a>
+        <a href="#">选项2</a>
+        <a href="#">选项3</a>
+    </div>
+
+    <p><span class="dropdown-text">
+        点击 这里查看下拉操作框2。
+  
+      </span> </p>
+  
+      <!-- 下拉操作框内容 -->
+      <div id="dropdown" class="dropdown-content">
+          <a href="#">选项4</a>
+          <a href="#">选项5</a>
+          <a href="#">选项6</a>
+      </div>
+  
+
+    <script>
+        const dropdowncontents = document.querySelectorAll('.dropdown-text')
+        const dropdowns = document.querySelectorAll(".dropdown-content");
+
+        for (let i = 0; i < dropdowncontents.length; i++) {
+            const dropdowncontent = dropdowncontents[i];
+            
+            // 使用闭包将当前的 i 值传递给事件监听器
+            (function(index) {
+              dropdowncontent.addEventListener('click', function() {
+                let dropdown = dropdowns[index];
+                console.log(index);
+                dropdown.classList.toggle('show');
+              });
+            })(i);
+          }
+        // JavaScript 函数来切换下拉操作框的显示/隐藏
+        /*function toggleDropdown() {
+            var dropdown = document.getElementById('dropdown');
+            dropdown.classList.toggle('show');
+        }*/
+
+        // 关闭下拉操作框如果用户点击文档的其他地方
+    
+    
+    </script>
+
+</body>
+
+
+</html>
