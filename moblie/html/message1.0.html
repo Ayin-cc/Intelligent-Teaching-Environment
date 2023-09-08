@@ -8,15 +8,19 @@
 		<title>ITE</title>
 		<script src="../js/jquery-3.7.1.min.js"></script>
 		<script>
-			$(document).ready(function (){
-				function addNew(msgs) {
-					// 添加新消息
-					for (var i = 0; i < msgs.length(); i++) {
-						var msg = msgs[i];
-						setMessage(msg.name, msg.time, msg.title, msg.content);
+			// 添加新消息
+			function addNew(msgs) {
+				for (var i = 0; i < msgs.length; i++) {
+					var msg = msgs[i];
+					if(i == 0) {
+						setMessage(msg.id, msg.time, msg.title, msg.content, false);
+						continue;
 					}
+					setMessage(msg.id, msg.time, msg.title, msg.content, true);
 				}
+			}
 
+			$(document).ready(function (){
 				// 初始化消息列表
 				$.ajax({
 					type: "POST",
@@ -25,7 +29,8 @@
 					contentType: "application/json",
 					data: "",
 					success: function (result) {
-						if(!result.isEmpty()){
+						console.info(result);
+						if(result != ""){
 							addNew(result);
 						}
 					}
@@ -33,15 +38,15 @@
 
 				// 不断发送心跳包维持连接
 				window.onload = function (){
-					setTimeout(addNew(), 5*1000);
+					setTimeout(5*1000);
 					$.ajax({
 						type: "POST",
 						dataType: "json",
-						url: 'http://162.14.107.35/SCUEE/Student/initMsg',
+						url: 'http://162.14.107.35/SCUEE/DistrMsg/keepAlive',
 						contentType: "application/json",
 						data: "",
 						success: function (result) {
-							if(!result.isEmpty()){
+							if(!result != ""){
 								addNew(result);
 							}
 						}
@@ -79,7 +84,7 @@
 			</div>
 		</div>
 		<script>
-			function setMessage(message_name, message_time, message_title, message_context) {
+			function setMessage(message_id, message_time, message_title, message_context, is_created = true) {
 				var all_message = document.getElementById('class-message');
 				var sum_message = '';
 
@@ -87,8 +92,8 @@
 				<div class="flex w-full">
 					<div class="flex items-center justify-center w-12 h-12">
 						<div class="flex items-center justify-center w-10 h-10 `;
-				var message_color = `bg-red-500`;
-				var message_nd = ` rounded-xl">
+				var message_color = `bg-red-500 rounded-xl">`;
+				var message_nd = `
 							<img draggable="false" class="w-8 h-8 p-1" src="../icons/ffffff/邮件.svg">
 						</div>
 					</div>
@@ -109,15 +114,14 @@
 				</div>
 				<div
 					class="w-full pr-2 overflow-hidden text-sm pl-14 overflow-ellipsis text-slate-400 whitespace-nowrap">`;
-				// message_context = `This is a message for testing! It' s an unread important notice!`;
+				// message_context = `This is a message for testing! It's an unread important notice!`;
 				var message_s = `</div>
-				<div class="flex h-0.5 w-64 bg-slate-100 mt-1"></div>
+				<div class="flex h-0.5 w-60 bg-slate-100 mt-1"></div>
 				</div> `;
-				var new_message = message_st + message_color + message_nd + message_name + message_rd + message_time + message_fo + message_title + message_fi + message_context + message_s;
+				var new_message = message_st + message_color + message_nd + message_title + message_rd + message_time + message_fo + message_context + message_fi + message_id + message_s;
 				sum_message = new_message + sum_message;
 
-				all_message.innerHTML = sum_message + all_message.innerHTML;
-
+				all_message.innerHTML = sum_message;
 			}
 			setMessage();
 		</script>
