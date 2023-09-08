@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link href="../css/output.css" rel="stylesheet" />
+		<title>communication</title>
+		<script>
+			$(document).ready(function () {
+				window.onload(function () {
+					// 检测cookie信息
+				})
+			})
+		</script>
+	</head>
+
+	<body class="bg-zinc-100">
+		<!-- 顶部栏 -->
+		<div class="flex flex-col bg-white">
+			<div class="flex flex-row items-center justify-center">
+				<!-- 头像栏 -->
+				<div class="flex items-center justify-center max-w-xs p-2rounded-lg resizable ">
+					<!-- 头像框 -->
+					<div class="flex w-8 h-10 mx-4 my-3 overflow-hidden rounded-full " id="photo-profile-sidebarBottom">
+						<img draggable="false" src="../icons/用户.svg" alt="" />
+					</div>
+					<div>
+						<div class="flex flex-grow mx-6 overflow-hidden select-none" id="name-profile-sidebarBottom">
+							XYCF
+						</div>
+
+						<div class="flex flex-grow py-1 overflow-hidden text-xs select-none"
+							id="number-profile-sidebarBottom">
+							2022xxxxxxxxx
+						</div>
+					</div>
+				</div>
+				<a href="../main.html"
+					class="absolute items-center justify-end w-8 h-8 max-w-xs overflow-hidden rounded-h-full right-2"
+					id="message-returnBottom">
+					<img draggable="false" src="../icons/左.svg" alt="" />
+				</a>
+			</div>
+			<!-- sidebar-line -->
+			<div class="flex mx-2 w-auto h-0.5 bg-slate-400 "></div>
+		</div>
+
+		<div class="flex flex-col w-screen h-full overflow-y-scroll mb-14 bg-zinc-100" id="chat-container">
+			<!-- 消息1 -->
+			<div class="flex flex-col w-screen my-2">
+				<div class="flex justify-center w-full py-2 text-xs text-zinc-600">
+					8:15
+				</div>
+				<div class="flex flex-row w-screen overflow-x-hidden">
+					<div class="flex w-10 h-10 p-1 ml-2 bg-purple-200 rounded-full">
+						<img draggable="false" class="w-8 h-8" src="../icons/333/人员.svg">
+					</div>
+					<div class="flex flex-col w-full mx-3 overflow-x-hidden">
+						<div class="text-sm truncate text-zinc-600 overflow-ellipsis whitespace-nowrap">
+							系统
+						</div>
+						<div class="p-3 mt-1 break-words bg-white rounded-xl max-w-max"
+							style="max-width: calc(100%-100px);">
+							你是？
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- 消息2 -->
+			<div class="flex flex-col w-screen my-2">
+				<div class="flex justify-center w-full py-2 text-xs text-zinc-600">
+					8:16
+				</div>
+				<div class="flex flex-row w-screen overflow-x-hidden">
+					<div class="flex flex-col items-end justify-end w-full mx-3 overflow-x-hidden text-end">
+						<div class="p-3 mt-1 break-words bg-white rounded-xl max-w-max"
+							style="max-width: calc(100%-100px);">
+							你是？
+						</div>
+					</div>
+					<div class="flex w-10 h-10 p-1 mr-2 bg-blue-100 rounded-full">
+						<img draggable="false" class="w-8 h-8" src="../icons/333/人员.svg">
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 底部输入框 -->
+		<div class="fixed bottom-0 flex items-center w-screen p-2 shadow-2xl shadow-slate-800">
+			<input type="text" class="flex flex-grow p-2 border-0 input-box" id="message-input" placeholder="输入消息...">
+			<button class="px-2 py-2 ml-2 bg-blue-500 border-0 rounded-xl" id="send-button">发送</button>
+		</div>
+		<script>
+			// 获取元素
+			const chatContainer = document.getElementById('chat-container');
+			const messageInput = document.getElementById('message-input');
+			const sendButton = document.getElementById('send-button');
+			var lasttime = '00:00';
+			// 发送消息函数
+			function sendMessage() {
+				const messageText = messageInput.value;
+				const nowtime = getNowtime();
+				if (messageText.trim() !== '') {
+					let mes1 = `<div class="flex flex-col w-screen my-2">`;
+					let mes2 = `<div class="flex justify-center w-full py-2 text-xs text-zinc-600">${nowtime}</div>`;
+					let mes3 = `<div class="flex flex-row w-screen overflow-x-hidden">
+					<div class="flex flex-col items-end justify-end w-full mx-3 overflow-x-hidden text-end">
+						<div class="p-3 mt-1 break-words bg-white rounded-xl max-w-max"
+							style="max-width: calc(100%-100px);">
+							${messageText}
+						</div>
+					</div>
+					<div class="flex w-10 h-10 p-1 mr-2 bg-blue-100 rounded-full">
+						<img draggable="false" class="w-8 h-8" src="../icons/333/人员.svg">
+					</div>
+					</div>
+				</div>`;
+
+					// 发送请求，失败提示用户
+					if (isLongtime(nowtime)) chatContainer.innerHTML = chatContainer.innerHTML + mes1 + mes2 + mes3;
+					else chatContainer.innerHTML = chatContainer.innerHTML + mes1 + mes3;
+					messageInput.value = '';
+				}
+			}
+
+			// 接受新消息函数
+			function getNewMessage(messageTime, messageTitle, messageText) {
+				let mes1 = `<div class="flex flex-col w-screen my-2">`;
+				let mes2 = `<div class="flex justify-center w-full py-2 text-xs text-zinc-600">${nowtime}</div>`;
+				let mes3 = `<div class="flex flex-row w-screen overflow-x-hidden">
+					<div class="flex w-10 h-10 p-1 ml-2 bg-purple-200 rounded-full">
+						<img draggable="false" class="w-8 h-8" src="../icons/333/人员.svg">
+					</div>
+					<div class="flex flex-col w-full mx-3 overflow-x-hidden">
+						<div class="text-sm truncate text-zinc-600 overflow-ellipsis whitespace-nowrap">
+							${messageTitle}
+						</div>
+						<div class="p-3 mt-1 break-words bg-white rounded-xl max-w-max"
+							style="max-width: calc(100%-100px);">
+							${messageText}
+						</div>
+					</div>
+				</div>
+			</div>`;
+				if (isLongtime(messageTime)) chatContainer.innerHTML = chatContainer.innerHTML + mes1 + mes2 + mes3;
+				else chatContainer.innerHTML = chatContainer.innerHTML + mes1 + mes3;
+			}
+
+			// 初始化
+			function getMessage() {
+				// 调用 getNewMessage()
+
+
+			}
+
+			function getNowtime() {
+				// 创建一个 Date 对象来获取当前本地时间
+				const currentDate = new Date();
+
+				// 获取年、月、日、小时、分钟和秒
+				const hours = currentDate.getHours().toString().padStart(2, '0');
+				const minutes = currentDate.getMinutes().toString().padStart(2, '0');
+
+				// 构建时间字符串
+				const formattedTime = `${hours}:${minutes}`;
+				return formattedTime;
+			}
+
+			function isLongtime(nowtime) {
+				// 解析时间字符串为 Date 对象
+				const time1 = new Date(`2023-08-27T${nowtime}:00`);
+				const time2 = new Date(`2023-08-27T${lasttime}:00`);
+
+				// 计算时间差（毫秒）
+				const timeDifference = Math.abs(time1 - time2);
+				console.log('time:' + timeDifference);
+				// 判断是否间隔超过5分钟
+				if (timeDifference > 5 * 60 * 1000) {
+					lasttime = nowtime;
+					return 1;
+				} else {
+					return 0;
+				}
+			}
+
+			// 监听发送按钮点击事件
+			sendButton.addEventListener('click', sendMessage);
+
+			// 监听输入框的回车键事件
+			messageInput.addEventListener('keyup', function (event) {
+				if (event.key === 'Enter') {
+					sendMessage();
+				}
+			});
+		</script>
+	</body>
+
+</html>
