@@ -8,7 +8,7 @@ import entity.Student;
 import java.util.List;
 
 public interface QRCodeService {
-    QRcode get(String token, String cid);
+    QRcode get(String token, String cid, String endTime);
     boolean scan(String token, String courseId, String uid);
     List<Student> update(String token, String uid);
     List<QRCodeResult> query(String token, String cid, String date, String courseName, String courseId, String teacherId);

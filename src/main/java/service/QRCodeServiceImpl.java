@@ -20,7 +20,7 @@ public class QRCodeServiceImpl implements QRCodeService {
     private QRCodeDao qrCodeDao;
 
     @Override
-    public QRcode get(String token, String cid) {
+    public QRcode get(String token, String cid, String endTime) {
         if(qrCodeDao.checkClassroomToken(token) == 0){
             return null;
         }
@@ -65,6 +65,13 @@ public class QRCodeServiceImpl implements QRCodeService {
     public boolean scan(String token, String courseId, String uid){
         // 判断学生token和对应二维码是否存在
         if(qrCodeDao.checkScan(token, uid) == 1){
+            // 判断二维码是否过期
+            Date date = new Date();
+            SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+            String now = formatter.format(date);
+            if(qrCodeDao.checkQRCodeTime(now, uid) == 0){
+                return false;
+            }
             // 判断学生是否为该节课的学生
             if(qrCodeDao.checkStudentInCourse(token, courseId) == 0){
                 return false;

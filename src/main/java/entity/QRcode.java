@@ -13,6 +13,7 @@ public class QRcode {
     private String courseId;
     private String courseName;
     private String teacher;
+    private String endTime;
     private String cid;
     private String uid;
     private String time;
@@ -23,25 +24,26 @@ public class QRcode {
     public QRcode() {
     }
 
-    public QRcode(String code, String cid, String uid, String time, List<String> sid){
-        this.code = code;
-        this.cid = cid;
-        this.uid = uid;
-        this.time = time;
-        this.sid = sid;
-    }
-
-    public QRcode(String type, String code, String courseId, String courseName, String teacher, String cid, String uid, String time, int count, List<String> sid) {
+    public QRcode(String type, String code, String courseId, String courseName, String teacher, String endTime, String cid, String uid, String time, int count, List<String> sid) {
         this.type = type;
         this.code = code;
         this.courseId = courseId;
         this.courseName = courseName;
         this.teacher = teacher;
+        this.endTime = endTime;
         this.cid = cid;
         this.uid = uid;
         this.time = time;
         this.count = count;
         this.sid = sid;
+    }
+
+    public QRcode(String code, String cid, String uniqueIdString, String time, List<String> students) {
+        this.code = code;
+        this.cid = cid;
+        this.uid = uniqueIdString;
+        this.time = time;
+        this.sid = students;
     }
 
     /**
@@ -126,6 +128,22 @@ public class QRcode {
 
     /**
      * 获取
+     * @return endTime
+     */
+    public String getEndTime() {
+        return endTime;
+    }
+
+    /**
+     * 设置
+     * @param endTime
+     */
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
+
+    /**
+     * 获取
      * @return cid
      */
     public String getCid() {
@@ -205,6 +223,6 @@ public class QRcode {
     }
 
     public String toString() {
-        return "QRcode{type = " + type + ", code = " + code + ", courseId = " + courseId + ", courseName = " + courseName + ", teacher = " + teacher + ", cid = " + cid + ", uid = " + uid + ", time = " + time + ", count = " + count + ", sid = " + sid + "}";
+        return "QRcode{type = " + type + ", code = " + code + ", courseId = " + courseId + ", courseName = " + courseName + ", teacher = " + teacher + ", endTime = " + endTime + ", cid = " + cid + ", uid = " + uid + ", time = " + time + ", count = " + count + ", sid = " + sid + "}";
     }
 }

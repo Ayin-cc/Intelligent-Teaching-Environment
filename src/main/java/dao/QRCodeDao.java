@@ -27,4 +27,5 @@ public interface QRCodeDao {
     int checkStudentInCourse(@Param("token") String token, @Param("courseId") String courseId);
     int checkClassroomToken(@Param("token")String token);
     int checkAdministratorToken(@Param("token")String token);
+    int checkQRCodeTime(@Param("now")String now, @Param("uid")String uid);
 }

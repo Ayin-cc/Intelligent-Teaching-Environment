@@ -8,6 +8,7 @@
         <result column="uid" property="uid" />
         <result column="code" property="code" />
         <result column="class_id" property="cid" />
+        <result column="end_time" property="endTime"/>
         <result column="count" property="count" />
         <result column="course_id" property="courseId" />
         <collection property="sid" ofType="string">
@@ -46,9 +47,9 @@
     
     <insert id="createQRCode">
         insert into scuee.qrcode
-            (uid, qrcode_code, class_id, qrcode_time, count)
+            (uid, qrcode_code, class_id, qrcode_time, count, end_time)
         values
-            (#{qrcode.uid}, #{qrcode.code}, #{qrcode.cid}, #{qrcode.time}, 0);
+            (#{qrcode.uid}, #{qrcode.code}, #{qrcode.cid}, #{qrcode.time}, 0, #{qrcode.endTime});
     </insert>
 
     <insert id="updateQRCode">
@@ -233,6 +234,13 @@
             select *
             from scuee.administrator
             where administrator.token = #{token}
+                   );
+    </select>
+    <select id="checkQRCodeTime" resultType="java.lang.Integer">
+        select exists(
+            select *
+            from scuee.qrcode
+            where qrcode.uid = #{uid} and qrcode.end_time &gt; #{now}
                    );
     </select>
 
