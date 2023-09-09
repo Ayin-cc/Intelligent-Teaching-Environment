@@ -56,7 +56,7 @@
 				$.ajax({
 					type: "POST",
 					dataType: "json",
-					url: 'http://162.14.107.35/SCUEE/CourseSchedule/get',
+					url: 'http://162.14.107.35/SCUEE/administrator/refreshAdministratorToken',
 					contentType: "application/json",
 					data: JSON.stringify({ "sid": userId }),
 					success: function (result) {
@@ -68,7 +68,7 @@
 				expdate.setTime(expdate.getTime() + 180 * 60 * 1000);	// cookie三小时过期
 				document.cookie = "userId=" + userId + ";token=" + token + ";expires=" + expdate.toGMTString() + ";path=/";
 				// 进入主界面
-				window.location.href = "../main.html";
+				window.location.href = "../../index.html";
 			}
 
 			// 登录功能
@@ -78,7 +78,7 @@
 				$.ajax({
 					type: "POST",
 					dataType: "json",
-					url: 'http://162.14.107.35/SCUEE/user/loginStudent',
+					url: 'http://162.14.107.35/SCUEE/administrator/loginAdministrator',
 					contentType: "application/json",
 					data: JSON.stringify({ "sid": userId, "passwd": passwd }),
 					success: function (result) {
@@ -104,7 +104,7 @@
 				$.ajax({
 					type: "POST",
 					dataType: "json",
-					url: 'http://162.14.107.35/SCUEE/user/loginStudent',
+					url: 'http://162.14.107.35/SCUEE/administrator/registerAdministrator',
 					contentType: "application/json",
 					data: JSON.stringify({ "sid": userId, "passwd": passwd }),
 					success: function (result) {
