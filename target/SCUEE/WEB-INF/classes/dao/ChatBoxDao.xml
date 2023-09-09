@@ -5,7 +5,7 @@
 
 <mapper namespace="dao.ChatBoxDao">
     <resultMap id="chatResultMap" type="entity.Chat">
-        <result column="classroom_id" property="cid"/>
+        <result column="course_id" property="id"/>
         <result column="student_id" property="sid"/>
         <result column="chat_name" property="name"/>
         <result column="chat_content" property="content"/>
@@ -13,20 +13,20 @@
 
     <insert id="addChat">
         insert into scuee.chat
-            (classroom_id, student_id, chat_name, chat_time, chat_content, is_sent)
+            (course_id, student_id, chat_name, chat_time, chat_content, is_sent)
         values
-            (#{chat.cid}, #{chat.sid}, #{chat.name}, #{chat.time}, #{chat.content}, 0)
+            (#{chat.id}, #{chat.sid}, #{chat.name}, #{chat.time}, #{chat.content}, 0)
     </insert>
 
     <update id="updateChat">
         update scuee.chat
         set is_sent = 1
-        where classroom_id=#{chat.cid} and student_id=#{chat.sid};
+        where course_id=#{chat.id} and student_id=#{chat.sid};
     </update>
 
     <select id="selectChat" resultMap="chatResultMap">
-        select scuee.chat.classroom_id,scuee.chat.student_id,scuee.chat.chat_name,scuee.chat.chat_time,scuee.chat.chat_content
+        select scuee.chat.course_id,scuee.chat.student_id,scuee.chat.chat_name,scuee.chat.chat_time,scuee.chat.chat_content
         from scuee.chat
-        where scuee.chat.classroom_id = #{cid} and scuee.chat.is_sent = 0;
+        where scuee.chat.course_id = #{id} and scuee.chat.is_sent = 0;
     </select>
 </mapper>

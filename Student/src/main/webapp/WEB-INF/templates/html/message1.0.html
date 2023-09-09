@@ -37,22 +37,30 @@
 				})
 
 				// 不断发送心跳包维持连接
-				window.onload = function () {
-					setTimeout(5 * 1000);
-					$.ajax({
-						type: "POST",
-						dataType: "json",
-						url: 'http://162.14.107.35/SCUEE/DistrMsg/keepAlive',
-						contentType: "application/json",
-						data: "",
-						success: function (result) {
-							if (!result != "") {
-								addNew(result);
+				function keepAlive(callback) {
+					setTimeout(function (){
+						console.log("123");
+						$.ajax({
+							type: "POST",
+							dataType: "json",
+							url: 'http://162.14.107.35/SCUEE/DistrMsg/keepAlive',
+							contentType: "application/json",
+							data: "",
+							success: function (result) {
+								if (result != "") {
+									addNew(result);
+								}
 							}
-						}
-					})
+						})
+						callback();
+					}, 5000)
 				}
 
+				async function k(){
+					keepAlive(k);
+				}
+
+				keepAlive(k);
 			})
 		</script>
 	</head>
