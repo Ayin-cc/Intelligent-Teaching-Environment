@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="../css/output.css" rel="stylesheet" />
+        <title>ITE</title>
+        <script src="../js/jquery-3.7.1.min.js"></script>
+    </head>
+
+    <body class="w-screen">
+        <div class="flex flex-col w-screen h-12 bg-white">
+            <!-- 头像栏 -->
+            <div class="flex items-center justify-center w-screen p-2 rounded-lg resizable">
+                <h2 class="flex items-center justify-center overflow-hidden text-center rounded-lg hover:bg-gray-100 "
+                    id="class-message-button" style="white-space: nowrap;">
+                    通知
+                </h2>
+                <!-- 返回按键 -->
+                <a href="./message1.0.html"
+                    class="absolute items-center justify-end w-8 h-8 max-w-xs overflow-hidden rounded-h-full right-2"
+                    id="message-returnBottom">
+                    <img draggable="false" src="../icons/左.svg" alt="" />
+                </a>
+            </div>
+            <!-- sidebar-line -->
+            <div class="flex mx-2 w-auto h-0.5 bg-slate-400 "></div>
+        </div>
+
+        <!-- 通知 -->
+        <div class="flex flex-col flex-grow w-screen h-full max-w-full max-h-full overflow-x-hidden overflow-y-scroll"
+            id="class-message">
+            <div class="flex flex-row">
+                <div class="flex px-3 pt-2 overflow-hidden text-lg rounded-lg">
+                    标题
+                </div>
+                <div class="flex flex-grow"></div>
+                <div class="flex items-end px-3 pt-2 overflow-hidden text-sm text-gray-400 rounded-lg text-end">
+                    time
+                </div>
+            </div>
+
+            <div class="flex flex-col mb-2">
+                <!-- 具体的相关信息 -->
+                <!-- <div class="absolute flex mx-3 overflow-hidden text-sm text-blue-600 rounded-lg right-2"
+                    id="details-button">
+                    显示
+                </div> -->
+                <!-- 发件人 -->
+                <!-- <div class="flex mx-3 mb-2 overflow-hidden text-sm text-green-600 rounded-lg select-none"
+                    id="brief-inf">
+                    发件人
+                </div>
+                <div id="detail-inf" class="hidden">
+                    <div class="flex mx-5 my-2 overflow-hidden text-xs roundd-lg">
+                        <div class="w-12 text-gray-400 text-end">发件人:</div>
+                        <div class="ml-2 text-gray-600 text-start">某某学院</div>
+                    </div>
+                    <div class="flex mx-5 my-2 overflow-hidden text-xs roundd-lg">
+                        <div class="w-12 text-gray-400 text-end">时间:</div>
+                        <div class="ml-2 text-gray-600 text-start">2022.4.16</div>
+                    </div>
+                </div> -->
+                <div class="flex mx-2 w-auto h-0.5 bg-slate-100 hide-able mb-2"></div>
+                <!-- 正文 -->
+                <div class="flex px-3 overflow-hidden rounded-lg">
+                    正文：
+                </div>
+            </div>
+
+        </div>
+        <script>
+
+            /*  // 控制相关信息的隐藏与否
+                var isShow = 1;
+                const details = document.getElementById('details-button');
+                const detail_inf = document.getElementById('detail-inf');
+                const brief_inf = document.getElementById('brief-inf');
+                function isShows() {
+                    if (isShow == 0) {
+                        details.textContent = '隐藏';
+                        detail_inf.classList.remove('hidden');
+                        brief_inf.classList.add('hidden');
+                        isShow = 1;
+                    } else if (isShow == 1) {
+                        details.textContent = '显示';
+                        brief_inf.classList.remove('hidden');
+                        detail_inf.classList.add('hidden');
+                        isShow = 0;
+                    }
+                }
+                details.addEventListener('click', () => {
+                    isShows();
+                });
+                isShows();
+            */
+
+            function getdetail_mes() {
+                var mids = sessionStorage.getItem('mid');
+                console.log("id:" + mids);
+                sessionStorage.removeItem('mid');
+            }
+
+
+            getdetail_mes();
+
+        </script>
+    </body>
+
+</html>
