@@ -16,7 +16,7 @@
 						setMessage(msg.id, msg.time, msg.title, msg.content);
 						continue;
 					}
-					setMessage(msg.id, msg.time, msg.title, msg.content);
+					setMessage(msg.id, msg.time, msg.title, msg.content, true);
 				}
 			}
 
@@ -37,8 +37,8 @@
 				})
 
 				// 不断发送心跳包维持连接
-				function keepAlive() {
-					console.log("send...");
+				window.onload = function () {
+					setTimeout(5 * 1000);
 					$.ajax({
 						type: "POST",
 						dataType: "json",
@@ -53,7 +53,6 @@
 					})
 				}
 
-				window.onload = setInterval(keepAlive, 5000);
 			})
 		</script>
 	</head>
@@ -69,7 +68,7 @@
 					通知
 				</h2>
 				<!-- 返回按键 -->
-				<a href="../main"
+				<a href="../main.html"
 					class="absolute items-center justify-end w-8 h-8 max-w-xs overflow-hidden rounded-h-full right-2"
 					id="message-returnBottom">
 					<img draggable="false" src="../icons/左.svg" alt="" />
@@ -78,19 +77,18 @@
 			<!-- sidebar-line -->
 			<div class="flex mx-2 w-auto h-0.5 bg-slate-400 "></div>
 		</div>
-		<div class="pt-12">
+		<div class="pt-12 mx-3">
 			<!-- 通知 -->
 			<div class="flex flex-col flex-grow w-screen h-full max-w-full max-h-full overflow-x-hidden overflow-y-scroll"
 				id="class-message">
-
 			</div>
 		</div>
 		<script>
 			function setMessage(message_id, message_time, message_title, message_context) {
 				var all_message = document.getElementById('class-message');
 
-				all_message.innerHTML = `<div class="flex flex-col items-center w-full min-w-0 px-1 py-2 rounded-lg hover:bg-zinc-100" id="${message_id}
-								var message_nd = " onclick="detail_message(${message_id})">
+				all_message.innerHTML = `<div class="flex flex-col items-center w-full min-w-0 px-1 py-2 rounded-lg hover:bg-zinc-100" id="${message_id}"
+								onclick="detail_message(${message_id})">
 					<div class="flex w-full" onclick="detail_message(${message_id})">
 						<div class="flex items-center justify-center w-12 h-12" onclick="detail_message(${message_id})">
 							<div class="flex items-center justify-center w-10 h-10 bg-red-500 rounded-xl">
@@ -99,7 +97,7 @@
 						</div>
 						<div class="flex flex-col whitespace-nowrap" onclick="detail_message(${message_id})">
 							<div class="flex flex-row" onclick="detail_message(${message_id})">
-								<div class="flex px-2 font-bold truncate" style="max-width: 80px;">
+								<div class="px-2 font-bold truncate" style="max-width: 80px;">
 									${message_title}
 									<!--$ {message_name}-->
 									</div>
@@ -122,8 +120,7 @@
 					 <div class="flex h-0.5 w-64 bg-slate-100 mt-1" onclick="detail_message(${message_id})"></div>
 				</div>`;
 			}
-			setMessage(124, 1, 2, 3, 4);
-			setMessage(123, 5, 6, 7, 8);
+			setMessage(313, 2, 21313123113221333333333333333333333333333333333333333333333, 3, 4);
 
 
 
@@ -136,9 +133,7 @@
 		</script>
 		<script>
 			$(document).ready(function () {
-				window.onload = (function () {
-					// 检测cookie信息
-				})
+				// 检测cookie信息
 			})
 		</script>
 	</body>

@@ -27,7 +27,7 @@
                             contentType: "application/json",
                             data: JSON.stringify({ "id": getdetail_mes() }),
                             success: function (result) {
-                                if (!result != "") {
+                                if (result != "") {
                                     title = result.title;
                                     content = result.content;
                                     time = result.time;
@@ -35,6 +35,9 @@
                                     document.getElementById("message-title").innerHTML = title;
                                     document.getElementById("message-content").innerHTML = content;
                                     document.getElementById("message-time").innerHTML = time;
+                                    for(var i = 0; i < attachment.length; i++){
+                                        // 添加附件
+                                    }
                                 }
                             }
                         })
@@ -69,7 +72,7 @@
                     标题
                 </div>
                 <div class="flex flex-grow"></div>
-                <div class="flex items-end px-3 pt-2 overflow-hidden text-sm text-gray-400 rounded-lg text-end">
+                <div class="flex items-end px-3 pt-2 overflow-hidden text-sm text-gray-400 rounded-lg text-end" id="message-time">
                     time
                 </div>
             </div>
@@ -128,15 +131,6 @@
                 });
                 isShows();
             */
-
-            function getdetail_mes() {
-                var mids = sessionStorage.getItem('mid');
-                console.log("id:" + mids);
-                sessionStorage.removeItem('mid');
-            }
-
-
-            getdetail_mes();
 
         </script>
     </body>
