@@ -4,6 +4,7 @@ const user_all = document.getElementById('user_all');
 const message_button = document.getElementById('message-sidebar');
 const timetable_button = document.getElementById('timetable-sidebar');
 const signIn_button = document.getElementById('signIn-sidebar');
+const communication_button = document.getElementById('communication-sidebar');
 
 var login_status = 1;
 // 登录信息显示
@@ -95,4 +96,10 @@ timetable_button.addEventListener('click', () => {
 		window.location.href = 'html/timetable1.0.html';
 	}
 });
-
+communication_button.addEventListener('click', () => {
+	if (login_status == 0) {
+		nologtip();
+	} else {
+		window.location.href = 'html/communication.html';
+	}
+});
