@@ -42,7 +42,9 @@ public class StudentController {
     @RequestMapping("/getObj")
     public ResponseEntity<Student> getObj(@RequestBody Student student){
         Student result = studentService.getObj(student.getSid());
-        result.setCode(200);
+        if(result != null) {
+            result.setCode(200);
+        }
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
