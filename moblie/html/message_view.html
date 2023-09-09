@@ -7,42 +7,43 @@
         <link href="../css/output.css" rel="stylesheet" />
         <title>ITE</title>
         <script src="../js/jquery-3.7.1.min.js"></script>
-                <script>
-                    var title = "";
-                    var content = "";
-                    var time = "";
-                    var attachment;
+        <script>
+            var title = "";
+            var content = "";
+            var time = "";
+            var attachment;
 
-                    function getdetail_mes() {
-                        var mids = sessionStorage.getItem('mid');
-                        console.log("id:" + mids);
-                        return mids;
+            function getdetail_mes() {
+                var mids = sessionStorage.getItem('mid');
+                console.log("id:" + mids);
+                return mids;
+            }
+
+            $(document).ready(function () {
+                $.ajax({
+                    type: "POST",
+                    dataType: "json",
+                    url: 'http://162.14.107.35/SCUEE/DistrMsg/get',
+                    contentType: "application/json",
+                    data: JSON.stringify({ "id": getdetail_mes() }),
+                    success: function (result) {
+                        if (result != "") {
+                            title = result.title;
+                            content = result.content;
+                            time = result.time;
+                            attachment = result.attachment;
+                            document.getElementById("message-title").innerHTML = title;
+                            document.getElementById("message-content").innerHTML = content;
+                            document.getElementById("message-time").innerHTML = time;
+
+                            // 添加附件
+                            isAttached(attachment.length);
+
+                        }
                     }
-
-                    $(document).ready(function () {
-                        $.ajax({
-                            type: "POST",
-                            dataType: "json",
-                            url: 'http://162.14.107.35/SCUEE/DistrMsg/get',
-                            contentType: "application/json",
-                            data: JSON.stringify({ "id": getdetail_mes() }),
-                            success: function (result) {
-                                if (result != "") {
-                                    title = result.title;
-                                    content = result.content;
-                                    time = result.time;
-                                    attachment = result.attachment;
-                                    document.getElementById("message-title").innerHTML = title;
-                                    document.getElementById("message-content").innerHTML = content;
-                                    document.getElementById("message-time").innerHTML = time;
-                                    for(var i = 0; i < attachment.length; i++){
-                                        // 添加附件
-                                    }
-                                }
-                            }
-                        })
-                    })
-                </script>
+                })
+            })
+        </script>
     </head>
 
     <body class="w-screen">
@@ -68,69 +69,152 @@
         <div class="flex flex-col flex-grow w-screen h-full max-w-full max-h-full px-3 overflow-x-hidden overflow-y-scroll"
             id="class-message">
             <div class="flex flex-row">
-            <div class="flex px-3 pt-2 overflow-hidden text-lg rounded-lg" id="message-title">
+                <div class="flex px-2 pt-2 text-lg" id="message-title">
                     标题
                 </div>
                 <div class="flex flex-grow"></div>
-                <div class="flex items-end px-3 pt-2 overflow-hidden text-sm text-gray-400 rounded-lg text-end" id="message-time">
+                <!-- <div class="flex items-end px-3 pt-2 text-sm text-gray-400 text-end"
+                    id="message-time">
                     time
-                </div>
+                </div> -->
             </div>
 
             <div class="flex flex-col mb-2">
                 <!-- 具体的相关信息 -->
-                <!-- <div class="absolute flex mx-3 overflow-hidden text-sm text-blue-600 rounded-lg right-2"
+                <div class="absolute flex mx-3 overflow-hidden text-sm text-blue-600 rounded-lg right-2"
                     id="details-button">
                     显示
-                </div> -->
-                <!-- 发件人 -->
-                <!-- <div class="flex mx-3 mb-2 overflow-hidden text-sm text-green-600 rounded-lg select-none"
-                    id="brief-inf">
-                    发件人
                 </div>
-                <div id="detail-inf" class="hidden">
-                    <div class="flex mx-5 my-2 overflow-hidden text-xs roundd-lg">
-                        <div class="w-12 text-gray-400 text-end">发件人:</div>
-                        <div class="ml-2 text-gray-600 text-start">某某学院</div>
+                <!-- 发件人 -->
+                <div class="flex mb-2 " id="brief-inf">
+                    <div class="mr-1 overflow-hidden text-sm text-green-600 rounded-lg select-none flexml-6">
+                        发件人
                     </div>
-                    <div class="flex mx-5 my-2 overflow-hidden text-xs roundd-lg">
+                    <div class="flex" id="attched-tip-brf">
+                        <img draggable="false" class="flex" style="max-width: 20px;" src="../icons/附件.svg" alt="" />
+                        <div class="flex overflow-hidden text-sm select-none" id="attched-tip-num">
+                            1
+                        </div>
+                    </div>
+
+                </div>
+
+                <div id="detail-inf" class="hidden w-full ">
+                    <!-- 发件人 & 时间 -->
+                    <div class="flex w-full mx-5 my-2 overflow-hidden text-xs">
+                        <div class="w-12 text-gray-400 text-end">发件人:</div>
+                        <div class="ml-2 overflow-hidden text-gray-600 text-start" style="max-width: calc(220px);">
+                            XX科</div>
+                    </div>
+                    <div class="flex mx-5 my-2 overflow-hidden text-xs">
                         <div class="w-12 text-gray-400 text-end">时间:</div>
                         <div class="ml-2 text-gray-600 text-start">2022.4.16</div>
                     </div>
-                </div> -->
+                    <!-- 附件 -->
+                    <div class="flex mx-5 my-2 overflow-hidden text-xs" style="max-width: calc(100%-20px);">
+                        <div class="w-12 text-gray-400 text-end" id="attched_tips">附件:</div>
+                        <div class="flex flex-col mb-1 overflow-hidden" style="max-width: calc(100%-100px);"
+                            id="attchment">
+                            <!-- <div class="flex mb-1 overflow-hidden" style="max-width: calc(100vw - 110px);">
+                                【
+                                <div class="overflow-hidden text-blue-500 overflow-ellipsis whitespace-nowrap"
+                                    style="max-width:  calc(100% - 10px);" onclick="clicklink(link)">
+                                    XXXX.pdf
+                                </div>
+                                】
+                            </div> -->
+                        </div>
+                    </div>
+
+                </div>
                 <div class="flex mx-2 w-auto h-0.5 bg-slate-100  mb-2"></div>
                 <!-- 正文 -->
-                <div class="flex px-3 overflow-hidden rounded-lg" id="message-content">
+                <div class="flex px-3 mb-8 overflow-hidden rounded-lg" id="message-content">
                     正文：
                 </div>
+                <div class="flex flex-grow"></div>
+
             </div>
 
         </div>
         <script>
 
-            /*  // 控制相关信息的隐藏与否
-                var isShow = 1;
-                const details = document.getElementById('details-button');
-                const detail_inf = document.getElementById('detail-inf');
-                const brief_inf = document.getElementById('brief-inf');
-                function isShows() {
-                    if (isShow == 0) {
-                        details.textContent = '隐藏';
-                        detail_inf.classList.remove('hidden');
-                        brief_inf.classList.add('hidden');
-                        isShow = 1;
-                    } else if (isShow == 1) {
-                        details.textContent = '显示';
-                        brief_inf.classList.remove('hidden');
-                        detail_inf.classList.add('hidden');
-                        isShow = 0;
-                    }
+            // 控制相关信息的隐藏与否
+            var isShow = 1;
+            const details_button = document.getElementById('details-button');
+            const attched_button = document.getElementById('attched-tip-brf');
+            const detail_inf = document.getElementById('detail-inf');
+            const brief_inf = document.getElementById('brief-inf');
+            function isShows() {
+                if (isShow == 0) {
+                    details_button.textContent = '隐藏';
+                    detail_inf.classList.remove('hidden');
+                    brief_inf.classList.add('hidden');
+                    isShow = 1;
+                } else if (isShow == 1) {
+                    details_button.textContent = '显示';
+                    brief_inf.classList.remove('hidden');
+                    detail_inf.classList.add('hidden');
+                    isShow = 0;
                 }
-                details.addEventListener('click', () => {
-                    isShows();
-                });
+            }
+            details_button.addEventListener('click', () => {
                 isShows();
-            */
+            });
+            attched_button.addEventListener('click', () => {
+                isShows();
+            });
+
+            // 仅展示用
+            isShows();
+            isAttched(2);
+
+            // 确认附件数量
+            function isAttched(attched_number) {
+                const attched_brf = document.getElementById('attched-tip-brf');
+                const attched_tips = document.getElementById('attched_tips');
+                const attched_num = document.getElementById('attched-tip-num');
+                if (attched_number == 0) {
+                    attched_tips.textContent = '无附件';
+                    attched_brf.classList.add('hidden');
+                    getAttachment(0);
+                } else {
+                    attched_tips.textContent = '附件:';
+                    attched_num.textContent = `${attched_number}`;
+                    attched_brf.classList.remove('hidden');
+                    getAttachment(attched_number);
+                }
+            }
+
+
+            // 添加附件
+            function getAttachment(attched_number) {
+                var attchment_links = document.getElementById('attchment');
+                for (var i = 0; i < attched_number; i++) {
+
+                    // 获取 链接 及 文件名
+                    var attachment_link = '';
+                    var attachment_name = 'xX.pdf';
+
+                    attchment_links.innerHTML = attchment_links.innerHTML + `<div class="flex mb-1 overflow-hidden" style="max-width: calc(100vw - 110px);">【附件${i}&nbsp <div class="overflow-hidden text-blue-500 overflow-ellipsis whitespace-nowrap" style="max-width:  calc(100% - 10px);" onclick="clicklink(${attachment_link})"> ${attachment_name} </div>】</div>`;
+                }
+            }
+
+            // 点击按钮时触发下载
+            function clicklink(attachment_link) {
+                downloadButton.addEventListener('click', function () {
+                    // 创建一个链接元素
+                    const downloadLink = document.createElement('a');
+                    // 设置链接的href属性为附件文件的路径
+                    downloadLink.href = attachment_link;
+                    // 设置下载属性，指定文件名
+                    downloadLink.download = `${attachment_name}`;
+                    // 模拟点击链接来触发下载
+                    downloadLink.click();
+                    // 清除链接元素
+                    downloadLink.remove();
+                });
+            }
 
         </script>
     </body>
