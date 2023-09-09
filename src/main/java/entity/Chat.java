@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Chat {
-    private String cid;
+    private String id;
     private String sid;
     private String name;
     private String time;
@@ -13,8 +13,8 @@ public class Chat {
     public Chat() {
     }
 
-    public Chat(String cid, String sid, String name, String time, String content) {
-        this.cid = cid;
+    public Chat(String id, String sid, String name, String time, String content) {
+        this.id = id;
         this.sid = sid;
         this.name = name;
         this.time = time;
@@ -25,16 +25,16 @@ public class Chat {
      * 获取
      * @return cid
      */
-    public String getCid() {
-        return cid;
+    public String getId() {
+        return id;
     }
 
     /**
      * 设置
-     * @param cid
+     * @param id
      */
-    public void setCid(String cid) {
-        this.cid = cid;
+    public void setId(String id) {
+        this.id = id;
     }
 
     /**
@@ -102,6 +102,6 @@ public class Chat {
     }
 
     public String toString() {
-        return "Chat{cid = " + cid + ", sid = " + sid + ", name = " + name + ", time = " + time + ", content = " + content + "}";
+        return "Chat{id = " + id + ", sid = " + sid + ", name = " + name + ", time = " + time + ", content = " + content + "}";
     }
 }

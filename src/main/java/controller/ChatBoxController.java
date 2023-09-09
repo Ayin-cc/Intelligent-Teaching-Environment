@@ -29,7 +29,7 @@ public class ChatBoxController {
     // 维持长连接
     @RequestMapping("/keepAlive")
     public ResponseEntity<List<Chat>> keepAlive(@RequestBody Chat chat){
-        List<Chat> chats = chatBoxService.keepAlive(chat.getCid());
+        List<Chat> chats = chatBoxService.keepAlive(chat.getId());
         return new ResponseEntity<>(chats, HttpStatus.OK);
     }
 

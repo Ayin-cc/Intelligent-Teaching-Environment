@@ -21,7 +21,7 @@ public class QRCodeController {
 
     // 教室端获取二维码接口
     @RequestMapping("/get")
-    public ResponseEntity<QRcode> get(@RequestBody @CookieValue("token") String token, @RequestBody Classroom classroom, @RequestBody String endTime) {
+    public ResponseEntity<QRcode> get(@RequestBody @CookieValue("token") String token, @RequestBody Classroom classroom, @RequestParam("endTime") String endTime) {
         QRcode qRcode = qrCodeService.get(token, classroom.getCid(), endTime);
         if(qRcode == null){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -33,7 +33,7 @@ public class QRCodeController {
 
     // 学生端扫描二维码接口
     @RequestMapping("/scan")
-    public ResponseEntity<String> scan(@CookieValue("token") String token, @RequestBody String courseId, @RequestBody String uid){
+    public ResponseEntity<String> scan(@CookieValue("token")String token, @RequestParam("courseId") String courseId, @RequestParam("uid") String uid){
         if(qrCodeService.scan(token, courseId, uid)){
             return new ResponseEntity<>("OK", HttpStatus.OK);
         }
