@@ -10,7 +10,6 @@
         <result column="student_major" property="major" />
         <result column="student_college" property="college" />
         <result column="student_sex" property="sex" />
-        <result column="student_passwd" property="passwd" />
         <result column="student_phone" property="phone" />
     </resultMap>
 
@@ -138,6 +137,12 @@
         on cc.course_id = course.id
         inner join scuee.course_students
         on cc.course_id = course_students.course_id;
+    </select>
+
+    <select id="selectStudentById" resultType="entity.Student">
+        select *
+        from scuee.student
+        where student.sid = #{sid};
     </select>
 
 </mapper>

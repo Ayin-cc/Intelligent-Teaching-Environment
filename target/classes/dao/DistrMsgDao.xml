@@ -15,14 +15,15 @@
         <result column="title" property="title" />
         <result column="content" property="content" />
         <result column="msg_time" property="time" />
+        <result column="sender" property="sender"/>
         <collection property="attachment" resultMap="attachmentResultMap"/>
     </resultMap>
 
     <insert id="addMsg" useGeneratedKeys="true" keyProperty="id">
         insert into scuee.message
-            (title, content, msg_time, is_published)
+            (title, content, msg_time, is_published, sender)
         values
-            (#{msg.title}, #{msg.content}, #{msg.time}, 0);
+            (#{msg.title}, #{msg.content}, #{msg.time}, 0), #{msg.sender};
     </insert>
 
     <insert id="addAttachment">

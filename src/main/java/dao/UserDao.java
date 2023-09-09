@@ -22,4 +22,5 @@ public interface UserDao {
     void updateAdministratorToken(@Param("id")String id, @Param("token")String token);
     List<Message> selectMsg();
     List<Course> selectCourse(@Param("classroom")Classroom classroom, @Param("date")String date);
+    Student selectStudentById(@Param("sid") String sid);
 }

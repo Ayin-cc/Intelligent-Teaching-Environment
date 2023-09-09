@@ -11,16 +11,19 @@ public class Message {
     private String title;
     private String content;
     private String time;
+    private String sender;
     private List<Attachment> attachment;
+
 
     public Message() {
     }
 
-    public Message(int id, String title, String content, String time, List<Attachment> attachment) {
+    public Message(int id, String title, String content, String time, String sender, List<Attachment> attachment) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.time = time;
+        this.sender = sender;
         this.attachment = attachment;
     }
 
@@ -90,6 +93,22 @@ public class Message {
 
     /**
      * 获取
+     * @return sender
+     */
+    public String getSender() {
+        return sender;
+    }
+
+    /**
+     * 设置
+     * @param sender
+     */
+    public void setSender(String sender) {
+        this.sender = sender;
+    }
+
+    /**
+     * 获取
      * @return attachment
      */
     public List<Attachment> getAttachment() {
@@ -105,6 +124,6 @@ public class Message {
     }
 
     public String toString() {
-        return "Message{id = " + id + ", title = " + title + ", content = " + content + ", time = " + time + ", attachment = " + attachment + "}";
+        return "Message{id = " + id + ", title = " + title + ", content = " + content + ", time = " + time + ", sender = " + sender + ", attachment = " + attachment + "}";
     }
 }

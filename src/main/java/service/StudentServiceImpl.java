@@ -40,4 +40,9 @@ public class StudentServiceImpl implements StudentService {
         userDao.updateStudentToken(student.getSid(), token);
         return token;
     }
+
+    @Override
+    public Student getObj(String sid) {
+        return userDao.selectStudentById(sid);
+    }
 }

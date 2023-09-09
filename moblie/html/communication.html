@@ -6,11 +6,25 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link href="../css/output.css" rel="stylesheet" />
 		<title>communication</title>
+		<script src="../js/jquery-3.7.1.min.js"></script>
 		<script>
+			var student;
+
 			$(document).ready(function () {
-				window.onload(function () {
-					// 检测cookie信息
-				})
+				// 检测cookie信息
+				if(document.cookie){
+					// 跳转登录
+				}
+				else{
+					// 获取学生对象
+					if(sessionStorage.getItem("Student") == ""){
+						var studentObj = getStudent(getCookie("userId"));
+						sessionStorage.setItem("Student", JSON.stringify(studentObj));
+					}
+					student = sessionStorage.getItem("Student");
+				}
+
+				// 使用学生对象替换页面中的值
 			})
 		</script>
 	</head>

@@ -39,6 +39,13 @@ public class StudentController {
         return new ResponseEntity<>(new StatusCode(code), HttpStatus.OK);
     }
 
+    @RequestMapping("/getObj")
+    public ResponseEntity<Student> getObj(@RequestBody Student student){
+        Student result = studentService.getObj(student.getSid());
+        result.setCode(200);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
     @RequestMapping("/refreshToken")
     public ResponseEntity<Token> refreshToken(@RequestBody Student student){
         String token = studentService.refreshToken(student);

@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Student {
+    private int code;
     private String sid;
     private String name;
     private String major;
@@ -16,7 +17,8 @@ public class Student {
     public Student() {
     }
 
-    public Student(String sid, String name, String major, String college, String sex, String passwd, String phone) {
+    public Student(int code, String sid, String name, String major, String college, String sex, String passwd, String phone) {
+        this.code = code;
         this.sid = sid;
         this.name = name;
         this.major = major;
@@ -24,6 +26,22 @@ public class Student {
         this.sex = sex;
         this.passwd = passwd;
         this.phone = phone;
+    }
+
+    /**
+     * 获取
+     * @return code
+     */
+    public int getCode() {
+        return code;
+    }
+
+    /**
+     * 设置
+     * @param code
+     */
+    public void setCode(int code) {
+        this.code = code;
     }
 
     /**
@@ -139,6 +157,6 @@ public class Student {
     }
 
     public String toString() {
-        return "Student{sid = " + sid + ", name = " + name + ", major = " + major + ", college = " + college + ", sex = " + sex + ", passwd = " + passwd + ", phone = " + phone + "}";
+        return "Student{code = " + code + ", sid = " + sid + ", name = " + name + ", major = " + major + ", college = " + college + ", sex = " + sex + ", passwd = " + passwd + ", phone = " + phone + "}";
     }
 }
