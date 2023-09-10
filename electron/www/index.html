@@ -13,7 +13,15 @@
 <body class="flex flex-col w-screen h-screen bg-zinc-100 bg-opacity-90 dark:bg-zinc-950 overflow-hidden">
     <!-- 因为tailwind CSS是实时修改css的，故留下需要的样式 -->
     <div
-        class="ml-2 p-2 h-6 w-6 hidden ring-inset ring ring-purple-200 dark:ring-zinc-700 dark:text-red-100 text-red-600">
+        class="ml-2 p-2 h-6 w-6 hidden ring-inset ring ring-purple-200 dark:ring-zinc-700 dark:text-red-100 text-red-600 opacity-0">
+    </div>
+    <!-- rightClick-box -->
+    <div class="flex fixed z-100 rounded-md select-none bg-white bg-opacity-80 ring-2 ring-zinc-100 shadow-xl
+     dark:bg-zinc-700 dark:bg-opacity-70 dark:ring-zinc-600 hide" id="rightClick-box">
+        <div class="flex flex-col my-2 bg-white dark:bg-zinc-700">
+            <div class="flex px-4 py-1 justify-center items-center text-zinc-700 hover:bg-zinc-100 dark:text-zinc-300 dark:hover:bg-zinc-600">签到</div>
+            <div class="flex px-4 py-1 justify-center items-center text-zinc-700 hover:bg-zinc-100 dark:text-zinc-300 dark:hover:bg-zinc-600">取消签到</div>
+        </div>
     </div>
     <!-- header -->
     <div class="flex h-10 select-none">
@@ -200,7 +208,7 @@
                         <img draggable="false" src="./icons/333/更多.svg" alt="" />
                     </div>
                     <!-- sidebar-self-extra -->
-                    <div class="absolute z-100" id="sidebar-self-extra">
+                    <div class="absolute z-60" id="sidebar-self-extra">
                         <div class="flex relative">
                             <div class="flex w-20 h-20" id="left-blank-sidebar-self-extra"></div>
                             <!-- extra card的数据 -->
@@ -275,60 +283,6 @@
                                                 </div>
                                                 <div class="flex h-full justify-center ml-2 dark:text-zinc-200">
                                                     关于
-                                                </div>
-                                                <div class="flex h-full flex-grow"></div>
-                                                <div
-                                                    class="flex h-full font-normal text-zinc-800 dark:text-zinc-400 truncate">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- 分割线 -->
-                                        <div class="flex w-full h-px my-1">
-                                            <div
-                                                class="flex w-full mx-2 h-full bg-purple-100 dark:bg-purple-300 dark:bg-opacity-50">
-                                            </div>
-                                        </div>
-                                        <div class="flex w-full h-max" id="login-sidebar-self-extra">
-                                            <div
-                                                class="flex w-full h-max px-4 py-2 hover:bg-purple-100 hover:font-bold dark:hover:bg-zinc-600">
-                                                <div class="flex h-full justify-center items-center">
-                                                    <img draggable="false" class="w-6 h-6" src="./icons/333/进入.svg"
-                                                        alt="" srcset="" />
-                                                </div>
-                                                <div class="flex h-full justify-center ml-2 dark:text-zinc-200">
-                                                    登录
-                                                </div>
-                                                <div class="flex h-full flex-grow"></div>
-                                                <div
-                                                    class="flex h-full font-normal text-zinc-800 dark:text-zinc-400 truncate">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="flex w-full h-max hide" id="logout-sidebar-self-extra">
-                                            <div
-                                                class="flex w-full h-max px-4 py-2 hover:bg-purple-100 hover:font-bold dark:hover:bg-zinc-600">
-                                                <div class="flex h-full justify-center items-center">
-                                                    <img draggable="false" class="w-6 h-6" src="./icons/333/退出.svg"
-                                                        alt="" srcset="" />
-                                                </div>
-                                                <div class="flex h-full justify-center ml-2 dark:text-zinc-200">
-                                                    登出
-                                                </div>
-                                                <div class="flex h-full flex-grow"></div>
-                                                <div
-                                                    class="flex h-full font-normal text-zinc-800 dark:text-zinc-400 truncate">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="flex w-full h-max" id="register-sidebar-self-extra">
-                                            <div
-                                                class="flex w-full h-max px-4 py-2 hover:bg-purple-100 hover:font-bold dark:hover:bg-zinc-600">
-                                                <div class="flex h-full justify-center items-center">
-                                                    <img draggable="false" class="w-6 h-6" src="./icons/333/发送.svg"
-                                                        alt="" srcset="" />
-                                                </div>
-                                                <div class="flex h-full justify-center ml-2 dark:text-zinc-200">
-                                                    注册
                                                 </div>
                                                 <div class="flex h-full flex-grow"></div>
                                                 <div
@@ -837,8 +791,8 @@
                             <div class="flex text-3xl text-zinc-700 dark:text-zinc-400">请在"首页"中点击"上课"</div>
                         </div>
                     </div>
-                    <!-- rollCall-result -->
-                    <div class="flex w-full h-full py-2 columns-5xs gap-4 overflow-y-scroll" id="rollCall-result">
+                    <!-- rollCall-list -->
+                    <div class="flex w-full h-full py-2 columns-5xs gap-4 overflow-y-scroll" id="rollCall-list">
                         <!-- 已签到-未回答问题-按钮 -->
                         <div
                             class="flex p-1 m-1 w-48 h-max rounded-xl items-center bg-purple-200 bg-opacity-70 ring-1 ring-purple-500 hover:shadow-purple-300 hover:shadow-md
@@ -970,20 +924,17 @@
                                     <div class="flex w-2"></div>
                                 </div>
 
-                                <div class="flex items-center py-2">
+                                <!-- <div class="flex items-center py-2">
                                     <div class="flex text-lg pr-4 dark:text-zinc-300">
                                         优先抽取未回答问题的
                                     </div>
-                                    <!-- <div class="flex flex-grow"></div> -->
-
-                                    <!-- 滑块按钮 -->
                                     <div class="flex items-center justify-center">
                                         <input type="checkbox" class="toggle" id="randomSelection-priority-toggle" />
                                         <label for="randomSelection-priority-toggle"
                                             class="mx-10 hover:shadow-lg bg-zinc-400 dark:bg-zinc-800"></label>
                                     </div>
                                     <div class="flex w-2"></div>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                         <!-- 发起抽取 -->
@@ -1019,7 +970,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="flex w-full h-full py-2 columns-5xs gap-4 overflow-y-scroll" id="randomSelection-display">
+                        <div class="flex w-full h-full py-2 columns-5xs gap-4 overflow-y-scroll"
+                            id="randomSelection-display">
 
                             <!-- 抽取结果1 -->
                             <div
@@ -1095,9 +1047,40 @@
                             <!-- (unfinished) -->
                             <!-- message-container -->
                             <div class="flex flex-col max-w-full max-h-full h-16-to-full" id="message-container">
+                                <!-- 某无标识通知 -->
+                                <div
+                                    class="flex flex-col pt-4 px-4 rounded-lg min-w-0 hover:bg-zinc-100 dark:hover:bg-zinc-800 after:mt-2 after:h-px after:w-full after:bg-zinc-300 after:dark:bg-zinc-600">
+                                    <!-- 消息体 -->
+                                    <div class="flex pb-2 items-center min-w-0">
+                                        <!-- 状态图标 -->
+                                        <div
+                                            class="flex p-1 mr-8 min-w-fit min-h-fit rounded-xl bg-amber-300 hover:bg-amber-400 dark:bg-amber-600 dark:hover:bg-amber-500">
+                                            <img draggable="false" class="w-8 h-8 p-1" src="./icons/333/邮件.svg" />
+                                        </div>
+                                        <!-- 标题 -->
+                                        <div class="flex px-2 w-40">
+                                            <div class="truncate min-w-40 dark:text-zinc-300 font-bold message-title">
+                                                Debug
+                                            </div>
+                                        </div>
+                                        <!-- 内容简介 -->
+                                        <div class="flex min-w-0 max-w-94-to-full">
+                                            <div class="truncate dark:text-zinc-300 message-detail max-w-full">
+                                                This is a message for testing! It' s a common notice!
+                                                <a class="px-2 text-blue-400" href="./index.html">附件(点击跳转)</a>
+                                            </div>
+                                        </div>
+                                        <div class="flex flex-grow"></div>
+                                        <!-- 通知时间 -->
+                                        <div class="flex pl-4 w-36 min-w-max text-zinc-400">
+                                            2023/08/22 18:00
+                                        </div>
+                                    </div>
+                                </div>
+                                
                                 <!-- 某重要通知(未读) -->
                                 <div
-                                    class="flex flex-col pt-4 px-4 rounded-lg min-w-0 hover:bg-zinc-100 dark:hover:bg-zinc-800 after:mt-2 after:h-px after:w-full after:bg-zinc-300 after:dark:bg-zinc-600 importantNotice">
+                                    class="flex flex-col pt-4 px-4 rounded-lg min-w-0 hover:bg-zinc-100 dark:hover:bg-zinc-800 after:mt-2 after:h-px after:w-full after:bg-zinc-300 after:dark:bg-zinc-600 importantNotice hide">
                                     <!-- 消息体 -->
                                     <div class="flex pb-2 items-center min-w-0">
                                         <!-- 状态图标 -->
@@ -1133,7 +1116,7 @@
                                 </div>
                                 <!-- 某重要通知(已读) -->
                                 <div
-                                    class="flex flex-col pt-4 px-4 rounded-lg min-w-0 hover:bg-zinc-100 dark:hover:bg-zinc-800 after:mt-2 after:h-px after:w-full after:bg-zinc-300 after:dark:bg-zinc-600 importantNotice read">
+                                    class="flex flex-col pt-4 px-4 rounded-lg min-w-0 hover:bg-zinc-100 dark:hover:bg-zinc-800 after:mt-2 after:h-px after:w-full after:bg-zinc-300 after:dark:bg-zinc-600 importantNotice read hide">
                                     <!-- 消息体 -->
                                     <div class="flex pb-2 items-center min-w-0">
                                         <!-- 状态图标 -->
@@ -1167,7 +1150,7 @@
                                 </div>
                                 <!-- 某一般通知(未读) -->
                                 <div
-                                    class="flex flex-col pt-4 px-4 rounded-lg min-w-0 hover:bg-zinc-100 dark:hover:bg-zinc-800 after:mt-2 after:h-px after:w-full after:bg-zinc-300 after:dark:bg-zinc-600 commonNotice">
+                                    class="flex flex-col pt-4 px-4 rounded-lg min-w-0 hover:bg-zinc-100 dark:hover:bg-zinc-800 after:mt-2 after:h-px after:w-full after:bg-zinc-300 after:dark:bg-zinc-600 commonNotice hide">
                                     <!-- 消息内容 -->
                                     <div class="flex pb-2 items-center min-w-0">
                                         <!-- 状态图标 -->
@@ -1203,7 +1186,7 @@
                                 </div>
                                 <!-- 某一般通知(已读) -->
                                 <div
-                                    class="flex flex-col pt-4 px-4 rounded-lg min-w-0 hover:bg-zinc-100 dark:hover:bg-zinc-800 after:mt-2 after:h-px after:w-full after:bg-zinc-300 after:dark:bg-zinc-600 commonNotice read">
+                                    class="flex flex-col pt-4 px-4 rounded-lg min-w-0 hover:bg-zinc-100 dark:hover:bg-zinc-800 after:mt-2 after:h-px after:w-full after:bg-zinc-300 after:dark:bg-zinc-600 commonNotice read hide">
                                     <!-- 消息内容 -->
                                     <div class="flex pb-2 items-center min-w-0">
                                         <!-- 状态图标 -->
@@ -1237,7 +1220,7 @@
                                 </div>
                                 <!-- 某宣传通知(未读) -->
                                 <div
-                                    class="flex flex-col pt-4 px-4 rounded-lg min-w-0 hover:bg-zinc-100 dark:hover:bg-zinc-800 after:mt-2 after:h-px after:w-full after:bg-zinc-300 after:dark:bg-zinc-600 publicizeNotice">
+                                    class="flex flex-col pt-4 px-4 rounded-lg min-w-0 hover:bg-zinc-100 dark:hover:bg-zinc-800 after:mt-2 after:h-px after:w-full after:bg-zinc-300 after:dark:bg-zinc-600 publicizeNotice hide">
                                     <!-- 消息内容 -->
                                     <div class="flex pb-2 items-center min-w-0">
                                         <!-- 状态图标 -->
@@ -1273,7 +1256,7 @@
                                 </div>
                                 <!-- 某宣传通知(已读) -->
                                 <div
-                                    class="flex flex-col pt-4 px-4 rounded-lg min-w-0 hover:bg-zinc-100 dark:hover:bg-zinc-800 after:mt-2 after:h-px after:w-full after:bg-zinc-300 after:dark:bg-zinc-600 publicizeNotice read">
+                                    class="flex flex-col pt-4 px-4 rounded-lg min-w-0 hover:bg-zinc-100 dark:hover:bg-zinc-800 after:mt-2 after:h-px after:w-full after:bg-zinc-300 after:dark:bg-zinc-600 publicizeNotice read hide">
                                     <!-- 消息内容 -->
                                     <div class="flex pb-2 items-center min-w-0">
                                         <!-- 状态图标 -->

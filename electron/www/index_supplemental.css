@@ -205,7 +205,7 @@
 .dark #help-sidebar-self-extra img {
     content: url(./icons/d4d4d8/帮助中心.svg);
 }
-.dark #login-sidebar-self-extra img {
+/* .dark #login-sidebar-self-extra img {
     content: url(./icons/d4d4d8/进入.svg);
 }
 .dark #logout-sidebar-self-extra img {
@@ -213,7 +213,7 @@
 }
 .dark #register-sidebar-self-extra img {
     content: url(./icons/d4d4d8/发送.svg);
-}
+} */
 .dark .communication-message-body img {
     content: url(./icons/d4d4d8/人员.svg);
 }
@@ -258,6 +258,15 @@
 }
 .w-100-to-full{
     width: calc(100% - 25rem)/* 100% - 400px */;
+}
+.min-w-40{
+    width: calc(10rem)/* 100% - 160px */;
+}
+.max-w-94-to-full{
+    max-width: calc(100% - 23.5rem)/* 100% - 376px */;
+}
+.z-60{
+    z-index: 60;
 }
 .z-100{
     z-index: 100;
@@ -347,5 +356,3 @@
 
 
 /* homepage */
-
-
