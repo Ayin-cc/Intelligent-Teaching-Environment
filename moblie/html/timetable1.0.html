@@ -4,12 +4,22 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>动态生成 HTML 元素</title>
+		<title>ITE-课表</title>
 		<link href="../css/output.css" rel="stylesheet" />
 		<script src="../js/jquery-3.7.1.min.js"></script>
 		<script src="../js/cookie-utils.js"></script>
 		<script>
+			var student;
 			$(document).ready(function () {
+				// 检测cookie信息
+				checkCookie(student);
+				// 使用学生对象替换页面中的值
+				function change_inf() {
+					const stdName = document.getElementById('name-profile');
+					const stdID = document.getElementById('number-profile');
+					stdName.textContent = student.name;
+					stdID.textContent = student.sid;
+				}
 			})
 		</script>
 	</head>
@@ -21,18 +31,17 @@
 				<!-- 头像栏 -->
 				<div class="flex items-center justify-center max-w-xs p-2 rounded-lg resizable">
 					<!-- 头像框 -->
-					<div class="flex w-8 h-10 mx-4 overflow-hidden rounded-full" id="photo-profile-sidebarBottom">
+					<div class="flex w-8 h-10 mx-4 overflow-hidden rounded-full" id="photo-profile">
 						<img draggable="false" src="../icons/用户.svg" alt="" />
 					</div>
 					<div>
 						<!-- 姓名 -->
-						<div class="flex flex-grow mx-6 overflow-hidden select-none" id="name-profile-sidebarBottom">
+						<div class="flex flex-grow mx-6 overflow-hidden select-none" id="name-profile">
 							XYCF
 						</div>
 
 						<!-- 学号 -->
-						<div class="flex flex-grow py-1 overflow-hidden text-xs select-none"
-							id="number-profile-sidebarBottom">
+						<div class="flex flex-grow py-1 overflow-hidden text-xs select-none" id="number-profile">
 							2022xxxxxxxxx
 						</div>
 					</div>
@@ -81,6 +90,8 @@
 		</div>
 	</body>
 	<script type="text/javascript">
+
+
 		// 判断日期是否在本周
 		function isCurrentWeek(past) {
 			const pastTime = new Date(past).getTime()
@@ -122,8 +133,8 @@
 
 		// 获取课表数据
 		function getCourse() {
-			//const sid = getCookie("sid");
-			const sid = "学生1";
+			// const sid = getCookie("sid");
+			const sid = "t1";
 			console.log(sid);
 			$.ajax({
 				type: "POST",

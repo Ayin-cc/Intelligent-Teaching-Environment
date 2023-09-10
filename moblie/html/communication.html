@@ -10,8 +10,16 @@
 		<script src="../js/cookie-utils.js"></script>
 		<script>
 			var student;
-
 			$(document).ready(function () {
+				// 检测cookie信息
+				checkCookie(student);
+				// 使用学生对象替换页面中的值
+				function change_inf() {
+					const stdName = document.getElementById('name-profile');
+					const stdID = document.getElementById('number-profile');
+					stdName.textContent = student.name;
+					stdID.textContent = student.sid;
+				}
 				// keepAlive
 				function keepAlive(callback) {
 					setTimeout(function () {
@@ -38,20 +46,7 @@
 				}
 				keepAlive(k);
 
-				// 检测cookie信息
-				if (document.cookie) {
-					// 跳转登录
-					window.location.href("LOGIN_.html")
-				}
-				else {
-					// 获取学生对象
-					if (sessionStorage.getItem("Student") == "") {
-						var studentObj = getStudent(getCookie("userId"));
-						sessionStorage.setItem("Student", JSON.stringify(studentObj));
-					}
-					student = sessionStorage.getItem("Student");
-				}
-				// 使用学生对象替换页面中的值
+
 			})
 		</script>
 	</head>
@@ -63,16 +58,15 @@
 				<!-- 头像栏 -->
 				<div class="flex items-center justify-center max-w-xs p-2rounded-lg resizable ">
 					<!-- 头像框 -->
-					<div class="flex w-8 h-10 mx-4 my-3 overflow-hidden rounded-full " id="photo-profile-sidebarBottom">
+					<div class="flex w-8 h-10 mx-4 my-3 overflow-hidden rounded-full " id="photo-profile">
 						<img draggable="false" src="../icons/用户.svg" alt="" />
 					</div>
 					<div>
-						<div class="flex flex-grow mx-6 overflow-hidden select-none" id="name-profile-sidebarBottom">
+						<div class="flex flex-grow mx-6 overflow-hidden select-none" id="name-profile">
 							XYCF
 						</div>
 
-						<div class="flex flex-grow py-1 overflow-hidden text-xs select-none"
-							id="number-profile-sidebarBottom">
+						<div class="flex flex-grow py-1 overflow-hidden text-xs select-none" id="number-profile">
 							2022xxxxxxxxx
 						</div>
 					</div>
@@ -89,7 +83,7 @@
 
 		<div class="flex flex-col w-screen h-full overflow-y-scroll mb-14 bg-zinc-100" id="chat-container">
 			<!-- 消息1 -->
-			<div class="flex flex-col w-screen my-2">
+			<!-- <div class="flex flex-col w-screen my-2">
 				<div class="flex justify-center w-full py-2 text-xs text-zinc-600">
 					8:15
 				</div>
@@ -107,9 +101,9 @@
 						</div>
 					</div>
 				</div>
-			</div>
+			</div> -->
 			<!-- 消息2 -->
-			<div class="flex flex-col w-screen my-2">
+			<!-- <div class="flex flex-col w-screen my-2">
 				<div class="flex justify-center w-full py-2 text-xs text-zinc-600">
 					8:16
 				</div>
@@ -124,7 +118,7 @@
 						<img draggable="false" class="w-8 h-8" src="../icons/333/人员.svg">
 					</div>
 				</div>
-			</div>
+			</div> -->
 		</div>
 		<!-- 底部输入框 -->
 		<div class="fixed bottom-0 flex items-center w-screen p-2 shadow-2xl shadow-slate-800">
