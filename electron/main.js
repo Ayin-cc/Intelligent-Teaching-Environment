@@ -1,8 +1,8 @@
 // BrowserWindow控制应用生命周期和创建原生浏览器窗口的模块
 // Tray创建托盘
-const { app, BrowserWindow, Menu, Tray, ipcMain, Notification } = require('electron')
+const { app, BrowserWindow, Menu, Tray, ipcMain, Notification, shell } = require('electron')
 const path = require('path')
-const qrcode = require('qrcode');
+// const qrcode = require('qrcode');
 const fs = require('fs');
 
 // 全局变量
@@ -209,34 +209,34 @@ function setupIPCListeners() {
         }
     });
     // 生成二维码
-    ipcMain.on('generateQRCode', (event, imagePath, code, duration, frequency) => {
-        // 设置定时器，生成QRCode
-        var interval = setInterval(function () {
-            qrcode.toFile(imagePath, code, {
-                color: {
-                    dark: '#000',  // QR 码颜色
-                    light: '#fff'  // 背景颜色
-                },
-                correctLevel: 'H', // 纠错级别，可选值：L, M, Q, H;分别表示低、中、高和最高纠错级别
-                width: 2160, // 设置宽度
-                height: 2160, // 设置高度
-                margin: 1, // 边距，1代表一个黑(白)方块
-            }, (err) => {
-                if (err) {
-                    event.sender.send('generationError', err.message);
+    // ipcMain.on('generateQRCode', (event, imagePath, code, duration, frequency) => {
+    //     // 设置定时器，生成QRCode
+    //     var interval = setInterval(function () {
+    //         qrcode.toFile(imagePath, code, {
+    //             color: {
+    //                 dark: '#000',  // QR 码颜色
+    //                 light: '#fff'  // 背景颜色
+    //             },
+    //             correctLevel: 'H', // 纠错级别，可选值：L, M, Q, H;分别表示低、中、高和最高纠错级别
+    //             width: 2160, // 设置宽度
+    //             height: 2160, // 设置高度
+    //             margin: 1, // 边距，1代表一个黑(白)方块
+    //         }, (err) => {
+    //             if (err) {
+    //                 event.sender.send('generationError', err.message);
 
-                } else {
-                    event.sender.send('generationSuccess', imagePath);
-                }
-            });
-        }, frequency * 1000);
-        // 在指定的持续时间之后清除定时器
-        setTimeout(function () {
-            clearInterval(interval); // 清除定时器
-        }, duration * 1000);
+    //             } else {
+    //                 event.sender.send('generationSuccess', imagePath);
+    //             }
+    //         });
+    //     }, frequency * 1000);
+    //     // 在指定的持续时间之后清除定时器
+    //     setTimeout(function () {
+    //         clearInterval(interval); // 清除定时器
+    //     }, duration * 1000);
 
 
-    });
+    // });
     // 生成、销毁QRCode子窗口
     ipcMain.on('QRCodeWindow', function (event, message) {
         if (message == 'create-window') {
@@ -272,6 +272,8 @@ function setupIPCListeners() {
         });
         notification.show();
     });
-
+    ipcMain.on('openExternal', function(event, url){
+        shell.openExternal(url);
+    });
 
 }   
