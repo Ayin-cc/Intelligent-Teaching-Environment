@@ -57,8 +57,10 @@ public class AdministratorServiceImpl implements AdministratorService{
             course.setTeacher("教师" + i);
             course.setStartSection(1);
             course.setEndSection(12);
-            System.out.println(course.toString());
             addCourse("", course);
+            for (int j = 0; j < course.getStudents().size(); j++) {
+                administratorDao.addStudentToCourse(course.getCourseId(), course.getStudents().get(j).getSid());
+            }
         }
 
         return "success";
