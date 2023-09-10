@@ -75,6 +75,10 @@
 			function login() {
 				const userId = document.getElementById("username");
 				const passwd = document.getElementById("password");
+				if (userId == '' || passwd == '') {
+					alert("学号或密码不能为空！");
+					return;
+				}
 				$.ajax({
 					type: "POST",
 					dataType: "json",
@@ -97,8 +101,8 @@
 				const userId = document.getElementById("username").value;
 				const passwd = document.getElementById("password").value;
 				const passwdConfirm = document.getElementById("password-confirm").value;
-				if (passwd == '') {
-					alert("密码不能为空！");
+				if (userId =='' || passwd == '') {
+					alert("学号或密码不能为空！");
 					return;
 				} else if (passwd != passwdConfirm) {
 					alert("密码不一致！");
@@ -139,7 +143,7 @@
 					// reset_password.classList.add('hidden');
 				}
 			}
-
+			// 注册按钮
 			sign_button.addEventListener('click', () => {
 				event.preventDefault();
 				if (log_sin_status == 1) {
@@ -148,6 +152,7 @@
 					log_button.classList.add('hidden');
 				} else register();
 			});
+			// 登录按钮
 			log_button.addEventListener('click', () => {
 				event.preventDefault();
 				/*
