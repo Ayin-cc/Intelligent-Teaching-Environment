@@ -6,7 +6,7 @@ var student = JSON.parse(decodeURIComponent(jsonData))
 
 
 // 在控制台输出接收到的数据
-console.log(student);
+//console.log(student);
 
 //设置默认值            
 const dSid = document.getElementById(0)
@@ -24,20 +24,22 @@ dPhone.placeholder = student.phone
 //修改
 const btn = document.getElementById('addStudent')
 btn.addEventListener('click',function(){
-    const Sid = document.getElementById(0).value
-    const Name = document.getElementById(1).value
-    const Major = document.getElementById(2).value
-    const College = document.getElementById(3).value
-    const Phone = document.getElementById(6).value
+    const sid = document.getElementById(0).value
+    const name = document.getElementById(1).value
+    const major = document.getElementById(2).value
+    const college = document.getElementById(3).value
+    const phone = document.getElementById(6).value
+    const token = student.token
     const Student = {
-        Sid,
-        Name,
-        Major,
-        College,
-        Phone
+        sid,
+        name,
+        major,
+        college,
+        phone,
+        token
     }
     
-    const url = /SCUEE/changeStudent
+    const url = "http://162.14.107.35/SCUEE/administrator/changeStudent"
     fetch(url, {
         method: 'POST',
         headers: {
@@ -52,10 +54,12 @@ btn.addEventListener('click',function(){
         return response.json();
         })
         .then(data => {
-            const Data = JSON.parse(decodeURIComponent(data))
-            console.log('成功保存数据:', Data);
-            alert('修改成功')
-            window.history.back()
+            if(data == 1){
+                alert("操作成功")
+                window.history.back();
+            }else{
+                alert("后端操作失败")
+            }
         })
         .catch(error => {
         console.error('发生错误:', error);

@@ -24,13 +24,15 @@ button.addEventListener('click', function(){
     const courseNum = document.getElementById(0).value
     const courseName = document.getElementById(1).value
     const teacher = document.getElementById(2).value
+    const token = course.token
     const Course = {
         courseNum,
         courseName,
-        teacher
+        teacher,
+        token
     }
 
-    const url = /SCUEE/changeCourse
+    const url = "http://162.14.107.35/SCUEE/administrator//changeCourse"
     fetch(url, {
         method: 'POST',
         headers: {
@@ -45,10 +47,12 @@ button.addEventListener('click', function(){
         return response.json();
         })
         .then(data => {
-            const Data = JSON.parse(decodeURIComponent(data))
-            console.log('成功保存数据:', Data);
-            alert('修改成功')
-            window.history.back()
+            if(data == 1){
+                alert("操作成功")
+                window.history.back();
+            }else{
+                alert("后端操作失败")
+            }
         })
         .catch(error => {
         console.error('发生错误:', error);

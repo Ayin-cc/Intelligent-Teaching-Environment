@@ -6,6 +6,7 @@
     <title>修改学生信息</title>
 </head>
 <body>
+    <button id="back">返回</button>
     <div class="propertyInput">
 
         <div>学号</div>
@@ -30,7 +31,12 @@
         </div>
         <button id="addStudent">修改</button>
     </div>
-
+    <script>
+        const back = document.getElementById('back')
+        back.addEventListener('click',function(){
+            window.history.back()
+        })
+    </script>
     <!-- <script>const url = /SCUEE/changeStudent</script> -->
     <script src="../js/changeS.js"></script>
 </body>

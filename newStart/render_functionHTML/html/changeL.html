@@ -6,6 +6,7 @@
     <title>修改课程信息</title>
 </head>
 <body>
+    <button id="back">返回</button>
     <div class="propertyInput">
 
         <div>课程号</div>
@@ -23,7 +24,12 @@
         <button id="butchange">确定修改</button>
         
     </div>
-
+    <script>
+        const back = document.getElementById('back')
+        back.addEventListener('click', function(){
+            window.history.back()
+        })
+    </script>
     <script src="../js/changeL.js"></script>
 </body>
 </html>

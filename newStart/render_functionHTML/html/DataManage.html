@@ -7,19 +7,33 @@
 </head>
 <body>
     <div class="btn-box classroom">
-      <a href="classromlassroom.html" target="iframe">
+      <a target="iframe" id="classroom">
           <div class="btn-name">教室信息管理</div>
       </a>
     </div>
     <div class="btn-box lesson">
-      <a href="lessonesson.html" target="iframe">
+      <a  target="iframe" id="lesson">
           <div class="btn-name">课程信息管理</div>
       </a>
     </div>
     <div class="btn-box lesson">
-      <a href="studenttudent.html" target="iframe">
+      <a  target="iframe" id="student">
           <div class="btn-name">学生信息管理</div>
       </a>
     </div>
+    <script>
+      var urlParams = new URLSearchParams(window.location.search);
+      var token = urlParams.get('data');
+
+      const classroom = document.getElementById('classroom')
+      const lesson = document.getElementById('lesson')
+      const student = document.getElementById('student')
+      
+      classroom.href = "classroom.html?data=" + encodeURIComponent(token)
+      lesson.href = "lesson.html?data=" + encodeURIComponent(token)
+      student.href = "student.html?data=" + encodeURIComponent(token)
+
+
+    </script>
 </body>
 </html>

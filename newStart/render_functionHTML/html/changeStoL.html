@@ -6,6 +6,7 @@
     <title>修改学生到课程</title>
 </head>
 <body>
+    <button id="back">返回</button>
     <div class="studentInput">
         <div>输入学生信息</div>
         <div>学号</div>
@@ -32,6 +33,12 @@
     </div>
     <button id="AStoL">添加</button>
     <button id="DStoL">删除</button>
+    <script>
+        const back = document.getElementById('back')
+        back.addEventListener('click',function(){
+            window.history.back()
+        })
+    </script>
     <script src="../js/changeStoL.js"></script>
 </body>
 </html>
