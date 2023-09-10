@@ -3,15 +3,24 @@ var isLogin = 0;
 var isClassPeriod = 0;
 var isClassStarted = 0;
 // 课程表
-var currentSection = 0; // 在updateHomepageScheduleDisplay()中，下课切换回'0'有'1分钟'延时 可以Ctrl+f 查找'1 * 60 *1000'
+var currentSection = 0; // 在updateHomepageScheduleDisplay()中
+var currentCourseIndex = 0;
 var scheduleHomepageFlag = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]; // 1为无课 0为有课s
 var continuousClasses = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]; // （还有，不包括现在）0为无 1为一节课 2为连续两节……  // 比如1~3的微积分[2,1,0,……]
+var endTimeClasses = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+var courseStartTime = ['08:15', '09:10', '10:15', '11:10', '13:50', '14:45', '15:40', '16:45', '17:40', '19:20', '20:15', '21:10'];
+var courseEndTime = ['09:00', '09:55', '11:00', '11:55', '14:35', '15:30', '16:25', '17:30', '18:25', '20:25', '21:00', '21:55'];
 var studentAnswersNum = []; // 在initializeSignIn()中定义的数组，若不为[]，则-1表示缺勤，0表示到但未回答问题，1,2,3……表示回答次数
-
+// 
+var cid = null;
+var uids = [null, null, null, null, null, null, null, null, null, null, null, null];
 var initializeData = null;
 var saveData = null;
+
 var students = null;
 var chatMessage = null;
+var newMessage = null;
+var token = null;
 
 // ==================================================
 // 当纯 HTML 被完全加载以及解析时
@@ -58,8 +67,8 @@ document.addEventListener("DOMContentLoaded", function () {
 // 初始化
 // ==================================================
 function initializeWeb() {
-    initializeStaticData()
-    initializeSave();
+    initializeStaticData(); // 在其中调用初始化动态数据
+    initializeMessage();
 }
 // 初始化静态数据
 function initializeStaticData() {
@@ -69,6 +78,7 @@ function initializeStaticData() {
         .then(data => {
             initializeData = data;
             // 在这里可以操作获取到的 JSON 数据
+            initializeSave();
         })
         .catch(error => {
             // 处理错误
@@ -81,7 +91,21 @@ function initializeStaticData() {
 // 读取数据
 // (unfinished)
 function initializeSave() {
-    // 
+    cid = initializeData["classroom"]["cid"];
+    // 初始化Token
+    $.ajax({
+        type: "POST",
+        dataType: "json",
+        url: 'http://162.14.107.35/SCUEE/Classroom/refreshToken',
+        contentType: "application/json",
+        data: JSON.stringify({ "cid": cid }),
+        success: function (result) {
+            if (result != "") {
+                token = result.token;
+            }
+        }
+    });
+
     fetch('./save/courses.json')
         .then(response => response.json())
         .then(data => {
@@ -89,8 +113,7 @@ function initializeSave() {
             console.log(data)
             saveData = data;
             // 在这里可以操作获取到的 JSON 数据 
-            initializeSaveHomepage()
-
+            initializeSaveHomepage();
         })
         .catch(error => {
             // 处理错误
@@ -104,15 +127,45 @@ function initializeSave() {
             console.log(data)
             chatMessage = data;
             // 在这里可以操作获取到的 JSON 数据 
-            initializeSaveHomepage()
 
         })
         .catch(error => {
             // 处理错误
             console.error('初始化动态数据出错：' + ' 获取交流消息时出错/n', error);
         });
+    // 
+    fetch('./save/message.json')
+        .then(response => response.json())
+        .then(data => {
+            console.log('message.json:');
+            console.log(data)
+            newMessage = data;
+            // 在这里可以操作获取到的 JSON 数据 
 
+        })
+        .catch(error => {
+            // 处理错误
+            console.error('初始化动态数据出错：' + ' 获取消息时出错/n', error);
+        });
+    // 初始化课表
+    $.ajax({
+        type: "POST",
+        dataType: "json",
+        url: 'http://162.14.107.35/SCUEE/Classroom/initCourseSchedule',
+        contentType: "application/json",
+        data: JSON.stringify({ "cid": cid }),
+        success: function (result) {
+            if (result != "") {
+                console.log('CourseSchedule: ' + result);
+                // saveData = result;
+            }
+        }
+    });
+    // $.ajex({
+
+    // })
 }
+
 function initializeSaveHomepage() {
     var courseCount = saveData.length;
     var scheduleHomepageDetail = $('#schedule-homepage').children().eq(0).children();
@@ -123,6 +176,7 @@ function initializeSaveHomepage() {
             scheduleHomepageFlag[j] = 1;
             scheduleHomepageDetail.eq(j).children().eq(1).text(saveData[i]['name']);
             scheduleHomepageDetail.eq(j).children().eq(3).text(saveData[i]['teacher']);
+            uids[j] = saveData[i]['courseId'];
         }
         var continuousCount = endSection - startSection;
         for (var j = continuousCount; j > 0; j--) {
@@ -131,10 +185,14 @@ function initializeSaveHomepage() {
 
     }
     for (var i = 0; i < 12; i++) {
+        if (scheduleHomepageFlag[i] == 1) {
+            endTimeClasses[i] = i + continuousClasses[i] + 1;
+        }
         if (scheduleHomepageFlag[i] == 0) {
             scheduleHomepageDetail.eq(i).children().eq(1).text('无课程');
             scheduleHomepageDetail.eq(i).children().eq(3).text('无');
         }
+
     }
 }
 
@@ -143,6 +201,7 @@ function initializeSaveHomepage() {
 // ==================================================
 function updateWeb() {
     webListener();
+    renewMessage();
 }
 // 主要监听事件
 function webListener() {
@@ -444,6 +503,18 @@ function webListener() {
             this.classList.add('dark:before:bg-purple-400');
         });
     });
+
+    // 为每个 <a> 标签添加点击事件处理程序
+    var a_links = document.querySelectorAll('a');
+    a_links.forEach(link => {
+        link.addEventListener('click', (event) => {
+            event.preventDefault();
+            var url = link.getAttribute('href');
+            // 发送 IPC 事件通知主进程打开链接
+            // ipcRenderer.send('openExternal', url);
+        });
+    });
+
 }
 
 // ==================================================
@@ -804,6 +875,7 @@ function updateHomepageScheduleDisplay() {
 
 
 }
+
 // 开始上课
 // (unfinished)
 function classStartHomepage() {
@@ -827,6 +899,8 @@ function classStartHomepage() {
             initializeRollCall();
             initializeRandomSelection();
             initializeCommunication();
+            updateRightClickBox();
+            updateUid();
 
         } else if (isClassStarted == 1) {
             isClassStarted = 0;
@@ -839,10 +913,47 @@ function classStartHomepage() {
             for (var i = 0; i < unstartMasks.length; i++) {
                 unstartMasks[i].classList.remove('hidden');
             }
-
-        }   // 关闭功能
+            // 关闭功能
+            // students = null;
+            // chatMessage = null;
+        }
     });
 
+}
+// #rightClick-box
+// (unfinished)
+function updateRightClickBox() {
+    var rightClickBox = $('#rightClick-box');
+    var studentBtns = $('#signIn-display').children();
+    studentBtns.each(function () {
+        var btn = $(this);
+        btn.on('contextmenu', function (event) {
+            // 怪
+            rightClickBox.children(0).children().eq(0).text('签到');
+            rightClickBox.children(0).children().eq(1).text('取消签到');
+            event.preventDefault(); // 阻止默认的右键菜单行
+            // 在这里添加右键事件处理逻辑
+            // 获取鼠标位置
+            const mouseX = event.clientX;
+            const mouseY = event.clientY;
+            rightClickBox.css({
+                left: mouseX + 'px',
+                top: mouseY + 'px',
+            });
+            rightClickBox.removeClass('flex ring-2 hide opacity-0');
+
+            $(document).on('click.rightClickBox', function (event) {
+                if (!$(event.target).closest('#rightClick-box').length) {
+                    rightClickBox.addClass('flex ring-2 hide opacity-0');
+                    $(document).off('click.rightClickBox'); // 移除事件监听器
+                }
+            });
+
+        });
+    });
+
+}
+function updateUid() {
 }
 // ==================================================
 // 签到
@@ -860,54 +971,46 @@ function updateSignIn() {
 // 初始化，在"classStartHomepage()"中调用
 function initializeSignIn() {
     // 目前有课
+    $('#signIn-display').empty();
     if (scheduleHomepageFlag[currentSection - 1] == 1) {
         var courseCount = saveData.length;
         for (var i = 0; i < courseCount; i++) {
             var startSection = saveData[i]['startSection'];
             var endSection = saveData[i]['endSection'];
             if ((startSection <= currentSection) && (currentSection <= endSection)) {
+                currentCourseIndex = i;
                 students = saveData[i]['students'];
                 // 初始化变量
                 // 定义学生回答次数
                 if (saveData[i]['students'].length > 0) {
-                    studentAnswersNum = new studentAnswersNumay(saveData[i]['students'].length).fill(-1);
+                    studentAnswersNum = new Array(saveData[i]['students'].length).fill(-1);
+                    for (var j = 0; j < studentAnswersNum.length; j++) {
+                        updateSignInList(saveData[i]['students'][j]['name'], saveData[i]['students'][j]['sid']);
+                    }
+
                 } else {
-                    studentAnswersNum = new studentAnswersNumay(1).fill(-1);
+                    studentAnswersNum = new Array(1).fill(-2);
+                    updateSignInList('没有检测到学生', '提醒消息');
                 }
-                updateSignInList(students)
+
             }
         }
     } else { // 目前没课
-        var signInDisplay = $('#signIn-display');
-        signInDisplay.empty();
-        var newElements = '';
-        var studentBefore = `<div class="flex p-1 m-1 w-48 h-max rounded-xl items-center bg-zinc-200 bg-opacity-70 hover:shadow-zinc-300 hover:shadow-md dark:bg-zinc-800 dark:ring-zinc-500 dark:hover:ring-4 dark:hover:shadow-none dark:hover:ring-red-700"><div class="flex flex-col p-3 w-full rounded-lg items-center bg-zinc-200 dark:bg-zinc-900 dark:hover:bg-zinc-800"><div class="flex w-full h-8 items-center relative"><div class="flex max-w-full min-w-full py-1 px-2 rounded-lg truncate hover:absolute hover:ring-1 hover:ring-red-400 hover:max-w-max hover:z-50 hover:left-0 hover:bg-zinc-200 bg-opacity-100 dark:text-zinc-300 dark:hover:bg-zinc-700 dark:hover:ring-zinc-500"><div class="flex flex-grow"></div><div class="flex select-all">`
-        var studentMiddle = `</div><div class="flex flex-grow"></div></div></div><div class="flex w-full justify-center text-sm text-zinc-700 dark:text-red-400 select-all">`
-        var studentAfter = `</div></div></div>`
-        var newElement = studentBefore + '没有检测到学生' + studentMiddle + '提醒消息' + studentAfter;
-        newElements += newElement;
-        signInDisplay.append(newElements);
+        $('#signIn-display').empty();
+        updateSignInList('目前没课', '提醒消息');
     }
-}
-function updateSignInList(students) {
-    var newElements = '';
-    // 定义标签
-    var studentBefore = `<div class="flex p-1 m-1 w-48 h-max rounded-xl items-center bg-zinc-200 bg-opacity-70 hover:shadow-zinc-300 hover:shadow-md dark:bg-zinc-800 dark:ring-zinc-500 dark:hover:ring-4 dark:hover:shadow-none dark:hover:ring-red-700"><div class="flex flex-col p-3 w-full rounded-lg items-center bg-zinc-200 dark:bg-zinc-900 dark:hover:bg-zinc-800"><div class="flex w-full h-8 items-center relative"><div class="flex max-w-full min-w-full py-1 px-2 rounded-lg truncate hover:absolute hover:ring-1 hover:ring-red-400 hover:max-w-max hover:z-50 hover:left-0 hover:bg-zinc-200 bg-opacity-100 dark:text-zinc-300 dark:hover:bg-zinc-700 dark:hover:ring-zinc-500"><div class="flex flex-grow"></div><div class="flex select-all">`
-    var studentMiddle = `</div><div class="flex flex-grow"></div></div></div><div class="flex w-full justify-center text-sm text-zinc-700 dark:text-red-400 select-all">`
-    var studentAfter = `</div></div></div>`
 
-    var studentNum = students.length;
-    for (var i = 0; i < studentNum; i++) {
-        var studentName = students[i]['name'];
-        var studentId = students[i]['sid'];
-        var newElement = studentBefore + studentName + studentMiddle + studentId + studentAfter;
-        newElements += newElement;
-    }
-    // 先清空，再添加
-    var signInDisplay = $('#signIn-display');
-    signInDisplay.empty();
-    signInDisplay.append(newElements);
 }
+
+function updateSignInList(name, sid) {
+    var signIn_1st = `<div class="flex p-1 m-1 w-48 h-max rounded-xl items-center bg-zinc-200 bg-opacity-70 hover:shadow-zinc-300 hover:shadow-md dark:bg-zinc-800 dark:ring-zinc-500 dark:hover:ring-4 dark:hover:shadow-none dark:hover:ring-red-700"><div class="flex flex-col p-3 w-full rounded-lg items-center bg-zinc-200 dark:bg-zinc-900 dark:hover:bg-zinc-800"><div class="flex w-full h-8 items-center relative"><div class="flex max-w-full min-w-full py-1 px-2 rounded-lg truncate hover:absolute hover:ring-1 hover:ring-red-400 hover:max-w-max hover:z-50 hover:left-0 hover:bg-zinc-200 bg-opacity-100 dark:text-zinc-300 dark:hover:bg-zinc-700 dark:hover:ring-zinc-500"><div class="flex flex-grow"></div><div class="flex select-all">`
+    var signIn_2nd = `</div><div class="flex flex-grow"></div></div></div><div class="flex w-full justify-center text-sm text-zinc-700 dark:text-red-400 select-all">`
+    var signIn_3rd = `</div></div></div>`
+    var newElement = signIn_1st + String(name) + signIn_2nd + String(sid) + signIn_3rd;
+    $('#signIn-display').append(newElement);
+
+}
+
 // 更新滑动条显示数字
 function updateInputTangeSignIn() {
     // 输入后改数字
@@ -1075,16 +1178,31 @@ function signInContinuing() {
             }
         }, 1000);
     }
-
-
     updateQRCodeSignInContinuing(duration, frequency);
 }
 // debug测试用的功能
 // 以后会改，尤其是处理网址，加密等等
 function updateQRCodeSignInContinuing(duration, frequency) {
-    var code = '1234567890';
-    var imagePath = './www/img/qrcode/qrcode_signIn_students.png'; // 相对于main.js的path
-    window.ipcRenderer.send('generateQRCode', imagePath, code, duration, frequency);
+    // 定义签到最终结束时间
+    var endTime;
+    if (currentSection != 0) {
+        endTime = courseEndTime[currentSection - 1];
+        var url = 'http://162.14.107.35/SCUEE/QRCode/get?' + endTime;
+        // 
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            url: url,
+            contentType: "application/json",
+            data: JSON.stringify({ "token": token, "cid": cid }),
+            success: function (result) {
+                if (result != "") {
+                    console.log(result);
+                }
+            }
+        })
+    }
+
     // 是否放大
     var qrcodeContainer = document.getElementById('qrcode-container');
     qrcodeContainer.addEventListener('click', function () {
@@ -1093,10 +1211,9 @@ function updateQRCodeSignInContinuing(duration, frequency) {
 }
 
 // 签到结束
-// (unfinished) 
+// (unfinished) 没有更新，没有右键更改签到情况
 function signInFinished() {
     var signInSelect = document.getElementById('signIn-select');
-    var signInInterface = document.getElementById('signIn-interface');
     var signInResult = document.getElementById('signIn-result');
 
     var signInReturnBtn = document.getElementById('signIn-return-btn');
@@ -1105,6 +1222,47 @@ function signInFinished() {
         signInResult.classList.add('hide');
         signInSelect.classList.remove('hide');
     });
+    var studentElements = $('#signIn-display').children();
+    studentElements.each(function (index, element) {
+        // 为每个子节点添加右键菜单监听器
+        $(element).on('contextmenu', function (e) {
+            e.preventDefault(); // 阻止默认的右键菜单行为
+            // 显示自定义的右键菜单，可以根据需要自定义菜单内容
+            $('#rightClick-box').children().eq(0).html(`<div class="flex px-4 py-1 justify-center items-center text-zinc-700 hover:bg-zinc-100 dark:text-zinc-300 dark:hover:bg-zinc-600">签到</div>
+            <div class="flex px-4 py-1 justify-center items-center text-zinc-700 hover:bg-zinc-100 dark:text-zinc-300 dark:hover:bg-zinc-600">取消签到</div>`);
+            var rightClickBox_1st = $('#rightClick-box').children().eq(0).children().eq(0);
+            var rightClickBox_2nd = $('#rightClick-box').children().eq(0).children().eq(1);
+            rightClickBox_1st.on('click', function (e) {
+                // (unfinished)没有教师端签到的端口
+
+                console.log('签到');
+
+                $.ajax({
+                    type: "POST",
+                    dataType: "json",
+                    url: 'http://162.14.107.35/SCUEE/QRCode/update',
+                    contentType: "application/json",
+
+                    data: JSON.stringify({ "token": token, "cid": cid }),
+                    success: function (result) {
+                        if (result != "") {
+                            console.log(result);
+                        }
+                    }
+                })
+                rightClickBox_1st.off('click');
+                rightClickBox_2nd.off('click');
+            });
+            rightClickBox_2nd.on('click', function (e) {
+                // (unfinished)没有教师端取消签到的端口
+                console.log('取消签到');
+                rightClickBox_1st.off('click');
+                rightClickBox_2nd.off('click');
+
+            });
+        });
+    });
+
 }
 
 // ==================================================
@@ -1118,31 +1276,23 @@ function updateRollCall() {
 function initializeRollCall() {
     // 目前有课
     if (scheduleHomepageFlag[currentSection - 1] == 1) {
-        var courseCount = saveData.length;
-        for (var i = 0; i < courseCount; i++) {
-            var startSection = saveData[i]['startSection'];
-            var endSection = saveData[i]['endSection'];
-            if ((startSection <= currentSection) && (currentSection <= endSection)) {
-                students = saveData[i]['students'];
-                updateRollCallList(students)
-            }
-        }
+        replaceRollCallList();
+        rollCall();
+
     } else { // 目前没课
-        var rollCallResult = $('#rollCall-result');
-        rollCallResult.empty();
+        var rollCallList = $('#rollCall-list');
+        rollCallList.empty();
         var newElements = '';
         var beforeStudentName = `<div class="flex p-1 m-1 w-48 h-max rounded-xl items-center bg-zinc-200 bg-opacity-70 hover:shadow-zinc-300 hover:shadow-md dark:bg-zinc-800 dark:ring-zinc-500 dark:hover:ring-2 dark:hover:shadow-none"><div class="flex p-3 w-full rounded-lg items-center bg-zinc-200 dark:bg-zinc-900 dark:hover:bg-zinc-800"><div class="flex p-1 w-28 rounded-md text-lg text-zinc-800 truncate hover:overflow-visible hover:min-w-max hover:bg-zinc-200 bg-opacity-100 dark:text-zinc-500 dark:hover:text-zinc-300 dark:hover:bg-zinc-800 hover:ring-1 ring-zinc-500 hover:z-50 hover:absolute">`
         var afterStudentName = `</div><div class="flex flex-grow"></div><div class="flex w-0.5 h-5 bg-zinc-500 bg-opacity-50 dark:bg-zinc-300"></div><div class="flex flex-row-reverse min-w-max w-6 h-9 pl-2 items-center text-red-700 dark:text-red-800">`
         var afterAnswerCount = `</div></div></div>`
         var newElement = beforeStudentName + '提醒消息：没有检测到当前的学生' + afterStudentName + '无' + afterAnswerCount;
         newElements += newElement;
-        rollCallResult.append(newElements);
-
-
-
+        rollCallList.append(newElements);
+        rollCall();
     }
 }
-function updateRollCallList(students) {
+function replaceRollCallList() {
     var newElements = '';
     // 定义名字前后的标签
     var absent_1st = `<div class="flex p-1 m-1 w-48 h-max rounded-xl items-center bg-zinc-200 bg-opacity-70 hover:shadow-zinc-300 hover:shadow-md dark:bg-zinc-800 dark:ring-zinc-500 dark:hover:ring-2 dark:hover:shadow-none"><div class="flex p-3 w-full rounded-lg items-center bg-zinc-200 dark:bg-zinc-900 dark:hover:bg-zinc-800"><div class="flex p-1 w-28 rounded-md text-lg text-zinc-800 truncate hover:overflow-visible hover:min-w-max hover:bg-zinc-200 bg-opacity-100 dark:text-zinc-500 dark:hover:text-zinc-300 dark:hover:bg-zinc-800 hover:ring-1 ring-zinc-500 hover:z-50 hover:absolute">`;
@@ -1169,10 +1319,49 @@ function updateRollCallList(students) {
         newElements += newElement;
     }
     // 先清空，再添加
-    var rollCallResult = $('#rollCall-result');
-    rollCallResult.empty();
-    rollCallResult.append(newElements);
+    var rollCallList = $('#rollCall-list');
+    rollCallList.empty();
+    rollCallList.append(newElements);
 }
+// (almost finished)
+function rollCall() {
+    var rollCallList = $('#rollCall-list');
+    rollCallList.children().each(function (index) {
+        $(this).on('click', function () {
+            if (students[index] >= 0) {
+                $.ajax({
+                    type: "POST",
+                    dataType: "json",
+                    url: 'http://162.14.107.35/SCUEE/CallStu/select',
+                    contentType: "application/json",
+                    data: JSON.stringify({ "token": token, "id": uids[currentSection - 1], "sid": students[index]['sid'] }), // 不确定
+                    success: function (result) {
+                        if (result != "") {
+                            if (result == 1) {
+                                studentAnswersNum[index]++;
+                                replaceRollCallList();
+                                // 更新了元素，重新设置click事件
+                                rollCallList.children().each(function () {
+                                    $(this).off('click');
+                                    rollCall();
+                                });
+                            } else if (result == 0) {
+                                // (unfinished)
+                            }
+
+                        }
+                    }
+                });
+            } else if (students[index] == -1) {
+
+            }
+            console.log('子元素被点击了，索引为:', index);
+        });
+
+    });
+
+}
+
 
 // ==================================================
 // 随机抽问
@@ -1183,7 +1372,6 @@ function updateRandomSelection() {
     randomSelectionStart();
 }
 // 初始化，在"classStartHomepage()"中调用
-
 function initializeRandomSelection() {
     // 目前有课
     if (scheduleHomepageFlag[currentSection - 1] == 1) {
@@ -1202,17 +1390,26 @@ function initializeRandomSelection() {
     }
 }
 // 添加到randomSelection-display中 的 末尾
-// (unfinished)没有样式判断
 function updateRandomSelectionList(studentName, answerCount) {
-    var newElements = '';
-    // 定义名字前后的标签
+    var RSStudent_1st_absent = `<div class="flex p-1 m-1 w-48 h-max rounded-xl items-center bg-zinc-200 bg-opacity-70 hover:shadow-zinc-300 hover:shadow-md dark:bg-zinc-800 dark:ring-zinc-500 dark:hover:ring-4 dark:hover:shadow-none dark:hover:ring-red-700"><div class="flex flex-col p-3 w-full rounded-lg items-center bg-zinc-200 dark:bg-zinc-900 dark:hover:bg-zinc-800"><div class="flex w-full h-8 items-center relative"><div class="flex max-w-full min-w-full py-1 px-2 rounded-lg truncate hover:absolute hover:ring-1 hover:ring-red-400 hover:max-w-max hover:z-50 hover:left-0 hover:bg-zinc-200 bg-opacity-100 dark:text-zinc-300 dark:hover:bg-zinc-700 dark:hover:ring-zinc-500"><div class="flex flex-grow"></div><div class="flex select-all">`;
+    var RSStudent_2nd_absent = `</div><div class="flex flex-grow"></div></div></div><div class="flex w-full justify-center text-sm text-zinc-700 dark:text-red-400 select-all">`;
+    var RSStudent_3rd_absent = `</div></div></div>`;
+    var RSStudent_1st_answered = `<div class="flex p-1 m-1 w-48 h-max rounded-xl items-center bg-purple-200 bg-opacity-100 hover:shadow-purple-300 hover:shadow-md dark:bg-zinc-600 dark:ring-zinc-500 dark:hover:ring-4 dark:hover:shadow-none"><div class="flex p-3 w-full rounded-lg items-center bg-purple-200 dark:bg-zinc-700 dark:hover:bg-zinc-800"><div class="flex p-1 w-28 rounded-md text-lg text-zinc-700 truncate hover:overflow-visible hover:min-w-max hover:bg-purple-200 bg-opacity-100 dark:text-zinc-300 dark:hover:text-zinc-200 dark:hover:bg-zinc-800 hover:ring-1 ring-zinc-500 hover:z-50 hover:absolute">`;
+    var RSStudent_2nd_answered = `</div><div class="flex flex-grow"></div><div class="flex w-0.5 h-5 bg-purple-500 bg-opacity-50"></div><div class="flex flex-row-reverse min-w-max w-6 h-9 pl-2 items-center text-zinc-600 dark:text-zinc-300">`;
+    var RSStudent_3rd_answered = `</div></div></div>`;
+    if (typeof answerCount === "string") {
+        var newElement = RSStudent_1st_absent + studentName + RSStudent_2nd_absent + answerCount + RSStudent_3rd_absent;
+        $('#randomSelection-display').append(newElement);
+    } else if (typeof answerCount === "number") {
+        var newElement = RSStudent_1st_answered + studentName + RSStudent_2nd_answered + answerCount + RSStudent_3rd_answered;
+        $('#randomSelection-display').append(newElement);
+    } else {
+        var newElement = RSStudent_1st_absent + answerCount + RSStudent_2nd_absent + "以上是非法参数" + RSStudent_3rd_absent;
+        $('#randomSelection-display').append(newElement);
+    }
 
-    var studentBefore = `<div class="flex p-1 m-1 w-48 h-max rounded-xl items-center bg-zinc-200 bg-opacity-70 hover:shadow-zinc-300 hover:shadow-md dark:bg-zinc-800 dark:ring-zinc-500 dark:hover:ring-4 dark:hover:shadow-none dark:hover:ring-red-700"><div class="flex flex-col p-3 w-full rounded-lg items-center bg-zinc-200 dark:bg-zinc-900 dark:hover:bg-zinc-800"><div class="flex w-full h-8 items-center relative"><div class="flex max-w-full min-w-full py-1 px-2 rounded-lg truncate hover:absolute hover:ring-1 hover:ring-red-400 hover:max-w-max hover:z-50 hover:left-0 hover:bg-zinc-200 bg-opacity-100 dark:text-zinc-300 dark:hover:bg-zinc-700 dark:hover:ring-zinc-500"><div class="flex flex-grow"></div><div class="flex select-all">`
-    var studentMiddle = `</div><div class="flex flex-grow"></div></div></div><div class="flex w-full justify-center text-sm text-zinc-700 dark:text-red-400 select-all">`
-    var studentAfter = `</div></div></div>`
-    var newElement = studentBefore + studentName + studentMiddle + answerCount + studentAfter;
-    newElements += newElement;
-    $('#randomSelection-display').append(newElements);
+
+
 }
 
 function updateInputTangeRandomSelection() {
@@ -1231,12 +1428,12 @@ function randomSelectionStart() {
     var randomSelectionStartBtn = document.getElementById('randomSelection-start-btn');
     randomSelectionStartBtn.addEventListener('click', function () {
         count = document.getElementById('randomSelection-count-input').value;
-        priority = document.getElementById('randomSelection-priority-toggle').checked;
+        // priority = document.getElementById('randomSelection-priority-toggle').checked;
         randomSelectionDisplay(count, priority);
     });
 
 }
-// (unfinished)获取选择学生数量，结合签到or否，比较防超出，随机生成，记录回答次数
+// (almost finished)获取选择学生数量，结合签到or否，比较防超出，随机生成(阉割哩)，记录回答次数
 function randomSelectionDisplay(count, priority) {
     var randomSelectionSelect = document.getElementById('randomSelection-select');
     var randomSelectionResult = document.getElementById('randomSelection-result');
@@ -1246,7 +1443,7 @@ function randomSelectionDisplay(count, priority) {
     randomSelectionResult.classList.remove('hide');
 
     // 具体抽取，然后修改html
-    if (priority == true) { // 优先抽取未回答问题的同学
+    if (priority == true) { // 优先抽取未回答问题的同学(阉割哩)服务器端不支持上传抽取结果
         // 最多抽取人数，以及记录'值为0'的'索引'
         var indices = [];
         for (let i = 0; i < studentAnswersNum.length; i++) {
@@ -1267,12 +1464,12 @@ function randomSelectionDisplay(count, priority) {
                 randomIndices.push(indices[randomIndex]);
                 indices.splice(randomIndex, 1);
             }
-            for(var i = 0; i < randomIndices.length; i++){
+            for (var i = 0; i < randomIndices.length; i++) {
                 studentAnswersNum[i]++;
                 updateRandomSelectionList(students[i]['name'], studentAnswersNum[i]);
             }
         }
-    } else if (priority == false) {
+    } else if (priority == false) { // 抽取签到的同学
         // 最多抽取人数，以及记录'值大于0'的'索引'
         var indices = [];
         for (let i = 0; i < studentAnswersNum.length; i++) {
@@ -1283,20 +1480,44 @@ function randomSelectionDisplay(count, priority) {
         var maxCount = indices.length;
         // 分情况生成
         if (maxCount == 0) {
+            $('#randomSelection-display').empty();
             updateRandomSelectionList('没有已签到的学生', '提醒消息')
         } else if (maxCount > 0) {
-            // 获得抽取结果的"索引数组"
-            var count = count > maxCount ? maxCount : count;
-            var randomIndices = [];
-            while (randomIndices.length < count) {
-                const randomIndex = Math.floor(Math.random() * indices.length);
-                randomIndices.push(indices[randomIndex]);
-                indices.splice(randomIndex, 1);
-            }
-            for(var i = 0; i < randomIndices.length; i++){
-                studentAnswersNum[i]++;
-                updateRandomSelectionList(students[i]['name'], studentAnswersNum[i]);
-            }
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                url: 'http://162.14.107.35/SCUEE/CallStu/random',
+                contentType: "application/json",
+                data: JSON.stringify({ "token": token, "count": maxCount, "uid": uids[currentSection - 1] }),
+                success: function (result) {
+                    if (result != "") {
+                        $('randomSelection-display').empty();
+                        var randomIndices = []; // 获得抽取结果的"索引数组"
+                        for (i = 0; i < result.length; i++) {
+                            for (j = 0; j < students.length; j++) {
+                                if (result[i]['sid'] == students[j]['sid']) {
+                                    randomIndices.push(j); // 第i个返回结果 是 本课堂的第j个学生
+                                }
+                                break;
+                            }
+                        }
+                        for (var i = 0; i < randomIndices.length; i++) {
+                            index = randomIndices[i]
+                            studentAnswersNum[index]++;
+                            updateRandomSelectionList(students[index]['name'], studentAnswersNum[index]);
+                        }
+
+                    }
+                }
+            });
+            // var count = count > maxCount ? maxCount : count;
+            // var randomIndices = []; // 获得抽取结果的"索引数组"
+            // while (randomIndices.length < count) {
+            //     const randomIndex = Math.floor(Math.random() * indices.length);
+            //     randomIndices.push(indices[randomIndex]);
+            //     indices.splice(randomIndex, 1);
+            // }
+
         }
     }
 
@@ -1314,62 +1535,91 @@ function randomSelectionDisplay(count, priority) {
 // message(通知)
 // ==================================================
 function updateMessage() {
-    // putMessageToWindows('Hello', 'The ITE is working!', './www/icons/message.png');
+    putMessageToWindows('Hello', 'The ITE is working!', './www/icons/message.png');
     clickMessage();
+
 }
 function initializeMessage() {
+    $('#message-container').empty();
+    var options = { title: '初始化提醒', content: '没有检测到消息', time: '2023/9/5 17:20:00' };
 
+    updateMessageList(options);
 }
-function putMessageToWindows(title, body, icon) {
+function updateMessageList(options) {
+    const { title, content, time, attachment = [] } = options;
+    var finalContent = content;
+    for (var i = 0; i < attachment.length; i++) {
+        if (attachment[i] != "") {
+            finalContent += `<a class="px-2 text-blue-400" href="` + attachment[i]['file'] + `">` + attachment[i]['name'] + `</a>`;
+        }
+
+    }
+    var message_1st = `<div class="flex flex-col pt-4 px-4 rounded-lg min-w-0 hover:bg-zinc-100 dark:hover:bg-zinc-800 after:mt-2 after:h-px after:w-full after:bg-zinc-300 after:dark:bg-zinc-600"><div class="flex pb-2 items-center min-w-0"><div class="flex p-1 mr-8 min-w-fit min-h-fit rounded-xl bg-amber-300 hover:bg-amber-400 dark:bg-amber-600 dark:hover:bg-amber-500"><img draggable="false" class="w-8 h-8 p-1" src="./icons/333/邮件.svg" /></div><div class="flex px-2 w-40"><div class="truncate min-w-40 dark:text-zinc-300 font-bold message-title">`;
+    var message_2nd = `</div></div><div class="flex min-w-0 max-w-94-to-full"><div class="truncate dark:text-zinc-300 max-w-full message-detail">`;
+    var message_3rd = `</div></div><div class="flex flex-grow"></div><div class="flex pl-4 w-36 min-w-max text-zinc-400">`;
+    var message_4th = `</div></div></div>`;
+    var message = message_1st + title + message_2nd + finalContent + message_3rd + time + message_4th;
+    $('#message-container').prepend(message);
+    putMessageToWindows(title, content);
+    clickMessage();
+}
+
+function putMessageToWindows(title, body, icon = './icons/message.png') {
     window.ipcRenderer.send('Notification', title, body, icon);
 }
+var messages = void 0;
 // 展开消息(jQuery)
 function clickMessage() {
-
+    // 在更新时，先取消原来的点击事件监听器
+    if (messages != undefined) {
+        messages.each(function () {
+            $(this).off('click');
+        });
+    }
     var messageContainer = $('#message-container');
-    var messages = messageContainer.children();
+    messages = messageContainer.children();
     messages.each(function () {
         $(this).on('click', function () {
-            // 切换是否读过
+            // 切换是否读过(被阉割了)
             var element = $(this);
-            var messageBody = element.children().eq(0);
-            if (element.hasClass('importantNotice')) {
-                if (element.hasClass('read')) {
-                    // 无
-                } else {
-                    messageBody.addClass('read');
-                    messageBody.children().eq(0).removeClass('bg-amber-300 hover:bg-amber-400 dark:bg-amber-600 dark:hover:bg-amber-500');
-                    messageBody.children().eq(0).addClass('bg-amber-50 hover:bg-amber-100 dark:bg-zinc-800 dark:hover:bg-zinc-600');
-                    messageBody.children().eq(0).find("img").attr("src", "./icons/333/已读邮件.svg");
-                    messageBody.children().eq(1).removeClass('bg-red-500 hover:bg-red-700 dark:bg-red-800 dark:hover:bg-red-700');
-                    messageBody.children().eq(1).addClass('bg-red-400 hover:bg-red-500 dark:bg-red-950 dark:hover:bg-red-800');
-                    messageBody.children().eq(1).find("img").attr("src", "./icons/ffffff/消息.svg");
-                }
-            } else if (element.hasClass('commonNotice')) {
-                if (element.hasClass('read')) {
-                    // 无
-                } else {
-                    messageBody.addClass('read');
-                    messageBody.children().eq(0).removeClass('bg-amber-300 hover:bg-amber-400 dark:bg-amber-600 dark:hover:bg-amber-500');
-                    messageBody.children().eq(0).addClass('bg-amber-50 hover:bg-amber-100 dark:bg-zinc-800 dark:hover:bg-zinc-600');
-                    messageBody.children().eq(0).find("img").attr("src", "./icons/333/已读邮件.svg");
-                    messageBody.children().eq(1).removeClass('bg-orange-400 hover:bg-orange-600 dark:bg-orange-700 dark:hover:bg-orange-600');
-                    messageBody.children().eq(1).addClass('bg-orange-200 hover:bg-orange-500 dark:bg-orange-900 dark:hover:bg-orange-800');
-                    messageBody.children().eq(1).find("img").attr("src", "./icons/ffffff/消息.svg");
-                }
-            } else if (element.hasClass('publicizeNotice')) {
-                if (element.hasClass('read')) {
-                    // 无
-                } else {
-                    messageBody.addClass('read');
-                    messageBody.children().eq(0).removeClass('bg-amber-300 hover:bg-amber-400 dark:bg-amber-600 dark:hover:bg-amber-500');
-                    messageBody.children().eq(0).addClass('bg-amber-50 hover:bg-amber-100 dark:bg-zinc-800 dark:hover:bg-zinc-600');
-                    messageBody.children().eq(0).find("img").attr("src", "./icons/333/已读邮件.svg");
-                    messageBody.children().eq(1).removeClass('bg-green-500 hover:bg-green-600 dark:bg-green-700 dark:hover:bg-green-600');
-                    messageBody.children().eq(1).addClass('bg-green-300 hover:bg-green-500 dark:bg-green-950 dark:hover:bg-green-800');
-                    messageBody.children().eq(1).find("img").attr("src", "./icons/ffffff/消息.svg");
-                }
-            }
+            // var messageBody = element.children().eq(0);
+            // if (element.hasClass('importantNotice')) {
+            //     if (element.hasClass('read')) {
+            //         // 无
+            //     } else {
+            //         messageBody.addClass('read');
+            //         messageBody.children().eq(0).removeClass('bg-amber-300 hover:bg-amber-400 dark:bg-amber-600 dark:hover:bg-amber-500');
+            //         messageBody.children().eq(0).addClass('bg-amber-50 hover:bg-amber-100 dark:bg-zinc-800 dark:hover:bg-zinc-600');
+            //         messageBody.children().eq(0).find("img").attr("src", "./icons/333/已读邮件.svg");
+            //         messageBody.children().eq(1).removeClass('bg-red-500 hover:bg-red-700 dark:bg-red-800 dark:hover:bg-red-700');
+            //         messageBody.children().eq(1).addClass('bg-red-400 hover:bg-red-500 dark:bg-red-950 dark:hover:bg-red-800');
+            //         messageBody.children().eq(1).find("img").attr("src", "./icons/ffffff/消息.svg");
+            //     }
+            // } else if (element.hasClass('commonNotice')) {
+            //     if (element.hasClass('read')) {
+            //         // 无
+            //     } else {
+            //         messageBody.addClass('read');
+            //         messageBody.children().eq(0).removeClass('bg-amber-300 hover:bg-amber-400 dark:bg-amber-600 dark:hover:bg-amber-500');
+            //         messageBody.children().eq(0).addClass('bg-amber-50 hover:bg-amber-100 dark:bg-zinc-800 dark:hover:bg-zinc-600');
+            //         messageBody.children().eq(0).find("img").attr("src", "./icons/333/已读邮件.svg");
+            //         messageBody.children().eq(1).removeClass('bg-orange-400 hover:bg-orange-600 dark:bg-orange-700 dark:hover:bg-orange-600');
+            //         messageBody.children().eq(1).addClass('bg-orange-200 hover:bg-orange-500 dark:bg-orange-900 dark:hover:bg-orange-800');
+            //         messageBody.children().eq(1).find("img").attr("src", "./icons/ffffff/消息.svg");
+            //     }
+            // } else if (element.hasClass('publicizeNotice')) {
+            //     if (element.hasClass('read')) {
+            //         // 无
+            //     } else {
+            //         messageBody.addClass('read');
+            //         messageBody.children().eq(0).removeClass('bg-amber-300 hover:bg-amber-400 dark:bg-amber-600 dark:hover:bg-amber-500');
+            //         messageBody.children().eq(0).addClass('bg-amber-50 hover:bg-amber-100 dark:bg-zinc-800 dark:hover:bg-zinc-600');
+            //         messageBody.children().eq(0).find("img").attr("src", "./icons/333/已读邮件.svg");
+            //         messageBody.children().eq(1).removeClass('bg-green-500 hover:bg-green-600 dark:bg-green-700 dark:hover:bg-green-600');
+            //         messageBody.children().eq(1).addClass('bg-green-300 hover:bg-green-500 dark:bg-green-950 dark:hover:bg-green-800');
+            //         messageBody.children().eq(1).find("img").attr("src", "./icons/ffffff/消息.svg");
+            //     }
+            // }
 
             // 点击后的，展开通知
             var detail = element.find('.message-detail');
@@ -1384,12 +1634,89 @@ function clickMessage() {
                 element.removeClass('ring-inset ring ring-purple-200 dark:ring-zinc-700');
                 detail.addClass('truncate');
                 detail.removeClass('break-words');
-                title.removeClass('truncate');
-                title.addClass('break-words');
+                title.addClass('truncate');
+                title.removeClass('break-words');
             }
         });
     });
 
+}
+function renewMessage() {
+    function getCurrentTime() {
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = now.getMonth().toString().padStart(2, '0');
+        const day = now.getDate().toString().padStart(2, '0');
+        const hours = now.getHours().toString(); // 获取小时，不确保两位数显示
+        const minutes = now.getMinutes().toString().padStart(2, '0'); // 获取分钟，并确保两位数显示
+        return `${year}/${month}/${day} ${hours}:${minutes}`;
+
+    }
+    $(document).ready(function () {
+        // 初始化消息列表() // 不确定 服务器没有这个功能？
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            url: 'http://162.14.107.35/SCUEE/Classroom/initMsg',
+            contentType: "application/json",
+            data: "",
+            success: function (result) {
+                if (result != "") {
+                    previousResult = result;
+                    $('#message-container').empty();
+                    replaceMessage(result);
+                }
+            }
+        });
+
+        // 不断发送心跳包维持连接 5秒
+        var previousResult = null; // 防止消息界面一直刷新，一会儿就把点击效果清除了
+        setInterval(function () {
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                url: 'http://162.14.107.35/SCUEE/DistrMsg/keepAlive',
+                contentType: "application/json",
+                data: "",
+                success: function (result) {
+                    console.log('success')
+                    // 防止消息界面一直刷新
+                    if (result != "" && result != previousResult && result.length > 0) {
+                        previousResult = result;
+                        $('#message-container').empty();
+                        replaceMessage(result);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.log('fail');
+                    console.error(error); // 输出错误信息到控制台
+                    const responseText = xhr.responseText;
+
+                    if (responseText === null || responseText.trim() === "") { // 服务器返回了 null 或空响应
+                        var result = [{ "title": "系统提醒", "content": "服务器中没有消息", "time": getCurrentTime() }];
+                        // 防止消息界面一直刷新
+                        if (previousResult == null || previousResult[0]["title"] != "系统提醒" || previousResult[0]["content"] != "服务器中没有消息") {
+                            previousResult = result;
+                            $('#message-container').empty();
+                            replaceMessage(result);
+                        }
+
+                    }
+                }
+            });
+        }, 5 * 1000); // 5秒刷新一次
+
+    });
+}
+function replaceMessage(messages) {
+    for (var i = 0; i < messages.length; i++) {
+        var message = messages[i];
+        var title = message.title;
+        var content = message.content;
+        var time = message.time;
+        var attachment = message.attachment
+        updateMessageList({ title, content, time, attachment });
+    }
 }
 
 
@@ -1401,38 +1728,43 @@ function updateCommunication() {
 
 }
 // 初始化，在"classStartHomepage()"中调用
-// (unfinished)
+// (unfinished)没有check是否连接至服务器
 function initializeCommunication() {
+    function getCurrentTime() {
+        const now = new Date();
+        const hours = now.getHours().toString(); // 获取小时，不确保两位数显示
+        const minutes = now.getMinutes().toString().padStart(2, '0'); // 获取分钟，并确保两位数显示
+        return `${hours}:${minutes}`;
+    }
     // 目前有课
     if (scheduleHomepageFlag[currentSection - 1] == 1) {
-        var courseCount = saveData.length;
-        for (var i = 0; i < courseCount; i++) {
-            var startSection = saveData[i]['startSection'];
-            var endSection = saveData[i]['endSection'];
-            if ((startSection <= currentSection) && (currentSection <= endSection)) {
-                updateCommunicationList()
+        $('#communication-display').children(0).empty();
+        updateCommunicationList(getCurrentTime(), '系统', '交流已启用');
+        // 获取消息(unfinished) // 不确定
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            url: 'http://162.14.107.35/SCUEE/ChatBox/keepAlive',
+            contentType: "application/json",
+            data: JSON.stringify({ "id": uids[currentSection - 1] }),
+            success: function (result) {
+                if (result != "") {
+                    for (var i = 0; i < result.length; i++) {
+                        updateCommunicationList(result[i].time, result[i].name, result[i].content);
+                    }
+                }
             }
-        }
+        })
     } else { // 目前没课
-        var communicationDisplay = $('#communication-display').children(0);
-        communicationDisplay.empty();
-        var newElements = '';
-        var timeBefore = `<div class="flex flex-col my-3 w-full communication-message-body"><div class="flex w-full justify-center text-zinc-600 text-sm dark:text-zinc-400">`;
-        var studentBefore = `</div><div class="flex w-full"><div class="flex h-10 w-10 p-1 rounded-full items-center justify-center bg-purple-200 dark:bg-purple-700"><img draggable="false" class="h-8 w-8" src="./icons/333/人员.svg" alt="" srcset=""></div><div class="flex w-20-to-full flex-col ml-4"><div class="flex text-zinc-600 max-w-xl text-sm truncate dark:text-zinc-400 select-text">`;
-        var messageBefore = `</div><div class="flex w-full"><div class="max-w-full p-4 rounded-xl bg-white dark:bg-zinc-900 dark:text-zinc-300 break-words select-text">`;
-        var studentAfter = `</div></div></div></div></div>`;
-        function getCurrentTime() {
-            const now = new Date();
-            const hours = now.getHours().toString(); // 获取小时，不确保两位数显示
-            const minutes = now.getMinutes().toString().padStart(2, '0'); // 获取分钟，并确保两位数显示
-            return `${hours}:${minutes}`;
-        }
-        var newElement = timeBefore + getCurrentTime() + studentBefore + '系统' + messageBefore + '当前无课' + studentAfter;
-        newElements += newElement;
-
-        communicationDisplay.append(newElements);
+        $('#communication-display').children(0).empty();
+        updateCommunicationList(getCurrentTime(), '系统', '当前无课');
     }
 }
-function updateCommunicationList() {
-
+function updateCommunicationList(time, name, content) {
+    var chatMessage_1st = `<div class="flex flex-col my-3 w-full communication-message-body"><div class="flex w-full justify-center text-zinc-600 text-sm dark:text-zinc-400">`;
+    var chatMessage_2nd = `</div><div class="flex w-full"><div class="flex h-10 w-10 p-1 rounded-full items-center justify-center bg-purple-200 dark:bg-purple-700"><img draggable="false" class="h-8 w-8" src="./icons/333/人员.svg" alt=""  srcset=""></div><div class="flex w-20-to-full flex-col ml-4"><div class="flex text-zinc-600 max-w-xl text-sm truncate dark:text-zinc-400 select-text">`;
+    var chatMessage_3rd = `</div><div class="flex w-full"><div class="max-w-full p-4 rounded-xl bg-white dark:bg-zinc-900 dark:text-zinc-300 break-words select-text">`;
+    var chatMessage_4th = `</div></div></div></div></div>`;
+    var newElement = chatMessage_1st + time + chatMessage_2nd + time + chatMessage_3rd + content + chatMessage_4th;
+    $('#communication-display').children(0).append(newElement)
 }
