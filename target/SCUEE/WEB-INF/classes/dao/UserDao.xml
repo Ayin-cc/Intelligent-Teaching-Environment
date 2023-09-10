@@ -24,6 +24,7 @@
         <result column="title" property="title" />
         <result column="content" property="content" />
         <result column="msg_time" property="time" />
+        <result column="sender" property="sender"/>
         <collection property="attachment" resultMap="attachmentResultMap"/>
     </resultMap>
 

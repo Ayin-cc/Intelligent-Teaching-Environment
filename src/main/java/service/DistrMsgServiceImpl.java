@@ -21,9 +21,14 @@ public class DistrMsgServiceImpl implements DistrMsgService {
     public boolean create(String token, Message msg) {
         if(msgDao.checkToken(token) == 1){
             msgDao.addMsg(msg);
+            if(msg.getAttachment().size() == 0){
+                msgDao.addAttachment(msg.getId(), "", null);
+                return true;
+            }
             for(int i = 0; i < msg.getAttachment().size(); i++){
                 msgDao.addAttachment(msg.getId(), msg.getAttachment().get(i).getName(), msg.getAttachment().get(i).getFile());
             }
+            return true;
         }
         return false;
     }

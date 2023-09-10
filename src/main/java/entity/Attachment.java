@@ -5,14 +5,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class Attachment {
     private int id;
-    private Byte file;
+    private String file;
     private String name;
 
 
     public Attachment() {
     }
 
-    public Attachment(int id, Byte file, String name) {
+    public Attachment(int id, String file, String name) {
         this.id = id;
         this.file = file;
         this.name = name;
@@ -38,7 +38,7 @@ public class Attachment {
      * 获取
      * @return file
      */
-    public Byte getFile() {
+    public String getFile() {
         return file;
     }
 
@@ -46,7 +46,7 @@ public class Attachment {
      * 设置
      * @param file
      */
-    public void setFile(Byte file) {
+    public void setFile(String file) {
         this.file = file;
     }
 
