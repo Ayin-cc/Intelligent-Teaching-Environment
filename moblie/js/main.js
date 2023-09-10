@@ -7,6 +7,19 @@ const signIn_button = document.getElementById('signIn-sidebar');
 const communication_button = document.getElementById('communication-sidebar');
 
 var login_status = 1;
+
+$(document).ready(function () {
+	// 检测cookie信息
+	var student;
+	login_status = checkCookie(student, 0);
+	// 初始化（登陆状态）
+	login_statu();
+	// 使用学生对象替换页面中的值
+	const stdName = document.getElementById('name-profile');
+	const stdID = document.getElementById('number-profile');
+	stdName.textContent = student.name;
+	stdID.textContent = student.sid;
+})
 // 登录信息显示
 function login_statu() {
 	if (login_status == 1) {
@@ -60,8 +73,7 @@ function nologtip() {
 	});
 }
 
-// 初始化（登陆状态）
-login_statu();
+
 
 // 点击事件---用户头像区域
 user_all.addEventListener('click', () => {

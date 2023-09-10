@@ -1,5 +1,5 @@
 // 创建cookie
-function setCookie(userId, token, cid=""){
+function setCookie(userId, token, cid = "") {
     var expdate = new Date();
     expdate.setTime(expdate.getTime() + 3 * 60 * 60 * 1000);	// cookie三小时过期
     document.cookie = "userId=" + userId + ";token=" + token + ";courseId=" + cid + ";expires=" + expdate.toGMTString() + ";path=/";
@@ -17,12 +17,12 @@ function getCookie(cname) {
 }
 
 // 删除cookie
-function deleteCookie(){
+function deleteCookie() {
     document.cookie = "expires=Thu, 01 Jan 1970 00:00:00 GMT";
 }
 
 // 获取学生信息
-function getStudent(sid){
+function getStudent(sid) {
     var student;
     $.ajax({
         type: "POST",
@@ -37,4 +37,25 @@ function getStudent(sid){
         }
     })
     return student;
+}
+
+function checkCookie(student, i = 1) {
+    // 检测cookie信息
+    if (!document.cookie) {
+        // 跳转登录
+        if (i == 1) {
+            alert('登录已过期，请重新登录');
+            window.location.href = "../html/LOGIN_.html";
+        }
+        else return 0;
+    }
+    else {
+        // 获取学生对象
+        if (sessionStorage.getItem("Student") == "") {
+            var studentObj = getStudent(getCookie("userId"));
+            sessionStorage.setItem("Student", JSON.stringify(studentObj));
+        }
+        student = sessionStorage.getItem("Student");
+    }
+    // 使用学生对象替换页面中的值
 }
