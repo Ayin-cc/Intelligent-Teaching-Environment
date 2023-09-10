@@ -6,7 +6,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>登录</title>
 		<link href="../css/output.css" rel="stylesheet">
-		<script src="../js/jquery-3.7.1.min.js" ></script>
+		<script src="../js/jquery-3.7.1.min.js"></script>
 		<script src="../js/cookie-utils.js"></script>
 		<script>
 			$(document).ready(function () {
@@ -33,17 +33,16 @@
 					<input type="password" id="password-confirm" name="password"
 						class="w-full p-2 border border-gray-300 rounded-md focus:bg-slate-100 bg-slate-50 focus:outline-none focus:border-blue-500">
 				</div>
-				<div class="flex items-center justify-between mt-16 mb-4">
-					<a class="text-blue-500" href="" id="reset-password">
+				<div class="flex items-center justify-end mt-12 mb-4">
+					<!-- <div class="flex items-end justify-end text-blue-500" id="reset-password">
 						忘记密码？
-					</a>
+					</div> -->
 					<button id="sign-button"
-						class="px-4 py-2 text-white bg-blue-400 rounded-md focus:outline-none focus:bg-blue-600">
+						class="flex items-end px-4 py-2 text-white bg-blue-400 rounded-md focus:outline-none focus:bg-blue-600">
 						注册
 					</button>
 					<button id="log-button"
-						class="px-4 py-2 text-white bg-blue-500 rounded-md focus:outline-none focus:bg-blue-600"
-						onclick="login()">
+						class="flex items-end px-4 py-2 ml-10 text-white bg-blue-500 rounded-md focus:outline-none focus:bg-blue-600">
 						登录
 					</button>
 				</div>
@@ -95,10 +94,13 @@
 
 			// 注册功能
 			function register() {
-				const userId = document.getElementById("username");
-				const passwd = document.getElementById("password");
-				const passwdConfirm = document.getElementById("password-confirm");
-				if (passwd != passwdConfirm) {
+				const userId = document.getElementById("username").value;
+				const passwd = document.getElementById("password").value;
+				const passwdConfirm = document.getElementById("password-confirm").value;
+				if (passwd == '') {
+					alert("密码不能为空！");
+					return;
+				} else if (passwd != passwdConfirm) {
 					alert("密码不一致！");
 					return;
 				}
@@ -124,6 +126,7 @@
 			const pswd_again = document.getElementById('pswd-again');
 			const sign_button = document.getElementById('sign-button');
 			const log_button = document.getElementById('log-button');
+			// const reset_password = document.getElementById('reset-password');
 			var log_sin_status = 1;
 
 			function change_top_tip() {
@@ -133,21 +136,28 @@
 				} else if (log_sin_status == 0) {
 					top_tip.textContent = '注册';
 					pswd_again.classList.remove('hidden');
+					// reset_password.classList.add('hidden');
 				}
 			}
 
 			sign_button.addEventListener('click', () => {
 				event.preventDefault();
-				log_sin_status = 0;
-				change_top_tip();
+				if (log_sin_status == 1) {
+					log_sin_status = 0;
+					change_top_tip();
+					log_button.classList.add('hidden');
+				} else register();
 			});
 			log_button.addEventListener('click', () => {
 				event.preventDefault();
+				/*
 				log_sin_status = 1;
 				change_top_tip();
+				*/
+				login();
 			});
 
-			// 舒适化
+			// 初始化
 			change_top_tip();
 
 
