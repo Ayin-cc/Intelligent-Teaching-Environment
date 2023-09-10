@@ -35,16 +35,16 @@
 
     <insert id="addStudent">
         insert into scuee.student
-            (sid, student_token, student_name, student_major, student_college, student_sex, student_passwd, student_phone)
+            (sid, student_name, student_major, student_college, student_sex, student_passwd, student_phone)
         values
-            (#{student.sid}, #{student.token}, #{student.name}, #{student.major}, #{student.college}, #{student.sex}, #{student.passwd}, #{student.phone});
+            (#{student.sid}, #{student.name}, #{student.major}, #{student.college}, #{student.sex}, #{student.passwd}, #{student.phone});
     </insert>
 
     <insert id="addClassroom">
         insert into scuee.classroom
-            (cid, address, classroom_token)
+            (cid, address)
         values
-            (#{classroom.cid}, #{classroom.address}, #{classroom.token});
+            (#{classroom.cid}, #{classroom.address});
     </insert>
 
     <insert id="addCourseInf">
@@ -202,9 +202,24 @@
     </select>
 
     <select id="selectCidBySite" resultType="java.lang.String">
-        select *
+        select scuee.classroom.cid
         from scuee.classroom
         where classroom.address = #{site};
+    </select>
+    <select id="checkClassroom" resultType="java.lang.Integer">
+        select exists(
+            select * from scuee.classroom where classroom.cid = #{cid}
+                   );
+    </select>
+    <select id="checkCourse" resultType="java.lang.Integer">
+        select exists(
+            select * from scuee.course where course.id = #{courseId}
+                   );
+    </select>
+    <select id="checkStudent" resultType="java.lang.Integer">
+        select exists(
+            select * from scuee.student where student.sid = #{sid}
+                   );
     </select>
 
 </mapper>

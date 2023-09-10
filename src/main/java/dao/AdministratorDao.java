@@ -29,4 +29,9 @@ public interface AdministratorDao {
     void deleteCourseSchedule(@Param("id")String id);
     void deleteStudentFromCourse(@Param("id")String id, @Param("sid") String sid);
     int checkToken(@Param("token") String token);
+    int checkClassroom(@Param("cid") String cid);
+
+    int checkCourse(@Param("courseId") String courseId);
+
+    int checkStudent(@Param("sid") String sid);
 }

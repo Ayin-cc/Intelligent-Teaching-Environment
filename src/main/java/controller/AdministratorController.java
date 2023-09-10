@@ -2,6 +2,7 @@ package controller;
 
 import entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,12 @@ import java.util.List;
 public class AdministratorController {
     @Autowired
     private AdministratorService administratorService;
+
+    @RequestMapping(value = "/testsql", method = RequestMethod.GET)
+    public String testsql(){
+        administratorService.testsql();
+        return "success";
+    }
 
     @RequestMapping("/login")
     public ResponseEntity<StatusCode> login(@RequestBody Administrator administrator){

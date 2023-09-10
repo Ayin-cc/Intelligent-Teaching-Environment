@@ -8,6 +8,7 @@ import entity.Student;
 import java.util.List;
 
 public interface AdministratorService {
+    String testsql();
     boolean login(Administrator administrator);
     int register(Administrator administrator);
     String refreshToken(Administrator administrator);

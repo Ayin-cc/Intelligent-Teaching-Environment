@@ -83,7 +83,6 @@
 
     <!-- <script src="../js/InformationRelease.js"></script> -->
     <script>
-        
         // 获取DOM元素
         
         const messageInput = document.getElementById('message-input');
@@ -104,7 +103,7 @@
 
         function send(formMessage){
             $.ajax({
-                url: 'http://162.14.107.35/SCUEE//DistrMsg/create',
+                url: 'http://162.14.107.35/SCUEE/DistrMsg/create',
                 type: 'POST', // 请求类型，可以根据您的需求修改
                 data: formMessage, // 将 FormData 对象作为数据发送
                 processData: false, // 不对数据进行处理（已经是 FormData）

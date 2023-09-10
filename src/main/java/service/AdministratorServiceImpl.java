@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 import util.GenerateToken;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -18,6 +21,48 @@ public class AdministratorServiceImpl implements AdministratorService{
     @Autowired
     private AdministratorDao administratorDao;
     private UserDao userDao;
+
+    @Override
+    public String testsql() {
+        String dates[][] = {{"2023-09-01", "2023-09-08", "2023-09-15", "2023-09-22"},
+                {"2023-09-02", "2023-09-09", "2023-09-17", "2023-09-24"},
+                {"2023-09-05", "2023-09-12", "2023-09-19", "2023-09-26"},
+                {"2023-09-06", "2023-09-13", "2023-09-20", "2023-09-27"}};
+        Student students[][] = new Student[4][5];
+        for (int i = 1; i <= 20; i++) {
+            Student student = new Student();
+            student.setSid("学号" + i);
+            student.setCollege("学院" + i);
+            student.setName("学生" + i);
+            student.setMajor("专业" + i);
+            student.setPhone("手机号" + i);
+            student.setSex("性别" + i);
+            student.setPasswd("密码" + i);
+            students[(i - 1) / 5][(i - 1) % 5] = student;
+            addStudent("", student);
+        }
+        for (int i = 1; i <= 4; i++) {
+            Classroom classroom = new Classroom();
+            classroom.setCid("教室号" + i);
+            classroom.setAddress("地点" + i);
+            addClassroom("", classroom);
+        }
+        for (int i = 1; i <= 4; i++) {
+            Course course = new Course();
+            course.setCourseId("课程号" + i);
+            course.setName("课程" + i);
+            course.setDate(Arrays.asList(dates[i - 1]));
+            course.setSite("地点" + i);
+            course.setStudents(Arrays.asList(students[i - 1]));
+            course.setTeacher("教师" + i);
+            course.setStartSection(1);
+            course.setEndSection(12);
+            System.out.println(course.toString());
+            addCourse("", course);
+        }
+
+        return "success";
+    }
 
     @Override
     public boolean login(Administrator administrator) {
@@ -48,11 +93,15 @@ public class AdministratorServiceImpl implements AdministratorService{
 
     @Override
     public boolean addStudent(String token, Student student) {
-        if(administratorDao.checkToken(token) == 1){
+        //if(administratorDao.checkToken(token) == 1){
+        // 检查学生是否已经存在
+        if(administratorDao.checkStudent(student.getSid()) == 1){
+            return false;
+        }
             administratorDao.addStudent(student);
             return true;
-        }
-        return false;
+        //}
+        //return false;
     }
 
     @Override
@@ -85,11 +134,15 @@ public class AdministratorServiceImpl implements AdministratorService{
 
     @Override
     public boolean addClassroom(String token, Classroom classroom) {
-        if(administratorDao.checkToken(token) == 1){
+//        if(administratorDao.checkToken(token) == 1){
+        // 检查教室是否已经存在
+        if(administratorDao.checkClassroom(classroom.getCid()) == 1){
+            return false;
+        }
             administratorDao.addClassroom(classroom);
             return true;
-        }
-        return false;
+//        }
+//        return false;
     }
 
     @Override
@@ -122,17 +175,21 @@ public class AdministratorServiceImpl implements AdministratorService{
 
     @Override
     public boolean addCourse(String token, Course course) {
-        if(administratorDao.checkToken(token) == 1){
+//        if(administratorDao.checkToken(token) == 1){
+        //判断课程是否已经存在
+        if(administratorDao.checkCourse(course.getCourseId()) == 1){
+            return false;
+        }
             administratorDao.addCourseInf(course);
             String cid = administratorDao.selectCidBySite(course.getSite());
-            for(int i = 0; i <= course.getDate().size(); i++){
+            for(int i = 0; i < course.getDate().size(); i++){
                 for(int j = course.getStartSection(); j <= course.getEndSection(); j++){
                     administratorDao.addCourseSchedule(cid, j, course.getCourseId(), course.getDate().get(i));
                 }
             }
             return true;
-        }
-        return false;
+//        }
+//        return false;
     }
 
     @Override
