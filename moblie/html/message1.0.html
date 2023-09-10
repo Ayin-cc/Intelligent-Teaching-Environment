@@ -12,11 +12,7 @@
 			function addNew(msgs) {
 				for (var i = 0; i < msgs.length; i++) {
 					var msg = msgs[i];
-					if (i == 0) {
-						setMessage(msg.id, msg.time, msg.title, msg.content);
-						continue;
-					}
-					setMessage(msg.id, msg.time, msg.title, msg.content, true);
+					setMessage(msg.id, msg.sender, msg.time, msg.title, msg.content);
 				}
 			}
 
@@ -92,7 +88,7 @@
 			</div>
 		</div>
 		<script>
-			function setMessage(message_id, message_time, message_title, message_context) {
+			function setMessage(message_id, message_name, message_time, message_title, message_context) {
 				var all_message = document.getElementById('class-message');
 
 				all_message.innerHTML = `<div class="flex flex-col items-center w-full min-w-0 px-1 py-2 rounded-lg hover:bg-zinc-100" id="${message_id}"
@@ -106,7 +102,7 @@
 						<div class="flex flex-col whitespace-nowrap" onclick="detail_message(${message_id})">
 							<div class="flex flex-row" onclick="detail_message(${message_id})">
 								<div class="px-2 font-bold truncate" style="max-width: 80px;">
-									${message_name}
+									${message_title}
 									</div>
 								<div onclick="detail_message(${message_id})"
 									class="absolute flex items-end justify-end pt-2 text-xs min-w-max text-zinc-400 text-end right-4">
@@ -115,7 +111,7 @@
 							</div>
 							<div class="px-2 overflow-hidden overflow-ellipsis text-slate-600 w-72 whitespace-nowrap"
 								onclick="detail_message(${message_id})">
-								${message_title}
+								${message_name}
 								</div>
 						</div>
 					</div>
