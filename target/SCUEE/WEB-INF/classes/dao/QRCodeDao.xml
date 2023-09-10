@@ -63,6 +63,11 @@
         where
             qrcode.uid = #{uid};
     </insert>
+    <update id="setStudentStatus">
+        update scuee.student
+        set student.signed_status = 0
+        where student.sid = #{sid}
+    </update>
 
     <select id="selectQRCodeByMulti" resultMap="qrcodeResultMap">
         select
@@ -242,6 +247,11 @@
             from scuee.qrcode
             where qrcode.uid = #{uid} and qrcode.end_time &gt; #{now}
                    );
+    </select>
+    <select id="checkStudentStatus" resultType="java.lang.Integer">
+        select scuee.student.signed_status
+        from scuee.student
+        where student.sid = #{sid};
     </select>
 
 

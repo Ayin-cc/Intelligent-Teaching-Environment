@@ -1,6 +1,7 @@
 package service;
 
 import dao.QRCodeDao;
+import entity.Course;
 import entity.QRCodeResult;
 import entity.QRcode;
 import entity.Student;
@@ -49,6 +50,11 @@ public class QRCodeServiceImpl implements QRCodeService {
                 // 将生成的二维码存入数据库
                 QRcode qRcode = new QRcode(code, cid, uniqueIdString, time, students);
                 qrCodeDao.createQRCode(qRcode);
+                // 将对应学生签到状态设为0
+                Course courses = qrCodeDao.selectCourseByCourseId(courseId);
+                for (int i = 0; i < courses.getStudents().size(); i++) {
+                    qrCodeDao.setStudentStatus(courses.getStudents().get(i).getSid(), 0);
+                }
 
                 return qRcode;
             }
@@ -59,6 +65,14 @@ public class QRCodeServiceImpl implements QRCodeService {
         else {
             return null;
         }
+    }
+
+    @Override
+    public boolean checkStudent(String sid) {
+        if(qrCodeDao.checkStudentStatus(sid) == 1){
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -77,7 +91,9 @@ public class QRCodeServiceImpl implements QRCodeService {
                 return false;
             }
             // 存入数据库
-            qrCodeDao.updateQRCode(uid, qrCodeDao.selectStudentByToken(token).getSid());
+            String sid = qrCodeDao.selectStudentByToken(token).getSid();
+            qrCodeDao.updateQRCode(uid, sid);
+            qrCodeDao.setStudentStatus(sid, 1);
 
             return true;
         }

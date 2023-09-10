@@ -7,6 +7,7 @@
 		<title>登录</title>
 		<link href="../css/output.css" rel="stylesheet">
 		<script src="../js/jquery-3.7.1.min.js" ></script>
+		<script src="../js/cookie-utils.js"></script>
 		<script>
 			$(document).ready(function () {
 			})
@@ -64,9 +65,9 @@
 					}
 				})
 				// 将相关信息存入cookie
-				var expdate = new Date();
-				expdate.setTime(expdate.getTime() + 180 * 60 * 1000);	// cookie三小时过期
-				document.cookie = "userId=" + userId + ";token=" + token + ";expires=" + expdate.toGMTString() + ";path=/";
+				setCookie(userId, token);
+				sessionStorage.setItem('mid', '0');
+				sessionStorage.setItem('is_signed', 'false');
 				// 进入主界面
 				window.location.href = "../main.html";
 			}

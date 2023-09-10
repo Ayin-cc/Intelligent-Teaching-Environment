@@ -31,6 +31,17 @@ public class QRCodeController {
         }
     }
 
+    // 检查学生签到状态
+    @RequestMapping("/checkStudent")
+    public ResponseEntity<Student> checkStudent(@RequestBody Student student){
+        if(qrCodeService.checkStudent(student.getSid())){
+            student.setCode(1);
+            return new ResponseEntity<>(student, HttpStatus.OK);
+        }
+        student.setCode(0);
+        return new ResponseEntity<>(student, HttpStatus.OK);
+    }
+
     // 学生端扫描二维码接口
     @RequestMapping("/scan")
     public ResponseEntity<String> scan(@CookieValue("token")String token, @RequestParam("courseId") String courseId, @RequestParam("uid") String uid){

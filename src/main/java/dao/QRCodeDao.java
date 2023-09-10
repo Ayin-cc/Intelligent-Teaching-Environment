@@ -17,7 +17,7 @@ public interface QRCodeDao {
     List<QRcode> selectQRCodeByDate(@Param("date") String date);
     List<Course> selectCourseByTeacher(@Param("teacher") String teacher);
     List<Course> selectCourseByName(@Param("name") String name);
-    List<Course> selectCourseByCourseId(@Param("id") String id);
+    Course selectCourseByCourseId(@Param("id") String id);
     List<Student> selectStudentByUid(@Param("uid") String uid);
     QRcode selectQRCodeByUid(@Param("uid") String uid);
     Student selectStudentByToken(@Param("token") String token);
@@ -28,4 +28,6 @@ public interface QRCodeDao {
     int checkClassroomToken(@Param("token")String token);
     int checkAdministratorToken(@Param("token")String token);
     int checkQRCodeTime(@Param("now")String now, @Param("uid")String uid);
+    int checkStudentStatus(@Param("sid")String sid);
+    void setStudentStatus(@Param("sid")String sid, int status);
 }
