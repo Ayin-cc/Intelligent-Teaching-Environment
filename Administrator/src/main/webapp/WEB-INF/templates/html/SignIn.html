@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>教务端登录</title>
+		<link href="../css/output.css" rel="stylesheet">
+		<script src="../js/jquery-3.7.1.min.js" ></script>
+		<script>
+			$(document).ready(function () {
+			})
+		</script>
+	</head>
+
+	<body class="flex items-center justify-center min-h-screen bg-gray-100">
+		<div class="p-8 bg-white shadow-xl w-80 rounded-xl">
+			<h2 class="text-2xl font-semibold" id="top-tip">登录</h2>
+			<form class="mt-10">
+				<div class="mb-4">
+					<label for="username" class="block mb-2 font-medium text-gray-600">学工号</label>
+					<input type="text" id="username" name="username"
+						class="w-full p-2 border border-gray-300 rounded-md focus:bg-slate-100 bg-slate-50 focus:outline-none focus:border-blue-500 ">
+				</div>
+				<div class="mb-4">
+					<label for="password" class="block mb-2 font-medium text-gray-600">密码</label>
+					<input type="password" id="password" name="password"
+						class="w-full p-2 border border-gray-300 rounded-md focus:bg-slate-100 bg-slate-50 focus:outline-none focus:border-blue-500">
+				</div>
+				<div class="hidden mb-4" id="pswd-again">
+					<label for="password" class="block mb-2 font-medium text-gray-600">确认密码</label>
+					<input type="password" id="password-confirm" name="password"
+						class="w-full p-2 border border-gray-300 rounded-md focus:bg-slate-100 bg-slate-50 focus:outline-none focus:border-blue-500">
+				</div>
+				<div class="flex items-center justify-between mt-16 mb-4">
+					<a class="text-blue-500" href="" id="reset-password">
+						忘记密码？
+					</a>
+					<button id="sign-button"
+						class="px-4 py-2 text-white bg-blue-400 rounded-md focus:outline-none focus:bg-blue-600">
+						注册
+					</button>
+					<button id="log-button"
+						class="px-4 py-2 text-white bg-blue-500 rounded-md focus:outline-none focus:bg-blue-600"
+						onclick="login()">
+						登录
+					</button>
+				</div>
+			</form>
+		</div>
+		<script>
+			// 验证通过，进入主界面
+			function enter(userId, passwd) {
+				var token;
+				// 获取token
+				$.ajax({
+					type: "POST",
+					dataType: "json",
+					url: 'http://162.14.107.35/SCUEE/administrator/refreshAdministratorToken',
+					contentType: "application/json",
+					data: JSON.stringify({ "sid": userId }),
+					success: function (result) {
+						token = result.token;
+					}
+				})
+				// 将相关信息存入cookie
+				var expdate = new Date();
+				expdate.setTime(expdate.getTime() + 180 * 60 * 1000);	// cookie三小时过期
+				document.cookie = "userId=" + userId + ";token=" + token + ";expires=" + expdate.toGMTString() + ";path=/";
+				// 进入主界面
+				window.location.href = "../index.html";
+			}
+
+			// 登录功能
+			function login() {
+				const userId = document.getElementById("username");
+				const passwd = document.getElementById("password");
+				$.ajax({
+					type: "POST",
+					dataType: "json",
+					url: 'http://162.14.107.35/SCUEE/administrator/loginAdministrator',
+					contentType: "application/json",
+					data: JSON.stringify({ "sid": userId, "passwd": passwd }),
+					success: function (result) {
+						if (result == 1) {
+							enter(userId, passwd);
+						}
+						else if (result == 0) {
+							alert("登录失败！请检查账号密码是否正确！");
+						}
+						else{
+							alert("请求错误！")
+						}
+					}
+				})
+			}
+
+			// 注册功能
+			function register() {
+				const userId = document.getElementById("username");
+				const passwd = document.getElementById("password");
+				const passwdConfirm = document.getElementById("password-confirm");
+				if (passwd != passwdConfirm) {
+					alert("密码不一致！");
+					return;
+				}
+				$.ajax({
+					type: "POST",
+					dataType: "json",
+					url: 'http://162.14.107.35/SCUEE/administrator/registerAdministrator',
+					contentType: "application/json",
+					data: JSON.stringify({ "sid": userId, "passwd": passwd }),
+					success: function (result) {
+						if (result == 200) {
+							enter(userId, passwd);
+						}
+						else if (result == 401) {
+							alert("注册失败！用户已存在！");
+						}
+						else{
+							alert("请求错误！")
+						}
+					}
+				})
+			}
+		</script>
+		<script>
+			const top_tip = document.getElementById('top-tip');
+			const pswd_again = document.getElementById('pswd-again');
+			const sign_button = document.getElementById('sign-button');
+			const log_button = document.getElementById('log-button');
+			var log_sin_status = 1;
+
+			function change_top_tip() {
+				if (log_sin_status == 1) {
+					top_tip.textContent = '登录';
+					pswd_again.classList.add('hidden');
+				} else if (log_sin_status == 0) {
+					top_tip.textContent = '注册';
+					pswd_again.classList.remove('hidden');
+				}
+			}
+
+			sign_button.addEventListener('click', () => {
+				event.preventDefault();
+				log_sin_status = 0;
+				change_top_tip();
+			});
+			log_button.addEventListener('click', () => {
+				event.preventDefault();
+				log_sin_status = 1;
+				change_top_tip();
+			});
+
+			// 舒适化
+			change_top_tip();
+
+
+		</script>
+	</body>
+
+</html>
