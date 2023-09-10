@@ -6,12 +6,13 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.sql.Blob;
 import java.util.List;
 
 @Repository
 public interface DistrMsgDao {
     void addMsg(@Param("msg") Message msg);
-    void addAttachment(@Param("id")int id, @Param("name")String name, @Param("file")String file);
+    void addAttachment(@Param("id")int id, @Param("name")String name, @Param("file") Blob file);
     List<Message> selectReadyMsg(@Param("time")String time);
     Attachment selectAttachment(@Param("id")int id, @Param("name")String name);
     Message selectMsgById(@Param("id") int id);

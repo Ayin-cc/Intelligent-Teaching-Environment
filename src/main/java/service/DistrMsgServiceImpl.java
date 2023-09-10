@@ -6,8 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import entity.Message;
 import org.springframework.web.multipart.MultipartFile;
+import util.FileByte;
 
+import javax.sql.rowset.serial.SerialBlob;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -19,14 +26,26 @@ public class DistrMsgServiceImpl implements DistrMsgService {
 
     @Override
     public boolean create(String token, Message msg) {
+        System.out.println(token);
+        System.out.println(msg.toString());
         if(msgDao.checkToken(token) == 1){
             msgDao.addMsg(msg);
             if(msg.getAttachment().size() == 0){
                 msgDao.addAttachment(msg.getId(), "", null);
                 return true;
             }
-            for(int i = 0; i < msg.getAttachment().size(); i++){
-                msgDao.addAttachment(msg.getId(), msg.getAttachment().get(i).getName(), msg.getAttachment().get(i).getFile());
+            for(int i  = 0; i < msg.getAttachmentFiles().size(); i++){
+                Blob file = null;
+                String name = null;
+                try {
+                    file = new SerialBlob(msg.getAttachmentFiles().get(i).getBytes());
+                    name = msg.getAttachmentFiles().get(i).getOriginalFilename();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                msgDao.addAttachment(msg.getId(), name, file);
             }
             return true;
         }
@@ -41,6 +60,16 @@ public class DistrMsgServiceImpl implements DistrMsgService {
         List<Message> msg = msgDao.selectReadyMsg(timeStr);
         for (int i = 0; i < msg.size(); i++) {
             msgDao.updateMsg(msg.get(i));
+            for (int j = 0; j < msg.get(i).getAttachment().size(); j++) {
+                Attachment attachment = msg.get(i).getAttachment().get(j);
+                try {
+                    attachment.setFile(FileByte.blobToByteArray(attachment.getBlob()));
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
         }
         return msg;
     }

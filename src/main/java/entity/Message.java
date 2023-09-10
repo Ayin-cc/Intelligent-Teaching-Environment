@@ -3,6 +3,7 @@ package entity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.FileInputStream;
 import java.util.List;
 
 @Component
@@ -13,18 +14,20 @@ public class Message {
     private String time;
     private String sender;
     private List<Attachment> attachment;
+    private List<MultipartFile> attachmentFiles;
 
 
     public Message() {
     }
 
-    public Message(int id, String title, String content, String time, String sender, List<Attachment> attachment) {
+    public Message(int id, String title, String content, String time, String sender, List<Attachment> attachment, List<MultipartFile> attachmentFiles) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.time = time;
         this.sender = sender;
         this.attachment = attachment;
+        this.attachmentFiles = attachmentFiles;
     }
 
     /**
@@ -123,7 +126,23 @@ public class Message {
         this.attachment = attachment;
     }
 
+    /**
+     * 获取
+     * @return attachmentFiles
+     */
+    public List<MultipartFile> getAttachmentFiles() {
+        return attachmentFiles;
+    }
+
+    /**
+     * 设置
+     * @param attachmentFiles
+     */
+    public void setAttachmentFiles(List<MultipartFile> attachmentFiles) {
+        this.attachmentFiles = attachmentFiles;
+    }
+
     public String toString() {
-        return "Message{id = " + id + ", title = " + title + ", content = " + content + ", time = " + time + ", sender = " + sender + ", attachment = " + attachment + "}";
+        return "Message{id = " + id + ", title = " + title + ", content = " + content + ", time = " + time + ", sender = " + sender + ", attachment = " + attachment + ", attachmentFiles = " + attachmentFiles + "}";
     }
 }

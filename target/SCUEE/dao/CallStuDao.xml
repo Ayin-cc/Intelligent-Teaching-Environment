@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dao.CallStuDao">
+    <resultMap id="callResultMap" type="entity.CallStudent">
+        <result column="course_id" property="id"/>
+        <result column="call_date" property="callDate"/>
+        <result column="call_time" property="callTime"/>
+        <result column="student_id" property="sid"/>
+    </resultMap>
+
+    <resultMap id="studentResultMap" type="entity.Student">
+        <result column="sid" property="sid" />
+        <result column="student_name" property="name" />
+        <result column="student_major" property="major" />
+        <result column="student_college" property="college" />
+        <result column="student_sex" property="sex" />
+        <result column="student_passwd" property="passwd" />
+        <result column="student_phone" property="phone" />
+    </resultMap>
+
+    <insert id="addCallStudent">
+        insert into scuee.call_student
+            (course_id, call_date, call_time, student_id)
+        values
+            (#{id}, #{date}, #{time}, #{sid});
+    </insert>
+
+    <select id="checkToken" resultType="java.lang.Integer">
+        select exists(
+            select *
+            from scuee.classroom
+            where
+                classroom.classroom_token = #{token}
+                   );
+    </select>
+
+    <select id="selectStudentByUid" resultMap="studentResultMap">
+        select student.*
+        from (select * from scuee.qrcode_student where uid=#{uid})qr
+        inner join scuee.student
+        on qr.student_id = student.sid;
+    </select>
+</mapper>

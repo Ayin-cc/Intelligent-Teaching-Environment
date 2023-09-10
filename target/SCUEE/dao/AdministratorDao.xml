@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dao.AdministratorDao">
+    <resultMap id="studentResultMap" type="entity.Student">
+        <result column="sid" property="sid" />
+        <result column="student_name" property="name" />
+        <result column="student_major" property="major" />
+        <result column="student_college" property="college" />
+        <result column="student_sex" property="sex" />
+        <result column="student_passwd" property="passwd" />
+        <result column="student_phone" property="phone" />
+    </resultMap>
+
+    <resultMap id="classroomResultMap" type="entity.Classroom">
+        <result column="cid" property="cid" />
+        <result column="address" property="address" />
+        <collection property="courseSchedule" resultMap="courseResultMap" />
+    </resultMap>
+
+    <resultMap id="courseResultMap" type="entity.Course">
+        <result column="id" property="courseId" />
+        <result column="course_name" property="name" />
+        <result column="course_teacher" property="teacher" />
+        <result column="course_site" property="site" />
+        <result column="start_section" property="startSection" />
+        <result column="end_section" property="endSection" />
+        <collection property="date" ofType="string">
+            <result column="course_date" />
+        </collection>
+        <collection property="students" resultMap="studentResultMap" />
+    </resultMap>
+
+    <insert id="addStudent">
+        insert into scuee.student
+            (sid, student_name, student_major, student_college, student_sex, student_passwd, student_phone)
+        values
+            (#{student.sid}, #{student.name}, #{student.major}, #{student.college}, #{student.sex}, #{student.passwd}, #{student.phone});
+    </insert>
+
+    <insert id="addClassroom">
+        insert into scuee.classroom
+            (cid, address)
+        values
+            (#{classroom.cid}, #{classroom.address});
+    </insert>
+
+    <insert id="addCourseInf">
+        insert into scuee.course
+            (id, course_name, course_teacher, course_site, start_section, end_section)
+        values
+            (#{course.courseId}, #{course.name}, #{course.teacher}, #{course.site}, #{course.startSection}, #{course.endSection});
+    </insert>
+
+    <insert id="addCourseSchedule">
+        insert into scuee.classroom_courses
+                (cid, course_section, course_id, course_date)
+        values
+            (#{cid}, #{section}, #{id}, #{date});
+    </insert>
+
+    <insert id="addStudentToCourse">
+        insert into scuee.course_students
+            (course_id, student_id)
+        values
+            (#{id}, #{sid});
+    </insert>
+
+    <update id="changeStudent">
+        update scuee.student
+        set
+            student.student_token = #{student.token},
+            student.student_name = #{student.name},
+            student.student_major = #{student.major},
+            student.student_college = #{student.college},
+            student.student_sex = #{student.sex},
+            student.student_passwd = #{student.passwd},
+            student.student_phone = #{student.phone}
+        where
+            student.sid = #{student.sid};
+    </update>
+
+    <update id="changeClassroom">
+        update scuee.classroom
+        set
+            classroom.address = #{classroom.address}
+        where
+            classroom.cid = #{classroom.cid};
+    </update>
+
+    <update id="changeCourseInf">
+        update scuee.course
+        set
+            course.course_name = #{course.name},
+            course.course_teacher = #{course.teacher},
+            course.course_site = #{course.site},
+            course.start_section = #{course.startSection},
+            course.end_section = #{course.endSection}
+        where
+            course.id = #{course.courseId};
+    </update>
+
+    <update id="changeCourseSchedule">
+        update scuee.classroom_courses
+        set
+            classroom_courses.cid = #{cid},
+            classroom_courses.course_date = #{date},
+            classroom_courses.course_section = #{section}
+        where
+            classroom_courses.course_id = #{id};
+    </update>
+
+    <delete id="deleteStudent">
+        delete from scuee.student
+        where student.sid = #{student.sid};
+    </delete>
+
+    <delete id="deleteClassroom">
+        delete from scuee.classroom
+        where  classroom.cid = #{classroom.cid};
+    </delete>
+
+    <delete id="deleteCourseInf">
+        delete from scuee.course
+        where course.id = #{course.courseId};
+    </delete>
+
+    <delete id="deleteCourseSchedule">
+        delete from scuee.classroom_courses
+        where classroom_courses.course_id = #{id};
+    </delete>
+
+    <delete id="deleteStudentFromCourse">
+        delete from scuee.course_students
+        where student_id = #{sid} and course_id = #{id};
+    </delete>
+
+    <select id="checkToken" resultType="java.lang.Integer">
+        select exists(
+            select * from scuee.administrator a where a.token = #{token}
+                   );
+    </select>
+
+    <select id="queryStudent" resultMap="studentResultMap">
+        select *
+        from scuee.student
+        where
+            1=1
+            <if test="sid != null">
+                and student.sid = #{sid}
+            </if>
+            <if test="name != null">
+                and student.student_name like concat('%', #{name}, '%')
+            </if>
+            <if test="major != null">
+                and student.student_major like concat('%', #{major}, '%')
+            </if>
+            <if test="college != null">
+                and student.student_college like concat('%', #{college}, '%')
+            </if>
+            <if test="phone != null">
+                and student.student_phone like concat(#{phone}, '%')
+            </if>;
+    </select>
+
+    <select id="queryClassroom" resultMap="classroomResultMap">
+        select *
+        from scuee.classroom
+        where
+            1=1
+            <if test="cid != null">
+                and classroom.cid = #{cid}
+            </if>
+            <if test="address != null">
+                and classroom.address like concat(#{address}, '%')
+            </if>;
+    </select>
+
+    <select id="queryCourse" resultMap="courseResultMap">
+        select scuee.course.*, scuee.classroom_courses.course_date, scuee.course_students.student_id
+        from (
+            select *
+            from scuee.course
+            where
+                1=1
+                <if test="id != null">
+                    and id = #{id}
+                </if>
+                <if test="name != null">
+                    and course_name like concat('%', #{name}, '%')
+                </if>
+                <if test="teacher != null">
+                    and course_teacher like concat('%', #{teacher}, '%')
+                </if>
+             )c
+        inner join classroom_courses
+        on c.id = classroom_courses.course_id
+        inner join course_students
+        on c.id = course_students.course_id
+    </select>
+
+    <select id="selectCidBySite" resultType="java.lang.String">
+        select scuee.classroom.cid
+        from scuee.classroom
+        where classroom.address = #{site};
+    </select>
+    <select id="checkClassroom" resultType="java.lang.Integer">
+        select exists(
+            select * from scuee.classroom where classroom.cid = #{cid}
+                   );
+    </select>
+    <select id="checkCourse" resultType="java.lang.Integer">
+        select exists(
+            select * from scuee.course where course.id = #{courseId}
+                   );
+    </select>
+    <select id="checkStudent" resultType="java.lang.Integer">
+        select exists(
+            select * from scuee.student where student.sid = #{sid}
+                   );
+    </select>
+
+</mapper>

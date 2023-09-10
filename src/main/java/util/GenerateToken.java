@@ -8,7 +8,7 @@ public class GenerateToken {
 
     public static String generateToken(){
         String result = "";
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 30; i++) {
             char c = CHARACTERS[random.nextInt(CHARACTERS.length)];
             result += c;
         }

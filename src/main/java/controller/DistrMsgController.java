@@ -21,7 +21,8 @@ public class DistrMsgController {
 
     // 教务端发布新消息接口
     @RequestMapping("/create")
-    public ResponseEntity<StatusCode> create(@RequestBody @CookieValue("token") String token, Message message){
+    public ResponseEntity<StatusCode> create(@RequestHeader("Authorization") String token, @RequestBody Message message){
+        System.out.println(token);
         if(distrMsgService.create(token, message)){
             return new ResponseEntity<>(new StatusCode(1), HttpStatus.OK);
         }
@@ -41,7 +42,6 @@ public class DistrMsgController {
     // 获取某条消息的具体内容
     @RequestMapping("/get")
     public ResponseEntity<Message> get(@RequestBody Message msg){
-        System.out.println(msg.getId());
         Message message = distrMsgService.get(msg.getId());
         return new ResponseEntity<>(message, HttpStatus.OK);
     }

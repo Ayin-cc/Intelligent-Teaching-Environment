@@ -3,6 +3,8 @@ package util;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Blob;
+import java.sql.SQLException;
 
 public class FileByte {
     public static byte[] inputSwitchByte(InputStream input){
@@ -36,5 +38,17 @@ public class FileByte {
             }
         }
         return result;
+    }
+
+    public static byte[] blobToByteArray(Blob blob) throws SQLException, IOException {
+        try (InputStream inputStream = blob.getBinaryStream()) {
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            byte[] buffer = new byte[1048576];
+            int bytesRead;
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                byteArrayOutputStream.write(buffer, 0, bytesRead);
+            }
+            return byteArrayOutputStream.toByteArray();
+        }
     }
 }

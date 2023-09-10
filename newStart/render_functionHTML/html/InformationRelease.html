@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>撰写消息</title>
+    <script src="../js/jquery-3.7.1.min.js"></script>
+    <script src="../js/cookie-utils.js"></script>
+    <script>
+        $(document).ready(function (){
+        })
+    </script>
     <style>
         /* 定义容器样式 */
         .custom-input-container {
@@ -102,25 +108,25 @@
         const maxSizeInBytes = 10 * 1024 * 1024; // 10MB
 
         function send(formMessage){
+            setCookie("user", "admin");
+            console.log(document.cookie);
             $.ajax({
-                url: 'http://162.14.107.35/SCUEE/DistrMsg/create',
-                type: 'POST', // 请求类型，可以根据您的需求修改
-                data: formMessage, // 将 FormData 对象作为数据发送
-                processData: false, // 不对数据进行处理（已经是 FormData）
-                contentType: false, // 不设置 content-type 头部，让浏览器自动设置为 multipart/form-data
-                beforeSend: function (xhr) {
-                    // 在发送请求之前设置请求头
-                    xhr.setRequestHeader('Authorization', 'Bearer '+token);
-                  },
+                type: "POST",
+                dataType: "json",
+                url: 'http://localhost:18083/SCUEE/DistrMsg/create',
+                contentType: "application/json",
+                headers: {'Accept': 'application/json', 'Authorization': "admin"},
+                data: JSON.stringify(formMessage),
                 success: function (data) {
                   // 请求成功时的处理逻辑
+                    console.log(getCookie("token"));
                   console.log('上传成功:', data);
                 },
                 error: function (xhr, status, error) {
                   // 请求失败时的处理逻辑
                   console.error('上传失败:', error);
                 }
-              });
+            })
         }
 
 
@@ -204,7 +210,7 @@
                 formMessage.append('title', title)
                 formMessage.append('content', content)
                 formMessage.append('time', time)
-                formMessage.append('attachment', files)
+                formMessage.append('attachmentFiles', files)
                 send(formMessage)
 
             } else {

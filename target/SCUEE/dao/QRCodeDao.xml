@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dao.QRCodeDao">
+    <resultMap id="qrcodeResultMap" type="entity.QRcode">
+        <result column="uid" property="uid" />
+        <result column="code" property="code" />
+        <result column="class_id" property="cid" />
+        <result column="end_time" property="endTime"/>
+        <result column="count" property="count" />
+        <result column="course_id" property="courseId" />
+        <collection property="sid" ofType="string">
+            <result column="student_id" />
+        </collection>
+    </resultMap>
+
+    <resultMap id="studentResultMap" type="entity.Student">
+        <result column="sid" property="sid" />
+        <result column="student_name" property="name" />
+        <result column="student_major" property="major" />
+        <result column="student_college" property="college" />
+        <result column="student_sex" property="sex" />
+        <result column="student_passwd" property="passwd" />
+        <result column="student_phone" property="phone" />
+    </resultMap>
+
+    <resultMap id="courseResultMap" type="entity.Course">
+        <result column="id" property="courseId" />
+        <result column="course_name" property="name" />
+        <result column="course_teacher" property="teacher" />
+        <result column="course_site" property="site" />
+        <result column="start_section" property="startSection" />
+        <result column="end_section" property="endSection" />
+        <collection property="date" ofType="string">
+            <result column="course_date" />
+        </collection>
+        <collection property="students" resultMap="studentResultMap" />
+    </resultMap>
+
+    <resultMap id="classroomResultMap" type="entity.Classroom">
+        <result column="cid" property="cid" />
+        <result column="address" property="address" />
+        <collection property="courseSchedule" resultMap="courseResultMap" />
+    </resultMap>
+    
+    <insert id="createQRCode">
+        insert into scuee.qrcode
+            (uid, qrcode_code, class_id, qrcode_time, count, end_time)
+        values
+            (#{qrcode.uid}, #{qrcode.code}, #{qrcode.cid}, #{qrcode.time}, 0, #{qrcode.endTime});
+    </insert>
+
+    <insert id="updateQRCode">
+        insert into scuee.qrcode_student
+            (uid, student_id)
+        values
+            (#{uid}, #{sid});
+        update scuee.qrcode
+        set
+            qrcode.count = qrcode.count + 1
+        where
+            qrcode.uid = #{uid};
+    </insert>
+    <update id="setStudentStatus">
+        update scuee.student
+        set student.signed_status = 0
+        where student.sid = #{sid}
+    </update>
+
+    <select id="selectQRCodeByMulti" resultMap="qrcodeResultMap">
+        select
+            scuee.qrcode.*, scuee.qrcode_student.student_id, scuee.course.*
+        from
+            scuee.qrcode
+        inner join
+                qrcode_student
+        on
+            qrcode.uid = qrcode_student.student_id
+        inner join
+            course
+        on
+            qrcode.course_id = course.id
+        where
+            1=1
+            <if test="cid != null">
+                and qrcode.class_id = #{cid}
+            </if>
+            <if test="date != null">
+                and qrcode.qrcode_time like concat('%', #{date}, '%')
+            </if>
+            <if test="teacher != null">
+                and course.course_teacher like concat('%', #{teacher}, '%')
+            </if>
+            <if test="name != null">
+                and course.course_name like concat('%', #{name}, '%')
+            </if>
+            <if test="id != null">
+                and course.id = #{id}
+            </if>;
+    </select>
+
+    <select id="selectQRCodeByCid" resultMap="qrcodeResultMap">
+        select
+            scuee.qrcode.*, scuee.qrcode_student.student_id
+        from
+            (select * from scuee.qrcode where class_id = #{cid})q
+        inner join
+                scuee.qrcode_student
+        on
+            q.uid = qrcode_student.uid;
+    </select>
+
+    <select id="selectStudentByCourseId" resultType="java.lang.String">
+        select
+            scuee.course_students.student_id
+        from
+            scuee.course_students
+        where
+            scuee.course_students.course_id = #{id};
+    </select>
+
+    <select id="selectCourseByDate" resultMap="courseResultMap">
+        select *
+        from classroom_courses
+        where course_date=#{date} and course_section=#{section};
+    </select>
+
+    <select id="selectQRCodeByDate" resultMap="qrcodeResultMap">
+        select
+            scuee.qrcode.*, scuee.qrcode_student.student_id
+        from
+            (select * from scuee.qrcode where date_format(qrcode_time, '%Y-%m-%d') = #{date})q
+        inner join
+                scuee.qrcode_student
+        on
+            q.uid = qrcode_student.uid;
+    </select>
+
+    <select id="selectCourseByTeacher" resultMap="courseResultMap">
+        select *
+        from
+            scuee.course
+        where
+            course.course_teacher = #{teacher};
+    </select>
+
+    <select id="selectCourseByName" resultMap="courseResultMap">
+        select *
+        from
+            scuee.course
+        where
+            course.course_name = #{name};
+    </select>
+
+    <select id="selectCourseByCourseId" resultMap="courseResultMap">
+        select *
+        from
+            scuee.course
+        where
+            course.id = #{id};
+    </select>
+
+    <select id="selectStudentByUid" resultMap="studentResultMap">
+        select
+            scuee.student.*
+        from
+            scuee.student
+        inner join
+                (select * from scuee.qrcode_student q where q.uid = #{uid})qs
+        on
+            qs.student_id = student.sid
+    </select>
+
+    <select id="selectQRCodeByUid" resultMap="qrcodeResultMap">
+        select
+            scuee.qrcode.*, scuee.qrcode_student.student_id
+        from
+            (select * from scuee.qrcode where uid = #{uid})q
+        inner join
+                scuee.qrcode_student
+        on
+            scuee.qrcode.uid = scuee.qrcode_student.uid;
+    </select>
+
+    <select id="selectStudentByToken" resultMap="studentResultMap">
+        select
+            *
+        from
+            scuee.student
+        where
+            student_token = #{token};
+    </select>
+
+    <select id="checkCid" resultType="java.lang.Integer">
+        select exists(
+            select  *
+            from scuee.classroom
+            where cid = #{cid}
+                   );
+    </select>
+
+    <select id="checkUid" resultType="java.lang.Integer">
+        select exists(
+            select *
+            from scuee.student
+            where sid = #{sid}
+                   );
+    </select>
+
+    <select id="checkScan" resultType="java.lang.Integer">
+        select exists(
+            select *
+            from scuee.student, scuee.qrcode
+            where student_token=#{token} and uid=#{uid}
+                   );
+    </select>
+
+    <select id="checkStudentInCourse" resultType="java.lang.Integer">
+        select exists(
+            select *
+            from (select * from scuee.course_students where course_id=#{courseId})c
+            inner join (select * from scuee.student where student_token=#{token})s
+            on c.student_id=s.sid
+                   );
+    </select>
+
+    <select id="checkClassroomToken" resultType="java.lang.Integer">
+        select exists(
+            select *
+            from scuee.classroom
+            where classroom.classroom_token = #{token}
+                   );
+    </select>
+
+    <select id="checkAdministratorToken" resultType="java.lang.Integer">
+        select exists(
+            select *
+            from scuee.administrator
+            where administrator.token = #{token}
+                   );
+    </select>
+    <select id="checkQRCodeTime" resultType="java.lang.Integer">
+        select exists(
+            select *
+            from scuee.qrcode
+            where qrcode.uid = #{uid} and qrcode.end_time &gt; #{now}
+                   );
+    </select>
+    <select id="checkStudentStatus" resultType="java.lang.Integer">
+        select scuee.student.signed_status
+        from scuee.student
+        where student.sid = #{sid};
+    </select>
+
+
+</mapper>

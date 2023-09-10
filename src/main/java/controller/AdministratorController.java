@@ -17,12 +17,6 @@ public class AdministratorController {
     @Autowired
     private AdministratorService administratorService;
 
-    @RequestMapping(value = "/testsql", method = RequestMethod.GET)
-    public String testsql(){
-        administratorService.testsql();
-        return "success";
-    }
-
     @RequestMapping("/login")
     public ResponseEntity<StatusCode> login(@RequestBody Administrator administrator){
         if(administratorService.login(administrator)){
@@ -44,7 +38,7 @@ public class AdministratorController {
     }
 
     @RequestMapping("/addStudent")
-    public ResponseEntity<StatusCode> addStudent(@RequestBody @CookieValue("token") String token, Student student){
+    public ResponseEntity<StatusCode> addStudent(@RequestBody @RequestHeader("Authorization") String token, Student student){
         if(administratorService.addStudent(token, student)){
             return new ResponseEntity<>(new StatusCode(1), HttpStatus.OK);
         }
