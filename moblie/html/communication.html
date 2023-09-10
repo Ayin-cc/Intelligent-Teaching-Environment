@@ -5,7 +5,7 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link href="../css/output.css" rel="stylesheet" />
-		<title>communication</title>
+		<title>ITE-交流</title>
 		<script src="../js/jquery-3.7.1.min.js"></script>
 		<script src="../js/cookie-utils.js"></script>
 		<script>
@@ -14,14 +14,14 @@
 			$(document).ready(function () {
 				// keepAlive
 				function keepAlive(callback) {
-					setTimeout(function (){
+					setTimeout(function () {
 						console.log("123");
 						$.ajax({
 							type: "POST",
 							dataType: "json",
 							url: 'http://162.14.107.35/SCUEE/ChatBox/keepAlive',
 							contentType: "application/json",
-							data: JSON.stringify({"id":getCookie("courseId")}),
+							data: JSON.stringify({ "id": getCookie("courseId") }),
 							success: function (result) {
 								if (result != "") {
 									for (var i = 0; i < result.length; i++) {
@@ -33,25 +33,24 @@
 						callback();
 					}, 5000)
 				}
-				async function k(){
+				async function k() {
 					keepAlive(k);
 				}
 				keepAlive(k);
 
 				// 检测cookie信息
-				if(document.cookie){
+				if (document.cookie) {
 					// 跳转登录
 					window.location.href("LOGIN_.html")
 				}
-				else{
+				else {
 					// 获取学生对象
-					if(sessionStorage.getItem("Student") == ""){
+					if (sessionStorage.getItem("Student") == "") {
 						var studentObj = getStudent(getCookie("userId"));
 						sessionStorage.setItem("Student", JSON.stringify(studentObj));
 					}
 					student = sessionStorage.getItem("Student");
 				}
-
 				// 使用学生对象替换页面中的值
 			})
 		</script>
@@ -130,7 +129,9 @@
 		<!-- 底部输入框 -->
 		<div class="fixed bottom-0 flex items-center w-screen p-2 shadow-2xl shadow-slate-800">
 			<input type="text" class="flex flex-grow p-2 border-0 input-box" id="message-input" placeholder="输入消息...">
-			<button class="px-2 py-2 ml-2 bg-blue-500 border-0 rounded-xl" id="send-button">发送</button>
+			<button
+				class="px-2 py-2 ml-3 text-gray-200 bg-blue-400 border-0 rounded-xl disabled:opacity-50 disabled:cursor-not-allowed"
+				id="send-button">发送</button>
 		</div>
 		<script>
 			// 获取元素
@@ -162,6 +163,7 @@
 					if (isLongtime(nowtime)) chatContainer.innerHTML = chatContainer.innerHTML + mes1 + mes2 + mes3;
 					else chatContainer.innerHTML = chatContainer.innerHTML + mes1 + mes3;
 					messageInput.value = '';
+					isInput();
 
 					// 发送到服务器
 					var datetime = new Date(Date.now());
@@ -171,11 +173,11 @@
 						url: 'http://162.14.107.35/SCUEE/ChatBox/send',
 						contentType: "application/json",
 						data: JSON.stringify({
-							"cid":getCookie("courseId"),
-							"sid":student.sid,
-							"name":student.name,
-							"time":datetime,
-							"content":messageText
+							"cid": getCookie("courseId"),
+							"sid": student.sid,
+							"name": student.name,
+							"time": datetime,
+							"content": messageText
 						}),
 						success: function (result) {
 							if (result == 0) {
@@ -213,8 +215,6 @@
 			// 初始化
 			function setMessage() {
 				// 调用 setNewMessage()
-
-
 			}
 
 			function getNowtime() {
@@ -256,6 +256,26 @@
 					sendMessage();
 				}
 			});
+
+			// 输入框 是否已输入 监测
+			function isInput() {
+				const inputValue = messageInput.value;
+				// 检查输入框是否有内容
+				if (inputValue.trim() !== "") {
+					// 有内容时启用按钮并添加相应的 Tailwind CSS 类
+					sendButton.classList.remove("bg-blue-400");
+					sendButton.classList.add("bg-blue-500");
+					sendButton.disabled = false;
+				} else {
+					// 无内容时禁用按钮并还原样式
+					sendButton.classList.remove("bg-blue-500");
+					sendButton.classList.add("bg-blue-400");
+					sendButton.disabled = true;
+				}
+			}
+
+			messageInput.addEventListener("input", isInput);
+
 		</script>
 	</body>
 
