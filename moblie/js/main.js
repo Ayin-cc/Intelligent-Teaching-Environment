@@ -10,8 +10,8 @@ var login_status = 1;
 
 $(document).ready(function () {
 	// 检测cookie信息
-	var student;
-	login_status = checkCookie(student, 0);
+	login_status = checkCookie(0);
+	var student = getStudentObj();
 	// 初始化（登陆状态）
 	login_statu();
 	// 使用学生对象替换页面中的值

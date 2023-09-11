@@ -36,6 +36,5 @@
     <mvc:resources mapping="/icons/**" location="/WEB-INF/templates/icons/"/>
     <mvc:resources mapping="/html/**" location="/WEB-INF/templates/html/"/>
     <mvc:resources mapping="/**" location="/WEB-INF/templates/"/>
-    <mvc:view-controller path="/main" view-name="main"></mvc:view-controller>
 
 </beans>

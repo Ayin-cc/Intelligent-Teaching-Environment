@@ -6,11 +6,24 @@ const timetable_button = document.getElementById('timetable-sidebar');
 const signIn_button = document.getElementById('signIn-sidebar');
 const communication_button = document.getElementById('communication-sidebar');
 
-var login_status = 1;
+var login_status = 0;
+
+$(document).ready(async function () {
+	// 检测cookie信息
+	login_status = checkCookie(login_status);
+	var student = await getStudentObj();
+	login_statu(student);
+})
+
 // 登录信息显示
-function login_statu() {
+function login_statu(student) {
 	if (login_status == 1) {
 		togglePages(user_infor, noneuser);
+		// 使用学生对象替换页面中的值
+		const stdName = document.getElementById('name-profile');
+		const stdID = document.getElementById('number-profile');
+		stdName.innerText = student.name;
+		stdID.innerText = student.sid;
 	} else {
 		togglePages(noneuser, user_infor);
 	}
@@ -48,7 +61,7 @@ function nologtip() {
 			clearInterval(countdownInterval); // 停止倒计时
 			setTimeout(() => {
 				messageBox.style.display = 'none'; // 移除提示框
-				window.location.href = 'html/LOGIN_.html';
+				window.location.href = 'LOGIN_.html';
 			}, 500); // 等待过渡结束后移除
 		}
 	}, 1000);
@@ -60,17 +73,16 @@ function nologtip() {
 	});
 }
 
-// 初始化（登陆状态）
-login_statu();
+
 
 // 点击事件---用户头像区域
 user_all.addEventListener('click', () => {
 	if (login_status == 0) {
 		setTimeout(() => {
-			window.location.href = 'html/LOGIN_.html';
+			window.location.href = 'LOGIN_.html';
 		}, 100); // 等待过渡结束后移除
 	} else {
-		window.location.href = 'html/mine.html';
+		window.location.href = 'mine.html';
 	}
 });
 
@@ -79,27 +91,27 @@ message_button.addEventListener('click', () => {
 	if (login_status == 0) {
 		nologtip();
 	} else {
-		window.location.href = 'html/message1.0.html';
+		window.location.href = 'message1.0.html';
 	}
 });
 signIn_button.addEventListener('click', () => {
 	if (login_status == 0) {
 		nologtip();
 	} else {
-		window.location.href = 'html/sign.html';
+		window.location.href = 'sign.html';
 	}
 });
 timetable_button.addEventListener('click', () => {
 	if (login_status == 0) {
 		nologtip();
 	} else {
-		window.location.href = 'html/timetable1.0.html';
+		window.location.href = 'timetable1.0.html';
 	}
 });
 communication_button.addEventListener('click', () => {
 	if (login_status == 0) {
 		nologtip();
 	} else {
-		window.location.href = 'html/communication.html';
+		window.location.href = 'communication.html';
 	}
 });

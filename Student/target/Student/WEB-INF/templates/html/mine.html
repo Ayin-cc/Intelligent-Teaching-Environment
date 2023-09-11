@@ -6,6 +6,27 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>ITE</title>
 		<link href="../css/output.css" rel="stylesheet" />
+		<script src="../js/jquery-3.7.1.min.js"></script>
+		<script src="../js/cookie-utils.js"></script>
+		<script>
+			$(document).ready(async function () {
+				// 检测cookie信息
+				checkCookie();
+				var student = await getStudentObj();
+				// 使用学生对象替换页面中的值
+				const stdName = document.getElementById('name-profile');
+				const stdID = document.getElementById('number-profile');
+				const stCollage = document.getElementById('college-profile');
+				//const stdClass = document.getElementById('class-profile');
+				const stdMajor = document.getElementById('major-profile');
+				stdName.innerText = student.name;
+				stdID.innerText = student.sid;
+				stCollage.innerText = student.college;
+				//stdClass.textContent = student.class;
+				stdMajor.innerText = student.major;
+
+			})
+		</script>
 	</head>
 
 	<body>
@@ -15,12 +36,12 @@
 				<!-- 头像栏 -->
 				<div class="flex flex-grow"></div>
 				<div class="flex items-center justify-center max-w-xs p-2 rounded-lg resizable">
-					<div class="flex flex-grow mx-6 overflow-hidden select-none" id="name-profile-sidebarBottom">
+					<div class="flex flex-grow mx-6 overflow-hidden select-none" id="title-profile">
 						我的信息
 					</div>
 				</div>
 				<div class="flex flex-grow"></div>
-				<a href="../main.html"
+				<a href="main.html"
 					class="absolute items-center justify-end w-8 h-8 max-w-xs overflow-hidden rounded-h-full right-2"
 					id="message-returnBottom">
 					<img draggable="false" src="../icons/左.svg" alt="" />
@@ -35,34 +56,36 @@
 			<div class="grid grid-cols-1 gap-4 md:grid-cols-2">
 				<!-- 使用 grid 和 grid-cols-1 (1 列) 或 md:grid-cols-2 (2 列) 来实现分列布局 -->
 				<div class="flex items-center justify-between p-4 bg-white rounded shadow-md">
-					<h6 class="select-none font-lg semibold">姓名：</h6>
-					<p class="text-right text-gray-600 select-all">XYCF</p>
+					<h6 class="select-none ">姓名：</h6>
+					<p class="text-right text-gray-600 select-all" id="name-profile">XYCF</p>
 				</div>
 			</div>
 			<div class="grid grid-cols-1 gap-4 my-3 md:grid-cols-2">
 				<div class="flex items-center justify-between p-4 bg-white rounded shadow-md">
-					<h6 class="select-none font-lg semibold">学号：</h6>
-					<p class="text-right text-gray-600 select-all">2022xxxxxxxxx</p>
+					<h6 class="select-none ">学号：</h6>
+					<p class="text-right text-gray-600 select-all" id="number-profile">2022xxxxxxxxx</p>
 				</div>
 			</div>
 			<div class="grid grid-cols-1 gap-4 my-3 md:grid-cols-2">
 				<div class="flex items-center justify-between p-4 bg-white rounded shadow-md">
-					<h6 class="select-none font-lg semibold">学院：</h6>
-					<p class="text-right text-gray-600 select-all">计算机学院</p>
+					<h6 class="select-none ">学院：</h6>
+					<p class="text-right text-gray-600 select-all" id="college-profile">计算机学院</p>
 				</div>
 			</div>
 			<div class="grid grid-cols-1 gap-4 my-3 md:grid-cols-2">
 				<div class="flex items-center justify-between p-4 bg-white rounded shadow-md">
-					<h6 class="select-none font-lg semibold">班级：</h6>
-					<p class="text-right text-gray-600 select-all">223040107</p>
+					<h6 class="select-none ">专业：</h6>
+					<p class="text-right text-gray-600 select-all" id="major-profile">计算机科学与技术</p>
 				</div>
 			</div>
+<!--			<div class="grid grid-cols-1 gap-4 my-3 md:grid-cols-2">-->
+<!--				<div class="flex items-center justify-between p-4 bg-white rounded shadow-md">-->
+<!--					<h6 class="select-none ">班级：</h6>-->
+<!--					<p class="text-right text-gray-600 select-all" id="class-profile">223040107</p>-->
+<!--				</div>-->
+<!--			</div>-->
 		</div>
 		</div>
-
-		<script>
-
-		</script>
 	</body>
 
 </html>

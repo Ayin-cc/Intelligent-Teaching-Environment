@@ -215,7 +215,9 @@
                 formMessage.append('title', title)
                 formMessage.append('content', content)
                 formMessage.append('time', time)
-                formMessage.append('attachmentFiles', files)
+                for (var i = 0; i < files.length; i++) {
+                    formMessage.append('attachmentFiles', files[i]);
+                }
                 send(formMessage)
 
             } else {

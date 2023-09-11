@@ -2,7 +2,13 @@
 function setCookie(userId, token, cid = "") {
     var expdate = new Date();
     expdate.setTime(expdate.getTime() + 3 * 60 * 60 * 1000);	// cookie三小时过期
-    document.cookie = "userId=" + userId + ";token=" + token + ";courseId=" + cid + ";expires=" + expdate.toGMTString() + ";path=/";
+    document.cookie = "userId=" + userId;
+    document.cookie = "token=" + token;
+    document.cookie = "path=/";
+    if(cid != ""){
+        document.cookie = "courseId=" + cid;
+    }
+    document.cookie = "expires=" + expdate.toGMTString();
 }
 
 // 寻找cookie的值
@@ -39,23 +45,23 @@ function getStudent(sid) {
     return student;
 }
 
-function checkCookie(student, i = 1) {
+function checkCookie(i = 1) {
     // 检测cookie信息
-    if (!document.cookie) {
+    if (document.cookie.isEmpty()) {
         // 跳转登录
         if (i == 1) {
             alert('登录已过期，请重新登录');
-            window.location.href = "../html/LOGIN_.html";
-        }
-        else return 0;
+            window.location.href = "/Student/html/LOGIN_.html";
+        } else return 0;
     }
-    else {
-        // 获取学生对象
-        if (sessionStorage.getItem("Student") == "") {
-            var studentObj = getStudent(getCookie("userId"));
-            sessionStorage.setItem("Student", JSON.stringify(studentObj));
-        }
-        student = sessionStorage.getItem("Student");
+}
+
+function getStudentObj(){
+    // 获取学生对象
+    if (sessionStorage.getItem("Student") == "") {
+        var studentObj = getStudent(getCookie("userId"));
+        sessionStorage.setItem("Student", JSON.stringify(studentObj));
     }
-    // 使用学生对象替换页面中的值
+    student = sessionStorage.getItem("Student");
+    return student;
 }
