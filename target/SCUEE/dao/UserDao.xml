@@ -140,7 +140,7 @@
         on cc.course_id = course_students.course_id;
     </select>
 
-    <select id="selectStudentById" resultType="entity.Student">
+    <select id="selectStudentById" resultMap="studentResultMap">
         select *
         from scuee.student
         where student.sid = #{sid};
