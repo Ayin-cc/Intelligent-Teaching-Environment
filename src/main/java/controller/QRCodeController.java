@@ -21,10 +21,10 @@ public class QRCodeController {
 
     // 教室端获取二维码接口
     @RequestMapping("/get")
-    public ResponseEntity<QRcode> get(@RequestBody @CookieValue("token") String token, @RequestBody Classroom classroom, @RequestParam("endTime") String endTime) {
+    public ResponseEntity<QRcode> get(@CookieValue("token") String token, @RequestBody Classroom classroom, @RequestParam("endTime") String endTime) {
         QRcode qRcode = qrCodeService.get(token, classroom.getCid(), endTime);
         if(qRcode == null){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(null, HttpStatus.OK);
         }
         else {
             return new ResponseEntity<>(qRcode, HttpStatus.OK);
