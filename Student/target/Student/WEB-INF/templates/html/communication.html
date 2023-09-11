@@ -10,16 +10,16 @@
 		<script src="../js/cookie-utils.js"></script>
 		<script>
 			var student;
-			$(document).ready(function () {
+			$(document).ready(async function () {
 				// 检测cookie信息
-				checkCookie(student);
+				checkCookie();
+				student = await getStudentObj();
 				// 使用学生对象替换页面中的值
-				function change_inf() {
-					const stdName = document.getElementById('name-profile');
-					const stdID = document.getElementById('number-profile');
-					stdName.textContent = student.name;
-					stdID.textContent = student.sid;
-				}
+				const stdName = document.getElementById('name-profile');
+				const stdID = document.getElementById('number-profile');
+				stdName.innerText = student.name;
+				stdID.innerText = student.sid;
+
 				// keepAlive
 				function keepAlive(callback) {
 					setTimeout(function () {
@@ -62,12 +62,10 @@
 						<img draggable="false" src="../icons/用户.svg" alt="" />
 					</div>
 					<div>
-						<div class="flex flex-grow mx-6 overflow-hidden select-none" id="name-profile">
-							XYCF
+						<div class="flex mx-6 overflow-hidden select-none" id="name-profile">
 						</div>
 
-						<div class="flex flex-grow py-1 overflow-hidden text-xs select-none" id="number-profile">
-							2022xxxxxxxxx
+						<div class="flex py-1 overflow-hidden text-xs select-none" id="number-profile">
 						</div>
 					</div>
 				</div>
