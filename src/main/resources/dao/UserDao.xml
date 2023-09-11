@@ -16,7 +16,7 @@
     <resultMap id="attachmentResultMap" type="entity.Attachment">
         <result column="msg_id" property="id"/>
         <result column="attachment_name" property="name" />
-        <result column="attachment_url" property="blob" jdbcType="BLOB" typeHandler="org.apache.ibatis.type.BlobTypeHandler"/>
+        <result column="attachment_url" property="file" jdbcType="BLOB" typeHandler="org.apache.ibatis.type.BlobTypeHandler"/>
     </resultMap>
 
     <resultMap id="msgResultMap" type="entity.Message">
@@ -107,7 +107,7 @@
         select *
         from scuee.message
         inner join scuee.msg_attachment
-        on id = id
+        on id = msg_id
         where is_published = 1;
     </select>
 

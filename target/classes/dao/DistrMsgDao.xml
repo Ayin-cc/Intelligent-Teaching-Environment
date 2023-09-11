@@ -7,7 +7,7 @@
     <resultMap id="attachmentResultMap" type="entity.Attachment">
         <result column="msg_id" property="id"/>
         <result column="attachment_name" property="name" />
-        <result column="attachment_url" property="blob" jdbcType="BLOB" typeHandler="org.apache.ibatis.type.BlobTypeHandler"/>
+        <result column="attachment_url" property="file" jdbcType="BLOB" typeHandler="org.apache.ibatis.type.BlobTypeHandler"/>
     </resultMap>
 
     <resultMap id="msgResultMap" type="entity.Message">
@@ -23,7 +23,7 @@
         insert into scuee.message
             (title, content, msg_time, is_published, sender)
         values
-            (#{msg.title}, #{msg.content}, #{msg.time}, 0), #{msg.sender};
+            (#{msg.title}, #{msg.content}, #{msg.time}, 0, #{msg.sender});
     </insert>
 
     <insert id="addAttachment">

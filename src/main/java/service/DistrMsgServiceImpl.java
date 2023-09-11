@@ -28,20 +28,20 @@ public class DistrMsgServiceImpl implements DistrMsgService {
     public boolean create(String token, Message msg) {
         System.out.println(token);
         System.out.println(msg.toString());
+
         if(msgDao.checkToken(token) == 1){
             msgDao.addMsg(msg);
-            if(msg.getAttachment().size() == 0){
+            if(msg.getAttachmentFiles().size() == 0){
                 msgDao.addAttachment(msg.getId(), "", null);
                 return true;
             }
             for(int i  = 0; i < msg.getAttachmentFiles().size(); i++){
-                Blob file = null;
+                byte[] file = null;
                 String name = null;
                 try {
-                    file = new SerialBlob(msg.getAttachmentFiles().get(i).getBytes());
+                    file = msg.getAttachmentFiles().get(i).getBytes();
                     name = msg.getAttachmentFiles().get(i).getOriginalFilename();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
+                    System.out.println(name);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }

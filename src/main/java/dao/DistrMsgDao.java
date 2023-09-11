@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface DistrMsgDao {
     void addMsg(@Param("msg") Message msg);
-    void addAttachment(@Param("id")int id, @Param("name")String name, @Param("file") Blob file);
+    void addAttachment(@Param("id")int id, @Param("name")String name, @Param("file") byte[] file);
     List<Message> selectReadyMsg(@Param("time")String time);
     Attachment selectAttachment(@Param("id")int id, @Param("name")String name);
     Message selectMsgById(@Param("id") int id);

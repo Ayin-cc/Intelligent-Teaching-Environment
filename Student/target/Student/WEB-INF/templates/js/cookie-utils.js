@@ -9,6 +9,8 @@ function setCookie(userId, token, cid = "") {
         document.cookie = "courseId=" + cid;
     }
     document.cookie = "expires=" + expdate.toGMTString();
+    var a = document.cookie;
+    console.log(a);
 }
 
 // 寻找cookie的值

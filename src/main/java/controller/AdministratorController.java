@@ -38,7 +38,7 @@ public class AdministratorController {
     }
 
     @RequestMapping("/addStudent")
-    public ResponseEntity<StatusCode> addStudent(@RequestBody @RequestHeader("Authorization") String token, Student student){
+    public ResponseEntity<StatusCode> addStudent(@RequestHeader("Authorization") String token, @RequestBody Student student){
         if(administratorService.addStudent(token, student)){
             return new ResponseEntity<>(new StatusCode(1), HttpStatus.OK);
         }
@@ -46,7 +46,7 @@ public class AdministratorController {
     }
 
     @RequestMapping("/changeStudent")
-    public ResponseEntity<StatusCode> changeStudent(@RequestBody @CookieValue("token") String token, Student student){
+    public ResponseEntity<StatusCode> changeStudent(@CookieValue("token") String token, @RequestBody Student student){
         if(administratorService.changeStudent(token, student)){
             return new ResponseEntity<>(new StatusCode(1), HttpStatus.OK);
         }
@@ -54,13 +54,13 @@ public class AdministratorController {
     }
 
     @RequestMapping("/queryStudent")
-    public ResponseEntity<List<Student>> queryStudent(@RequestBody @CookieValue("token") String token, Student student){
+    public ResponseEntity<List<Student>> queryStudent(@CookieValue("token") String token, @RequestBody Student student){
         List<Student> result = administratorService.queryStudent(token, student.getSid(), student.getName(), student.getMajor(), student.getCollege(), student.getPhone());
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @RequestMapping("/deleteStudent")
-    public ResponseEntity<StatusCode> deleteStudent(@RequestBody @CookieValue("token") String token, Student student){
+    public ResponseEntity<StatusCode> deleteStudent(@CookieValue("token") String token, @RequestBody Student student){
         if(administratorService.deleteStudent(token, student)){
             return new ResponseEntity<>(new StatusCode(1), HttpStatus.OK);
         }
@@ -68,7 +68,7 @@ public class AdministratorController {
     }
 
     @RequestMapping("/addClassroom")
-    public ResponseEntity<StatusCode> addClassroom(@RequestBody @CookieValue("token") String token, Classroom classroom){
+    public ResponseEntity<StatusCode> addClassroom(@CookieValue("token") String token, @RequestBody Classroom classroom){
         if(administratorService.addClassroom(token, classroom)){
             return new ResponseEntity<>(new StatusCode(1), HttpStatus.OK);
         }
