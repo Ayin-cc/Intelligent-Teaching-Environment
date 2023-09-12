@@ -40,10 +40,10 @@
                             document.getElementById("message-time").innerHTML = time;
                             document.getElementById("message-sender").innerHTML = sender;
                             document.getElementById("message-sender-out").innerHTML = sender;
-                            if(attachment[0].file == null){
+                            if (attachment[0].file == null) {
                                 attachment = null;
                             }
-                            else{
+                            else {
                                 // 添加附件
                                 document.getElementById("attched-tip-num").innerHTML = attachment.length;
                                 for (var i = 0; i < attachment.length; i++) {
@@ -100,7 +100,8 @@
                 </div>
                 <!-- 发件人 -->
                 <div class="flex mb-2 " id="brief-inf">
-                    <div class="mr-1 overflow-hidden text-sm text-green-600 rounded-lg select-none flexml-6"  id="message-sender-out">
+                    <div class="mr-1 overflow-hidden text-sm text-green-600 rounded-lg select-none flexml-6"
+                        id="message-sender-out">
                         发件人
                     </div>
                     <div class="flex" id="attched-tip-brf">
@@ -116,8 +117,10 @@
                     <!-- 发件人 & 时间 -->
                     <div class="flex w-full mx-5 my-2 overflow-hidden text-xs">
                         <div class="w-12 text-gray-400 text-end">发件人:</div>
-                        <div class="ml-2 overflow-hidden text-gray-600 text-start" style="max-width: calc(220px);"  id="message-sender">
-                            XX科</div>
+                        <div class="ml-2 overflow-hidden text-gray-600 text-start" style="max-width: calc(220px);"
+                            id="message-sender">
+                            XX科
+                        </div>
                     </div>
                     <div class="flex mx-5 my-2 overflow-hidden text-xs">
                         <div class="w-12 text-gray-400 text-end">时间:</div>
@@ -177,9 +180,8 @@
                 isShows();
             });
 
-
             // 确认附件数量
-            function isAttached(attched_number, blobUrl='', attachment_name='') {
+            function isAttached(attched_number, blobUrl = '', attachment_name = '') {
                 const attched_brf = document.getElementById('attched-tip-brf');
                 const attched_tips = document.getElementById('attched_tips');
                 const attched_num = document.getElementById('attched-tip-num');
@@ -197,7 +199,7 @@
 
 
             // 添加附件
-            function setAttachment(attched_number, blobUrl='', attachment_name='') {
+            function setAttachment(attched_number, blobUrl = '', attachment_name = '') {
                 var attchment_links = document.getElementById('attchment');
                 for (var i = 1; i <= attched_number; i++) {
                     attchment_links.innerHTML = attchment_links.innerHTML + `<div class="flex mb-1 overflow-hidden" style="max-width: calc(100vw - 110px);">【 <a class="overflow-hidden text-blue-500 overflow-ellipsis whitespace-nowrap" style="max-width:  calc(100% - 10px);" href="${blobUrl}" download="${attachment_name}">${attachment_name}</a>】</div>`;
