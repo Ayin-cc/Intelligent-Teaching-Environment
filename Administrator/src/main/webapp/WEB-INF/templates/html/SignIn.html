@@ -65,7 +65,7 @@
 	async function enter(userId) {
 		var token;
 		// 获取token
-		$.ajax({
+		await $.ajax({
 			type: "POST",
 			dataType: "json",
 			url: 'http://162.14.107.35/SCUEE/Administrator/refreshToken',
@@ -76,7 +76,7 @@
 			}
 		})
 		// 将相关信息存入cookie
-		await setCookie(userId, token);
+		setCookie(userId, token);
 
 		// 进入主界面
 		alert("登录成功！");

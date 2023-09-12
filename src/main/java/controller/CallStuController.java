@@ -21,14 +21,14 @@ public class CallStuController {
 
     // 随机点名接口
     @RequestMapping("/random")
-    public ResponseEntity<List<Student>> random(@RequestBody @CookieValue("token") String token, QRcode qRcode){
+    public ResponseEntity<List<Student>> random(@RequestHeader("Authorization") String token, @RequestBody QRcode qRcode){
         List<Student> students = callStuService.random(token, qRcode.getCount(), qRcode.getUid());
         return new ResponseEntity<>(students, HttpStatus.OK);
     }
 
     // 直接点名接口
     @RequestMapping("/select")
-    public ResponseEntity<StatusCode> select(@RequestBody @CookieValue("token") String token, CallStudent callStudent){
+    public ResponseEntity<StatusCode> select(@RequestHeader("Authorization") String token, @RequestBody CallStudent callStudent){
         if(callStuService.select(token, callStudent.getId(), callStudent.getSid())){
             return new ResponseEntity<>(new StatusCode(1), HttpStatus.OK);
         }

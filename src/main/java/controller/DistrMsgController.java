@@ -22,7 +22,7 @@ public class DistrMsgController {
 
     // 教务端发布新消息接口
     @RequestMapping("/create")
-    public ResponseEntity<StatusCode> create(@CookieValue("token") String token, @RequestParam("title")String title, @RequestParam("content")String content, @RequestParam("time")String time, @RequestParam("attachmentFiles")MultipartFile[] files){
+    public ResponseEntity<StatusCode> create(@RequestHeader("Authorization") String token, @RequestParam("title")String title, @RequestParam("content")String content, @RequestParam("time")String time, @RequestParam("attachmentFiles")MultipartFile[] files){
         Message message = new Message();
         message.setTitle(title);
         message.setTime(time);

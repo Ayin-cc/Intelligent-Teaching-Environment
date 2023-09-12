@@ -280,46 +280,7 @@
             return o;
         }
 
-        // 根据搜索表单的值发送Ajax请求，并显示返回的数据
-        function searchAndShow() {
-            // 获取搜索表单的元素
-            var searchForm = $("#search-form");
-            // 获取搜索表单的序列化数据
-            var searchData = searchForm.serializeObject();
-            // 发送Ajax请求，传递搜索表单的数据
-            $.ajax({
-                url: "http://localhost:18083/SCUEE/Administrator/queryCourse",
-                type: "POST",
-                data: JSON.stringify(searchData),
-                contentType:"application/json",
-                dataType: "json",
-                success: function(data) {
-                    // 如果返回的数据是一个数组，说明查询成功
-                    if (data) {
-                        // 获取显示表格的tbody元素
-                        var showTbody = $("#show-table tbody");
-                        // 清空tbody中的内容
-                        showTbody.empty();
-                        // 遍历返回的数据数组，对每个课程对象进行处理
-                        for (var i = 0; i < data.length; i++) {
-                            // 获取当前的课程对象
-                            var course = data[i];
-                            // 调用函数，根据课程对象生成表格的一行
-                            var tr = createTableRow(course);
-                            // 将生成的tr添加到tbody中
-                            showTbody.append(tr);
-                        }
-                    } else {
-                        // 如果返回的数据不是一个数组，说明查询失败，弹出提示信息
-                        alert(data.message || "查询失败，请重试！");
-                    }
-                },
-                error: function() {
-                    // 如果请求失败，弹出提示信息
-                    alert("请求失败，请重试！");
-                }
-            });
-        }
+
 
 
         $(document).ready(function() {
@@ -333,6 +294,48 @@
             $("#add-btn").click(function() {
                 $("#add-modal").modal("show");
             });
+
+            // 根据搜索表单的值发送Ajax请求，并显示返回的数据
+            function searchAndShow() {
+                // 获取搜索表单的元素
+                var searchForm = $("#search-form");
+                // 获取搜索表单的序列化数据
+                var searchData = searchForm.serializeObject();
+                // 发送Ajax请求，传递搜索表单的数据
+                $.ajax({
+                    url: "http://162.14.107.35//SCUEE/Administrator/queryCourse",
+                    type: "POST",
+                    headers:{"Authorization":"admin"},
+                    data: JSON.stringify(searchData),
+                    contentType:"application/json",
+                    dataType: "json",
+                    success: function(data) {
+                        // 如果返回的数据是一个数组，说明查询成功
+                        if (data) {
+                            // 获取显示表格的tbody元素
+                            var showTbody = $("#show-table tbody");
+                            // 清空tbody中的内容
+                            showTbody.empty();
+                            // 遍历返回的数据数组，对每个课程对象进行处理
+                            for (var i = 0; i < data.length; i++) {
+                                // 获取当前的课程对象
+                                var course = data[i];
+                                // 调用函数，根据课程对象生成表格的一行
+                                var tr = createTableRow(course);
+                                // 将生成的tr添加到tbody中
+                                showTbody.append(tr);
+                            }
+                        } else {
+                            // 如果返回的数据不是一个数组，说明查询失败，弹出提示信息
+                            alert(data.message || "查询失败，请重试！");
+                        }
+                    },
+                    error: function() {
+                        // 如果请求失败，弹出提示信息
+                        alert("请求失败，请重试！");
+                    }
+                });
+            }
 
             // 绑定确认按钮
             $("#add-confirm-btn").click(function() {

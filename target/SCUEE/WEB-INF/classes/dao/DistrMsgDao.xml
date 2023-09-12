@@ -44,7 +44,7 @@
         from (
             select * from scuee.message where msg_time &lt;= #{time} and is_published = 0
              )m
-        inner join
+        left join
             scuee.msg_attachment
         on
             m.id = msg_attachment.msg_id;
@@ -65,7 +65,7 @@
     <select id="selectMsgById" resultMap="msgResultMap">
         select *
         from (select * from scuee.message where id = #{id})m
-        inner join
+        left join
              scuee.msg_attachment
         on
             m.id = msg_attachment.msg_id;

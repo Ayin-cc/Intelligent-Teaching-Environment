@@ -94,10 +94,10 @@
 		</script>
 		<script>
 			// 验证通过，进入主界面
-			async function enter(userId, passwd) {
+			async function enter(userId) {
 				var token;
 				// 获取token
-				$.ajax({
+				await $.ajax({
 					type: "POST",
 					dataType: "json",
 					url: 'http://162.14.107.35/SCUEE/Student/refreshToken',
@@ -105,11 +105,10 @@
 					data: JSON.stringify({ "sid": userId }),
 					success: function (result) {
 						token = result.token;
-
 					}
 				})
 				// 将相关信息存入cookie
-				await setCookie(userId, token);
+				setCookie(userId, token);
 				sessionStorage.setItem('mid', '0');
 				sessionStorage.setItem('is_signed', 'false');
 				// 进入主界面
@@ -165,7 +164,10 @@
 
 			// 登录功能
 			function login() {
-				if (userId.value == '' || passwd.value == '') {
+				var userIdInput = userId.value;
+				var passwdInput = passwd.value;
+				if (userIdInput == '' || passwdInput == '') {
+					return;
 					alert("学号或密码不能为空！");
 					log_button.blur();
 					return;
@@ -175,10 +177,10 @@
 					dataType: "json",
 					url: 'http://162.14.107.35/SCUEE/Student/login',
 					contentType: "application/json",
-					data: JSON.stringify({ "sid": userId.value, "passwd": passwd.value }),
+					data: JSON.stringify({ "sid": userIdInput, "passwd": passwdInput }),
 					success: function (result) {
 						if (result.statusCode == 1) {
-							enter(userId.value, passwd.value);
+							enter(userId.value);
 						}
 						if (result.statusCode == 0) {
 							alert("登录失败！请检查账号密码是否正确！");
@@ -190,9 +192,11 @@
 
 			// 注册功能
 			function register() {
-				if (userId.value == '' || passwd.value == '') {
+				var userIdInput = userId.value;
+				var passwdInput = passwd.value;
+				if (userIdInput == '' || passwdInput == '') {
 					return;
-				} else if (passwd.value != passwdConfirm.value) {
+				} else if (passwdInput != passwdConfirm.value) {
 					alert("密码不一致！");
 				} else {
 					$.ajax({
@@ -200,7 +204,7 @@
 						dataType: "json",
 						url: 'http://162.14.107.35/SCUEE/Student/register',
 						contentType: "application/json",
-						data: JSON.stringify({ "sid": userId, "passwd": passwd }),
+						data: JSON.stringify({ "sid": userIdInput, "passwd": passwdInput }),
 						success: function (result) {
 							if (result == 200) {
 								enter(userId, passwd);

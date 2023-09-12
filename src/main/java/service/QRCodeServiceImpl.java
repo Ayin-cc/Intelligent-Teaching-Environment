@@ -113,9 +113,13 @@ public class QRCodeServiceImpl implements QRCodeService {
     @Override
     public List<QRCodeResult> query(String token, String cid, String date, String courseName, String courseId, String teacher){
         if(qrCodeDao.checkAdministratorToken(token) == 0){
+            System.out.println(token);
             return null;
         }
+        System.out.println(cid);
+        System.out.println(cid != null);
         List<QRCodeResult> result = qrCodeDao.selectQRCodeByMulti(cid, date, courseName, courseId, teacher);
+        System.out.println(result.toString());
         return result;
     }
 }

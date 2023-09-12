@@ -35,7 +35,7 @@ function checkCookie(i = 1) {
     console.log(document.cookie);
     //setCookie(getCookie("userId"), "admin");
     // 检测cookie信息
-    if (!document.cookie || document.cookie == null) {
+    if (!document.cookie || document.cookie == undefined) {
         console.log("cookie is empty");
         // 跳转登录
         if (i == 1) {

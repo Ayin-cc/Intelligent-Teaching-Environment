@@ -194,22 +194,14 @@
     function sendQueryRequest(params) {
         // 使用jQuery的ajax方法来发送异步请求
         $.ajax({
-            // 设置请求的URL为/query
             url: "/query",
-            // 设置请求的类型为POST
             type: "POST",
-            // 设置请求的数据为查询参数对象
             data: params,
-            // 设置请求的数据类型为JSON
             dataType: "json",
-            // 设置请求成功时的回调函数
             success: function(data) {
-                // 调用处理查询结果的函数
                 handleQueryResult(data);
             },
-            // 设置请求失败时的回调函数
             error: function(error) {
-                // 使用alert方法来显示错误信息
                 alert(error.responseText);
             }
         });
