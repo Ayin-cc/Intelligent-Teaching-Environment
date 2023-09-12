@@ -142,8 +142,12 @@
 
     // 发送查询请求
     function sendQueryRequest() {
-        var queryForm = $("#query-form");
-        var queryData = new FormData(queryForm);
+        var queryData = new FormData();
+        queryData.append("courseName", $("#course-name-input").value);
+        queryData.append("cid", $("#cid-input").value);
+        queryData.append("date", $("#time-input").value);
+        queryData.append("courseId", $("#course-id-input").value);
+        queryData.append("teacher", $("#teacher-name-input").value);
         // 使用jQuery的ajax方法来发送异步请求
         $.ajax({
             url: "http://162.14.107.35/SCUEE/QRCode/query",
