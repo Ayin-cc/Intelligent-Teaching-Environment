@@ -184,25 +184,22 @@
 
     <select id="queryCourse" resultMap="courseResultMap">
         select scuee.course.*, scuee.classroom_courses.course_date, scuee.course_students.student_id
-        from (
-            select *
-            from scuee.course
-            where
-                1=1
-                <if test="id != null">
-                    and id like concat(#{id}, '%')
-                </if>
-                <if test="name != null">
-                    and course_name like concat('%', #{name}, '%')
-                </if>
-                <if test="teacher != null">
-                    and course_teacher like concat('%', #{teacher}, '%')
-                </if>
-             )c
+        from scuee.course
         inner join classroom_courses
-        on c.id = classroom_courses.course_id
+        on course.id = classroom_courses.course_id
         inner join course_students
-        on c.id = course_students.course_id
+        on course.id = course_students.course_id
+        where
+        1=1
+        <if test="id != null">
+            and id like concat(#{id}, '%')
+        </if>
+        <if test="name != null">
+            and course_name like concat('%', #{name}, '%')
+        </if>
+        <if test="teacher != null">
+            and course_teacher like concat('%', #{teacher}, '%')
+        </if>
     </select>
 
     <select id="selectCidBySite" resultType="java.lang.String">
