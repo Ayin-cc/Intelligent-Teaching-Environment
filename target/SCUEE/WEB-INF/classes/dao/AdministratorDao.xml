@@ -189,6 +189,8 @@
         on course.id = classroom_courses.course_id
         inner join course_students
         on course.id = course_students.course_id
+        inner join student
+        on course_students.student_id = student.sid
         where
         1=1
         <if test="id != null">
