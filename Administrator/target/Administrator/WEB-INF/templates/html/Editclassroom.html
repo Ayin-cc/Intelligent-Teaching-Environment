@@ -6,111 +6,14 @@
   <script src="../js/jquery-3.7.1.min.js"></script>
   <script src="../js/cookie-utils.js"></script>
   <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
-  <script>
-    $(document).ready(function() {
-      checkCookie();
-      document.getElementById("username-profile").innerText = student.name;
 
-      // 绑定提交
-      $("#search-form").submit(function(event) {
-        event.preventDefault();
-
-        // 调用函数，根据搜索表单的值发送Ajax请求，并显示返回的数据
-        searchAndShow();
-      });
-
-      // 绑定添加按钮
-      $("#add-btn").click(function() {
-        $("#add-modal").modal("show");
-      });
-
-      // 绑定添加模态框的确认按钮
-      $("#add-confirm-btn").click(function() {
-        var addForm = $("#add-form");
-        var addData = addForm.serializeObject();
-
-        // 发送Ajax请求，传递添加表单的数据
-        $.ajax({
-          url: "http://162.14.107.35/SCUEE/Administrator/addClassroom",
-          type: "POST",
-          data: JSON.stringify(addData),
-          dataType: "json",
-          contentType:"application/json",
-          headers:{"Authorization":getCookie("token")},
-          success: function(data) {
-            if (typeof data === "object") {
-              $("#add-modal").modal("hide");
-              alert(data.message || "添加成功！");
-              searchAndShow();
-            } else {
-              alert(data.message || "添加失败，请重试！");
-            }
-          },
-          error: function() {
-            alert("请求失败，请重试！");
-          }
-        });
-      });
-
-      $("#upload-confirm-btn").click(function() {
-        var uploadForm = $("#upload-form")[0];
-        var uploadData = new FormData(uploadForm);
-
-        // 发送Ajax请求，传递上传表单的数据
-        $.ajax({
-          url: "http://162.14.107.35/SCUEE/Administrator/changeClassroom",
-          type: "POST",
-          data: JSON.stringify(uploadData),
-          dataType: "json",
-          contentType: "application/json",
-          headers:{"Authorization":getCookie("token")},
-          success: function(data) {
-            if (typeof data === "object") {
-              $("#upload-modal").modal("hide");
-              alert(data.message || "上传成功！");
-              // 调用函数，根据搜索表单的值发送Ajax请求，并显示返回的数据
-              searchAndShow();
-            } else {
-              alert(data.message || "上传失败，请重试！");
-            }
-          },
-          error: function() {
-            alert("请求失败，请重试！");
-          }
-        });
-      });
-
-      // 绑定编辑按钮
-      $("#show-table tbody").on("click", "button.btn-warning", function() {
-
-        var tr = $(this).closest("tr");
-        var classroom = {};
-        classroom.cid = tr.children().eq(0).text();
-        classroom.address = tr.children().eq(1).text();
-        classroom.courseSchedule = tr.children().eq(2).text().split(",").map(function(name) {
-          var course = {};
-          course.name = name;
-          return course;
-        });
-        fillEditForm(classroom);
-        var editTbody = $("#edit-course-table tbody");
-        editTbody.empty();
-        for (var i = 0; i < classroom.courseSchedule.length; i++) {
-          var course = classroom.courseSchedule[i];
-          var tr = createEditCourseTableRow(course);
-          editTbody.append(tr);
-        }
-        $("#edit-modal").modal("show");
-      });
-    });
-  </script>
 </head>
 
 <body>
 <div class="container">
   <h1 class="text-center">教室信息管理</h1>
 
-  <form id="search-form" class="form-inline">
+  <form id="search-form-classroom" class="form-inline">
     <div class="form-group">
       <label for="cid">教室id</label>
       <input type="text" class="form-control" id="cid" name="cid" placeholder="请输入教室id">
@@ -285,6 +188,7 @@
       </div>
     </div>
   </div>
+</div>
 
 
   <script>
@@ -337,6 +241,12 @@
       return tr;
     }
 
+  </script>
+
+<script>
+  $(document).ready(function() {
+    checkCookie();
+
     $.fn.serializeObject = function(){
       var o = {};
       var a = this.serializeArray();
@@ -355,8 +265,9 @@
 
     // 定义一个函数，用于根据搜索表单的值发送Ajax请求，并显示返回的数据
     function searchAndShow() {
-      var searchForm = $("#search-form");
+      var searchForm = $("#search-form-classroom");
       var searchData = searchForm.serializeObject();
+      alert(searchData);
       $.ajax({
         url: "http://162.14.107.35/SCUEE/Administrator/queryClassroom",
         type: "POST",
@@ -382,7 +293,101 @@
         }
       });
     }
-  </script>
-</div>
+
+    // 绑定提交
+    $("#search-form-classroom").submit(function(event) {
+      event.preventDefault();
+      // 调用函数，根据搜索表单的值发送Ajax请求，并显示返回的数据
+      searchAndShow();
+    });
+
+
+
+    // 绑定添加按钮
+    $("#add-btn").click(function() {
+      $("#add-modal").modal("show");
+    });
+
+    // 绑定添加模态框的确认按钮
+    $("#add-confirm-btn").click(function() {
+      var addForm = $("#add-form");
+      var addData = addForm.serializeObject();
+
+      // 发送Ajax请求，传递添加表单的数据
+      $.ajax({
+        url: "http://162.14.107.35/SCUEE/Administrator/addClassroom",
+        type: "POST",
+        data: JSON.stringify(addData),
+        dataType: "json",
+        contentType:"application/json",
+        headers:{"Authorization":getCookie("token")},
+        success: function(data) {
+          if (typeof data === "object") {
+            $("#add-modal").modal("hide");
+            alert(data.message || "添加成功！");
+            searchAndShow();
+          } else {
+            alert(data.message || "添加失败，请重试！");
+          }
+        },
+        error: function() {
+          alert("请求失败，请重试！");
+        }
+      });
+    });
+
+    $("#upload-confirm-btn").click(function() {
+      var uploadForm = $("#upload-form")[0];
+      var uploadData = new FormData(uploadForm);
+
+      // 发送Ajax请求，传递上传表单的数据
+      $.ajax({
+        url: "http://162.14.107.35/SCUEE/Administrator/changeClassroom",
+        type: "POST",
+        data: JSON.stringify(uploadData),
+        dataType: "json",
+        contentType: "application/json",
+        headers:{"Authorization":getCookie("token")},
+        success: function(data) {
+          if (typeof data === "object") {
+            $("#upload-modal").modal("hide");
+            alert(data.message || "上传成功！");
+            // 调用函数，根据搜索表单的值发送Ajax请求，并显示返回的数据
+            searchAndShow();
+          } else {
+            alert(data.message || "上传失败，请重试！");
+          }
+        },
+        error: function() {
+          alert("请求失败，请重试！");
+        }
+      });
+    });
+
+    // 绑定编辑按钮
+    $("#show-table tbody").on("click", "button.btn-warning", function() {
+
+      var tr = $(this).closest("tr");
+      var classroom = {};
+      classroom.cid = tr.children().eq(0).text();
+      classroom.address = tr.children().eq(1).text();
+      classroom.courseSchedule = tr.children().eq(2).text().split(",").map(function(name) {
+        var course = {};
+        course.name = name;
+        return course;
+      });
+      fillEditForm(classroom);
+      var editTbody = $("#edit-course-table tbody");
+      editTbody.empty();
+      for (var i = 0; i < classroom.courseSchedule.length; i++) {
+        var course = classroom.courseSchedule[i];
+        var tr = createEditCourseTableRow(course);
+        editTbody.append(tr);
+      }
+      $("#edit-modal").modal("show");
+    });
+  });
+</script>
+
 </body>
 </html>

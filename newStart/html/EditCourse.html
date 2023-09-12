@@ -306,6 +306,8 @@
 
 
         $(document).ready(function() {
+            checkCookie();
+
             $("#search-form").submit(function(event) {
                 event.preventDefault();
                 searchAndShow();
