@@ -6,6 +6,162 @@
   <script src="../js/jquery-3.7.1.min.js"></script>
   <script src="../js/cookie-utils.js"></script>
   <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      checkCookie();
+      document.getElementById("username-profile").innerText = student.name;
+
+      // 绑定搜索表单的提交事件
+      $("#search-form").submit(function (event) {
+        // 阻止表单的默认提交行为
+        event.preventDefault();
+        // 调用函数，根据搜索表单的值发送Ajax请求，并显示返回的数据
+        searchAndShow();
+      });
+
+      $.fn.serializeObject = function(){
+        var o = {};
+        var a = this.serializeArray();
+        $.each(a, function() {
+          if (o[this.name] !== undefined) {
+            if (!o[this.name].push) {
+              o[this.name] = [o[this.name]];
+            }
+            o[this.name].push(this.value || '');
+          } else {
+            o[this.name] = this.value || '';
+          }
+        });
+        return o;
+      }
+
+
+      $("#add-btn").click(function () {
+        $("#add-modal").modal("show");
+      });
+      $("#add-confirm-btn").click(function () {
+        var addForm = $("#add-form");
+        var addData = addForm.serializeObject();
+
+        // 发送Ajax请求，传递添加表单的数据
+        $.ajax({
+          url: "http://162.14.107.35/SCUEE/Administrator/addStudent",
+          type: "POST",
+          data: JSON.stringify(addData),
+          dataType: "json",
+          contentType: "application/json",
+          headers:{"Authorization":getCookie("token")},
+          success: function (data) {
+            if (typeof data === "object") {
+              $("#add-modal").modal("hide");
+              alert(data.message || "添加成功！");
+              // 调用函数，根据搜索表单的值发送Ajax请求，并显示返回的数据
+              searchAndShow();
+            } else {
+              alert(data.message || "添加失败，请重试！");
+            }
+          },
+          error: function () {
+            alert("请求失败，请重试！");
+          }
+        });
+      });
+
+      $("#upload-confirm-btn").click(function () {
+        var uploadForm = $("#upload-form")[0];
+        var uploadData = new FormData(uploadForm);
+
+
+        $("#show-table tbody").on("click", "button.btn-warning", function () {
+
+          var tr = $(this).closest("tr");
+          var student = {};
+          student.sid = tr.children().eq(0).text();
+          student.name = tr.children().eq(1).text();
+          student.major = tr.children().eq(2).text();
+          student.college = tr.children().eq(3).text();
+          student.sex = tr.children().eq(4).text();
+          student.passwd = tr.children().eq(5).text();
+          student.phone = tr.children().eq(6).text();
+          currentStudent = student;
+          fillEditForm(student);
+
+
+          $("#edit-modal").modal("show");
+        });
+
+
+        $("#show-table tbody").on("click", "button.btn-danger", function () {
+
+          var tr = $(this).closest("tr");
+          var sid = tr.children().eq(0).text();
+          var result = confirm("您确定要删除学号为" + sid + "的学生吗？");
+          if (result) {
+
+
+            // 发送Ajax请求，传递要删除的学号
+            $.ajax({
+              url: "http://162.14.107.35/SCUEE/Administrator/deleteStudent",
+              type: "POST",
+              data: JSON.stringify({"sid": sid}),
+              dataType: "json",
+              contentType: "application/json",
+              headers:{"Authorization":getCookie("token")},
+              success: function (data) {
+                // 如果返回的数据是一个对象，说明删除成功
+                if (typeof data === "object") {
+                  // 弹出提示信息
+                  alert(data.message || "删除成功！");
+                  // 调用函数，根据搜索表单的值发送Ajax请求，并显示返回的数据
+                  searchAndShow();
+                } else {
+                  // 如果返回的数据不是一个对象，说明删除失败，弹出提示信息
+                  alert(data.message || "删除失败，请重试！");
+                }
+              },
+              error: function () {
+                // 如果请求失败，弹出提示信息
+                alert("请求失败，请重试！");
+              }
+            });
+          }
+        });
+
+
+        $("#confirm-btn").click(function () {
+          var editForm = $("#edit-form");
+
+          var editData = editForm.serializeObject();
+
+
+          // 发送Ajax请求，传递编辑表单的数据
+          $.ajax({
+            url: "http://162.14.107.35/SCUEE/Administrator/changeStudent",
+            type: "POST",
+            data: JSON.stringify(editData),
+            dataType: "json",
+            headers:{"Authorization":getCookie("token")},
+            contentType: "application/json",
+            success: function (data) {
+              if (typeof data === "object") {
+                $("#edit-modal").modal("hide");
+                alert(data.message || "修改成功！");
+                searchAndShow();
+              } else {
+                alert(data.message || "修改失败，请重试！");
+              }
+            },
+
+
+            error: function () {
+              // 如果请求失败，弹出提示信息
+              alert("请求失败，请重试！");
+            }
+          });
+        });
+      });
+    })
+  </script>
 </head>
 
 
@@ -252,8 +408,7 @@
       </div>
     </div>
   </div>
-
-
+</div>
 
 
 
@@ -339,142 +494,6 @@
         }
       });
     }
-
-
-    // 当文档加载完成后，执行以下代码
-    $(document).ready(function() {
-      checkCookie();
-      document.getElementById("username-profile").innerText = student.name;
-
-      // 绑定搜索表单的提交事件
-      $("#search-form").submit(function (event) {
-        // 阻止表单的默认提交行为
-        event.preventDefault();
-        // 调用函数，根据搜索表单的值发送Ajax请求，并显示返回的数据
-        searchAndShow();
-      });
-
-
-      $("#add-btn").click(function () {
-        $("#add-modal").modal("show");
-      });
-      $("#add-confirm-btn").click(function () {
-        var addForm = $("#add-form");
-        var addData = addForm.serialize();
-
-
-        // 发送Ajax请求，传递添加表单的数据
-        $.ajax({
-          url: "/addStudent",
-          type: "POST",
-          data: addData,
-          dataType: "json",
-          success: function (data) {
-            if (typeof data === "object") {
-              $("#add-modal").modal("hide");
-              alert(data.message || "添加成功！");
-              // 调用函数，根据搜索表单的值发送Ajax请求，并显示返回的数据
-              searchAndShow();
-            } else {
-              alert(data.message || "添加失败，请重试！");
-            }
-          },
-          error: function () {
-            alert("请求失败，请重试！");
-          }
-        });
-      });
-
-      $("#upload-confirm-btn").click(function () {
-        var uploadForm = $("#upload-form")[0];
-        var uploadData = new FormData(uploadForm);
-
-
-        $("#show-table tbody").on("click", "button.btn-warning", function () {
-
-          var tr = $(this).closest("tr");
-          var student = {};
-          student.sid = tr.children().eq(0).text();
-          student.name = tr.children().eq(1).text();
-          student.major = tr.children().eq(2).text();
-          student.college = tr.children().eq(3).text();
-          student.sex = tr.children().eq(4).text();
-          student.passwd = tr.children().eq(5).text();
-          student.phone = tr.children().eq(6).text();
-          currentStudent = student;
-          fillEditForm(student);
-
-
-          $("#edit-modal").modal("show");
-        });
-
-
-        $("#show-table tbody").on("click", "button.btn-danger", function () {
-
-          var tr = $(this).closest("tr");
-          var sid = tr.children().eq(0).text();
-          var result = confirm("您确定要删除学号为" + sid + "的学生吗？");
-          if (result) {
-
-
-            // 发送Ajax请求，传递要删除的学号
-            $.ajax({
-              url: "/deleteStudent",
-              type: "POST",
-              data: {sid: sid},
-              dataType: "json",
-              success: function (data) {
-                // 如果返回的数据是一个对象，说明删除成功
-                if (typeof data === "object") {
-                  // 弹出提示信息
-                  alert(data.message || "删除成功！");
-                  // 调用函数，根据搜索表单的值发送Ajax请求，并显示返回的数据
-                  searchAndShow();
-                } else {
-                  // 如果返回的数据不是一个对象，说明删除失败，弹出提示信息
-                  alert(data.message || "删除失败，请重试！");
-                }
-              },
-              error: function () {
-                // 如果请求失败，弹出提示信息
-                alert("请求失败，请重试！");
-              }
-            });
-          }
-        });
-
-
-        $("#confirm-btn").click(function () {
-          var editForm = $("#edit-form");
-
-          var editData = editForm.serialize();
-
-
-          // 发送Ajax请求，传递编辑表单的数据
-          $.ajax({
-            url: "/changeStudent",
-            type: "POST",
-            data: editData,
-            dataType: "json",
-            success: function (data) {
-              if (typeof data === "object") {
-                $("#edit-modal").modal("hide");
-                alert(data.message || "修改成功！");
-                searchAndShow();
-              } else {
-                alert(data.message || "修改失败，请重试！");
-              }
-            },
-
-
-            error: function () {
-              // 如果请求失败，弹出提示信息
-              alert("请求失败，请重试！");
-            }
-          });
-        });
-      });
-    })
   </script>
 </body>
 </html>

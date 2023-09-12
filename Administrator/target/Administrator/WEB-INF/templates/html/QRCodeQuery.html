@@ -7,6 +7,19 @@
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="../js/cookie-utils.js"></script>
     <script src="../js/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.staticfile.org/bootstrap-daterangepicker/3.0.5/daterangepicker.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            checkCookie();
+            document.getElementById("username-profile").innerText = student.name;
+
+            // 调用初始化日期选择器组件的函数
+            initDateRangePicker();
+            // 获取查询表单元素，并设置其提交事件的回调函数为处理查询表单的提交事件的函数
+            $("#query-form").submit(handleQueryFormSubmit);
+        });
+    </script>
 </head>
 <body>
 <div class="container">
@@ -71,11 +84,6 @@
     </table>
 
 
-
-
-
-
-
     <div id="detail-modal" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -125,16 +133,6 @@
     </div>
 
 </div>
-
-
-<script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
-<script src="https://cdn.staticfile.org/bootstrap-daterangepicker/3.0.5/daterangepicker.min.js"></script>
-
-
-
-
-
 
 <script>
     //JS部分
@@ -194,10 +192,12 @@
     function sendQueryRequest(params) {
         // 使用jQuery的ajax方法来发送异步请求
         $.ajax({
-            url: "/query",
+            url: "http://162.14.107.35/SCUEE/QRCode/query",
             type: "POST",
-            data: params,
+            data: JSON.stringify(params),
             dataType: "json",
+            contentType: "application/json",
+            headers:{"Authorization":getCookie("token")},
             success: function(data) {
                 handleQueryResult(data);
             },
@@ -266,15 +266,4 @@
         // 传参
         sendQueryRequest(params);
     }
-
-
-    $(document).ready(function() {
-        checkCookie();
-        document.getElementById("username-profile").innerText = student.name;
-
-        // 调用初始化日期选择器组件的函数
-        initDateRangePicker();
-        // 获取查询表单元素，并设置其提交事件的回调函数为处理查询表单的提交事件的函数
-        $("#query-form").submit(handleQueryFormSubmit);
-    });
 </script>
