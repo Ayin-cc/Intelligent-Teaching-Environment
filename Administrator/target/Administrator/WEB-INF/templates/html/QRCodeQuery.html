@@ -17,7 +17,7 @@
     <script>
         $(document).ready(function() {
             checkCookie();
-            
+
             // 获取查询表单元素，并设置其提交事件的回调函数为处理查询表单的提交事件的函数
             $("#query-form").submit(handleQueryFormSubmit);
         });
@@ -31,14 +31,14 @@
         <div class="form-group row">
             <label for="course-name-input" class="col-sm-2 col-form-label">课程名称</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="course-name-input" placeholder="请输入课程名称">
+                <input type="text" class="form-control" id="course-name-input" placeholder="请输入课程名称" name="courseName">
             </div>
         </div>
 
         <div class="form-group row">
             <label for="cid" class="col-sm-2 col-form-label">教室ID</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="cid-input" placeholder="请输入教室ID">
+                <input type="text" class="form-control" id="cid-input" placeholder="请输入教室ID" name="cid">
             </div>
         </div>
 
@@ -46,7 +46,7 @@
             <label for="time-input" class="col-sm-2 col-form-label">时间</label>
             <div class="col-sm-10">
                 <!-- 使用Bootstrap日期选择器组件 -->
-                <input type="text" class="form-control" id="time-input" placeholder="请选择时间范围" data-toggle="daterangepicker">
+                <input type="text" class="form-control" id="time-input" placeholder="请选择时间范围" data-toggle="daterangepicker" name="date">
             </div>
         </div>
 
@@ -54,7 +54,7 @@
         <div class="form-group row">
             <label for="course-id-input" class="col-sm-2 col-form-label">课程号</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="course-id-input" placeholder="请输入课程号">
+                <input type="text" class="form-control" id="course-id-input" placeholder="请输入课程号" name="courseId">
             </div>
         </div>
 
@@ -62,7 +62,7 @@
         <div class="form-group row">
             <label for="teacher-name-input" class="col-sm-2 col-form-label">教师姓名</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="teacher-name-input" placeholder="请输入教师姓名">
+                <input type="text" class="form-control" id="teacher-name-input" placeholder="请输入教师姓名" name="teacher">
             </div>
         </div>
 
