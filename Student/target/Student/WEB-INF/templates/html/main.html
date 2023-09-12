@@ -4,11 +4,10 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link href="../css/output.css" rel="stylesheet" />
 		<title>ITE</title>
+		<link href="../css/output.css" rel="stylesheet" />
 		<script src="../js/jquery-3.7.1.min.js"></script>
 		<script src="../js/cookie-utils.js"></script>
-
 		<style>
 			/* 未登录提示框 */
 			.nolog-tips {
@@ -42,16 +41,18 @@
 					<div class="flex w-8 h-10 mx-4 my-1 overflow-hidden rounded-full" id="photo-profile-sidebarBottom">
 						<img draggable="false" src="../icons/用户.svg" alt="" />
 					</div>
-					<!-- <div class="hidden" id="user_inf"> -->
-					<div class="flex flex-col" id="user_inf">
+					<div class="flex flex-col items-center justify-center overflow-hidden" style="max-width: 16rem;"
+						id="user_inf">
 						<!-- 姓名 -->
-						<div class="flex flex-grow mx-6 overflow-hidden select-none" id="name-profile">
-							XYCF
+						<div class="overflow-hidden text-center select-none overflow-ellipsis whitespace-nowrap"
+							style="max-width: 16rem;" id="name-profile">
+							XXXXXXXX
 						</div>
 
 						<!-- 学号 -->
-						<div class="flex flex-grow py-1 overflow-hidden text-xs select-none" id="number-profile">
-							2022xxxxxxxxx
+						<div class="py-1 overflow-hidden text-xs text-center select-none overflow-ellipsis whitespace-nowrap"
+							style="max-width: 16rem;" id="number-profile">
+							202XXXXXXXXXXX
 						</div>
 					</div>
 					<div class="flex flex-grow mx-2 my-3 overflow-hidden select-none" id="user_no">未登录</div>
@@ -131,7 +132,6 @@
 			<p id="countdown" class="my-1 mt-2 text-xs">3 秒后自动跳转至登陆界面</p>
 			<p class="mb-1 text-xs">点击取消</p>
 		</div>
-
 		<script src="../js/main.js"></script>
 	</body>
 
