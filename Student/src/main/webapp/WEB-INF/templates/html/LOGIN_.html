@@ -112,7 +112,9 @@
 				sessionStorage.setItem('mid', '0');
 				sessionStorage.setItem('is_signed', 'false');
 				// 进入主界面
-				window.location.href = "main.html";
+				setTimeout(function (){
+					window.location.href = "main.html";
+				}, 1000);
 			}
 
 

@@ -12,17 +12,18 @@
 			$(document).ready(async function () {
 				// 检测cookie信息
 				checkCookie();
-				var student = await getStudentObj();
 				// 使用学生对象替换页面中的值
+				var student = await getStudentObj();
+
 				const stdName = document.getElementById('name-profile');
 				const stdID = document.getElementById('number-profile');
-				const stCollage = document.getElementById('college-profile');
+				const stCollege = document.getElementById('college-profile');
 				//const stdClass = document.getElementById('class-profile');
 				const stdMajor = document.getElementById('major-profile');
 				stdName.innerText = student.name;
 				stdID.innerText = student.sid;
-				stCollage.innerText = student.college;
-				//stdClass.textContent = student.class;
+				stCollege.innerText = student.college;
+				//stdClass.innerContent = student.class;
 				stdMajor.innerText = student.major;
 
 			})
@@ -79,12 +80,12 @@
 				</div>
 			</div>
 			<button onclick="deleteCookie()">退出登录</button>
-<!--			<div class="grid grid-cols-1 gap-4 my-3 md:grid-cols-2">-->
-<!--				<div class="flex items-center justify-between p-4 bg-white rounded shadow-md">-->
-<!--					<h6 class="select-none ">班级：</h6>-->
-<!--					<p class="text-right text-gray-600 select-all" id="class-profile">223040107</p>-->
-<!--				</div>-->
-<!--			</div>-->
+			<!-- <div class="grid grid-cols-1 gap-4 my-3 md:grid-cols-2">
+				<div class="flex items-center justify-between p-4 bg-white rounded shadow-md">
+					<h6 class="select-none ">班级：</h6>
+					<p class="text-right text-gray-600 select-all" id="class-profile">223040107</p>
+				</div>
+			</div> -->
 		</div>
 		</div>
 	</body>

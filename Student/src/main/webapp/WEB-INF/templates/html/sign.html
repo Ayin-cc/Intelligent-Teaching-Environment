@@ -10222,16 +10222,15 @@
 		</style>
 		<script>
 			var student;
-			$(document).ready(function () {
+			$(document).ready(async function () {
 				// 检测cookie信息
 				checkCookie(student);
+				student = await getStudentObj();
 				// 使用学生对象替换页面中的值
-				function change_inf() {
-					const stdName = document.getElementById('name-profile');
-					const stdID = document.getElementById('number-profile');
-					stdName.textContent = student.name;
-					stdID.textContent = student.sid;
-				}
+				const stdName = document.getElementById('name-profile');
+				const stdID = document.getElementById('number-profile');
+				stdName.textContent = student.name;
+				stdID.textContent = student.sid;
 			})
 		</script>
 	</head>

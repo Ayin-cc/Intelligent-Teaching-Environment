@@ -4,6 +4,8 @@
     <option name="state">
       <map>
         <entry key="file://$PROJECT_DIR$/Administrator/src/main/webapp/WEB-INF/templates/html/Editclassroom.html" value="file://$PROJECT_DIR$/Administrator/src/main/webapp/WEB-INF/templates/html" />
+        <entry key="file://$PROJECT_DIR$/Administrator/src/main/webapp/WEB-INF/templates/html/InformationRelease.html" value="file://$PROJECT_DIR$/Administrator/src/main/webapp/WEB-INF/templates/html" />
+        <entry key="file://$PROJECT_DIR$/Administrator/src/main/webapp/WEB-INF/templates/html/QRCodeQuery.html" value="file://$PROJECT_DIR$/Administrator/src/main/webapp/WEB-INF/templates/html" />
       </map>
     </option>
   </component>

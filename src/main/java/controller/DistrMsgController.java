@@ -28,6 +28,7 @@ public class DistrMsgController {
         message.setTime(time);
         message.setContent(content);
         message.setAttachmentFiles(Arrays.asList(files));
+        System.out.println(message.toString());
         if(distrMsgService.create(token, message)){
             return new ResponseEntity<>(new StatusCode(1), HttpStatus.OK);
         }

@@ -6,7 +6,7 @@ function setCookie(userId, token, cid = "") {
     document.cookie = "userId=" + userId;
     document.cookie = "token=" + token;
     document.cookie = "path=/";
-    if(cid != ""){
+    if (cid != "") {
         document.cookie = "courseId=" + cid;
     }
     document.cookie = "expires=" + expdate.toUTCString();
@@ -41,16 +41,18 @@ function checkCookie(i = 1) {
         }
         else return 0;
     }
-    console.log(document.cookie);
-    return 1;
+    else {
+        console.log(document.cookie);
+        return 1;
+    }
 }
 
-function getStudentObj(){
+function getStudentObj() {
     // 获取学生对象
     sessionStorage.removeItem("Student");
     var student = JSON.parse(sessionStorage.getItem("Student"));
     if (!student) {
-        return new Promise((resolve, reject) =>{
+        return new Promise((resolve, reject) => {
             console.log(getCookie("userId"));
             var studentObj = new Object();
             console.log("send sid");
