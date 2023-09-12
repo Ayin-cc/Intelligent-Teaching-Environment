@@ -17,9 +17,7 @@
     <script>
         $(document).ready(function() {
             checkCookie();
-
-            // 调用初始化日期选择器组件的函数
-            initDateRangePicker();
+            
             // 获取查询表单元素，并设置其提交事件的回调函数为处理查询表单的提交事件的函数
             $("#query-form").submit(handleQueryFormSubmit);
         });
