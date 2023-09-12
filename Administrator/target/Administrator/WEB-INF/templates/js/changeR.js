@@ -1,4 +1,3 @@
-
 // 获取 URL 中的参数
 var urlParams = new URLSearchParams(window.location.search);
 var jsonData = urlParams.get('data');
@@ -6,7 +5,7 @@ var classroom = JSON.parse(decodeURIComponent(jsonData))
 
 
 // 在控制台输出接收到的数据
-console.log(classroom);
+//console.log(classroom);
 
 //设置默认值
 const address = classroom.address
@@ -24,7 +23,7 @@ num.setAttribute('placeholder', number)
 const id = document.getElementById('id')
 id.placeholder = classroom.cid
 
-//以下功能里的URL需要重设
+//以下功能里的URL需要重设 完成
 //修改
 const button = document.getElementById('button')
 button.addEventListener('click', function(){            
@@ -32,17 +31,17 @@ button.addEventListener('click', function(){
     const PNumber = document.getElementById('PN').value
     const address = postion+PNumber
     const cid = document.getElementById('id').value
+    const token = classroom.token
+
     const QueryClassroom = {
         cid,
         address,
-       
+        token
     }
         
-
-
     // 使用 fetch 发送 POST 请求到后端
     //这里URL需要重设
-    const url = /SCUEE/changeClassroom
+    const url = "http://162.14.107.35/SCUEE/administrator/changeClassroom"
     fetch(url, {
         method: 'POST',
         headers: {
@@ -51,18 +50,22 @@ button.addEventListener('click', function(){
         body: JSON.stringify(QueryClassroom), // 将数据转换为 JSON 字符串并包含在请求体中
     })
         .then(response => {
-        if (!response.ok) {
-            throw new Error('网络请求失败');
-        }
-        return response.json();
+            if (!response.ok) {
+                throw new Error('网络请求失败');
+            }
+            return response.json();
         })
         .then(data => {
-            
-        console.log('成功保存数据:', data);
-        window.history.back();
+            if(data == 1){
+                alert("操作成功")
+                
+                window.history.back();
+            }else{
+                alert("后端操作失败")
+            }
         })
         .catch(error => {
-        console.error('发生错误:', error);
+            console.error('发生错误:', error);
         });
         
 })

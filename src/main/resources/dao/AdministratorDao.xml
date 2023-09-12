@@ -149,7 +149,7 @@
         where
             1=1
             <if test="sid != null">
-                and student.sid = #{sid}
+                and student.sid like concat(#{sid}, '%')
             </if>
             <if test="name != null">
                 and student.student_name like concat('%', #{name}, '%')
@@ -168,13 +168,17 @@
     <select id="queryClassroom" resultMap="classroomResultMap">
         select *
         from scuee.classroom
+        inner join scuee.classroom_courses
+        on classroom_courses.cid = classroom.cid
+        inner join scuee.course
+        on classroom_courses.course_id = course.id
         where
             1=1
             <if test="cid != null">
-                and classroom.cid = #{cid}
+                and classroom.cid like concat('%', #{cid}, '%')
             </if>
             <if test="address != null">
-                and classroom.address like concat(#{address}, '%')
+                and classroom.address like concat('%', #{address}, '%')
             </if>;
     </select>
 
@@ -186,7 +190,7 @@
             where
                 1=1
                 <if test="id != null">
-                    and id = #{id}
+                    and id like concat(#{id}, '%')
                 </if>
                 <if test="name != null">
                     and course_name like concat('%', #{name}, '%')

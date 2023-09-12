@@ -48,7 +48,17 @@
 				</div>
 			</form>
 		</div>
+		<button id="skip">
+			测试用,跳过登录,token设为TOKEN
+		</button>
 		<script>
+			const skip = document.getElementById('skip')
+			skip.addEventListener('click',function(){
+				const TOKEN = "TOKEN"
+				const urlToken = "../index.html?data=" + encodeURIComponent(TOKEN)
+				
+				window.location.href = urlToken
+			}) 
 			// 验证通过，进入主界面
 			function enter(userId, passwd) {
 				var token;
@@ -58,17 +68,22 @@
 					dataType: "json",
 					url: 'http://162.14.107.35/SCUEE/administrator/refreshAdministratorToken',
 					contentType: "application/json",
-					data: JSON.stringify({ "sid": userId }),
+					data: JSON.stringify({ "id": userId, "password": passwd }),
 					success: function (result) {
 						token = result.token;
 					}
 				})
+				const urlToken = "../index.html?data=" + encodeURIComponent(token)
+
+				/*
 				// 将相关信息存入cookie
 				var expdate = new Date();
 				expdate.setTime(expdate.getTime() + 180 * 60 * 1000);	// cookie三小时过期
-				document.cookie = "userId=" + userId + ";token=" + token + ";expires=" + expdate.toGMTString() + ";path=/";
+				document.cookie = "userId=" + userId + ";expires=" + expdate.toGMTString() + ";path=/";
+				document.cookie = "token=" + token + ";expires=" + expdate.toGMTString() + ";path=/";
+				*/
 				// 进入主界面
-				window.location.href = "../index.html";
+				window.location.href = urlToken;
 			}
 
 			// 登录功能
@@ -85,11 +100,8 @@
 						if (result == 1) {
 							enter(userId, passwd);
 						}
-						else if (result == 0) {
+						if (result == 0) {
 							alert("登录失败！请检查账号密码是否正确！");
-						}
-						else{
-							alert("请求错误！")
 						}
 					}
 				})
@@ -114,11 +126,8 @@
 						if (result == 200) {
 							enter(userId, passwd);
 						}
-						else if (result == 401) {
+						if (result == 401) {
 							alert("注册失败！用户已存在！");
-						}
-						else{
-							alert("请求错误！")
 						}
 					}
 				})

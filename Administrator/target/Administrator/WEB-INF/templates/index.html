@@ -5,85 +5,28 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1 user-scalable=no">
-    <link rel="stylesheet" href="css/index.css">
-    <!-- 
-    <script type="text/javascript" src="js/user.js"></script> 
-    -->
+    <link rel="stylesheet" href="index.css">
     <title>IntelligentClass User</title>
 </head>
 
 <body>
+    
     <div class="page">
         <div class="left">
             <div class="profile-box">
                 <div class="position-box">
-                    <img class="profile-img" src="images/image_1.jpg" alt="">
-                    
-                    <div class="profile-card">
-                        <ul class="card-detail">
-                            <li class="card-li">
-                                <div class="content">
-                                    <img class="card-li-icon" src="images/icons/用户_user.svg" alt="身份">
-                                    <p class="content-name">身份</p>
-                                    <p class="content-text permission">未登录</p>
-                                </div>
-                                <div class="content">
-                                    <img class="card-li-icon" src="images/icons/身份证_id-card-h.svg" alt="权限">
-                                    <p class="content-name">权限</p>
-                                    <p class="content-text server-name">用户</p>
-                                </div>
-                            </li>
-                            <li class="card-li line"></li>
-                            <li class="card-li">
-                                <div class="content about">
-                                    <img class="card-li-icon" src="images/icons/书籍1_book-one.svg" alt="关于">
-                                    <p class="content-name">关于</p>
-                                    <img class="chevron" src="images/icons/右_right.svg" alt="">
-                                </div>
-                                <div class="content setting">
-                                    <img class="card-li-icon" src="images/icons/设置2_setting.svg" alt="设置">
-                                    <p class="content-name">设置</p>
-                                    <img class="chevron" src="images/icons/右_right.svg" alt="">
-                                </div>
-                                <div class="content help">
-                                    <img class="card-li-icon" src="images/icons/帮助中心_helpcenter.svg" alt="帮助">
-                                    <p class="content-name">帮助</p>
-                                    <img class="chevron" src="images/icons/右_right.svg" alt="">
-                                </div>
-                            </li>
-                            <li class="card-li line"></li>
-                            <li class="card-li">
-                                <div class="content card-login">
-                                    <img class="card-li-icon" src="images/icons/进入.svg" alt="登录">
-                                    <p class="content-name">登录</p>
-                                    <img class="chevron" src="images/icons/右_right.svg" alt="">
-                                </div>
-                                <div class="content card-register">
-                                    <img class="card-li-icon" src="images/icons/发送1.svg" alt="注册">
-                                    <p class="content-name">注册</p>
-                                    <img class="chevron" src="images/icons/右_right.svg" alt="">
-                                </div>
-                                <div class="content card-logout">
-                                    <img class="card-li-icon" src="images/icons/退出.svg" alt="退出登录">
-                                    <p class="content-name">退出登录</p>
-                                    <img class="chevron" src="images/icons/右_right.svg" alt="">
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
+                    <img class="profile-img" src="images/image_1.jpg" alt=""></div>
                     <div class="profile-name">User</div>
-                </div>
             </div><!-- profile end -->
-
             <div class="function-box">
                 <div class="position-box">
                     <div class="blank-box"></div>
-                    <div class="btn-box homepage">
-                        <a class="active" href="html/SignIn.html" target="iframe">
+                    <!-- <div class="btn-box homepage">
+                        <a class="active" href="render_functionHTML/html/SignIn.html" target="iframe">
                             <img class="icon" src="images/icons/首页_home.svg" alt="">
-                            <div class="btn-name">登录</div>
+                            <div class="btn-name">登录？</div>
                         </a>
-                    </div>
+                    </div> -->
                     <div class="btn-box sign-in">
                         <a href="html/QRCodeQuery.html" target="iframe">
                             <img class="icon" src="images/icons/编辑_edit.svg" alt="">
@@ -91,13 +34,13 @@
                         </a>
                     </div>
                     <div class="btn-box message">
-                        <a href="html/InformationRelease.html" target="iframe">
+                        <a target="iframe" id="DistrMsg">
                             <img class="icon" src="images/icons/未读消息_message-unread.svg" alt="">
                             <div class="btn-name">消息分发</div>
                         </a>
                     </div>
                     <div class="btn-box timetable">
-                        <a href="html/DataManage.html" target="iframe">
+                        <a target="iframe" id="DataManage">
                             <img class="icon" src="images/icons/日程表_schedule.svg" alt="">
                             <div class="btn-name">数据信息</div>
                         </a>
@@ -132,7 +75,7 @@
                     <div class="greeting" id="greeting">
                         上午好！
                     </div>
-                    <div class="blank-box"></div>
+                    <!-- <div class="blank-box"></div>
                     <div class="btn-box">
                         <div class="btn setting">
                             <img class="img-setting" src="images/icons/设置_setting-one.svg" alt="设置">
@@ -141,23 +84,23 @@
                             <img class="img-help" src="images/icons/帮助_help.svg" alt="帮助">
                         </div>
 
-                    </div>
+                    </div> -->
                 </div>
                 <div class="header-second">
                     <div class="time" id="time">
                         2023年01月01日 星期日
                     </div>
-                    <div class="blank-box"></div>
+                    <!-- <div class="blank-box"></div>
                     <div class="btn-box">
                         <div class="btn refresh">
                             <img class="img-refresh" src="images/icons/刷新_refresh.svg" alt="刷新">
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <div class="iframe-box">
                 <iframe class="main-iframe" id="main-iframe" name="iframe" scrolling="auto"
-                    src="html/homepage.html"></iframe>
+                    src="html/SignIn.html"></iframe>
                 <div class="blank-box"></div>
             </div>
 
@@ -166,6 +109,16 @@
     </div><!-- page end -->
     <!-- <script src="./user.js"></script> -->
     <script src="js/index.js"></script>
+    <script>
+        var urlParams = new URLSearchParams(window.location.search);
+        var token = urlParams.get('data');
+
+        const DistrMsg = document.getElementById('DistrMsg')
+        const DataManage = document.getElementById('DataManage')
+        console.log(DistrMsg)
+        DistrMsg.href="html/InformationRelease.html?data=" + encodeURIComponent(token)
+        DataManage.href = "html/DataManage.html?data=" + encodeURIComponent(token)
+    </script>
     <!-- <script src="./preload.js"></script> -->
 
 </body>

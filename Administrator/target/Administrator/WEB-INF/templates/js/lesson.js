@@ -2,11 +2,21 @@ const number = document.getElementById(0).value
 const name = document.getElementById(1).value
 const teacher = document.getElementById(2).value
 
-const course = {    
+var urlParams = new URLSearchParams(window.location.search);
+const token = urlParams.get('data');
+console.log(token)
+if(token == null){
+    alert("token过期")
+}
+else{
+    var course = {    
         number,
         name,      
-        teacher
+        teacher,
+        token
 }
+}
+
 //fetch与数据库接口
 function network(url, Course){
     fetch(url, {
@@ -17,18 +27,18 @@ function network(url, Course){
         body: JSON.stringify(Course), // 将数据转换为 JSON 字符串并包含在请求体中
     })
         .then(response => {
-        if (!response.ok) {
-            throw new Error('网络请求失败');
-        }
-        return response.json();
+            if (!response.ok) {
+                throw new Error('网络请求失败');
+            }
+            return response.json();
         })
         .then(data => {
-        const Data = JSON.parse(decodeURIComponent(data))
-        console.log('成功保存数据:', Data);
-        
+            const Data = JSON.parse(data)
+            console.log('返回数据:', Data);
+            return Data
         })
         .catch(error => {
-        console.error('发生错误:', error);
+            console.error('发生错误:', error);
         });
 }
 
@@ -36,11 +46,7 @@ function network(url, Course){
 function query(url, Course){
     
     const data = network(url, Course)
-    // const data = [
-    //     {number:1,name: 'a',teacher:2}
-        
-    // ]
-    
+
     //更新HTML
     //清空之前查询
     const DC = document.getElementsByClassName('results')[0]
@@ -142,7 +148,7 @@ function query(url, Course){
     // 当用户点击确定按钮时，可以执行相应的操作
                 confirmBtns[index].onclick = function() {
     
-                    const url = /SCUEE/deleteCourse
+                    const url = "http://162.14.107.35/SCUEE/administrator/deleteCourse"
                     network(url,data[index])
                     alert("确定按钮被点击了！");
                     modals[index].style.display = "none"; // 关闭弹窗
@@ -166,14 +172,14 @@ function query(url, Course){
 //查询
 const butQuery = document.getElementById('butQuery')
 butQuery.addEventListener('click',function(){
-    const url = /SCUEE/queryStudent
+    const url = "http://162.14.107.35/SCUEE/administrator/queryStudent"
     query(url, course)
 })
 
 //添加
 const butAdd = document.getElementById('butAdd')
 butAdd.addEventListener('click', function(){            
-    const url = /SCUEE/queryStudent
+    const url = "http://162.14.107.35/SCUEE/administrator/queryStudent"
 
     const i = query(url, course)
     
@@ -182,7 +188,7 @@ butAdd.addEventListener('click', function(){
         alert('内容重复')
     }
     else{//添加教室
-        url = /SCUEE/addCourse
+        url = "http://162.14.107.35/SCUEE/administrator/addCourse"
         network(url, course)
         
         
@@ -190,8 +196,8 @@ butAdd.addEventListener('click', function(){
 })
 
 const back = document.getElementById('back')
-back.click = function(){
+back.addEventListener('click', function(){
     window.history.back()
-}
+})
 
         

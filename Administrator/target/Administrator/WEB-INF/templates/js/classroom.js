@@ -3,11 +3,37 @@ const postion = document.getElementById('RP').value
 const PNumber = document.getElementById('PN').value
 const address = postion+PNumber
 const cid = document.getElementById('id').value
-const classroom = {
-    cid,
-    address,
-    // token,
+//获取token
+var urlParams = new URLSearchParams(window.location.search);
+const token = urlParams.get('data');
+console.log(token)
+// function getTokenFromCookie(cookieName) {
+//     const cookies = document.cookie.split(';'); // 将 Cookie 字符串分割成一个数组
+//     console.log(cookies)
+//     console.log(document.cookie)
+//     // 遍历 Cookie 数组，查找包含指定名称的 Cookie
+//     for (let i = 0; i < cookies.length; i++) {
+//       const cookie = cookies[i].trim(); // 去除空格
+//       if (cookie.startsWith(cookieName + '=')) {
+//         // 如果找到匹配的 Cookie，则提取令牌值并返回
+//         return cookie.substring(cookieName.length + 1); // +1 用于跳过等号
+//       }
+//     }
+  
+//     // 如果没有找到匹配的 Cookie，返回 null 或适当的默认值
+//     return null;
+// }
+
+if(token == null){
+    alert("token过期")
+}else{
+    var classroom = {
+        cid,
+        address,
+        token,
+    }
 }
+
 
 //fetch与数据库接口
 function network(url, Classroom){
@@ -25,8 +51,8 @@ function network(url, Classroom){
             return response.json();
         })
         .then(data => {
-            const Data = JSON.parse(decodeURIComponent(data))
-            console.log('成功保存数据:', Data);
+            const Data = JSON.parse(data)
+            console.log('返回数据:', Data);
             return Data
         })
         .catch(error => {
@@ -77,14 +103,6 @@ function query(url, classroom){
         change.href = urlchange
         drop.appendChild(change)
 
-        /*
-        const del = document.createElement('a')
-        del.setAttribute('herf', './deleteR.html')
-        del.textContent = '删除'
-        const urldel = './deleteR.html?data=' + encodeURIComponent(classroom)
-        del.href = urlchange
-        drop.appendChild(del)
-        */
        //打开弹窗按钮
         const del = document.createElement('button')
         del.textContent = '删除'
@@ -133,10 +151,6 @@ function query(url, classroom){
             console.log(index);
             dropdown.classList.toggle('show');
 
-    
- 
-
-
             });
         })(i);
     }
@@ -161,9 +175,9 @@ function query(url, classroom){
     // 当用户点击确定按钮时，可以执行相应的操作
                 confirmBtns[index].onclick = function() {
     
-                    const url = /SCUEE/deleteClassroom
+                    const url = "http://162.14.107.35/SCUEE/administrator/deleteClassroom"
                     network(url,data[index])
-                    alert("确定按钮被点击了！");
+                    //alert("确定按钮被点击了！");
                     modals[index].style.display = "none"; // 关闭弹窗
                 }
 
@@ -184,16 +198,16 @@ function query(url, classroom){
 
 //返回
 const back = document.getElementById('back')
-back.click = function(){
+back.addEventListener('click',function(){
     window.history.back()
-}
+})
 
 //以下功能里的URL需要重设
 //查询
 const butQuery = document.getElementById('butQuery')
 butQuery.addEventListener('click',function(){
 
-    const url = /SCUEE/queryClassroom
+    const url = 'http://162.14.107.35/SCUEE/administrator/queryClassroom'
 
     query(url)
 })
@@ -202,7 +216,7 @@ butQuery.addEventListener('click',function(){
 const butAdd = document.getElementById('butAdd')
 butAdd.addEventListener('click', function(){
 
-    let url = /SCUEE/queryClassroom
+    let url = "http://162.14.107.35/SCUEE/administrator/queryClassroom"
 
     const i = query(url, classroom)
     if(i){
@@ -210,7 +224,7 @@ butAdd.addEventListener('click', function(){
         alert('内容重复')
     }
     else{//添加教室
-        url = /SCUEE/addClassroom
+        url = "http://162.14.107.35/SCUEE/administrator/addClassroom"
         network(url, classroom)
     }
 })

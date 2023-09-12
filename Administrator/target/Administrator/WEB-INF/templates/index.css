@@ -269,32 +269,32 @@ body::-webkit-scrollbar {
 }
 
 .left .function-box .position-box .homepage a:hover img {
-    content: url(../images/icons/home_dark.svg);
+    content: url(images/icons/home_dark.svg);
     mix-blend-mode: darken;
 }
 
 .left .function-box .position-box .sign-in a:hover img {
-    content: url(../images/icons/edit_dark.svg);
+    content: url(images/icons/edit_dark.svg);
     mix-blend-mode: darken;
 }
 
 .left .function-box .position-box .roll-call a:hover img {
-    content: url(../images/icons/classroom_dark.svg);
+    content: url(images/icons/classroom_dark.svg);
     mix-blend-mode: darken;
 }
 
 .left .function-box .position-box .message a:hover img {
-    content: url(../images/icons/message-unread_dark.svg);
+    content: url(images/icons/message-unread_dark.svg);
     mix-blend-mode: darken;
 }
 
 .left .function-box .position-box .interaction a:hover img {
-    content: url(../images/icons/peoples_dark.svg);
+    content: url(images/icons/peoples_dark.svg);
     mix-blend-mode: darken;
 }
 
 .left .function-box .position-box .timetable a:hover img {
-    content: url(../images/icons/schedule_dark.svg);
+    content: url(images/icons/schedule_dark.svg);
     mix-blend-mode: darken;
 }
 

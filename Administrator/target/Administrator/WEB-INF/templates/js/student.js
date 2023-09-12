@@ -1,14 +1,25 @@
+//构建对象
 const sid = document.getElementById(0).value
 const name = document.getElementById(1).value
 const major = document.getElementById(2).value
 const college = document.getElementById(3).value
 const phone = document.getElementById(6).value
-const student = {    
-        sid,      
-        name,      
-        major,         
-        college,                
-        phone
+//token
+var urlParams = new URLSearchParams(window.location.search);
+const token = urlParams.get('data');
+console.log(token)
+if(token == null){
+    alert("token过期")
+}
+else{
+    var student = {    
+            sid,      
+            name,      
+            major,         
+            college,                
+            phone,
+            token
+    }
 }
 //fetch与数据库接口
 function network(url, Student){
@@ -23,15 +34,15 @@ function network(url, Student){
         if (!response.ok) {
             throw new Error('网络请求失败');
         }
-        return response.json();
+            return response.json();
         })
         .then(data => {
-        const Data = JSON.parse(decodeURIComponent(data))
-        console.log('成功保存数据:', Data);
-        
+            const Data = JSON.parse(data)
+            console.log('返回数据:', Data);
+            return Data
         })
         .catch(error => {
-        console.error('发生错误:', error);
+            console.error('发生错误:', error);
         });
 }
 
@@ -80,20 +91,10 @@ function query(url, student){
         change.href = urlchange
         drop.appendChild(change)
 
-        
-        // const del = document.createElement('a')
-        // del.setAttribute('herf', './deleteR.html')
-        // del.textContent = '删除'
-        // const urldel = './deleteR.html?data=' + encodeURIComponent(classroom)
-        // del.href = urlchange
-        // drop.appendChild(del)
-        
        //打开弹窗按钮
         const del = document.createElement('button')
         del.textContent = '删除'
         del.setAttribute('class', 'openModalBtn')
-       
-
         drop.appendChild(del)//弹窗按钮添加到操作框
 
         //弹窗
@@ -114,12 +115,7 @@ function query(url, student){
         cancelBtn.classList.add('cancelBtn')
         cancelBtn.textContent = '取消'
         modal_content.append(confirmBtn)
-        modal_content.append(cancelBtn)
-
-
-
-
-        
+        modal_content.append(cancelBtn)    
     })
     
     //使用按钮绑定下拉框
@@ -159,9 +155,9 @@ function query(url, student){
     // 当用户点击确定按钮时，可以执行相应的操作
                 confirmBtns[index].onclick = function() {
     
-                    const url = /SCUEE/deleteStudent
+                    const url = "http://162.14.107.35/SCUEE/administrator/deleteStudent"
                     network(url,data[index])
-                    alert("确定按钮被点击了！");
+                    //alert("确定按钮被点击了！");
                     modals[index].style.display = "none"; // 关闭弹窗
                 }
 
@@ -183,14 +179,14 @@ function query(url, student){
 //查询
 const butQuery = document.getElementById('butQuery')
 butQuery.addEventListener('click',function(){
-    const url = /SCUEE/queryStudent
+    const url = "http://162.14.107.35/SCUEE/administrator/queryStudent"
     query(url, student)
 })
 
 //添加
 const butAdd = document.getElementById('butAdd')
 butAdd.addEventListener('click', function(){            
-    let url = /SCUEE/queryStudent
+    let url = "http://162.14.107.35/SCUEE/administrator/queryStudent"
 
     const i = query(url, student)
 
@@ -199,15 +195,15 @@ butAdd.addEventListener('click', function(){
         alert('内容重复')
     }
     else{//添加学生
-        url = /SCUEE/addStudent
+        url = "http://162.14.107.35/SCUEE/administrator/addStudent"
         network(url, student)
         
         
     }
 })
 const back = document.getElementById('back')
-back.click = function(){
+back.addEventListener('click',function(){
     window.history.back()
-}
+})
 
         
