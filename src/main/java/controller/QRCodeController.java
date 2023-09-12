@@ -62,7 +62,7 @@ public class QRCodeController {
 
     // 查询签到数据接口
     @RequestMapping("/query")
-    public ResponseEntity<List<QRCodeResult>> query(@CookieValue("token") String token, @RequestBody String courseName, @RequestBody String cid, @RequestBody String date, @RequestBody String courseId, @RequestBody String teacher){
+    public ResponseEntity<List<QRCodeResult>> query(@CookieValue("token") String token, @RequestParam("courseName") String courseName, @RequestParam("cid") String cid, @RequestParam("date") String date, @RequestParam("courseId") String courseId, @RequestParam("teacher") String teacher){
         List<QRCodeResult> result = qrCodeService.query(token, cid, date, courseName, courseId, teacher);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }

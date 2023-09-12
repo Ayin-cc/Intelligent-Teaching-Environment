@@ -1,8 +1,8 @@
 // 创建cookie
-function setCookie(userId, token, cid=""){
+function setCookie(userId, token){
     var expdate = new Date();
     expdate.setTime(expdate.getTime() + 3 * 60 * 60 * 1000);	// cookie三小时过期
-    document.cookie = "userId=" + userId + ";token=" + token + ";courseId=" + cid + ";expires=" + expdate.toGMTString() + ";path=/";
+    document.cookie = "userId=" + userId + ";token=" + token + ";expires=" + expdate.toGMTString();
 }
 
 // 寻找cookie的值

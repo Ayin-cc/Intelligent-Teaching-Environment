@@ -1,0 +1,434 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>课程信息管理系统</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="../js/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/jqueryui/1.12.1/jquery-ui.min.css">
+</head>
+<body>
+<div class="container">
+    <h1 class="text-center">课程信息管理</h1>
+    <!-- 搜索表单 -->
+
+
+    <form id="search-form" class="form-inline">
+        <div class="form-group">
+            <label for="courseId">课程号</label>
+            <input type="text" class="form-control" id="courseId" name="courseId" placeholder="请输入课程号">
+        </div>
+        <div class="form-group">
+            <label for="name">名字</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="请输入名字">
+        </div>
+        <div class="form-group">
+            <label for="teacher">教师</label>
+            <input type="text" class="form-control" id="teacher" name="teacher" placeholder="请输入教师">
+        </div>
+        <div class="form-group">
+            <label for="site">上课地点</label>
+            <input type="text" class="form-control" id="site" name="site" placeholder="请输入上课地点">
+        </div>
+        <div class="form-group">
+            <label for="date">上课时间</label>
+            <!-- 使用日历选择器 -->
+            <input type = "text" class = "form-control datepicker" id = "date" name = "date" placeholder = "请选择上课时间">
+        </div>
+        <button type = "submit" class = "btn btn-primary">搜索</button>
+    </form>
+    <button type="button" class="btn btn-primary" onclick="window.location='DataManage.html'">返回</button>
+
+
+
+    <button id = "add-btn" class = "btn btn-success">添加</button>
+    <table id = "show-table" class = "table table-striped table-bordered table-hover">
+        <thead>
+        <tr>
+            <th>课程号</th>
+            <th>名字</th>
+            <th>教师</th>
+            <th>上课地点</th>
+            <th>上课时间</th>
+            <th>开始节次</th>
+            <th>结束节次</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+
+    <div id = "edit-modal" class = "modal fade">
+        <div class = "modal-dialog modal-lg">
+            <div class = "modal-content">
+                <div class = "modal-header">
+                    <h4 class = "modal-title">编辑课程信息</h4>
+                    <button type = "button" class = "close" data-dismiss = "modal">×</button>
+                </div>
+
+
+                <div class = "modal-body">
+                    <form id = "edit-form" class = "form-horizontal">
+
+
+                        <!-- 课程号 -->
+                        <div class = "form-group row">
+                            <label for = "edit-courseId" class = "col-sm-2 col-form-label">课程号</label>
+                            <div class = "col-sm-10">
+                                <input type = "text" readonly class = "form-control-plaintext" id = "edit-courseId">
+                            </div>
+                        </div>
+
+                        <!-- 名字 -->
+                        <div class = "form-group row">
+                            <label for = "edit-name" class = "col-sm-2 col-form-label">名字</label>
+                            <div class = "col-sm-10">
+                                <input type = "text" class = "form-control" id = "edit-name">
+                            </div>
+                        </div>
+
+                        <!-- 教师 -->
+                        <div class = "form-group row">
+                            <label for = "edit-teacher" class = "col-sm-2 col-form-label">教师</label>
+                            <div class = "col-sm-10">
+                                <input type = "text" class = "form-control" id = "edit-teacher">
+                            </div>
+                        </div>
+
+                        <!-- 上课地点 -->
+                        <div class = "form-group row">
+                            <label for = "edit-site" class = "col-sm-2 col-form-label">上课地点</label>
+                            <div class = "col-sm-10">
+                                <input type = "text" class = "form-control" id = "edit-site">
+                            </div>
+                        </div>
+
+                        <!-- 上课时间 -->
+                        <div class="form-group row">
+                            <label for="edit-date" class="col-sm-2 col-form-label">上课时间</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control datepicker" id="edit-date">
+                            </div>
+                        </div>
+
+                        <!-- 开始节次 -->
+                        <div class="form-group row">
+                            <label for="edit-startSection" class="col-sm-2 col-form-label">开始节次</label>
+                            <div class="col-sm-10">
+                                <input type="number" min="1" max="12" step="1" class="form-control" id="edit-startSection">
+                            </div>
+                        </div>
+
+                        <!-- 结束节次 -->
+                        <div class="form-group row">
+                            <label for="edit-endSection" class="col-sm-2 col-form-label">结束节次</label>
+                            <div class="col-sm-10">
+                                <input type="number" min="1" max="12" step="1" class="form-control" id="edit-endSection">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button id="confirm-btn" type="button" class="btn btn-primary">确认</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div id="add-modal" class="modal fade">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">添加课程信息</h4>
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                </div>
+
+                <div class="modal-body">
+
+                    <form id="add-form" class="form-horizontal">
+
+                        <!-- 课程号 -->
+                        <div class="form-group row">
+                            <label for="add-courseId" class="col-sm-2 col-form-label">课程号</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="add-courseId">
+                            </div>
+                        </div>
+
+                        <!-- 名字 -->
+                        <div class="form-group row">
+                            <label for="add-name" class="col-sm-2 col-form-label">名字</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="add-name">
+                            </div>
+                        </div>
+
+                        <!-- 教师 -->
+                        <div class="form-group row">
+                            <label for="add-teacher" class="col-sm-2 col-form-label">教师</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="add-teacher">
+                            </div>
+                        </div>
+
+                        <!-- 上课地点 -->
+                        <div class="form-group row">
+                            <label for="add-site" class="col-sm-2 col-form-label">上课地点</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="add-site">
+                            </div>
+                        </div>
+
+                        <!-- 上课时间 -->
+                        <div class="form-group row">
+                            <label for="add-date" class="col-sm-2 col-form-label">上课时间</label>
+                            <div class="col-sm-10">
+                                <input type = "text" class = "form-control datepicker" id = "add-date">
+                            </div>
+                        </div>
+
+                        <!-- 开始节次 -->
+                        <div class = "form-group row">
+                            <label for = "add-startSection" class = "col-sm-2 col-form-label">开始节次</label>
+                            <div class = "col-sm-10">
+                                <input type = "number" min = "1" max = "12" step = "1" class = "form-control" id = "add-startSection">
+                            </div>
+                        </div>
+
+                        <!-- 结束节次 -->
+                        <div class = "form-group row">
+                            <label for = "add-endSection" class = "col-sm-2 col-form-label">结束节次</label>
+                            <div class = "col-sm-10">
+                                <input type = "number" min = "1" max = "12" step = "1" class = "form-control" id = "add-endSection">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+
+
+                <div class = "modal-footer">
+                    <button id = "add-confirm-btn" type = "button" class = "btn btn-primary">确认</button>
+                    <button type = "button" class = "btn btn-secondary" data-dismiss = "modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script>
+        // 存储编辑的课程对象
+        var currentCourse = null;
+
+
+        function createTableRow(course) {
+            var tr = $("<tr></tr>");
+            var courseIdTd = $("<td></td>").text(course.courseId);
+            var nameTd = $("<td></td>").text(course.name);
+            var teacherTd = $("<td></td>").text(course.teacher);
+            var siteTd = $("<td></td>").text(course.site);
+            var dateTd = $("<td></td>").text(course.date.join(","));
+            var startSectionTd = $("<td></td>").text(course.startSection);
+            var endSectionTd = $("<td></td>").text(course.endSection);
+            var editBtn = $("<button></button>").addClass("btn btn-warning").text("编辑");
+            var deleteBtn = $("<button></button>").addClass("btn btn-danger").text("删除");
+            var opTd = $("<td></td>").append(editBtn).append(deleteBtn);
+            tr.append(courseIdTd).append(nameTd).append(teacherTd).append(siteTd).append(dateTd).append(startSectionTd).append(endSectionTd).append(opTd);
+            return tr;
+        }
+
+        function fillEditForm(course) {
+            var editCourseId = $("#edit-courseId");
+            var editName = $("#edit-name");
+            var editTeacher = $("#edit-teacher");
+            var editSite = $("#edit-site");
+            var editDate = $("#edit-date");
+            var editStartSection = $("#edit-startSection");
+            var editEndSection = $("#edit-endSection");
+
+            editCourseId.val(course.courseId);
+            editName.val(course.name);
+            editTeacher.val(course.teacher);
+            editSite.val(course.site);
+
+            editDate.val(course.date.join(","));
+            editStartSection.val(course.startSection);
+            editEndSection.val(course.endSection);
+        }
+
+
+        //接口部分来自bing
+        // 根据搜索表单的值发送Ajax请求，并显示返回的数据
+        function searchAndShow() {
+            // 获取搜索表单的元素
+            var searchForm = $("#search-form");
+            // 获取搜索表单的序列化数据
+            var searchData = searchForm.serialize();
+            // 发送Ajax请求，传递搜索表单的数据
+            $.ajax({
+                url: "/searchCourse",
+                type: "GET",
+                data: searchData,
+                dataType: "json",
+                success: function(data) {
+                    // 如果返回的数据是一个数组，说明查询成功
+                    if (Array.isArray(data)) {
+                        // 获取显示表格的tbody元素
+                        var showTbody = $("#show-table tbody");
+                        // 清空tbody中的内容
+                        showTbody.empty();
+                        // 遍历返回的数据数组，对每个课程对象进行处理
+                        for (var i = 0; i < data.length; i++) {
+                            // 获取当前的课程对象
+                            var course = data[i];
+                            // 调用函数，根据课程对象生成表格的一行
+                            var tr = createTableRow(course);
+                            // 将生成的tr添加到tbody中
+                            showTbody.append(tr);
+                        }
+                    } else {
+                        // 如果返回的数据不是一个数组，说明查询失败，弹出提示信息
+                        alert(data.message || "查询失败，请重试！");
+                    }
+                },
+                error: function() {
+                    // 如果请求失败，弹出提示信息
+                    alert("请求失败，请重试！");
+                }
+            });
+        }
+
+
+        $(document).ready(function() {
+            $("#search-form").submit(function(event) {
+                event.preventDefault();
+                searchAndShow();
+            });
+
+            $("#add-btn").click(function() {
+                $("#add-modal").modal("show");
+            });
+
+            // 绑定确认按钮
+            $("#add-confirm-btn").click(function() {
+                var addForm = $("#add-form");
+                var addData = addForm.serialize();
+
+
+                // 发送Ajax请求，传递添加表单的数据
+                $.ajax({
+                    url: "/addCourse",
+                    type: "POST",
+                    data: addData,
+                    dataType: "json",
+                    success: function(data) {
+                        if (typeof data === "object") {
+                            $("#add-modal").modal("hide");
+                            alert(data.message || "添加成功！");
+
+                            searchAndShow();
+
+                        } else {
+                            alert(data.message || "添加失败，请重试！");
+                        }
+                    },
+                    error: function() {
+                        alert("请求失败，请重试！");
+                    }
+                });
+            });
+
+            // 绑定编辑按钮
+            $("#show-table tbody").on("click", "button.btn-warning", function() {
+
+                var tr = $(this).closest("tr");
+                var course = {};
+                course.courseId = tr.children().eq(0).text();
+                course.name = tr.children().eq(1).text();
+                course.teacher = tr.children().eq(2).text();
+                course.site = tr.children().eq(3).text();
+                course.date = tr.children().eq(4).text().split(",");
+                course.startSection = tr.children().eq(5).text();
+                course.endSection = tr.children().eq(6).text();
+
+                currentCourse = course;
+
+                fillEditForm(course);
+                $("#edit-modal").modal("show");
+            });
+
+            // 绑定删除按钮
+            $("#show-table tbody").on("click", "button.btn-danger", function() {
+                var tr = $(this).closest("tr");
+                var courseId = tr.children().eq(0).text();
+                var result = confirm("您确定要删除课程号为" + courseId + "的课程吗？");
+
+
+                if (result) {
+                    $.ajax({
+                        url: "/deleteCourse",
+                        type: "POST",
+                        data: {courseId: courseId},
+                        dataType: "json",
+                        success: function(data) {
+                            if (typeof data === "object") {
+                                alert(data.message || "删除成功！");
+
+                                searchAndShow();
+                            } else {
+                                alert(data.message || "删除失败，请重试！");
+                            }
+                        },
+                        error: function() {
+                            alert("请求失败，请重试！");
+                        }
+                    });
+                }
+            });
+
+            // 绑定确认按钮
+            $("#confirm-btn").click(function() {
+                var editForm = $("#edit-form");
+                var editData = editForm.serialize();
+
+                $.ajax({
+                    url: "/changeCourse",
+                    type: "POST",
+                    data: editData,
+                    dataType: "json",
+                    success: function(data) {
+                        if (typeof data === "object") {
+                            $("#edit-modal").modal("hide");
+                            alert(data.message || "修改成功！");
+
+                            searchAndShow();
+                        } else {
+                            alert(data.message || "修改失败，请重试！");
+                        }
+                    },
+                    error: function() {
+                        alert("请求失败，请重试！");
+                    }
+                });
+            });
+
+            $(".datepicker").datepicker({
+                dateFormat: "yy-mm-dd",
+                multipleDates: true,
+                multipleDatesSeparator: ","
+            });
+        });
+
+
+    </script>
+</body>
+</html>
+
+
+

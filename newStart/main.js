@@ -15,7 +15,7 @@ app.on('ready',()=>{
 
 
 
-    mainWindow.loadFile('./render_functionHTML/html/SignIn.html')
+    mainWindow.loadFile('./html/SignIn.html')
     //来自李欣哲的
     
     
