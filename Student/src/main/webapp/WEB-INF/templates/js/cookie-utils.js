@@ -1,5 +1,6 @@
 // 创建cookie
 function setCookie(userId, token, cid = "") {
+    console.log(token);
     var expdate = new Date();
     expdate.setTime(expdate.getTime() + 3 * 60 * 60 * 1000);	// cookie三小时过期
     document.cookie = "userId=" + userId;

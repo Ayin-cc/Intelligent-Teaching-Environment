@@ -21,7 +21,7 @@ public class QRCodeController {
 
     // 教室端获取二维码接口
     @RequestMapping("/get")
-    public ResponseEntity<QRcode> get(@CookieValue("token") String token, @RequestBody Classroom classroom, @RequestParam("endTime") String endTime) {
+    public ResponseEntity<QRcode> get(@RequestHeader("Authorization") String token, @RequestBody Classroom classroom, @RequestParam("endTime") String endTime) {
         QRcode qRcode = qrCodeService.get(token, classroom.getCid(), endTime);
         if(qRcode == null){
             return new ResponseEntity<>(null, HttpStatus.OK);
@@ -44,8 +44,8 @@ public class QRCodeController {
 
     // 学生端扫描二维码接口
     @RequestMapping("/scan")
-    public ResponseEntity<String> scan(@CookieValue("token")String token, @RequestParam("courseId") String courseId, @RequestParam("uid") String uid){
-        if(qrCodeService.scan(token, courseId, uid)){
+    public ResponseEntity<String> scan(@RequestHeader("Authorization")String token, @RequestBody QRcode qRcode){
+        if(qrCodeService.scan(token, qRcode.getCourseId(), qRcode.getUid())){
             return new ResponseEntity<>("OK", HttpStatus.OK);
         }
         else{
@@ -55,14 +55,14 @@ public class QRCodeController {
 
     // 教室端更新签到数据接口
     @RequestMapping("/update")
-    public ResponseEntity<List<Student>> update(@CookieValue("token") String token, @RequestBody QRcode qRcode){
+    public ResponseEntity<List<Student>> update(@RequestHeader("Authorization") String token, @RequestBody QRcode qRcode){
         List<Student> students = qrCodeService.update(token, qRcode.getUid());
         return new ResponseEntity<>(students, HttpStatus.OK);
     }
 
     // 查询签到数据接口
     @RequestMapping("/query")
-    public ResponseEntity<List<QRCodeResult>> query(@CookieValue("token") String token, @RequestParam("courseName") String courseName, @RequestParam("cid") String cid, @RequestParam("date") String date, @RequestParam("courseId") String courseId, @RequestParam("teacher") String teacher){
+    public ResponseEntity<List<QRCodeResult>> query(@RequestHeader("Authorization") String token, @RequestParam("courseName") String courseName, @RequestParam("cid") String cid, @RequestParam("date") String date, @RequestParam("courseId") String courseId, @RequestParam("teacher") String teacher){
         List<QRCodeResult> result = qrCodeService.query(token, cid, date, courseName, courseId, teacher);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }

@@ -40,7 +40,7 @@
     <select id="selectStudentByUid" resultMap="studentResultMap">
         select student.*
         from (select * from scuee.qrcode_student where uid=#{uid})qr
-        inner join scuee.student
+        left join scuee.student
         on qr.student_id = student.sid;
     </select>
 </mapper>

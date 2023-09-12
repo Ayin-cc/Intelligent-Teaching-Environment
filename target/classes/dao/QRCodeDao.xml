@@ -16,6 +16,14 @@
         </collection>
     </resultMap>
 
+    <resultMap id="returnResultMap" type="entity.QRCodeResult">
+        <result column="course_name" property="courseName"/>
+        <result column="id" property="courseId"/>
+        <result column="qrcode_time" property="date"/>
+        <result column="course_teacher" property="teacher"/>
+        <collection property="students" resultMap="studentResultMap"/>
+    </resultMap>
+
     <resultMap id="studentResultMap" type="entity.Student">
         <result column="sid" property="sid" />
         <result column="student_name" property="name" />
@@ -69,34 +77,38 @@
         where student.sid = #{sid}
     </update>
 
-    <select id="selectQRCodeByMulti" resultMap="qrcodeResultMap">
+    <select id="selectQRCodeByMulti" resultMap="returnResultMap">
         select
-            scuee.qrcode.*, scuee.qrcode_student.student_id, scuee.course.*
+            *
         from
             scuee.qrcode
-        inner join
+        left join
                 qrcode_student
         on
-            qrcode.uid = qrcode_student.student_id
-        inner join
+            qrcode.uid = qrcode_student.uid
+        left join
             course
         on
             qrcode.course_id = course.id
+        left join
+                student
+        on
+            qrcode_student.student_id = student.sid
         where
             1=1
-            <if test="cid != null">
+            <if test="cid != null and cid != ''">
                 and qrcode.class_id = #{cid}
             </if>
-            <if test="date != null">
+            <if test="date != null and date != ''">
                 and qrcode.qrcode_time like concat('%', #{date}, '%')
             </if>
-            <if test="teacher != null">
+            <if test="teacher != null and teacher != ''">
                 and course.course_teacher like concat('%', #{teacher}, '%')
             </if>
-            <if test="name != null">
+            <if test="name != null and name != ''">
                 and course.course_name like concat('%', #{name}, '%')
             </if>
-            <if test="id != null">
+            <if test="id != null and id != ''">
                 and course.id = #{id}
             </if>;
     </select>
@@ -106,7 +118,7 @@
             scuee.qrcode.*, scuee.qrcode_student.student_id
         from
             (select * from scuee.qrcode where class_id = #{cid})q
-        inner join
+        left join
                 scuee.qrcode_student
         on
             q.uid = qrcode_student.uid;
@@ -132,7 +144,7 @@
             scuee.qrcode.*, scuee.qrcode_student.student_id
         from
             (select * from scuee.qrcode where date_format(qrcode_time, '%Y-%m-%d') = #{date})q
-        inner join
+        left join
                 scuee.qrcode_student
         on
             q.uid = qrcode_student.uid;
@@ -167,7 +179,7 @@
             scuee.student.*
         from
             scuee.student
-        inner join
+        left join
                 (select * from scuee.qrcode_student q where q.uid = #{uid})qs
         on
             qs.student_id = student.sid
@@ -178,7 +190,7 @@
             scuee.qrcode.*, scuee.qrcode_student.student_id
         from
             (select * from scuee.qrcode where uid = #{uid})q
-        inner join
+        left join
                 scuee.qrcode_student
         on
             scuee.qrcode.uid = scuee.qrcode_student.uid;
@@ -221,7 +233,7 @@
         select exists(
             select *
             from (select * from scuee.course_students where course_id=#{courseId})c
-            inner join (select * from scuee.student where student_token=#{token})s
+            left join (select * from scuee.student where student_token=#{token})s
             on c.student_id=s.sid
                    );
     </select>

@@ -106,7 +106,7 @@
     <select id="selectMsg" resultMap="msgResultMap">
         select *
         from scuee.message
-        inner join scuee.msg_attachment
+        left join scuee.msg_attachment
         on id = msg_id
         where is_published = 1;
     </select>
@@ -134,9 +134,9 @@
         from(
             select * from scuee.classroom_courses where course_date = #{date}
             )cc
-        inner join scuee.course
+        left join scuee.course
         on cc.course_id = course.id
-        inner join scuee.course_students
+        left join scuee.course_students
         on cc.course_id = course_students.course_id;
     </select>
 
