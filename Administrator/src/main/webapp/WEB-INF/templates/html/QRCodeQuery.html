@@ -19,7 +19,7 @@
             checkCookie();
 
             // 获取查询表单元素，并设置其提交事件的回调函数为处理查询表单的提交事件的函数
-            $("#query-form").submit(handleQueryFormSubmit);
+            $("#query-form").submit(sendQueryRequest());
         });
     </script>
 </head>
@@ -67,7 +67,7 @@
         </div>
 
 
-        <button type="submit" class="btn btn-primary" onclick="sendQueryRequest()">查询</button>
+        <button type="submit" class="btn btn-primary">查询</button>
 
     </form>
 
