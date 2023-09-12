@@ -207,40 +207,40 @@
     </script>
 </head>
 <body>
-<div className="container">
-    <h1 className="text-center">课程信息管理</h1>
+<div class="container">
+    <h1 class="text-center">课程信息管理</h1>
     <!-- 搜索表单 -->
 
 
-    <form id="search-form" className="form-inline">
-        <div className="form-group">
+    <form id="search-form" class="form-inline">
+        <div class="form-group">
             <label htmlFor="courseId">课程号</label>
-            <input type="text" className="form-control" id="courseId" name="courseId" placeholder="请输入课程号">
+            <input type="text" class="form-control" id="courseId" name="courseId" placeholder="请输入课程号">
         </div>
-        <div className="form-group">
+        <div class="form-group">
             <label htmlFor="name">名字</label>
-            <input type="text" className="form-control" id="name" name="name" placeholder="请输入名字">
+            <input type="text" class="form-control" id="name" name="name" placeholder="请输入名字">
         </div>
-        <div className="form-group">
+        <div class="form-group">
             <label htmlFor="teacher">教师</label>
-            <input type="text" className="form-control" id="teacher" name="teacher" placeholder="请输入教师">
+            <input type="text" class="form-control" id="teacher" name="teacher" placeholder="请输入教师">
         </div>
-        <div className="form-group">
+        <div class="form-group">
             <label htmlFor="site">上课地点</label>
-            <input type="text" className="form-control" id="site" name="site" placeholder="请输入上课地点">
+            <input type="text" class="form-control" id="site" name="site" placeholder="请输入上课地点">
         </div>
-        <div className="form-group">
+        <div class="form-group">
             <label htmlFor="date">上课时间</label>
             <!-- 使用日历选择器 -->
-            <input type="text" className="form-control datepicker" id="date" name="date" placeholder="请选择上课时间">
+            <input type="text" class="form-control datepicker" id="date" name="date" placeholder="请选择上课时间">
         </div>
-        <button type="submit" className="btn btn-primary">搜索</button>
+        <button type="submit" class="btn btn-primary">搜索</button>
     </form>
-    <button type="button" className="btn btn-primary" onClick="window.location='DataManage.html'">返回</button>
+    <button type="button" class="btn btn-primary" onClick="window.location='DataManage.html'">返回</button>
 
 
-    <button id="add-btn" className="btn btn-success">添加</button>
-    <table id="show-table" className="table table-striped table-bordered table-hover">
+    <button id="add-btn" class="btn btn-success">添加</button>
+    <table id="show-table" class="table table-striped table-bordered table-hover">
         <thead>
         <tr>
             <th>课程号</th>
@@ -257,154 +257,154 @@
     </table>
 
 
-    <div id="edit-modal" className="modal fade">
-        <div className="modal-dialog modal-lg">
-            <div className="modal-content">
-                <div className="modal-header">
-                    <h4 className="modal-title">编辑课程信息</h4>
-                    <button type="button" className="close" data-dismiss="modal">×</button>
+    <div id="edit-modal" class="modal fade">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">编辑课程信息</h4>
+                    <button type="button" class="close" data-dismiss="modal">×</button>
                 </div>
 
 
-                <div className="modal-body">
-                    <form id="edit-form" className="form-horizontal">
+                <div class="modal-body">
+                    <form id="edit-form" class="form-horizontal">
 
 
                         <!-- 课程号 -->
-                        <div className="form-group row">
-                            <label htmlFor="edit-courseId" className="col-sm-2 col-form-label">课程号</label>
-                            <div className="col-sm-10">
-                                <input type="text" readOnly className="form-control-plaintext" id="edit-courseId">
+                        <div class="form-group row">
+                            <label htmlFor="edit-courseId" class="col-sm-2 col-form-label">课程号</label>
+                            <div class="col-sm-10">
+                                <input type="text" readOnly class="form-control-plaintext" id="edit-courseId">
                             </div>
                         </div>
 
                         <!-- 名字 -->
-                        <div className="form-group row">
-                            <label htmlFor="edit-name" className="col-sm-2 col-form-label">名字</label>
-                            <div className="col-sm-10">
-                                <input type="text" className="form-control" id="edit-name">
+                        <div class="form-group row">
+                            <label htmlFor="edit-name" class="col-sm-2 col-form-label">名字</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="edit-name">
                             </div>
                         </div>
 
                         <!-- 教师 -->
-                        <div className="form-group row">
-                            <label htmlFor="edit-teacher" className="col-sm-2 col-form-label">教师</label>
-                            <div className="col-sm-10">
-                                <input type="text" className="form-control" id="edit-teacher">
+                        <div class="form-group row">
+                            <label htmlFor="edit-teacher" class="col-sm-2 col-form-label">教师</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="edit-teacher">
                             </div>
                         </div>
 
                         <!-- 上课地点 -->
-                        <div className="form-group row">
-                            <label htmlFor="edit-site" className="col-sm-2 col-form-label">上课地点</label>
-                            <div className="col-sm-10">
-                                <input type="text" className="form-control" id="edit-site">
+                        <div class="form-group row">
+                            <label htmlFor="edit-site" class="col-sm-2 col-form-label">上课地点</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="edit-site">
                             </div>
                         </div>
 
                         <!-- 上课时间 -->
-                        <div className="form-group row">
-                            <label htmlFor="edit-date" className="col-sm-2 col-form-label">上课时间</label>
-                            <div className="col-sm-10">
-                                <input type="text" className="form-control datepicker" id="edit-date">
+                        <div class="form-group row">
+                            <label htmlFor="edit-date" class="col-sm-2 col-form-label">上课时间</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control datepicker" id="edit-date">
                             </div>
                         </div>
 
                         <!-- 开始节次 -->
-                        <div className="form-group row">
-                            <label htmlFor="edit-startSection" className="col-sm-2 col-form-label">开始节次</label>
-                            <div className="col-sm-10">
-                                <input type="number" min="1" max="12" step="1" className="form-control"
+                        <div class="form-group row">
+                            <label htmlFor="edit-startSection" class="col-sm-2 col-form-label">开始节次</label>
+                            <div class="col-sm-10">
+                                <input type="number" min="1" max="12" step="1" class="form-control"
                                        id="edit-startSection">
                             </div>
                         </div>
 
                         <!-- 结束节次 -->
-                        <div className="form-group row">
-                            <label htmlFor="edit-endSection" className="col-sm-2 col-form-label">结束节次</label>
-                            <div className="col-sm-10">
-                                <input type="number" min="1" max="12" step="1" className="form-control"
+                        <div class="form-group row">
+                            <label htmlFor="edit-endSection" class="col-sm-2 col-form-label">结束节次</label>
+                            <div class="col-sm-10">
+                                <input type="number" min="1" max="12" step="1" class="form-control"
                                        id="edit-endSection">
                             </div>
                         </div>
                     </form>
                 </div>
 
-                <div className="modal-footer">
-                    <button id="confirm-btn" type="button" className="btn btn-primary">确认</button>
-                    <button type="button" className="btn btn-secondary" data-dismiss="modal">取消</button>
+                <div class="modal-footer">
+                    <button id="confirm-btn" type="button" class="btn btn-primary">确认</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
                 </div>
             </div>
         </div>
     </div>
 
 
-    <div id="add-modal" className="modal fade">
-        <div className="modal-dialog modal-lg">
-            <div className="modal-content">
-                <div className="modal-header">
-                    <h4 className="modal-title">添加课程信息</h4>
-                    <button type="button" className="close" data-dismiss="modal">×</button>
+    <div id="add-modal" class="modal fade">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">添加课程信息</h4>
+                    <button type="button" class="close" data-dismiss="modal">×</button>
                 </div>
 
-                <div className="modal-body">
+                <div class="modal-body">
 
-                    <form id="add-form" className="form-horizontal">
+                    <form id="add-form" class="form-horizontal">
 
                         <!-- 课程号 -->
-                        <div className="form-group row">
-                            <label htmlFor="add-courseId" className="col-sm-2 col-form-label">课程号</label>
-                            <div className="col-sm-10">
-                                <input type="text" className="form-control" id="add-courseId" name="courseId">
+                        <div class="form-group row">
+                            <label htmlFor="add-courseId" class="col-sm-2 col-form-label">课程号</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="add-courseId" name="courseId">
                             </div>
                         </div>
 
                         <!-- 名字 -->
-                        <div className="form-group row">
-                            <label htmlFor="add-name" className="col-sm-2 col-form-label">名字</label>
-                            <div className="col-sm-10">
-                                <input type="text" className="form-control" id="add-name" name="name">
+                        <div class="form-group row">
+                            <label htmlFor="add-name" class="col-sm-2 col-form-label">名字</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="add-name" name="name">
                             </div>
                         </div>
 
                         <!-- 教师 -->
-                        <div className="form-group row">
-                            <label htmlFor="add-teacher" className="col-sm-2 col-form-label">教师</label>
-                            <div className="col-sm-10">
-                                <input type="text" className="form-control" id="add-teacher" name="teacher">
+                        <div class="form-group row">
+                            <label htmlFor="add-teacher" class="col-sm-2 col-form-label">教师</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="add-teacher" name="teacher">
                             </div>
                         </div>
 
                         <!-- 上课地点 -->
-                        <div className="form-group row">
-                            <label htmlFor="add-site" className="col-sm-2 col-form-label">上课地点</label>
-                            <div className="col-sm-10">
-                                <input type="text" className="form-control" id="add-site" name="site">
+                        <div class="form-group row">
+                            <label htmlFor="add-site" class="col-sm-2 col-form-label">上课地点</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="add-site" name="site">
                             </div>
                         </div>
 
                         <!-- 上课时间 -->
-                        <div className="form-group row">
-                            <label htmlFor="add-date" className="col-sm-2 col-form-label">上课时间</label>
-                            <div className="col-sm-10">
-                                <input type="text" className="form-control datepicker" id="add-date" name="date">
+                        <div class="form-group row">
+                            <label htmlFor="add-date" class="col-sm-2 col-form-label">上课时间</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control datepicker" id="add-date" name="date">
                             </div>
                         </div>
 
                         <!-- 开始节次 -->
-                        <div className="form-group row">
-                            <label htmlFor="add-startSection" className="col-sm-2 col-form-label">开始节次</label>
-                            <div className="col-sm-10">
-                                <input type="number" min="1" max="12" step="1" className="form-control"
+                        <div class="form-group row">
+                            <label htmlFor="add-startSection" class="col-sm-2 col-form-label">开始节次</label>
+                            <div class="col-sm-10">
+                                <input type="number" min="1" max="12" step="1" class="form-control"
                                        id="add-startSection" name="startSection">
                             </div>
                         </div>
 
                         <!-- 结束节次 -->
-                        <div className="form-group row">
-                            <label htmlFor="add-endSection" className="col-sm-2 col-form-label">结束节次</label>
-                            <div className="col-sm-10">
-                                <input type="number" min="1" max="12" step="1" className="form-control"
+                        <div class="form-group row">
+                            <label htmlFor="add-endSection" class="col-sm-2 col-form-label">结束节次</label>
+                            <div class="col-sm-10">
+                                <input type="number" min="1" max="12" step="1" class="form-control"
                                        id="add-endSection" name="endSection">
                             </div>
                         </div>
@@ -412,9 +412,9 @@
                 </div>
 
 
-                <div className="modal-footer">
-                    <button id="add-confirm-btn" type="button" className="btn btn-primary">确认</button>
-                    <button type="button" className="btn btn-secondary" data-dismiss="modal">取消</button>
+                <div class="modal-footer">
+                    <button id="add-confirm-btn" type="button" class="btn btn-primary">确认</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
                 </div>
             </div>
         </div>
