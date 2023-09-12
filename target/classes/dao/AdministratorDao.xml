@@ -183,7 +183,7 @@
     </select>
 
     <select id="queryCourse" resultMap="courseResultMap">
-        select scuee.course.*, scuee.classroom_courses.course_date, scuee.course_students.student_id
+        select *
         from scuee.course
         inner join classroom_courses
         on course.id = classroom_courses.course_id
