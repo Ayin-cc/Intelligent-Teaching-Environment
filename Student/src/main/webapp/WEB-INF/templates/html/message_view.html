@@ -47,7 +47,7 @@
                                 // 添加附件
                                 document.getElementById("attched-tip-num").innerHTML = attachment.length;
                                 for (var i = 0; i < attachment.length; i++) {
-                                    var blob = new Blob([atob(attachment[i].file)], { type: 'text/plain; charset=utf-8' });
+                                    var blob = new Blob(["\ufeff", atob(attachment[i].file)], { type: 'text/plain; charset=utf-8' });
                                     var blobUrl = URL.createObjectURL(blob);
                                     isAttached(attachment.length, blobUrl, attachment[i].name);
                                 }
