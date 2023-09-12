@@ -7,7 +7,8 @@
     <!-- 引入Bootstrap样式表 -->
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
     <!-- 引入jQuery库 -->
-    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <script src="../js/jquery-3.7.1.min.js"></script>
+    <script src="../js/cookie-utils.js"></script>
     <!-- 引入Bootstrap JS文件 -->
     <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <style>
@@ -109,9 +110,10 @@
 
     function send(formMessage){
         $.ajax({
-            url: 'http://162.14.107.35/SCUEE//DistrMsg/create',
+            url: 'http://localhost:18083/SCUEE//DistrMsg/create',
             type: 'POST', // 请求类型，可以根据您的需求修改
             data: formMessage, // 将 FormData 对象作为数据发送
+            headers:{"Authorization":getCookie("token")},
             processData: false, // 不对数据进行处理（已经是 FormData）
             contentType: false, // 不设置 content-type 头部，让浏览器自动设置为 multipart/form-data
             success: function (data) {
@@ -199,14 +201,17 @@
 
             //准备发送Message
             const title = document.getElementById('title').value;//文本
-            const content = messageInput;//html元素
-            const time = year+'-'+month+'-'+day+' '+hours+':'+minutes+':'+seconds
+            const content = messageInput.innerHTML;//html元素
+            const time = "" + year+'-'+month+'-'+day+' '+hours+':'+minutes+':'+seconds
             const files = fileInput.files
+            const token = getCookie("token");
             var formMessage = new FormData();
             formMessage.append('title', title)
             formMessage.append('content', content)
             formMessage.append('time', time)
-            formMessage.append('attachment', files)
+            for (var i = 0; i < files.length; i++) {
+                formMessage.append('attachmentFiles', files[i]);
+            }
             formMessage.append('token', token)
             send(formMessage)
 

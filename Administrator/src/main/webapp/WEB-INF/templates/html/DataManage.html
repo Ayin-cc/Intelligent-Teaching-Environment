@@ -22,18 +22,13 @@
       </a>
     </div>
     <script>
-      var urlParams = new URLSearchParams(window.location.search);
-      var token = urlParams.get('data');
-
       const classroom = document.getElementById('classroom')
       const lesson = document.getElementById('lesson')
       const student = document.getElementById('student')
       
-      classroom.href = "Editclassroom.html?data=" + encodeURIComponent(token)
-      lesson.href = "EditCourse.html?data=" + encodeURIComponent(token)
-      student.href = "EditStu.html?data=" + encodeURIComponent(token)
-
-
+      classroom.href = "Editclassroom.html";
+      lesson.href = "EditCourse.html;";
+      student.href = "EditStu.html";
     </script>
 </body>
 </html>

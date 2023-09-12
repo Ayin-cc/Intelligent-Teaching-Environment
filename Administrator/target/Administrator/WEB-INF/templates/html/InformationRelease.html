@@ -4,17 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>撰写消息</title>
+    <!-- 引入Bootstrap样式表 -->
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <!-- 引入jQuery库 -->
+    <script src="../js/jquery-3.7.1.min.js"></script>
+    <script src="../js/cookie-utils.js"></script>
+    <!-- 引入Bootstrap JS文件 -->
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <style>
         /* 定义容器样式 */
         .custom-input-container {
-            width: 300px;
+            width: 1100px;
             min-height: 200px; /* 设置容器高度 */
             border: 1px solid #ccc;
             overflow: auto; /* 启用滚动条 */
         }
 
-    </style>
-    <style>
         /* CSS 样式用于模态对话框 */
         .modal {
             display: none; /* 默认隐藏 */
@@ -32,222 +37,216 @@
             background-color: #fff;
             padding: 20px;
             border-radius: 5px;
+            width: 500px;
         }
     </style>
-    <script src="../js/jquery-3.7.1.min.js" ></script>
-    <script src="../js/cookie-utils.js"></script>
-		<script>
-			$(document).ready(function () {
-                checkCookie();
-                document.getElementById("username-profile").innerText = student.name;
-			})
-		</script>
-
-
-
-    
 </head>
 <body>
-    <button id="scheduleButton">定时发送</button>
-    
+<div class="container">
+    <h1 class="text-center">撰写消息</h1>
+    <!-- 定时发送按钮 -->
+    <button id="scheduleButton" class="btn btn-info">定时发送</button>
 
     <!-- 定时发送框 -->
     <div id="timeModal" class="modal">
         <div class="modal-content">
             <h2>设置发送时间</h2>
-            <input type="datetime-local" id="dateTimeInput">
-            <button id="confirmButton">确认</button>
-            <button id="cancelButton">取消</button>
+            <input type="datetime-local" id="dateTimeInput" class="form-control">
+            <button id="confirmButton" class="btn btn-primary">确认</button>
+            <button id="cancelButton" class="btn btn-secondary">取消</button>
         </div>
     </div>
 
     <!-- 主题 -->
-    <div>
-        <input type="text" id="title" placeholder="主题">
+    <div class="form-group">
+        <label for="title">主题</label>
+        <input type="text" id="title" class="form-control" placeholder="主题">
     </div>
 
     <!-- 加粗 字号 -->
-    <div unselectable="on" style="display: inline-block;">                     
-        <input type="button" id="btnBold" onmousedown="return false;"value = "加粗">                     
-    </div>
-    <div unselectable="on" style="display: inline-block;">                     
+    <div class="form-group">
+        <input type="button" id="btnBold" onmousedown="return false;" value = "加粗" class = "btn btn-secondary">
         <label for="fontSizeInput">字号大小：</label>
-        <input type="number" id="fontSizeInput" min="1" max="7" step="1" value="3">
-        <button onclick="changeFontSize()">应用</button>                   
+        <input type="number" id="fontSizeInput" min="1" max="7" step="1" value="3" class = "form-control-inline">
+        <button onclick = "changeFontSize()" class = "btn btn-secondary">应用</button>
     </div>
-    <br>
-   
-    <!-- 内容 -->
-    <div class="custom-input-container" id="message-input" placeholder = "内容" contenteditable="true">
 
+    <!-- 内容 -->
+    <div class = "form-group">
+        <label for = "message-input">内容</label>
+        <div class = "custom-input-container" id = "message-input" placeholder = "内容" contenteditable = "true"></div>
     </div>
-    
+
     <!-- 附件 -->
-    <div>
+    <div class = "form-group">
         按住 Ctrl 多选
-        <input type="file" id="fileInput" multiple>
+        <input type = "file" id = "fileInput" multiple class = "form-control-file">
     </div>
+
     <!-- 显示总文件大小 -->
-    <p>文件总大小(限制10MB): <span id="totalSize">0 bytes</span></p>
+    <p>文件总大小(限制10MB): <span id = "totalSize">0 bytes</span></p>
 
     <!-- 提示信息 -->
-    <p id="message"></p>
+    <p id = "message"></p>
 
-    <!-- <script src="../js/InformationRelease.js"></script> -->
-    <script>
-        // 获取DOM元素
-        const messageInput = document.getElementById('message-input');
-        
-        const btnbold = document.getElementById("btnBold");
+</div>
+<script>
+    // 获取DOM元素
+    const messageInput = document.getElementById('message-input');
 
-        const timemodal = document.getElementById('timeModal');
-        const scheduleButton = document.getElementById('scheduleButton');
-        const confirmButton = document.getElementById('confirmButton');
-        const cancelButton = document.getElementById('cancelButton');
-        const dateTimeInput = document.getElementById('dateTimeInput');
+    const btnbold = document.getElementById("btnBold");
 
-        // 获取文件选择框的引用
-        const fileInput = document.getElementById('fileInput');
-        const totalSizeSpan = document.getElementById('totalSize');
-        const message = document.getElementById('message');
-        const maxSizeInBytes = 10 * 1024 * 1024; // 10MB
+    const timemodal = document.getElementById('timeModal');
+    const scheduleButton = document.getElementById('scheduleButton');
+    const confirmButton = document.getElementById('confirmButton');
+    const cancelButton = document.getElementById('cancelButton');
+    const dateTimeInput = document.getElementById('dateTimeInput');
 
-        function send(formMessage){
-            $.ajax({
-                url: 'http://162.14.107.35/SCUEE//DistrMsg/create',
-                type: 'POST', // 请求类型，可以根据您的需求修改
-                data: formMessage, // 将 FormData 对象作为数据发送
-                processData: false, // 不对数据进行处理（已经是 FormData）
-                contentType: false, // 不设置 content-type 头部，让浏览器自动设置为 multipart/form-data
-                success: function (data) {
-                  // 请求成功时的处理逻辑
-                  console.log('上传成功:', data);
-                },
-                error: function (xhr, status, error) {
-                  // 请求失败时的处理逻辑
-                  console.error('上传失败:', error);
-                }
-              });
+    // 获取文件选择框的引用
+    const fileInput = document.getElementById('fileInput');
+    const totalSizeSpan = document.getElementById('totalSize');
+    const message = document.getElementById('message');
+    const maxSizeInBytes = 10 * 1024 * 1024; // 10MB
+
+    function send(formMessage){
+        $.ajax({
+            url: 'http://localhost:18083/SCUEE//DistrMsg/create',
+            type: 'POST', // 请求类型，可以根据您的需求修改
+            data: formMessage, // 将 FormData 对象作为数据发送
+            headers:{"Authorization":getCookie("token")},
+            processData: false, // 不对数据进行处理（已经是 FormData）
+            contentType: false, // 不设置 content-type 头部，让浏览器自动设置为 multipart/form-data
+            success: function (data) {
+                // 请求成功时的处理逻辑
+                console.log('上传成功:', data);
+            },
+            error: function (xhr, status, error) {
+                // 请求失败时的处理逻辑
+                console.error('上传失败:', error);
+            }
+        });
+    }
+
+
+    // 当用户选择文件时，计算总文件大小
+    fileInput.addEventListener('change', () => {
+        let totalSize = 0;
+        let validFileCount = 0;
+        //const allowedFileTypes = ['image/jpeg', 'image/png']; // 允许的文件类型
+
+        // 遍历选定的文件并累加它们的大小
+        for (const file of fileInput.files) {
+            totalSize += file.size;
+            validFileCount++;
+            /*if (allowedFileTypes.includes(file.type)) {
+
+            }*/
         }
 
-
-        // 当用户选择文件时，计算总文件大小
-        fileInput.addEventListener('change', () => {
-            let totalSize = 0;
-            let validFileCount = 0;
-            //const allowedFileTypes = ['image/jpeg', 'image/png']; // 允许的文件类型
-
-            // 遍历选定的文件并累加它们的大小
-            for (const file of fileInput.files) {
-                totalSize += file.size;
-                validFileCount++;
-                /*if (allowedFileTypes.includes(file.type)) {
-                    
-                }*/
-            }
-
-            // 检查文件大小
-            if (totalSize <= maxSizeInBytes) {
-                message.textContent = '所有文件大小符合要求。';
-            } else {
-                message.textContent = '某些文件超过了10MB的限制。';
-            }
-
-            // 检查文件类型
-            /* if (validFileCount === fileInput.files.length) {
-                message.textContent += ' 所有文件都是允许的类型。';
-            } else {
-                message.textContent += ' 某些文件不是允许的类型。';
-            } */
-
-            // 将文件大小格式化为更友好的单位（如KB、MB、GB等）
-            const formattedSize = formatFileSize(totalSize);
-
-            // 更新显示总文件大小的元素
-            totalSizeSpan.textContent = formattedSize;
-        });
-
-        // 格式化文件大小为更友好的单位
-        function formatFileSize(sizeInBytes) {
-            if (sizeInBytes < 1024) {
-                return sizeInBytes + ' bytes';
-            } else if (sizeInBytes < 1024 * 1024) {
-                return (sizeInBytes / 1024).toFixed(2) + ' KB';
-            } else if (sizeInBytes < 1024 * 1024 * 1024) {
-                return (sizeInBytes / (1024 * 1024)).toFixed(2) + ' MB';
-            } else {
-                return (sizeInBytes / (1024 * 1024 * 1024)).toFixed(2) + ' GB';
-            }
+        // 检查文件大小
+        if (totalSize <= maxSizeInBytes) {
+            message.textContent = '所有文件大小符合要求。';
+        } else {
+            message.textContent = '某些文件超过了10MB的限制。';
         }
 
-        //定时发送
-            // 点击按钮打开模态对话框
-        scheduleButton.addEventListener('click', () => {
-            timemodal.style.display = 'block';
-        });
-            // 点击确认按钮设置发送时间 并发送
-        confirmButton.addEventListener('click', () => {
-            const textInput = document.getElementById('textInput');
-            const selectedDateTime = new Date(dateTimeInput.value);
-            const currentTime = new Date();
+        // 检查文件类型
+        /* if (validFileCount === fileInput.files.length) {
+            message.textContent += ' 所有文件都是允许的类型。';
+        } else {
+            message.textContent += ' 某些文件不是允许的类型。';
+        } */
 
-            console.log(currentTime);
-            console.log(selectedDateTime);
+        // 将文件大小格式化为更友好的单位（如KB、MB、GB等）
+        const formattedSize = formatFileSize(totalSize);
 
-            if (selectedDateTime > currentTime) {
-                const year = selectedDateTime.getFullYear(); // 获取年份
-                const month = selectedDateTime.getMonth() + 1; // 获取月份（注意：月份从0开始，所以需要加1）
-                const day = selectedDateTime.getDate(); // 获取日期
-                const hours = selectedDateTime.getHours(); // 获取小时
-                const minutes = selectedDateTime.getMinutes(); // 获取分钟
-                const seconds =selectedDateTime.getSeconds(); // 获取秒钟
+        // 更新显示总文件大小的元素
+        totalSizeSpan.textContent = formattedSize;
+    });
 
-                //准备发送Message
-                const title = document.getElementById('title').value;//文本
-                const content = messageInput;//html元素
-                const time = year+'-'+month+'-'+day+' '+hours+':'+minutes+':'+seconds
-                const files = fileInput.files
-                var formMessage = new FormData();
-                formMessage.append('title', title)
-                formMessage.append('content', content)
-                formMessage.append('time', time)
-                formMessage.append('attachment', files)
-                formMessage.append('token', token)
-                send(formMessage)
+    // 格式化文件大小为更友好的单位
+    function formatFileSize(sizeInBytes) {
+        if (sizeInBytes < 1024) {
+            return sizeInBytes + ' bytes';
+        } else if (sizeInBytes < 1024 * 1024) {
+            return (sizeInBytes / 1024).toFixed(2) + ' KB';
+        } else if (sizeInBytes < 1024 * 1024 * 1024) {
+            return (sizeInBytes / (1024 * 1024)).toFixed(2) + ' MB';
+        } else {
+            return (sizeInBytes / (1024 * 1024 * 1024)).toFixed(2) + ' GB';
+        }
+    }
 
-            } else {
-                alert("所选时间必须在当前时间之后。");
+    //定时发送
+    // 点击按钮打开模态对话框
+    scheduleButton.addEventListener('click', () => {
+        timemodal.style.display = 'block';
+    });
+    // 点击确认按钮设置发送时间 并发送
+    confirmButton.addEventListener('click', () => {
+        const textInput = document.getElementById('textInput');
+        const selectedDateTime = new Date(dateTimeInput.value);
+        const currentTime = new Date();
+
+        console.log(currentTime);
+        console.log(selectedDateTime);
+
+        if (selectedDateTime > currentTime) {
+            const year = selectedDateTime.getFullYear(); // 获取年份
+            const month = selectedDateTime.getMonth() + 1; // 获取月份（注意：月份从0开始，所以需要加1）
+            const day = selectedDateTime.getDate(); // 获取日期
+            const hours = selectedDateTime.getHours(); // 获取小时
+            const minutes = selectedDateTime.getMinutes(); // 获取分钟
+            const seconds =selectedDateTime.getSeconds(); // 获取秒钟
+
+            //准备发送Message
+            const title = document.getElementById('title').value;//文本
+            const content = messageInput.innerHTML;//html元素
+            const time = "" + year+'-'+month+'-'+day+' '+hours+':'+minutes+':'+seconds
+            const files = fileInput.files
+            const token = getCookie("token");
+            var formMessage = new FormData();
+            formMessage.append('title', title)
+            formMessage.append('content', content)
+            formMessage.append('time', time)
+            for (var i = 0; i < files.length; i++) {
+                formMessage.append('attachmentFiles', files[i]);
             }
-        });
+            formMessage.append('token', token)
+            send(formMessage)
 
-            // 点击取消按钮关闭对话框
-        cancelButton.addEventListener('click', () => {
+        } else {
+            alert("所选时间必须在当前时间之后。");
+        }
+    });
+
+    // 点击取消按钮关闭对话框
+    cancelButton.addEventListener('click', () => {
+        timemodal.style.display = 'none';
+    });
+
+    // 当用户点击对话框外部区域时，关闭对话框
+    window.addEventListener('click', (event) => {
+        if (event.target === timemodal) {
             timemodal.style.display = 'none';
-        });
-
-            // 当用户点击对话框外部区域时，关闭对话框
-        window.addEventListener('click', (event) => {
-            if (event.target === timemodal) {
-                timemodal.style.display = 'none';
-            }
-        });
-
-
-
-        //加粗
-        btnbold.addEventListener('click', function(){
-            document.execCommand('bold', false, null);
-        })
-
-        //字号
-        function changeFontSize() {
-            const fontSizeInput = document.getElementById('fontSizeInput').value;
-            document.execCommand('fontSize', false, fontSizeInput);
         }
-        
-        
+    });
 
-    </script>
+
+
+    //加粗
+    btnbold.addEventListener('click', function(){
+        document.execCommand('bold', false, null);
+    })
+
+    //字号
+    function changeFontSize() {
+        const fontSizeInput = document.getElementById('fontSizeInput').value;
+        document.execCommand('fontSize', false, fontSizeInput);
+    }
+
+
+
+</script>
 </body>
 </html>
-

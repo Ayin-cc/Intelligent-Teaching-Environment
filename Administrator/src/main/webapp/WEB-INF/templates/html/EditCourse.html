@@ -41,20 +41,13 @@
                 // 获取搜索表单的元素
                 var searchForm = $("#search-form");
                 // 获取搜索表单的序列化数据
-                var formData = {};
-                // 遍历表单字段
-                searchForm.find("input").each(function() {
-                    var input = $(this);
-                    var fieldName = input.attr("name");
-                    var fieldValue = input.val();
-                    formData[fieldName] = fieldValue;
-                });
+                var formData = searchForm.serializeObject();
                 // 发送Ajax请求，传递搜索表单的数据
                 $.ajax({
-                    url: "http://162.14.107.35//SCUEE/Administrator/queryCourse",
+                    url: "http://localhost:18083/SCUEE/Administrator/queryCourse",
                     type: "POST",
                     headers:{"Authorization":getCookie("token")},
-                    data: JSON.stringify({}),
+                    data: JSON.stringify(formData),
                     contentType:"application/json",
                     dataType: "json",
                     success: function(data) {

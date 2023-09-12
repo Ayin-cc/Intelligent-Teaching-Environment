@@ -24,7 +24,7 @@ function fetch(url, message){
 }
 
 //设置URL
-const url = /SCUEE/DistrMsg/create
+const url = "/SCUEE/DistrMsg/create"
 // 处理发送按钮点击事件
 sendButton.addEventListener('click', () => {
     const message = messageInput.value;
