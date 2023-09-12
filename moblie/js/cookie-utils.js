@@ -1,11 +1,11 @@
 // 创建cookie
 function setCookie(userId, token, cid = "") {
     var expdate = new Date();
-    expdate.setTime(expdate.getTime() + 3 * 60 * 60 * 1000);	// cookie三小时过期
+    expdate.setTime(expdate.getTime() - 1);	// cookie三小时过期
     document.cookie = "userId=" + userId;
     document.cookie = "token=" + token;
     document.cookie = "path=/";
-    if(cid != ""){
+    if (cid != "") {
         document.cookie = "courseId=" + cid;
     }
     document.cookie = "expires=" + expdate.toGMTString();
@@ -27,41 +27,50 @@ function deleteCookie() {
     document.cookie = "expires=Thu, 01 Jan 1970 00:00:00 GMT";
 }
 
-// 获取学生信息
-function getStudent(sid) {
-    var student;
-    $.ajax({
-        type: "POST",
-        dataType: "json",
-        url: 'http://162.14.107.35/SCUEE/DistrMsg/get',
-        contentType: "application/json",
-        data: JSON.stringify({ "id": getdetail_mes() }),
-        success: function (result) {
-            if (result != "") {
-                student = result;
-            }
-        }
-    })
-    return student;
-}
-
 function checkCookie(i = 1) {
     // 检测cookie信息
-    if (document.cookie.isEmpty()) {
+    if (!document.cookie) {
+        console.log("cookie is empty");
         // 跳转登录
         if (i == 1) {
             alert('登录已过期，请重新登录');
-            window.location.href = "/Student/html/LOGIN_.html";
-        } else return 0;
+            window.location.href = "LOGIN_.html";
+        }
+        else return 0;
+    }
+    else {
+        console.log(document.cookie);
+        console.log("i=" + i);
+        return 1;
     }
 }
 
-function getStudentObj(){
+function getStudentObj() {
     // 获取学生对象
-    if (sessionStorage.getItem("Student") == "") {
-        var studentObj = getStudent(getCookie("userId"));
-        sessionStorage.setItem("Student", JSON.stringify(studentObj));
+    sessionStorage.removeItem("Student");
+    var student = JSON.parse(sessionStorage.getItem("Student"));
+    if (!student) {
+        return new Promise((resolve, reject) => {
+            console.log(getCookie("userId"));
+            var studentObj = new Object();
+            console.log("send sid");
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                url: 'http://162.14.107.35/SCUEE/Student/getObj',
+                contentType: "application/json",
+                data: JSON.stringify({ "sid": getCookie("userId") }),
+                success: function (result) {
+                    if (result) {
+                        studentObj = result;
+                        sessionStorage.setItem("Student", JSON.stringify(studentObj));
+                        console.log(studentObj);
+                        resolve(studentObj);
+                    }
+                }
+            })
+        })
     }
-    student = sessionStorage.getItem("Student");
+    console.log(student);
     return student;
 }

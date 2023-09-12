@@ -20,9 +20,9 @@
                 return mids;
             }
 
-            $(document).ready(function () {
-                // 检测 cookie 是否过期
-                checkCookie(student);
+            $(document).ready(async function () {
+                // 检测 cookie信息
+                checkCookie();
 
                 $.ajax({
                     type: "POST",

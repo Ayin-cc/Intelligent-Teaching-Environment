@@ -7,27 +7,45 @@ const signIn_button = document.getElementById('signIn-sidebar');
 const communication_button = document.getElementById('communication-sidebar');
 
 var login_status = 1;
-
-$(document).ready(function () {
+$(document).ready(async function () {
 	// 检测cookie信息
 	login_status = checkCookie(0);
-	var student = getStudentObj();
+	var student = await getStudentObj();
 	// 初始化（登陆状态）
-	login_statu();
-	// 使用学生对象替换页面中的值
-	const stdName = document.getElementById('name-profile');
-	const stdID = document.getElementById('number-profile');
-	stdName.textContent = student.name;
-	stdID.textContent = student.sid;
+	login_statu(student);
+	// login_statu1();
 })
+
 // 登录信息显示
-function login_statu() {
+function login_statu(student) {
+	console.log("login_status11=" + login_status);
 	if (login_status == 1) {
 		togglePages(user_infor, noneuser);
+
+		// 使用学生对象替换页面中的值
+		const stdName = document.getElementById('name-profile');
+		const stdID = document.getElementById('number-profile');
+		stdName.textContent = student.name;
+		stdID.textContent = student.sid;
 	} else {
 		togglePages(noneuser, user_infor);
 	}
 }
+// function login_statu1() {
+// 	console.log("login_status11=" + login_status);
+// 	if (login_status == 1) {
+// 		togglePages(user_infor, noneuser);
+
+// 		// 使用学生对象替换页面中的值
+// 		const stdName = document.getElementById('name-profile');
+// 		const stdID = document.getElementById('number-profile');
+// 		stdName.textContent = "student.name";
+// 		stdID.textContent = "student.sid";
+// 	} else {
+// 		togglePages(noneuser, user_infor);
+// 	}
+// }
+
 // 登录信息显隐转换
 function togglePages(pageToShow, pageToHide) {
 	pageToShow.classList.remove('hidden');
@@ -61,7 +79,7 @@ function nologtip() {
 			clearInterval(countdownInterval); // 停止倒计时
 			setTimeout(() => {
 				messageBox.style.display = 'none'; // 移除提示框
-				window.location.href = 'html/LOGIN_.html';
+				window.location.href = 'LOGIN_.html';
 			}, 500); // 等待过渡结束后移除
 		}
 	}, 1000);
@@ -73,16 +91,14 @@ function nologtip() {
 	});
 }
 
-
-
 // 点击事件---用户头像区域
 user_all.addEventListener('click', () => {
 	if (login_status == 0) {
 		setTimeout(() => {
-			window.location.href = 'html/LOGIN_.html';
+			window.location.href = 'LOGIN_.html';
 		}, 100); // 等待过渡结束后移除
 	} else {
-		window.location.href = 'html/mine.html';
+		window.location.href = 'mine.html';
 	}
 });
 
@@ -91,27 +107,27 @@ message_button.addEventListener('click', () => {
 	if (login_status == 0) {
 		nologtip();
 	} else {
-		window.location.href = 'html/message1.0.html';
+		window.location.href = 'message1.0.html';
 	}
 });
 signIn_button.addEventListener('click', () => {
 	if (login_status == 0) {
 		nologtip();
 	} else {
-		window.location.href = 'html/sign.html';
+		window.location.href = 'sign.html';
 	}
 });
 timetable_button.addEventListener('click', () => {
 	if (login_status == 0) {
 		nologtip();
 	} else {
-		window.location.href = 'html/timetable1.0.html';
+		window.location.href = 'timetable1.0.html';
 	}
 });
 communication_button.addEventListener('click', () => {
 	if (login_status == 0) {
 		nologtip();
 	} else {
-		window.location.href = 'html/communication.html';
+		window.location.href = 'communication.html';
 	}
 });

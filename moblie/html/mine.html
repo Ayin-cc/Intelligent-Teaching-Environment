@@ -9,11 +9,11 @@
 		<script src="../js/jquery-3.7.1.min.js"></script>
 		<script src="../js/cookie-utils.js"></script>
 		<script>
-			var student;
-			$(document).ready(function () {
+			$(document).ready(async function () {
 				// 检测cookie信息
-				checkCookie(student);
+				checkCookie();
 				// 使用学生对象替换页面中的值
+				var student = await getStudentObj();
 				function change_inf() {
 					const stdName = document.getElementById('name-profile');
 					const stdID = document.getElementById('number-profile');
@@ -37,12 +37,12 @@
 				<!-- 头像栏 -->
 				<div class="flex flex-grow"></div>
 				<div class="flex items-center justify-center max-w-xs p-2 rounded-lg resizable">
-					<div class="flex flex-grow mx-6 overflow-hidden select-none" id="name-profile">
+					<div class="flex flex-grow mx-6 overflow-hidden select-none" id="title-profile">
 						我的信息
 					</div>
 				</div>
 				<div class="flex flex-grow"></div>
-				<a href="../main.html"
+				<a href="main.html"
 					class="absolute items-center justify-end w-8 h-8 max-w-xs overflow-hidden rounded-h-full right-2"
 					id="message-returnBottom">
 					<img draggable="false" src="../icons/左.svg" alt="" />
@@ -79,12 +79,12 @@
 					<p class="text-right text-gray-600 select-all" id="major-profile">计算机科学与技术</p>
 				</div>
 			</div>
-			<div class="grid grid-cols-1 gap-4 my-3 md:grid-cols-2">
+			<!-- <div class="grid grid-cols-1 gap-4 my-3 md:grid-cols-2">
 				<div class="flex items-center justify-between p-4 bg-white rounded shadow-md">
 					<h6 class="select-none ">班级：</h6>
 					<p class="text-right text-gray-600 select-all" id="class-profile">223040107</p>
 				</div>
-			</div>
+			</div> -->
 		</div>
 		</div>
 	</body>

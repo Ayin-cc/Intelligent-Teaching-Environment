@@ -10,10 +10,11 @@
 		<script src="../js/cookie-utils.js"></script>
 		<script>
 			var student;
-			$(document).ready(function () {
+			$(document).ready(async function () {
 				// 检测cookie信息
-				checkCookie(student);
+				checkCookie();
 				// 使用学生对象替换页面中的值
+				student = await getStudentObj();
 				function change_inf() {
 					const stdName = document.getElementById('name-profile');
 					const stdID = document.getElementById('number-profile');
@@ -34,18 +35,19 @@
 					<div class="flex w-8 h-10 mx-4 overflow-hidden rounded-full" id="photo-profile">
 						<img draggable="false" src="../icons/用户.svg" alt="" />
 					</div>
-					<div>
+					<div class="flex flex-col items-center justify-center overflow-hidden" style="max-width: 16rem;">
 						<!-- 姓名 -->
-						<div class="flex flex-grow mx-6 overflow-hidden select-none" id="name-profile">
-							XYCF
+						<div class="overflow-hidden text-center select-none overflow-ellipsis whitespace-nowrap"
+							style="max-width: 16rem;" id="name-profile">
+							XXXXXXXX
 						</div>
 
 						<!-- 学号 -->
-						<div class="flex flex-grow py-1 overflow-hidden text-xs select-none" id="number-profile">
-							2022xxxxxxxxx
+						<div class="py-1 overflow-hidden text-xs text-center select-none overflow-ellipsis whitespace-nowrap"
+							style="max-width: 16rem;" id="number-profile">
+							202XXXXXXXXXXX
 						</div>
 					</div>
-
 				</div>
 
 				<div class="flex flex-grow"></div>
@@ -58,7 +60,7 @@
 				<div class="absolute w-8 h-8 p-2 mx-2 rounded-lg hover:bg-slate-100 right-8" id="refresh-menu-header">
 					<img draggable="false" src="../icons/刷新.svg" alt="" srcset="" />
 				</div>
-				<a href="../main.html"
+				<a href="main.html"
 					class="absolute items-center justify-end w-8 h-8 max-w-xs overflow-hidden rounded-h-full right-2"
 					id="timetable-returnBottom">
 					<img draggable="false" src="../icons/左.svg" alt="" />

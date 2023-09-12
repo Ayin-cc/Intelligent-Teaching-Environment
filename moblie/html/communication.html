@@ -10,16 +10,16 @@
 		<script src="../js/cookie-utils.js"></script>
 		<script>
 			var student;
-			$(document).ready(function () {
+			$(document).ready(async function () {
 				// 检测cookie信息
-				checkCookie(student);
+				checkCookie();
+				student = await getStudentObj();
 				// 使用学生对象替换页面中的值
-				function change_inf() {
-					const stdName = document.getElementById('name-profile');
-					const stdID = document.getElementById('number-profile');
-					stdName.textContent = student.name;
-					stdID.textContent = student.sid;
-				}
+				const stdName = document.getElementById('name-profile');
+				const stdID = document.getElementById('number-profile');
+				stdName.innerText = student.name;
+				stdID.innerText = student.sid;
+
 				// keepAlive
 				function keepAlive(callback) {
 					setTimeout(function () {
@@ -45,8 +45,6 @@
 					keepAlive(k);
 				}
 				keepAlive(k);
-
-
 			})
 		</script>
 	</head>
@@ -56,22 +54,26 @@
 		<div class="flex flex-col bg-white">
 			<div class="flex flex-row items-center justify-center">
 				<!-- 头像栏 -->
-				<div class="flex items-center justify-center max-w-xs p-2rounded-lg resizable ">
+				<div class="flex items-center justify-center max-w-sm p-2rounded-lg resizable ">
 					<!-- 头像框 -->
 					<div class="flex w-8 h-10 mx-4 my-3 overflow-hidden rounded-full " id="photo-profile">
 						<img draggable="false" src="../icons/用户.svg" alt="" />
 					</div>
-					<div>
-						<div class="flex flex-grow mx-6 overflow-hidden select-none" id="name-profile">
-							XYCF
+					<div class="flex flex-col items-center justify-center overflow-hidden" style="max-width: 16rem;">
+						<!-- 姓名 -->
+						<div class="overflow-hidden text-center select-none overflow-ellipsis whitespace-nowrap"
+							style="max-width: 16rem;" id="name-profile">
+							XXXXXXXX
 						</div>
 
-						<div class="flex flex-grow py-1 overflow-hidden text-xs select-none" id="number-profile">
-							2022xxxxxxxxx
+						<!-- 学号 -->
+						<div class="py-1 overflow-hidden text-xs text-center select-none overflow-ellipsis whitespace-nowrap"
+							style="max-width: 16rem;" id="number-profile">
+							202XXXXXXXXXXX
 						</div>
 					</div>
 				</div>
-				<a href="../main.html"
+				<a href="main.html"
 					class="absolute items-center justify-end w-8 h-8 max-w-xs overflow-hidden rounded-h-full right-2"
 					id="message-returnBottom">
 					<img draggable="false" src="../icons/左.svg" alt="" />
