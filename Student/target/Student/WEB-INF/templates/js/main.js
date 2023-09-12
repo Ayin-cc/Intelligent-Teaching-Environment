@@ -10,8 +10,9 @@ var login_status = 0;
 
 $(document).ready(async function () {
 	// 检测cookie信息
-	login_status = checkCookie(login_status);
+	login_status = checkCookie(0);
 	var student = await getStudentObj();
+	// 初始化（登陆状态）
 	login_statu(student);
 })
 
@@ -28,6 +29,7 @@ function login_statu(student) {
 		togglePages(noneuser, user_infor);
 	}
 }
+
 // 登录信息显隐转换
 function togglePages(pageToShow, pageToHide) {
 	pageToShow.classList.remove('hidden');
@@ -72,8 +74,6 @@ function nologtip() {
 		hidde_status = 1;
 	});
 }
-
-
 
 // 点击事件---用户头像区域
 user_all.addEventListener('click', () => {
