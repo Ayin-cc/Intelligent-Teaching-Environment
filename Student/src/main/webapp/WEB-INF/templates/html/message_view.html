@@ -25,7 +25,7 @@
                     type: "POST",
                     dataType: "json",
                     url: 'http://162.14.107.35/SCUEE/DistrMsg/get',
-                    contentType: "application/json; charset=UTF-8",
+                    contentType: "application/json",
                     data: JSON.stringify({ "id": getdetail_mes() }),
                     success: function (result) {
                         if (result) {
@@ -47,7 +47,7 @@
                                 // 添加附件
                                 document.getElementById("attched-tip-num").innerHTML = attachment.length;
                                 for (var i = 0; i < attachment.length; i++) {
-                                    var blob = new Blob([new TextEncoder().encode(attachment[i].file)], { type: 'application/octet-stream; charset=GBK' });
+                                    var blob = new Blob([atob(attachment[i].file)], { type: 'application/octet-stream; charset=UTF-8' });
                                     var blobUrl = URL.createObjectURL(blob);
                                     isAttached(attachment.length, blobUrl, attachment[i].name);
                                 }
