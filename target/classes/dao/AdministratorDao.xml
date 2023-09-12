@@ -148,19 +148,19 @@
         from scuee.student
         where
             1=1
-            <if test="sid != null">
+            <if test="sid != null and sid != ''">
                 and student.sid like concat(#{sid}, '%')
             </if>
-            <if test="name != null">
+            <if test="name != null and name != ''">
                 and student.student_name like concat('%', #{name}, '%')
             </if>
-            <if test="major != null">
+            <if test="major != null and major != ''">
                 and student.student_major like concat('%', #{major}, '%')
             </if>
-            <if test="college != null">
+            <if test="college != null and college != ''">
                 and student.student_college like concat('%', #{college}, '%')
             </if>
-            <if test="phone != null">
+            <if test="phone != null and phone != ''">
                 and student.student_phone like concat(#{phone}, '%')
             </if>;
     </select>
@@ -174,10 +174,10 @@
         on classroom_courses.course_id = course.id
         where
             1=1
-            <if test="cid != null">
+            <if test="cid != null and cid != ''">
                 and classroom.cid like concat('%', #{cid}, '%')
             </if>
-            <if test="address != null">
+            <if test="address != null and address != ''">
                 and classroom.address like concat('%', #{address}, '%')
             </if>;
     </select>
@@ -193,14 +193,17 @@
         on course_students.student_id = student.sid
         where
         1=1
-        <if test="id != null">
+        <if test="id != null and id != ''">
             and id like concat(#{id}, '%')
         </if>
-        <if test="name != null">
+        <if test="name != null and name != ''">
             and course_name like concat('%', #{name}, '%')
         </if>
-        <if test="teacher != null">
+        <if test="teacher != null and teacher != ''">
             and course_teacher like concat('%', #{teacher}, '%')
+        </if>
+        <if test="date != null and date != ''">
+            and classroom_courses.course_date = #{date}
         </if>
     </select>
 

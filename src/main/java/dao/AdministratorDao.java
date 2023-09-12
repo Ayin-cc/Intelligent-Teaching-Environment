@@ -22,7 +22,7 @@ public interface AdministratorDao {
     void changeCourseSchedule(@Param("cid")String cid, @Param("section")int section, @Param("id")String id, @Param("date")String date);
     List<Student> queryStudent(@Param("sid")String sid, @Param("name")String name, @Param("major")String major, @Param("college")String college, @Param("phone")String phone);
     List<Classroom> queryClassroom(@Param("cid")String cid, @Param("address")String address);
-    List<Course> queryCourse(@Param("id")String id, @Param("name")String name, @Param("teacher")String teacher);
+    List<Course> queryCourse(@Param("id")String id, @Param("name")String name, @Param("teacher")String teacher, @Param("date")String date);
     void deleteStudent(@Param("student")Student student);
     void deleteClassroom(@Param("classroom")Classroom classroom);
     void deleteCourseInf(@Param("course")Course course);

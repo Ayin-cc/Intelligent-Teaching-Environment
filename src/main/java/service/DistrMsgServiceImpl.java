@@ -62,6 +62,9 @@ public class DistrMsgServiceImpl implements DistrMsgService {
             msgDao.updateMsg(msg.get(i));
             for (int j = 0; j < msg.get(i).getAttachment().size(); j++) {
                 Attachment attachment = msg.get(i).getAttachment().get(j);
+                if(attachment.getBlob() == null){
+                    continue;
+                }
                 try {
                     attachment.setFile(FileByte.blobToByteArray(attachment.getBlob()));
                 } catch (SQLException e) {

@@ -118,7 +118,8 @@
             contentType: false, // 不设置 content-type 头部，让浏览器自动设置为 multipart/form-data
             success: function (data) {
                 // 请求成功时的处理逻辑
-                console.log('上传成功:', data);
+                alert("上传成功");
+                window.location.href = "InformationRelease.html";
             },
             error: function (xhr, status, error) {
                 // 请求失败时的处理逻辑
@@ -149,7 +150,6 @@
         } else {
             message.textContent = '某些文件超过了10MB的限制。';
         }
-
         // 检查文件类型
         /* if (validFileCount === fileInput.files.length) {
             message.textContent += ' 所有文件都是允许的类型。';

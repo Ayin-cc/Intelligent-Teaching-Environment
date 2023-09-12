@@ -21,7 +21,7 @@ public interface AdministratorService {
     boolean deleteClassroom(String token, Classroom classroom);
     boolean addCourse(String token, Course course);
     boolean changeCourse(String token, Course course);
-    List<Course> queryCourse(String token, String id, String name, String teacher);
+    List<Course> queryCourse(String token, String id, String name, String teacher, String date);
     boolean deleteCourse(String token, Course course);
     boolean addStudentToCourse(String token, String id, String sid);
     boolean deleteStudentFromCourse(String token, String sid, String id);

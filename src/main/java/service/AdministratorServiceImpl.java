@@ -167,11 +167,11 @@ public class AdministratorServiceImpl implements AdministratorService{
     }
 
     @Override
-    public List<Course> queryCourse(String token, String id, String name, String teacher) {
+    public List<Course> queryCourse(String token, String id, String name, String teacher, String date) {
         if(administratorDao.checkToken(token) == 0){
             return null;
         }
-        List<Course> courses = administratorDao.queryCourse(id, name, teacher);
+        List<Course> courses = administratorDao.queryCourse(id, name, teacher, date);
         return courses;
     }
 

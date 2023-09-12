@@ -44,12 +44,18 @@
                 var formData = searchForm.serializeObject();
                 // 发送Ajax请求，传递搜索表单的数据
                 $.ajax({
-                    url: "http://localhost:18083/SCUEE/Administrator/queryCourse",
+                    url: "http://162.14.107.35/SCUEE/Administrator/queryCourse",
                     type: "POST",
-                    headers:{"Authorization":getCookie("token")},
-                    data: JSON.stringify(formData),
-                    contentType:"application/json",
+                    contentType:"application/json; charset=UTF-8",
                     dataType: "json",
+                    headers:{"Authorization":getCookie("token")},
+                    data: JSON.stringify({
+                        "courseId":formData.courseId,
+                        "name":formData.name,
+                        "site":formData.site,
+                        "teacher":formData.teacher,
+                        "date":[formData.date]
+                    }),
                     success: function(data) {
                         // 如果返回的数据是一个数组，说明查询成功
                         if (data) {
@@ -84,7 +90,7 @@
                 var addData = addForm.serializeObject();
                 // 发送Ajax请求，传递添加表单的数据
                 $.ajax({
-                    url: "http://162.14.107.35/SCUEE/Administrator/addCourse",
+                    url: "http://localhost:18083/SCUEE/Administrator/addCourse",
                     type: "POST",
                     data: JSON.stringify(addData),
                     dataType: "json",

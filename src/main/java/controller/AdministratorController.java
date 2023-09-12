@@ -116,7 +116,7 @@ public class AdministratorController {
 
     @RequestMapping("/queryCourse")
     public ResponseEntity<List<Course>> queryCourse(@RequestHeader("Authorization") String token, @RequestBody Course course){
-        List<Course> result = administratorService.queryCourse(token, course.getCourseId(), course.getName(), course.getTeacher());
+        List<Course> result = administratorService.queryCourse(token, course.getCourseId(), course.getName(), course.getTeacher(), course.getDate().get(0));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
