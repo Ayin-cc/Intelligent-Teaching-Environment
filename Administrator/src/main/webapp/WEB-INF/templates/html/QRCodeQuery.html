@@ -5,6 +5,8 @@
     <title>二维码查询</title>
     <!-- 引入Bootstrap CSS文件 -->
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="../js/cookie-utils.js"></script>
+    <script src="../js/jquery-3.7.1.min.js"></script>
 </head>
 <body>
 <div class="container">
@@ -275,6 +277,9 @@
 
 
     $(document).ready(function() {
+        checkCookie();
+        document.getElementById("username-profile").innerText = student.name;
+
         // 调用初始化日期选择器组件的函数
         initDateRangePicker();
         // 获取查询表单元素，并设置其提交事件的回调函数为处理查询表单的提交事件的函数

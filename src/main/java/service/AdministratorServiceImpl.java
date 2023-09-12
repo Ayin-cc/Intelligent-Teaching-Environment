@@ -20,6 +20,7 @@ import java.util.List;
 public class AdministratorServiceImpl implements AdministratorService{
     @Autowired
     private AdministratorDao administratorDao;
+    @Autowired
     private UserDao userDao;
 
     @Override

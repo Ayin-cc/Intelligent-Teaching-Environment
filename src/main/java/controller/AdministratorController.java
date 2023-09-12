@@ -19,6 +19,7 @@ public class AdministratorController {
 
     @RequestMapping("/login")
     public ResponseEntity<StatusCode> login(@RequestBody Administrator administrator){
+        System.out.println(administrator.toString());
         if(administratorService.login(administrator)){
             return new ResponseEntity<>(new StatusCode(1), HttpStatus.OK);
         }

@@ -4,6 +4,7 @@
   <title>教室信息管理</title>
   <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
   <script src="../js/jquery-3.7.1.min.js"></script>
+  <script src="../js/cookie-utils.js"></script>
   <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </head>
 
@@ -189,6 +190,7 @@
 
 
   <script>
+    var student = new Object();
 
     function createTableRow(classroom) {
       var tr = $("<tr></tr>");
@@ -260,7 +262,6 @@
       $.ajax({
         url: "http://162.14.107.35/SCUEE/Administrator/queryClassroom",
         type: "POST",
-        headers:{"Cookie":"token=admin"},
         contentType: "application/json",
         data: JSON.stringify(searchData),
         dataType: "json",
@@ -285,6 +286,9 @@
 
 
     $(document).ready(function() {
+      checkCookie();
+      document.getElementById("username-profile").innerText = student.name;
+
       // 绑定提交
       $("#search-form").submit(function(event) {
         event.preventDefault();

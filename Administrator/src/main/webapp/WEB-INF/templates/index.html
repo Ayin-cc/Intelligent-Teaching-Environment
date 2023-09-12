@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1 user-scalable=no">
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="css/index.css">
     <title>IntelligentClass User</title>
 </head>
 
@@ -16,7 +16,7 @@
             <div class="profile-box">
                 <div class="position-box">
                     <img class="profile-img" src="images/image_1.jpg" alt=""></div>
-                    <div class="profile-name">User</div>
+                    <div class="profile-name" id="username-profile">User</div>
             </div><!-- profile end -->
             <div class="function-box">
                 <div class="position-box">
@@ -29,7 +29,7 @@
                     </div> -->
                     <div class="btn-box sign-in">
                         <a href="html/QRCodeQuery.html" target="iframe">
-                            <img class="icon" src="images/icons/编辑_edit.svg" alt="">
+                            <img class="icon" src="images/icons/编辑_edit.svg" id="QRCodeQuery" alt="">
                             <div class="btn-name">二维码签到查询</div>
                         </a>
                     </div>
@@ -110,14 +110,13 @@
     <!-- <script src="./user.js"></script> -->
     <script src="js/index.js"></script>
     <script>
-        var urlParams = new URLSearchParams(window.location.search);
-        var token = urlParams.get('data');
+        const QRCodeQuery = document.getElementById('QRCodeQuery');
+        const DistrMsg = document.getElementById('DistrMsg');
+        const DataManage = document.getElementById('DataManage');
 
-        const DistrMsg = document.getElementById('DistrMsg')
-        const DataManage = document.getElementById('DataManage')
-        console.log(DistrMsg)
-        DistrMsg.href="html/InformationRelease.html?data=" + encodeURIComponent(token)
-        DataManage.href = "html/DataManage.html?data=" + encodeURIComponent(token)
+        DistrMsg.href="html/InformationRelease.html";
+        DataManage.href = "html/DataManage.html";
+        QRCodeQuery.href = "html/QRCodeQuery.html";
     </script>
     <!-- <script src="./preload.js"></script> -->
 

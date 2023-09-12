@@ -1,8 +1,16 @@
 // 创建cookie
-function setCookie(userId, token){
+function setCookie(userId, token, cid = "") {
     var expdate = new Date();
-    expdate.setTime(expdate.getTime() + 3 * 60 * 60 * 1000);	// cookie三小时过期
-    document.cookie = "userId=" + userId + ";token=" + token + ";expires=" + expdate.toGMTString();
+    expdate.setTime(expdate.getTime() - 1);	// cookie三小时过期
+    document.cookie = "userId=" + userId;
+    document.cookie = "token=" + token;
+    document.cookie = "path=/";
+    if(cid != ""){
+        document.cookie = "courseId=" + cid;
+    }
+    document.cookie = "expires=" + expdate.toGMTString();
+    var a = document.cookie;
+    console.log(a);
 }
 
 // 寻找cookie的值
@@ -17,6 +25,21 @@ function getCookie(cname) {
 }
 
 // 删除cookie
-function deleteCookie(){
+function deleteCookie() {
     document.cookie = "expires=Thu, 01 Jan 1970 00:00:00 GMT";
+}
+
+function checkCookie(i = 1) {
+    // 检测cookie信息
+    if (!document.cookie) {
+        console.log("cookie is empty");
+        // 跳转登录
+        if (i == 1) {
+            alert('登录已过期，请重新登录');
+            window.location.href = "SignIn.html";
+        }
+        else return 0;
+    }
+    console.log(document.cookie);
+    return 1;
 }
