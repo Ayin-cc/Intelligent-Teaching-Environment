@@ -23,6 +23,7 @@ public class DistrMsgServiceImpl implements DistrMsgService {
     @Autowired
     private DistrMsgDao msgDao;
 
+    // TODO 编码问题尚未解决，只支持英文
 
     @Override
     public boolean create(String token, Message msg) {

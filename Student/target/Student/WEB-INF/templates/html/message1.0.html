@@ -35,7 +35,7 @@
 					data: "",
 					success: function (result) {
 						console.info(result);
-						if (result != "") {
+						if (result) {
 							addNew(result);
 						}
 					}
@@ -100,7 +100,7 @@
 			function setMessage(message_id, message_name, message_time, message_title, message_context) {
 				var all_message = document.getElementById('class-message');
 
-				var new_message = `<div class="flex flex-col items-center w-full min-w-0 px-1 py-2 rounded-lg hover:bg-zinc-100" id="${message_id}"
+				all_message.innerHTML = `<div class="flex flex-col items-center w-full min-w-0 px-1 py-2 rounded-lg hover:bg-zinc-100" id="${message_id}"
 								onclick="detail_message(${message_id})">
 					<div class="flex w-full" onclick="detail_message(${message_id})">
 						<div class="flex items-center justify-center w-12 h-12" onclick="detail_message(${message_id})">
@@ -111,7 +111,7 @@
 						<div class="flex flex-col whitespace-nowrap" onclick="detail_message(${message_id})">
 							<div class="flex flex-row" onclick="detail_message(${message_id})">
 								<div class="px-2 font-bold truncate" style="max-width: 80px;">
-									${message_name}
+									${message_title}
 									</div>
 								<div onclick="detail_message(${message_id})"
 									class="absolute flex items-end justify-end pt-2 text-xs min-w-max text-zinc-400 text-end right-4">
@@ -120,7 +120,7 @@
 							</div>
 							<div class="px-2 overflow-hidden overflow-ellipsis text-slate-600 w-72 whitespace-nowrap"
 								onclick="detail_message(${message_id})">
-								${message_title}
+								${message_name}
 								</div>
 						</div>
 					</div>
@@ -129,10 +129,8 @@
 						${message_context}
 						</div>
 					 <div class="flex h-0.5 w-64 bg-slate-100 mt-1" onclick="detail_message(${message_id})"></div>
-				</div>`;
-				all_message.innerHTML = new_message + all_message.innerHTML;
+				</div>` + all_message.innerHTML;
 			}
-			setMessage(1, 2, 3, 3, 4);
 
 			function detail_message(mids) {
 				sessionStorage.setItem('mid', mids);

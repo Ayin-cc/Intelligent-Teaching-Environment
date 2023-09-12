@@ -14,7 +14,6 @@
 
 		</script>
 		<script>
-
 			(function webpackUniversalModuleDefinition(root, factory) {
 				if (typeof exports === 'object' && typeof module === 'object')
 					module.exports = factory();
@@ -10225,15 +10224,13 @@
 			var student;
 			$(document).ready(async function () {
 				// 检测cookie信息
-				checkCookie();
-				// 使用学生对象替换页面中的值
+				checkCookie(student);
 				student = await getStudentObj();
-				function change_inf() {
-					const stdName = document.getElementById('name-profile');
-					const stdID = document.getElementById('number-profile');
-					stdName.textContent = student.name;
-					stdID.textContent = student.sid;
-				}
+				// 使用学生对象替换页面中的值
+				const stdName = document.getElementById('name-profile');
+				const stdID = document.getElementById('number-profile');
+				stdName.textContent = student.name;
+				stdID.textContent = student.sid;
 			})
 		</script>
 	</head>
@@ -10248,17 +10245,15 @@
 					<div class="flex w-8 h-10 mx-4 my-3 overflow-hidden rounded-full " id="photo-profile">
 						<img draggable="false" src="../icons/用户.svg" alt="" />
 					</div>
-					<div class="flex flex-col items-center justify-center overflow-hidden" style="max-width: 16rem;">
+					<div>
 						<!-- 姓名 -->
-						<div class="overflow-hidden text-center select-none overflow-ellipsis whitespace-nowrap"
-							style="max-width: 16rem;" id="name-profile">
-							XXXXXXXX
+						<div class="flex flex-grow mx-6 overflow-hidden select-none" id="name-profile">
+							XYCF
 						</div>
 
 						<!-- 学号 -->
-						<div class="py-1 overflow-hidden text-xs text-center select-none overflow-ellipsis whitespace-nowrap"
-							style="max-width: 16rem;" id="number-profile">
-							202XXXXXXXXXXX
+						<div class="flex flex-grow py-1 overflow-hidden text-xs select-none" id="number-profile">
+							2022xxxxxxxxx
 						</div>
 					</div>
 				</div>
@@ -10366,44 +10361,39 @@
 						inversionAttempts: "dontInvert",
 					});
 
-					// 判断 字符串时间是否符合
-					/*
-					function isTimeOut() {
-						// 获取当前时间
-						let nowTime;
-						// 解码 获取截止时间
-						let endTime;
-						// 判断是否超时
-						if (1) {
-							return 0;
-						} else {
-							return 1;
-						}
-					}
-					// 超时则告知二维码已超时
-					if (isTimeOut()) alert('扫码失败，二维码已超时');
-					else {*/
-						alert('扫码成功');
-						var query = code.data.substring(1);
-						var vars = query.split("&");
+					alert('扫码成功： ' + code.data);
+					var query = code.data.substring(1);
+					var vars = query.split("&");
 
-						$.ajax({
-							type: "POST",
-							dataType: "json",
-							url: code.data,
-							contentType: "application/json",
-							data: "",
-							success: function (result) {
-								if (result != "") {
-									// 签到成功
-									sessionStorage.setItem('is_signed', 'true');
-									setCookie(getCookie("userId"), getCookie("token"), vars[1]);
-									status_sign = 1;
-									signed_button();
-								}
+					$.ajax({
+						type: "POST",
+						dataType: "json",
+						url: code.data,
+						contentType: "application/json",
+						data: "",
+						success: function (result) {
+							if (result != "") {
+								// 签到成功
+								sessionStorage.setItem('is_signed', 'true');
+								setCookie(getCookie("userId"), getCookie("token"), vars[1]);
+								status_sign = 1;
+								signed_button();
 							}
-						})
-					//}
+						}
+					})
+
+					// if (code) {
+					// 	const scan_video = document.getElementById('v');
+					// 	scan_video.classList.add('hidden');
+					// 	// window.location.href = code.data;
+					// 	jumpButton.classList.remove('hidden');
+					// 	scanvideo_bor.classList.add('hidden');
+					// 	//window.open('https://www.baidu.com/default.html');
+					// 	status_sign = 1;
+					// 	signed_button();
+					// } else {
+					// 	alert("识别错误");
+					// }
 				}
 			}
 		</script>
@@ -10437,6 +10427,8 @@
 				}
 			});
 		</script>
+
+
 	</body>
 
 </html>

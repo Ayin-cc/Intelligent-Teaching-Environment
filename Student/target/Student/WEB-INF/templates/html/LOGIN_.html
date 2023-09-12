@@ -112,13 +112,15 @@
 				sessionStorage.setItem('mid', '0');
 				sessionStorage.setItem('is_signed', 'false');
 				// 进入主界面
-				window.location.href = "main.html";
+				setTimeout(function (){
+					window.location.href = "main.html";
+				}, 1000);
 			}
 
 
-			const userId = document.getElementById("username");
-			const passwd = document.getElementById("password");
-			const passwdConfirm = document.getElementById("password-confirm");
+			var userId = document.getElementById("username");
+			var passwd = document.getElementById("password");
+			var passwdConfirm = document.getElementById("password-confirm");
 
 			// 输入框 是否已输入 监测
 			var isUserID = 0;

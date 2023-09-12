@@ -5,10 +5,15 @@
     <title>二维码查询</title>
     <!-- 引入Bootstrap CSS文件 -->
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/bootstrap-daterangepicker/3.0.5/daterangepicker.css">
+
     <script src="../js/cookie-utils.js"></script>
+
     <script src="../js/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <script src="https://cdn.staticfile.org/bootstrap-daterangepicker/3.0.5/daterangepicker.min.js"></script>
+    <script src="https://cdn.staticfile.org/bootstrap-daterangepicker/3.0.5/daterangepicker.min.js">
+
+    </script>
     <script>
         $(document).ready(function() {
             checkCookie();
@@ -134,19 +139,7 @@
 </div>
 
 <script>
-    //JS部分
-//日历
-    function initDateRangePicker() {
-        var timeInput = $("#time");
-        timeInput.daterangepicker({
-            // 设置日期格式为YYYY-MM-DD
-            locale: {
-                format: 'YYYY-MM-DD'
-            },
-            startDate: moment(),
-            endDate: moment()
-        });
-    }
+
 
 
     function getQueryParams() {
@@ -266,3 +259,6 @@
         sendQueryRequest(params);
     }
 </script>
+
+</body>
+</html>

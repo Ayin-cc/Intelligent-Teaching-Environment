@@ -102,10 +102,10 @@
 
     function send(formMessage){
         $.ajax({
-            url: 'http://162.14.107.35/SCUEE/DistrMsg/create',
+            url: 'http://localhost:18083/SCUEE/DistrMsg/create',
             type: 'POST', // 请求类型，可以根据您的需求修改
             data: formMessage, // 将 FormData 对象作为数据发送
-            headers:{"Authorization":getCookie("token")},
+            headers:{"Authorization":getCookie("token"), "contentType":"charset=UTF-8"},
             processData: false, // 不对数据进行处理（已经是 FormData）
             contentType: false, // 不设置 content-type 头部，让浏览器自动设置为 multipart/form-data
             success: function (data) {
