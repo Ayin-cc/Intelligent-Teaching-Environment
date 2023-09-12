@@ -1,7 +1,6 @@
 // 创建cookie
 function setCookie(userId, token, cid = "") {
     var expdate = new Date();
-    token = "admin";
     expdate.setTime(expdate.getTime() + 3 * 60 * 60 * 1000);	// cookie三小时过期
     document.cookie = "userId=" + userId;
     document.cookie = "token=" + token;
@@ -31,11 +30,10 @@ function deleteCookie() {
 }
 
 function checkCookie(i = 1) {
-    deleteCookie();
     console.log(document.cookie);
     //setCookie(getCookie("userId"), "admin");
     // 检测cookie信息
-    if (!document.cookie || document.cookie == undefined) {
+    if (!document.cookie) {
         console.log("cookie is empty");
         // 跳转登录
         if (i == 1) {
