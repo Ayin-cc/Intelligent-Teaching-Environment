@@ -96,11 +96,13 @@ public class AdministratorServiceImpl implements AdministratorService{
         if(administratorDao.checkToken(token) == 1){
             // 检查教室是否已经存在
             if(administratorDao.checkClassroom(classroom.getCid()) == 1){
+                System.out.println("教室已存在！");
                 return false;
             }
             administratorDao.addClassroom(classroom);
             return true;
         }
+        System.out.println("token不存在");
         return false;
     }
 
@@ -134,6 +136,7 @@ public class AdministratorServiceImpl implements AdministratorService{
 
     @Override
     public boolean addCourse(String token, Course course) {
+        System.out.println(course.toString());
         if(administratorDao.checkToken(token) == 1){
 //          判断课程是否已经存在
             if(administratorDao.checkCourse(course.getCourseId()) == 1){

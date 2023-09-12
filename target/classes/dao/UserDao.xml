@@ -130,10 +130,12 @@
     </select>
 
     <select id="selectCourse" resultMap="courseResultMap">
-        select scuee.course.*, scuee.classroom_courses.course_date, scuee.course_students.student_id
+        select *
         from(
             select * from scuee.classroom_courses where course_date = #{date}
             )cc
+        inner join scuee.classroom
+        on classroom.cid = cc.cid
         left join scuee.course
         on cc.course_id = course.id
         left join scuee.course_students

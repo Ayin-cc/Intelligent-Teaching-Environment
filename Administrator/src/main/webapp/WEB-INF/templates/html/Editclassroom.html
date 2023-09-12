@@ -1,6 +1,6 @@
 <html>
 <head>
-  <meta charset="utf-8">
+  <meta charSet="utf-8">
   <title>教室信息管理</title>
   <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
   <script src="../js/jquery-3.7.1.min.js"></script>
@@ -10,25 +10,25 @@
 </head>
 
 <body>
-<div class="container">
-  <h1 class="text-center">教室信息管理</h1>
+<div className="container">
+  <h1 className="text-center">教室信息管理</h1>
 
-  <form id="search-form-classroom" class="form-inline">
-    <div class="form-group">
-      <label for="cid">教室id</label>
-      <input type="text" class="form-control" id="cid" name="cid" placeholder="请输入教室id">
+  <form id="search-form-classroom" className="form-inline">
+    <div className="form-group">
+      <label htmlFor="cid">教室id</label>
+      <input type="text" className="form-control" id="cid" name="cid" placeholder="请输入教室id">
     </div>
-    <div class="form-group">
-      <label for="address">地址</label>
-      <input type="text" class="form-control" id="address" name="address" placeholder="请输入地址">
+    <div className="form-group">
+      <label htmlFor="address">地址</label>
+      <input type="text" className="form-control" id="address" name="address" placeholder="请输入地址">
     </div>
-    <button type = "submit" class = "btn btn-primary">搜索</button>
+    <button type="submit" className="btn btn-primary">搜索</button>
   </form>
-  <button type="button" class="btn btn-primary" onclick="window.location='DataManage.html'">返回</button>
+  <button type="button" className="btn btn-primary" onClick="window.location='DataManage.html'">返回</button>
 
 
-  <button id = "add-btn" class = "btn btn-success">添加</button>
-  <table id = "show-table" class = "table table-striped table-bordered table-hover">
+  <button id="add-btn" className="btn btn-success">添加</button>
+  <table id="show-table" className="table table-striped table-bordered table-hover">
     <thead>
     <tr>
       <th>教室id</th>
@@ -40,35 +40,35 @@
     <tbody></tbody>
   </table>
 
-  <div id = "edit-modal" class = "modal fade">
-    <div class = "modal-dialog modal-lg">
-      <div class = "modal-content">
-        <div class = "modal-header">
-          <h4 class = "modal-title">编辑教室信息</h4>
-          <button type = "button" class = "close" data-dismiss = "modal">×</button>
+  <div id="edit-modal" className="modal fade">
+    <div className="modal-dialog modal-lg">
+      <div className="modal-content">
+        <div className="modal-header">
+          <h4 className="modal-title">编辑教室信息</h4>
+          <button type="button" className="close" data-dismiss="modal">×</button>
         </div>
 
-        <div class = "modal-body">
-          <form id = "edit-form" class = "form-horizontal">
+        <div className="modal-body">
+          <form id="edit-form" className="form-horizontal">
             <!-- 教室id -->
-            <div class = "form-group row">
-              <label for = "edit-cid" class = "col-sm-2 col-form-label">教室id</label>
-              <div class = "col-sm-10">
-                <input type = "text" readonly class = "form-control-plaintext" id = "edit-cid">
+            <div className="form-group row">
+              <label htmlFor="edit-cid" className="col-sm-2 col-form-label">教室id</label>
+              <div className="col-sm-10">
+                <input type="text" readOnly className="form-control-plaintext" id="edit-cid">
               </div>
             </div>
 
             <!-- 地址 -->
-            <div class = "form-group row">
-              <label for = "edit-address" class = "col-sm-2 col-form-label">地址</label>
-              <div class = "col-sm-10">
-                <input type = "text" class = "form-control" id = "edit-address">
+            <div className="form-group row">
+              <label htmlFor="edit-address" className="col-sm-2 col-form-label">地址</label>
+              <div className="col-sm-10">
+                <input type="text" className="form-control" id="edit-address">
               </div>
             </div>
 
             <!-- 课程安排 -->
-            <input type = "hidden" id = "edit-courseSchedule" name = "courseSchedule">
-            <table id = "edit-course-table" class = "table table-striped table-bordered table-hover">
+            <input type="hidden" id="edit-courseSchedule" name="courseSchedule">
+            <table id="edit-course-table" className="table table-striped table-bordered table-hover">
               <thead>
               <tr>
                 <th>课程号</th>
@@ -83,107 +83,88 @@
               <tbody></tbody>
             </table>
 
-            <button id = "edit-add-course-btn" type = "button" class = "btn btn-success">添加课程</button>
+            <button id="edit-add-course-btn" type="button" className="btn btn-success">添加课程</button>
 
           </form>
         </div>
 
-        <div class="modal-footer">
+        <div className="modal-footer">
 
-          <button id="confirm-btn" type="button" class="btn btn-primary">确认</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+          <button id="confirm-btn" type="button" className="btn btn-primary">确认</button>
+          <button type="button" className="btn btn-secondary" data-dismiss="modal">取消</button>
         </div>
       </div>
     </div>
   </div>
 
-  <div id="add-modal" class="modal fade">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title">添加教室信息</h4>
+  <div id="add-modal" className="modal fade">
+    <div className="modal-dialog modal-lg">
+      <div className="modal-content">
+        <div className="modal-header">
+          <h4 className="modal-title">添加教室信息</h4>
 
-          <button type="button" class="close" data-dismiss="modal">×</button>
+          <button type="button" className="close" data-dismiss="modal">×</button>
         </div>
 
-        <div class="modal-body">
-          <form id="add-form" class="form-horizontal">
+        <div className="modal-body">
+          <form id="add-form" className="form-horizontal">
             <!-- 教室id -->
-            <div class="form-group row">
-              <label for="add-cid" class="col-sm-2 col-form-label">教室id</label>
-              <div class="col-sm-10">
-                <input type="text" class="form-control" id="add-cid">
+            <div className="form-group row">
+              <label htmlFor="add-cid" className="col-sm-2 col-form-label">教室id</label>
+              <div className="col-sm-10">
+                <input type="text" className="form-control" id="add-cid" name="cid">
               </div>
             </div>
 
             <!-- 地址 -->
-            <div class="form-group row">
-              <label for="add-address" class="col-sm-2 col-form-label">地址</label>
-              <div class="col-sm-10">
-                <input type="text" class="form-control" id="add-address">
+            <div className="form-group row">
+              <label htmlFor="add-address" className="col-sm-2 col-form-label">地址</label>
+              <div className="col-sm-10">
+                <input type="text" className="form-control" id="add-address" name="address">
               </div>
             </div>
 
-            <!-- 课程安排 -->
-
-            <input type = "hidden" id = "add-courseSchedule" name = "courseSchedule">
-            <table id = "add-course-table" class = "table table-striped table-bordered table-hover">
-              <thead>
-              <tr>
-                <th>课程号</th>
-                <th>名字</th>
-                <th>教师</th>
-                <th>上课时间</th>
-                <th>开始节次</th>
-                <th>结束节次</th>
-                <th>操作</th>
-              </tr>
-              </thead>
-              <tbody></tbody>
-            </table>
-
-
-            <button id = "add-add-course-btn" type = "button" class = "btn btn-success">添加课程</button>
+            <button id="add-add-course-btn" type="button" className="btn btn-success">添加课程</button>
 
           </form>
         </div>
 
-        <div class = "modal-footer">
+        <div className="modal-footer">
 
-          <button id = "add-confirm-btn" type = "button" class = "btn btn-primary">确认</button>
-          <button type = "button" class = "btn btn-secondary" data-dismiss = "modal">取消</button>
+          <button id="add-confirm-btn" type="submit" className="btn btn-primary">确认</button>
+          <button type="button" className="btn btn-secondary" data-dismiss="modal">取消</button>
         </div>
       </div>
     </div>
   </div>
 
 
-  <div id = "upload-modal" class = "modal fade">
-    <div class = "modal-dialog modal-lg">
-      <div class = "modal-content">
-        <div class = "modal-header">
-          <h4 class = "modal-title">上传教室信息</h4>
+  <div id="upload-modal" className="modal fade">
+    <div className="modal-dialog modal-lg">
+      <div className="modal-content">
+        <div className="modal-header">
+          <h4 className="modal-title">上传教室信息</h4>
 
-          <button type = "button" class = "close" data-dismiss = "modal">×</button>
+          <button type="button" className="close" data-dismiss="modal">×</button>
         </div>
 
         <!-- 文件选择 -->
-        <div class = "modal-body">
-          <form id = "upload-form" class = "form-horizontal" enctype="multipart/form-data">
-            <div class = "form-group row">
-              <label for = "file" class = "col-sm-2 col-form-label">选择文件</label>
+        <div className="modal-body">
+          <form id="upload-form" className="form-horizontal" encType="multipart/form-data">
+            <div className="form-group row">
+              <label htmlFor="file" className="col-sm-2 col-form-label">选择文件</label>
 
-              <div class = "col-sm-10">
-                <input type = "file" class = "form-control-file" id = "file" name="file">
+              <div className="col-sm-10">
+                <input type="file" className="form-control-file" id="file" name="file">
               </div>
             </div>
           </form>
         </div>
 
-        <div class="modal-footer">
+        <div className="modal-footer">
 
-          <button id="upload-confirm-btn" type="button" class="btn btn-primary">确认</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+          <button id="upload-confirm-btn" type="button" className="btn btn-primary">确认</button>
+          <button type="button" className="btn btn-secondary" data-dismiss="modal">取消</button>
         </div>
       </div>
     </div>
@@ -191,66 +172,66 @@
 </div>
 
 
-  <script>
-    var student = new Object();
+<script>
+  var student = new Object();
 
-    function createTableRow(classroom) {
-      var tr = $("<tr></tr>");
-      var cidTd = $("<td></td>").text(classroom.cid);
-      var addressTd = $("<td></td>").text(classroom.address);
-      var courseScheduleTd = $("<td></td>").text(classroom.courseSchedule.map(function(course) {
-        return course.name;
-      }).join(","));
+  function createTableRow(classroom) {
+    var tr = $("<tr></tr>");
+    var cidTd = $("<td></td>").text(classroom.cid);
+    var addressTd = $("<td></td>").text(classroom.address);
+    var courseScheduleTd = $("<td></td>").text(classroom.courseSchedule.map(function (course) {
+      return course.name;
+    }).join(","));
 
-      var editBtn = $("<button></button>").addClass("btn btn-warning").text("编辑");
-      var deleteBtn = $("<button></button>").addClass("btn btn-danger").text("删除");
-      var opTd = $("<td></td>").append(editBtn).append(deleteBtn);
+    var editBtn = $("<button></button>").addClass("btn btn-warning").text("编辑");
+    var deleteBtn = $("<button></button>").addClass("btn btn-danger").text("删除");
+    var opTd = $("<td></td>").append(editBtn).append(deleteBtn);
 
-      tr.append(cidTd).append(addressTd).append(courseScheduleTd).append(opTd);
+    tr.append(cidTd).append(addressTd).append(courseScheduleTd).append(opTd);
 
-      return tr;
-    }
+    return tr;
+  }
 
-    //根据教室对象填充编辑表单
-    function fillEditForm(classroom) {
-      var editCid = $("#edit-cid");
-      var editAddress = $("#edit-address");
-      var editCourseSchedule = $("#edit-courseSchedule");
-      editCid.val(classroom.cid);
-      editAddress.val(classroom.address);
-      editCourseSchedule.val(JSON.stringify(classroom.courseSchedule));
-    }
+  //根据教室对象填充编辑表单
+  function fillEditForm(classroom) {
+    var editCid = $("#edit-cid");
+    var editAddress = $("#edit-address");
+    var editCourseSchedule = $("#edit-courseSchedule");
+    editCid.val(classroom.cid);
+    editAddress.val(classroom.address);
+    editCourseSchedule.val(JSON.stringify(classroom.courseSchedule));
+  }
 
-    // 生成编辑课程表格
-    function createEditCourseTableRow(course) {
-      var tr = $("<tr></tr>");
-      var courseIdTd = $("<td></td>").text(course.courseId);
-      var nameTd = $("<td></td>").text(course.name);
-      var teacherTd = $("<td></td>").text(course.teacher);
+  // 生成编辑课程表格
+  function createEditCourseTableRow(course) {
+    var tr = $("<tr></tr>");
+    var courseIdTd = $("<td></td>").text(course.courseId);
+    var nameTd = $("<td></td>").text(course.name);
+    var teacherTd = $("<td></td>").text(course.teacher);
 
-      var dateTd = $("<td></td>").text(course.date.join(","));
-      var startSectionTd = $("<td></td>").text(course.startSection);
-      var endSectionTd = $("<td></td>").text(course.endSection);
+    var dateTd = $("<td></td>").text(course.date.join(","));
+    var startSectionTd = $("<td></td>").text(course.startSection);
+    var endSectionTd = $("<td></td>").text(course.endSection);
 
-      var editBtn = $("<button></button>").addClass("btn btn-warning").text("编辑");
-      var deleteBtn = $("<button></button>").addClass("btn btn-danger").text("删除");
-      var opTd = $("<td></td>").append(editBtn).append(deleteBtn);
+    var editBtn = $("<button></button>").addClass("btn btn-warning").text("编辑");
+    var deleteBtn = $("<button></button>").addClass("btn btn-danger").text("删除");
+    var opTd = $("<td></td>").append(editBtn).append(deleteBtn);
 
-      tr.append(courseIdTd).append(nameTd).append(teacherTd).append(dateTd).append(startSectionTd).append(endSectionTd).append(opTd);
+    tr.append(courseIdTd).append(nameTd).append(teacherTd).append(dateTd).append(startSectionTd).append(endSectionTd).append(opTd);
 
-      return tr;
-    }
+    return tr;
+  }
 
-  </script>
+</script>
 
 <script>
-  $(document).ready(function() {
+  $(document).ready(function () {
     checkCookie();
 
-    $.fn.serializeObject = function(){
+    $.fn.serializeObject = function () {
       var o = {};
       var a = this.serializeArray();
-      $.each(a, function() {
+      $.each(a, function () {
         if (o[this.name] !== undefined) {
           if (!o[this.name].push) {
             o[this.name] = [o[this.name]];
@@ -267,15 +248,14 @@
     function searchAndShow() {
       var searchForm = $("#search-form-classroom");
       var searchData = searchForm.serializeObject();
-      alert(searchData);
       $.ajax({
         url: "http://162.14.107.35/SCUEE/Administrator/queryClassroom",
         type: "POST",
         contentType: "application/json",
         data: JSON.stringify(searchData),
-        headers:{"Authorization":getCookie("token")},
+        headers: {"Authorization": getCookie("token")},
         dataType: "json",
-        success: function(data) {
+        success: function (data) {
           if (data) {//判断返回值待确定
             var showTbody = $("#show-table tbody");
             showTbody.empty();
@@ -288,40 +268,44 @@
             alert(data.message || "查询失败，请重试！");
           }
         },
-        error: function() {
+        error: function () {
           alert("请求失败，请重试！");
         }
       });
     }
 
     // 绑定提交
-    $("#search-form-classroom").submit(function(event) {
+    $("#search-form-classroom").submit(function (event) {
       event.preventDefault();
       // 调用函数，根据搜索表单的值发送Ajax请求，并显示返回的数据
       searchAndShow();
     });
 
 
-
     // 绑定添加按钮
-    $("#add-btn").click(function() {
+    $("#add-btn").click(function () {
       $("#add-modal").modal("show");
     });
 
     // 绑定添加模态框的确认按钮
-    $("#add-confirm-btn").click(function() {
+    $("#add-confirm-btn").click(function () {
       var addForm = $("#add-form");
       var addData = addForm.serializeObject();
+      console.log(addData);
 
       // 发送Ajax请求，传递添加表单的数据
       $.ajax({
         url: "http://162.14.107.35/SCUEE/Administrator/addClassroom",
         type: "POST",
-        data: JSON.stringify(addData),
+        data: JSON.stringify({
+          "cid": addData.cid,
+          "address": addData.address,
+          "courseSchedule": [addData.courseSchedul]
+        }),
         dataType: "json",
-        contentType:"application/json",
-        headers:{"Authorization":getCookie("token")},
-        success: function(data) {
+        contentType: "application/json",
+        headers: {"Authorization": getCookie("token")},
+        success: function (data) {
           if (typeof data === "object") {
             $("#add-modal").modal("hide");
             alert(data.message || "添加成功！");
@@ -330,13 +314,13 @@
             alert(data.message || "添加失败，请重试！");
           }
         },
-        error: function() {
+        error: function () {
           alert("请求失败，请重试！");
         }
       });
     });
 
-    $("#upload-confirm-btn").click(function() {
+    $("#upload-confirm-btn").click(function () {
       var uploadForm = $("#upload-form")[0];
       var uploadData = new FormData(uploadForm);
 
@@ -347,8 +331,8 @@
         data: JSON.stringify(uploadData),
         dataType: "json",
         contentType: "application/json",
-        headers:{"Authorization":getCookie("token")},
-        success: function(data) {
+        headers: {"Authorization": getCookie("token")},
+        success: function (data) {
           if (typeof data === "object") {
             $("#upload-modal").modal("hide");
             alert(data.message || "上传成功！");
@@ -358,20 +342,20 @@
             alert(data.message || "上传失败，请重试！");
           }
         },
-        error: function() {
+        error: function () {
           alert("请求失败，请重试！");
         }
       });
     });
 
     // 绑定编辑按钮
-    $("#show-table tbody").on("click", "button.btn-warning", function() {
+    $("#show-table tbody").on("click", "button.btn-warning", function () {
 
       var tr = $(this).closest("tr");
       var classroom = {};
       classroom.cid = tr.children().eq(0).text();
       classroom.address = tr.children().eq(1).text();
-      classroom.courseSchedule = tr.children().eq(2).text().split(",").map(function(name) {
+      classroom.courseSchedule = tr.children().eq(2).text().split(",").map(function (name) {
         var course = {};
         course.name = name;
         return course;
@@ -386,6 +370,35 @@
       }
       $("#edit-modal").modal("show");
     });
+
+    // 绑定删除按钮
+    $("#show-table tbody").on("click", "button.btn-danger", function () {
+      var tr = $(this).closest("tr");
+      var cid = tr.children().eq(0).text();
+      var result = confirm("您确定要删除课程号为" + cid + "的教室吗？");
+
+      if (result) {
+        $.ajax({
+          url: "http://162.14.107.35/SCUEE/Administrator/deleteClassroom",
+          type: "POST",
+          data: JSON.stringify({"cid": cid}),
+          contentType: "application/json",
+          headers: {"Authorization": getCookie("token")},
+          dataType: "json",
+          success: function (data) {
+            if (typeof data === "object") {
+              alert(data.message || "删除成功！");
+              searchAndShow();
+            } else {
+              alert(data.message || "删除失败，请重试！");
+            }
+          },
+          error: function () {
+            alert("请求失败，请重试！");
+          }
+        });
+      }
+    })
   });
 </script>
 

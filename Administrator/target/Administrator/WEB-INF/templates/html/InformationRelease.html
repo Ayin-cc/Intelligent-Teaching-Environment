@@ -63,14 +63,6 @@
         <input type="text" id="title" class="form-control" placeholder="主题">
     </div>
 
-    <!-- 加粗 字号 -->
-    <div class="form-group">
-        <input type="button" id="btnBold" onmousedown="return false;" value = "加粗" class = "btn btn-secondary">
-        <label for="fontSizeInput">字号大小：</label>
-        <input type="number" id="fontSizeInput" min="1" max="7" step="1" value="3" class = "form-control-inline">
-        <button onclick = "changeFontSize()" class = "btn btn-secondary">应用</button>
-    </div>
-
     <!-- 内容 -->
     <div class = "form-group">
         <label for = "message-input">内容</label>
@@ -110,7 +102,7 @@
 
     function send(formMessage){
         $.ajax({
-            url: 'http://localhost:18083/SCUEE//DistrMsg/create',
+            url: 'http://162.14.107.35/SCUEE/DistrMsg/create',
             type: 'POST', // 请求类型，可以根据您的需求修改
             data: formMessage, // 将 FormData 对象作为数据发送
             headers:{"Authorization":getCookie("token")},
@@ -232,18 +224,6 @@
         }
     });
 
-
-
-    //加粗
-    btnbold.addEventListener('click', function(){
-        document.execCommand('bold', false, null);
-    })
-
-    //字号
-    function changeFontSize() {
-        const fontSizeInput = document.getElementById('fontSizeInput').value;
-        document.execCommand('fontSize', false, fontSizeInput);
-    }
 
 
 

@@ -91,12 +91,10 @@
 
 
         $("#show-table tbody").on("click", "button.btn-danger", function () {
-
           var tr = $(this).closest("tr");
           var sid = tr.children().eq(0).text();
           var result = confirm("您确定要删除学号为" + sid + "的学生吗？");
           if (result) {
-
 
             // 发送Ajax请求，传递要删除的学号
             $.ajax({
@@ -314,7 +312,7 @@
             <div class="form-group row">
               <label for="add-sid" class="col-sm-2 col-form-label">学号</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="add-sid">
+                <input type="text" class="form-control" id="add-sid" name="sid">
               </div>
             </div>
 
@@ -322,7 +320,7 @@
             <div class="form-group row">
               <label for="add-name" class="col-sm-2 col-form-label">姓名</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="add-name">
+                <input type="text" class="form-control" id="add-name" name="name">
               </div>
             </div>
 
@@ -330,14 +328,14 @@
             <div class="form-group row">
               <label for="add-major" class="col-sm-2 col-form-label">专业</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="add-major">
+                <input type="text" class="form-control" id="add-major" name="major">
               </div>
             </div>
 
             <div class="form-group row">
               <label for="add-college" class="col-sm-2 col-form-label">学院</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="add-college">
+                <input type="text" class="form-control" id="add-college" name="college">
               </div>
             </div>
 
@@ -345,7 +343,7 @@
             <div class="form-group row">
               <label for="add-sex" class="col-sm-2 col-form-label">性别</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="add-sex">
+                <input type="text" class="form-control" id="add-sex" name="sex">
               </div>
             </div>
 
@@ -353,7 +351,7 @@
             <div class="form-group row">
               <label for="add-passwd" class="col-sm-2 col-form-label">密码</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="add-passwd">
+                <input type="text" class="form-control" id="add-passwd" name="passwd">
               </div>
             </div>
 
@@ -361,7 +359,7 @@
             <div class="form-group row">
               <label for="add-phone" class="col-sm-2 col-form-label">手机号</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="add-phone">
+                <input type="text" class="form-control" id="add-phone" name="phone">
               </div>
             </div>
           </form>
@@ -459,12 +457,14 @@
       // 获取搜索表单的元素
       var searchForm = $("#search-form");
       // 获取搜索表单的序列化数据
-      var searchData = searchForm.serialize();
+      var searchData = searchForm.serializeObject();
       // 发送Ajax请求，传递搜索表单的数据
       $.ajax({
-        url: "/searchStudent",
-        type: "GET",
-        data: searchData,
+        url: "http://162.14.107.35/SCUEE/Administrator/queryStudent",
+        type: "POST",
+        data: JSON.stringify(searchData),
+        headers:{"Authorization":getCookie("token")},
+        contentType:"application/json",
         dataType: "json",
         success: function(data) {
           // 如果返回的数据是一个数组，说明查询成功
