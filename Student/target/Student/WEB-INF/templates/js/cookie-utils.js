@@ -8,7 +8,7 @@ function setCookie(userId, token, cid = "") {
     if(cid != ""){
         document.cookie = "courseId=" + cid;
     }
-    document.cookie = "expires=" + expdate.toGMTString();
+    document.cookie = "expires=" + expdate.toUTCString();
     var a = document.cookie;
     console.log(a);
 }
