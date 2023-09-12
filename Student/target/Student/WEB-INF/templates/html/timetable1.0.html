@@ -10,16 +10,15 @@
 		<script src="../js/cookie-utils.js"></script>
 		<script>
 			var student;
-			$(document).ready(function () {
+			$(document).ready(async function () {
 				// 检测cookie信息
-				checkCookie(student);
+				checkCookie();
+				student = await getStudentObj();
 				// 使用学生对象替换页面中的值
-				function change_inf() {
-					const stdName = document.getElementById('name-profile');
-					const stdID = document.getElementById('number-profile');
-					stdName.textContent = student.name;
-					stdID.textContent = student.sid;
-				}
+				const stdName = document.getElementById('name-profile');
+				const stdID = document.getElementById('number-profile');
+				stdName.textContent = student.name;
+				stdID.textContent = student.sid;
 			})
 		</script>
 	</head>
@@ -133,7 +132,7 @@
 
 		// 获取课表数据
 		function getCourse() {
-			const sid = getCookie("sid");
+			const sid = student.sid;
 			console.log(sid);
 			$.ajax({
 				type: "POST",
