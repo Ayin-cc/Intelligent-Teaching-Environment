@@ -87,29 +87,6 @@
 	var userId = document.getElementById("username");
 	var passwd = document.getElementById("password");
 
-	// 输入框 是否已输入 监测
-	var isUserID = 0;
-	var isPasswd = 0;
-	//单个输入框的检测
-	function isInput(input) {
-		if ((input.value).trim() !== "") {
-			return 1;
-		} else {
-			return 0;
-		}
-	}
-
-
-	// 检测各输入框内容
-	userId.addEventListener("input", function () {
-		isUserID = isInput(userId);
-		isAllInput();
-	});
-	passwd.addEventListener("input", function () {
-		isPasswd = isInput(passwd);
-		isAllInput();
-	});
-
 	// 登录功能
 	function login() {
 		if (userId.value == '' || passwd.value == '') {
