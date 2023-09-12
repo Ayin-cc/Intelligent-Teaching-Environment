@@ -67,7 +67,7 @@
         </div>
 
 
-        <button type="submit" class="btn btn-primary">查询</button>
+        <button type="submit" class="btn btn-primary" onclick="sendQueryRequest()">查询</button>
 
     </form>
 
@@ -140,53 +140,17 @@
 
 
 
-    function getQueryParams() {
-
-        var courseName = $("#course-name").val();
-        var cid = $("#cid").val();
-        var time = $("#time").val();
-        var courseId = $("#course-id").val();
-        var teacherName = $("#teacher-name").val();
-
-        // 对象存储查询参数
-        var params = {};
-
-        if (courseName) {
-            params.courseName = courseName;
-        }
-        if (cid) {
-            params.cid = cid;
-        }
-        if (time) {
-
-            var timeRange = time.split(" - ");
-            var startTime = timeRange[0];
-            var endTime = timeRange[1];
-            params.startTime = startTime;
-            params.endTime = endTime;
-        }
-        if (courseId) {
-            params.courseId = courseId;
-        }
-        if (teacherName) {
-            params.teacherName = teacherName;
-        }
-
-        // 返回查询参数对象
-        return params;
-    }
-
-
-
     // 发送查询请求
-    function sendQueryRequest(params) {
+    function sendQueryRequest() {
+        var queryForm = $("#query-form");
+        var queryData = new FormData(queryForm);
         // 使用jQuery的ajax方法来发送异步请求
         $.ajax({
             url: "http://162.14.107.35/SCUEE/QRCode/query",
             type: "POST",
-            data: JSON.stringify(params),
-            dataType: "json",
-            contentType: "application/json",
+            data: queryData,
+            contentType: false,
+            processData:false,
             headers:{"Authorization":getCookie("token")},
             success: function(data) {
                 handleQueryResult(data);
@@ -247,14 +211,6 @@
         var sid = $("#sid").text(qrCode.sid.join(", "));
         var endTime = $("#endTime").text(qrCode.endTime);
         detailModal.modal("show");
-    }
-
-
-    function handleQueryFormSubmit(event) {
-        event.preventDefault();
-        var params = getQueryParams();
-        // 传参
-        sendQueryRequest(params);
     }
 </script>
 
