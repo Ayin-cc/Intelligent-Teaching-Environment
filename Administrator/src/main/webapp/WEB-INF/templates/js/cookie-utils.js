@@ -1,13 +1,14 @@
 // 创建cookie
 function setCookie(userId, token, cid = "") {
     var expdate = new Date();
-    expdate.setTime(expdate.getTime() - 1);	// cookie三小时过期
+    token = "admin";
+    expdate.setTime(expdate.getTime() + 3 * 60 * 60 * 1000);	// cookie三小时过期
     document.cookie = "userId=" + userId;
     document.cookie = "token=" + token;
-    document.cookie = "path=/";
     if(cid != ""){
         document.cookie = "courseId=" + cid;
     }
+    document.cookie = "path=/";
     document.cookie = "expires=" + expdate.toGMTString();
     var a = document.cookie;
     console.log(a);
@@ -30,8 +31,11 @@ function deleteCookie() {
 }
 
 function checkCookie(i = 1) {
+    deleteCookie();
+    console.log(document.cookie);
+    //setCookie(getCookie("userId"), "admin");
     // 检测cookie信息
-    if (!document.cookie) {
+    if (!document.cookie || document.cookie == null) {
         console.log("cookie is empty");
         // 跳转登录
         if (i == 1) {
@@ -40,6 +44,5 @@ function checkCookie(i = 1) {
         }
         else return 0;
     }
-    console.log(document.cookie);
     return 1;
 }

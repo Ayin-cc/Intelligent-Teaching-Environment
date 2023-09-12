@@ -31,19 +31,10 @@
 			<input type="password" id="password" name="password" placeholder="密码"
 				   class="w-full p-2 my-2 border border-gray-300 rounded-md focus:bg-slate-100 bg-slate-50 focus:outline-none focus:border-blue-500">
 		</div>
-		<div class="hidden mb-4" id="pswd-again">
-			<!-- <label for="password" class="block mb-2 font-medium text-gray-600">确认密码</label> -->
-			<input type="password" id="password-confirm" name="password" placeholder="确认密码"
-				   class="w-full p-2 my-2 border border-gray-300 rounded-md focus:bg-slate-100 bg-slate-50 focus:outline-none focus:border-blue-500">
-		</div>
 		<div class="flex items-center justify-end mt-12 mb-4">
 			<!-- <div class="flex items-end justify-end text-blue-500" id="reset-password">
                 忘记密码？
             </div> -->
-			<button id="sign-button"
-					class="flex items-end px-4 py-2 text-white bg-blue-400 rounded-md focus:outline-none focus:bg-blue-600">
-				注册
-			</button>
 			<button id="log-button"
 					class="flex items-end px-4 py-2 ml-10 text-white bg-blue-500 rounded-md focus:outline-none focus:bg-blue-600">
 				登录
@@ -59,33 +50,6 @@
 	// const reset_password = document.getElementById('reset-password');
 	var log_sin_status = 1;
 
-	function change_top_tip() {
-		if (log_sin_status == 1) {
-			top_tip.textContent = '登录';
-			pswd_again.classList.add('hidden');
-		} else if (log_sin_status == 0) {
-			top_tip.textContent = '注册';
-			pswd_again.classList.remove('hidden');
-			// reset_password.classList.add('hidden');
-		}
-	}
-
-	// 注册按钮
-	sign_button.addEventListener('click', () => {
-		event.preventDefault();
-		if (log_sin_status == 1) {
-			log_sin_status = 0;
-			change_top_tip();
-			passwdConfirm.value = '';
-			sign_button.classList.remove('bg-blue-400');
-			sign_button.classList.add('bg-blue-500');
-			log_button.classList.add('hidden');
-			sign_button.blur();
-		} else {
-			register();
-		}
-	});
-
 	// 登录按钮
 	log_button.addEventListener('click', () => {
 		event.preventDefault();
@@ -95,9 +59,6 @@
         */
 		login();
 	});
-
-	// 初始化
-	change_top_tip();
 </script>
 <script>
 	// 验证通过，进入主界面
@@ -125,12 +86,10 @@
 
 	var userId = document.getElementById("username");
 	var passwd = document.getElementById("password");
-	var passwdConfirm = document.getElementById("password-confirm");
 
 	// 输入框 是否已输入 监测
 	var isUserID = 0;
 	var isPasswd = 0;
-	var isPasswdConfirm = 0;
 	//单个输入框的检测
 	function isInput(input) {
 		if ((input.value).trim() !== "") {
@@ -139,22 +98,8 @@
 			return 0;
 		}
 	}
-	// 所有输入框均输入 注册按钮样式修改
-	function isAllInput() {
-		var inputAll = isUserID + isPasswd + isPasswdConfirm;
-		if (inputAll !== 3) {
-			sign_button.classList.remove("bg-blue-500");
-			sign_button.classList.add("bg-blue-200");
-			//sendButton.disabled = true;
-		} else {
-			sign_button.classList.remove("bg-blue-200");
-			sign_button.classList.add("bg-blue-500");
-			//sendButton.disabled = true;
-		}
-	}
 
-	// 初始化 注册按钮 样式
-	isAllInput();
+
 	// 检测各输入框内容
 	userId.addEventListener("input", function () {
 		isUserID = isInput(userId);
@@ -162,10 +107,6 @@
 	});
 	passwd.addEventListener("input", function () {
 		isPasswd = isInput(passwd);
-		isAllInput();
-	});
-	passwdConfirm.addEventListener("input", function () {
-		isPasswdConfirm = isInput(passwdConfirm);
 		isAllInput();
 	});
 
@@ -192,33 +133,6 @@
 			}
 		})
 		log_button.blur();
-	}
-
-	// 注册功能
-	function register() {
-		if (userId.value == '' || passwd.value == '') {
-			return;
-		} else if (passwd.value != passwdConfirm.value) {
-			alert("密码不一致！");
-		} else {
-			$.ajax({
-				type: "POST",
-				dataType: "json",
-				url: 'http://162.14.107.35/SCUEE/Administrator/login',
-				contentType: "application/json",
-				data: JSON.stringify({ "id": userId, "passwd": passwd }),
-				success: function (result) {
-					if (result == 200) {
-						enter(userId, passwd);
-					}
-					if (result == 401) {
-						alert("注册失败！用户已存在！");
-					}
-				}
-			})
-		}
-		sign_button.blur();
-
 	}
 </script>
 </body>

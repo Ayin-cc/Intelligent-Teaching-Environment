@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1 user-scalable=no">
-    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="../css/index.css">
     <title>IntelligentClass User</title>
 </head>
 
@@ -15,7 +15,7 @@
         <div class="left">
             <div class="profile-box">
                 <div class="position-box">
-                    <img class="profile-img" src="images/image_1.jpg" alt=""></div>
+                    <img class="profile-img" src="../images/image_1.jpg" alt=""></div>
                     <div class="profile-name" id="username-profile">User</div>
             </div><!-- profile end -->
             <div class="function-box">
@@ -28,20 +28,20 @@
                         </a>
                     </div> -->
                     <div class="btn-box sign-in">
-                        <a href="html/QRCodeQuery.html" target="iframe">
-                            <img class="icon" src="images/icons/编辑_edit.svg" id="QRCodeQuery" alt="">
+                        <a href="QRCodeQuery.html" target="iframe">
+                            <img class="icon" src="../images/icons/编辑_edit.svg" id="QRCodeQuery" alt="">
                             <div class="btn-name">二维码签到查询</div>
                         </a>
                     </div>
                     <div class="btn-box message">
                         <a target="iframe" id="DistrMsg">
-                            <img class="icon" src="images/icons/未读消息_message-unread.svg" alt="">
+                            <img class="icon" src="../images/icons/未读消息_message-unread.svg" alt="">
                             <div class="btn-name">消息分发</div>
                         </a>
                     </div>
                     <div class="btn-box timetable">
                         <a target="iframe" id="DataManage">
-                            <img class="icon" src="images/icons/日程表_schedule.svg" alt="">
+                            <img class="icon" src="../images/icons/日程表_schedule.svg" alt="">
                             <div class="btn-name">数据信息</div>
                         </a>
                     </div>
@@ -100,7 +100,7 @@
             </div>
             <div class="iframe-box">
                 <iframe class="main-iframe" id="main-iframe" name="iframe" scrolling="auto"
-                    src="html/SignIn.html"></iframe>
+                    src="SignIn.html"></iframe>
                 <div class="blank-box"></div>
             </div>
 
@@ -108,15 +108,15 @@
 
     </div><!-- page end -->
     <!-- <script src="./user.js"></script> -->
-    <script src="js/index.js"></script>
+    <script src="../js/index.js"></script>
     <script>
         const QRCodeQuery = document.getElementById('QRCodeQuery');
         const DistrMsg = document.getElementById('DistrMsg');
         const DataManage = document.getElementById('DataManage');
 
-        DistrMsg.href="html/InformationRelease.html";
-        DataManage.href = "html/DataManage.html";
-        QRCodeQuery.href = "html/QRCodeQuery.html";
+        DistrMsg.href="InformationRelease.html";
+        DataManage.href = "DataManage.html";
+        QRCodeQuery.href = "QRCodeQuery.html";
     </script>
     <!-- <script src="./preload.js"></script> -->
 

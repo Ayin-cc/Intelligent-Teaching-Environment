@@ -280,7 +280,6 @@
             return o;
         }
 
-        //接口部分来自bing
         // 根据搜索表单的值发送Ajax请求，并显示返回的数据
         function searchAndShow() {
             // 获取搜索表单的元素
@@ -289,7 +288,7 @@
             var searchData = searchForm.serializeObject();
             // 发送Ajax请求，传递搜索表单的数据
             $.ajax({
-                url: "http://162.14.107.35/SCUEE/Administrator/queryCourse",
+                url: "http://localhost:18083/SCUEE/Administrator/queryCourse",
                 type: "POST",
                 data: JSON.stringify(searchData),
                 contentType:"application/json",
@@ -325,7 +324,6 @@
 
         $(document).ready(function() {
             checkCookie();
-            document.getElementById("username-profile").innerText = student.name;
 
             $("#search-form").submit(function(event) {
                 event.preventDefault();

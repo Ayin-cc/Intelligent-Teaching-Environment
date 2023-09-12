@@ -1,7 +1,7 @@
 // 创建cookie
 function setCookie(userId, token, cid = "") {
     var expdate = new Date();
-    expdate.setTime(expdate.getTime() - 1);	// cookie三小时过期
+    expdate.setTime(expdate.getTime() + 3 * 60 * 60 * 1000);	// cookie三小时过期
     document.cookie = "userId=" + userId;
     document.cookie = "token=" + token;
     document.cookie = "path=/";

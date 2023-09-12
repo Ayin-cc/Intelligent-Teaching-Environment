@@ -1,6 +1,6 @@
 const { app, BrowserWindow, Menu, Tray, ipcMain, Notification } = require('electron')
 const path = require('path')
-const http = require('http');
+
 
 app.on('ready',()=>{
     mainWindow = new BrowserWindow({
@@ -13,9 +13,12 @@ app.on('ready',()=>{
         }
     })
 
-    //来自李欣哲的
 
-    mainWindow.loadFile('index.html')
+
+    mainWindow.loadFile('./html/SignIn.html')
+    //来自李欣哲的
+    
+    
 
     mainWindow.webContents.openDevTools(); // 打开窗口的调试工具
 
@@ -75,25 +78,26 @@ app.on('ready',()=>{
     });
 })
 
+//暂时不需要
 // 控制菜单 ↓
-ipcMain.on('mainWindow_minimize', (event, message) => {
-    const mainWindow = BrowserWindow.getFocusedWindow();
-    if (!mainWindow.isMinimized()) {
-        mainWindow.minimize();
-    }
-})
-ipcMain.handle('mainWindow_maximize', (event, message) => {
-    const mainWindow = BrowserWindow.getFocusedWindow();
-    if (!mainWindow.isMaximized()) {
-        mainWindow.maximize();
-        // event.sender.send('controlBtn[1]_state','0')
-        return 0;
-    } else {
-        mainWindow.restore();
-        // event.sender.send('controlBtn[1]_state','1')
-        return 1;
-    }
-})
+// ipcMain.on('mainWindow_minimize', (event, message) => {
+//     const mainWindow = BrowserWindow.getFocusedWindow();
+//     if (!mainWindow.isMinimized()) {
+//         mainWindow.minimize();
+//     }
+// })
+// ipcMain.handle('mainWindow_maximize', (event, message) => {
+//     const mainWindow = BrowserWindow.getFocusedWindow();
+//     if (!mainWindow.isMaximized()) {
+//         mainWindow.maximize();
+//         // event.sender.send('controlBtn[1]_state','0')
+//         return 0;
+//     } else {
+//         mainWindow.restore();
+//         // event.sender.send('controlBtn[1]_state','1')
+//         return 1;
+//     }
+// })
 ipcMain.on('mainWindow_close', (event, message) => {
     const mainWindow = BrowserWindow.getFocusedWindow();
     mainWindow.close();

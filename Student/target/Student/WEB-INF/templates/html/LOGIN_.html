@@ -94,7 +94,7 @@
 		</script>
 		<script>
 			// 验证通过，进入主界面
-			function enter(userId, passwd) {
+			async function enter(userId, passwd) {
 				var token;
 				// 获取token
 				$.ajax({
@@ -105,10 +105,11 @@
 					data: JSON.stringify({ "sid": userId }),
 					success: function (result) {
 						token = result.token;
-						// 将相关信息存入cookie
-						setCookie(userId, token);
+
 					}
 				})
+				// 将相关信息存入cookie
+				await setCookie(userId, token);
 				sessionStorage.setItem('mid', '0');
 				sessionStorage.setItem('is_signed', 'false');
 				// 进入主界面
